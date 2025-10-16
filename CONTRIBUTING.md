@@ -29,6 +29,48 @@ docs(gitignore): clarify intention of local packages folder
 chore: ignore .vscode directory
 ```
 
+## Branching Convention
+
+### Main Branches
+
+- `main`: always stable and ready for release
+- `develop`: integration branch for new features
+
+Branches should be named using the following pattern:
+
+```git
+<type>/<short-description>
+```
+
+Optionally include issue IDs:
+
+```git
+feat/42-input-sprint-action
+```
+
+The target branch is usually `develop`. 
+For urgent fixes, use `hotfix` branches targeting `main`.
+(Types are the same as commit types plus `hotfix`)
+
+| Type | Purpose |
+|------|----------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `hotfix` | Urgent fixes. Target branch: `main` |
+| `docs` | Documentation or comments |
+| `style` | Formatting or style-only changes |
+| `refactor` | Code refactoring |
+| `chore` | Maintenance or configuration updates |
+| `test` | Adding or modifying tests |
+
+Examples:
+
+```git
+feat/input-sprint-action
+fix/camera-follow-target
+docs/readme-update
+```
+
 ## Code Style
 
 - KISS!
