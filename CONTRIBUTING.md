@@ -17,8 +17,9 @@ We use the **Conventional Commits** style:
 | `docs` | Documentation or comments |
 | `style` | Formatting or style-only changes |
 | `refactor` | Code refactoring |
-| `chore` | Maintenance or configuration updates |
+| `chore` | Maintenance, configuration updates |
 | `test` | Adding or modifying tests |
+| `meta` | Project management materials: meeting summaries, planning notes, brainstorming docs |
 
 ### Examples
 
@@ -48,9 +49,8 @@ Optionally include issue IDs:
 feat/42-input-sprint-action
 ```
 
-The target branch is usually `develop`. 
+The target branch is usually `develop`.
 For urgent fixes, use `hotfix` branches targeting `main`.
-(Types are the same as commit types plus `hotfix`)
 
 | Type | Purpose |
 |------|----------|
