@@ -33,6 +33,9 @@ __MACOSX/
 # Private Local Packages (.unitypackage that won't be shared/versioned should be installed here)
 /[Aa]ssets/[Ll]ocal[Pp]ackages/
 /[Aa]ssets/[Ll]ocal[Pp]ackages.meta
+# IgnoreFolder in Assets (put items you want to ignore in this folder)
+/[Aa]ssets/[Ii]gnore[Ff]older/
+/[Aa]ssets/[Ii]gnore[Ff]older.meta
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
