@@ -20,6 +20,7 @@ We use the **Conventional Commits** style:
 | `chore` | Maintenance, configuration updates |
 | `test` | Adding or modifying tests |
 | `meta` | Project management materials: meeting summaries, planning notes, brainstorming docs |
+| `add` | New files of every kind (must be relevant) |
 
 ### Examples
 
