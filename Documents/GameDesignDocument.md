@@ -38,7 +38,7 @@
     </table>
 </div>
 
-<p align="center">⚙️ Version: 0.1 &nbsp;•&nbsp; 🕒 Last modified: 2025-10-30</p>
+<p align="center">⚙️ Version: 0.2 &nbsp;•&nbsp; 🕒 Last modified: 2025-11-03</p>
 
 ## Table of Contents
 
@@ -60,6 +60,10 @@
 - [8. Soundtrack](#8-soundtrack)
 
 ## 0. Document Versioning
+| **Version** | **Date**       | **Change Description**                  |
+|-------------|------------------------------|-----------------------------------------|
+| 0.1         | 2024-10-30     | Initial draft completed                 |
+| 0.2         | 2024-11-03     | Added some general level design details in sections 5.1, 5.2, 5.3 and their subsections. |
 
 ## 1. Overview
 
@@ -208,31 +212,55 @@ The setting is the underground laboratory where the protagonist lives. During th
 - encounters the first enemies, testing the main gameplay dynamics.
 
 The player is guided through a **simple puzzle** to become familiar with the controls, during which **it is not possible to die**; on-screen tips are shown on how to proceed.  
+
 **Level ends:** when the guided puzzle is solved.
 
 #### 5.1.2 Sound Tools
 
+- Footsteps, low frequency sound that contributes to perception throughout the entire game
+- Clapping, mid frequency which reveals more than the footsteps
+- Whistles, high frequency sound that reveals the most details but attracts enemies the most
+
 #### 5.1.3 Environmental Sound Sources
+
+- Water Drops falling from a leaking pipe in the underground lab's corridor.
+- Electronics producing constant humming, radios and lab equipment
+- Falling objects
 
 #### 5.1.4 Enemies
 
+- Basic, dumb enemies to give the player a chance at the start
+
 #### 5.1.5 Puzzles
+
+The monsters are blocking the exit; the player must use sound to attract them and reach the exit.
+First interaction with sound tools and environmental sounds.
+Within this puzzle the player will also find the first continuous sound tool which will be useful in the next levels being able to reveal (in a non detailed way) the environment in a different way.
 
 ### 5.2. The Market
 
 #### 5.2.1 Level Overview
 
-The player reaches an **abandoned town** and must go to a **market** hoping to find information about **Doctor Kael** and trace the data needed to remedy the catastrophe.  
-The **puzzles** are more **complex** and the **monsters** more **aggressive**.  
+The player reaches the downtown market area hoping to find information about **Doctor Kael** and trace the data needed to remedy the catastrophe.  
+The **puzzles** are more **complex** and the **monsters** more **aggressive**.
+
 **Level ends:** when Noah finds the **information** he is looking for.
 
 #### 5.2.2 Sound Tools
 
+- Bell, high frequency sound that reveals a large area but attracts enemies significantly
+
 #### 5.2.3 Environmental Sound Sources
+
+- Marco-polo puzzle (reach and hear for the response)
 
 #### 5.2.4 Enemies
 
+- Smarter enemies that challenge the player to use sound tools and environmental sounds effectively
+
 #### 5.2.5 Puzzles
+
+The Marcopolo puzzle: the market will be a sort of maze through which the player will have to move carefully, using **sound tools** and paying attention to **environmental sounds** as they work as a response system someone is using to guide the player through the area. By following the environmental sounds the player reaches the bell-maker, who provides him with a new sound tool: the **bell**. He also has some information Doctor Kael left behind...
 
 ### 5.3. The Resonance Tower
 
@@ -262,6 +290,7 @@ This information will allow them to **save the world** by **annihilating the ene
 ## 7. Assets
 
 To enable the correct functioning of the echolocation mechanism, we are oriented toward using low-poly assets for which there are packages that do not distort our aesthetic vision for the game. In addition, low-poly assets:
+
 - Improve game performance
 - Allow greater freedom during environment construction, as they are inherently more modular and reusable
 - Facilitate the addition of custom details
