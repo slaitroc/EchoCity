@@ -62,8 +62,8 @@
 ## 0. Document Versioning
 | **Version** | **Date**       | **Change Description**                  |
 |-------------|------------------------------|-----------------------------------------|
-| 0.1         | 2024-10-30     | Initial draft completed                 |
-| 0.2         | 2024-11-03     | Added some general level design details in sections 5.1, 5.2, 5.3 and their subsections. |
+| 0.1         | 2025-10-30     | Initial draft completed                 |
+| 0.2         | 2025-11-03     | Added some general level design details in sections 5.1, 5.2, 5.3 and their subsections. |
 
 ## 1. Overview
 
