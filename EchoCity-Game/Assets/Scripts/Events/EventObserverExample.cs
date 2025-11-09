@@ -4,9 +4,9 @@ public class EventObserverExample : MonoBehaviour
 {
 
     [Header("Observed Events")]
-    [SerializeField] private StringEventSO stringEvent;
-    [SerializeField] private VoidEventSO voidEvent;
-    [SerializeField] private IntEventSO intEvent;
+    [SerializeField] private SOStringEvent stringEvent;
+    [SerializeField] private SOEventVoid voidEvent;
+    [SerializeField] private SOIntEvent intEvent;
 
     [Header("GO with Handlers")]
     [SerializeField] private GameManager_EventTest gameManager;

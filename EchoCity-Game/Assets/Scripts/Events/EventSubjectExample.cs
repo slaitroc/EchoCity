@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class EventSubjectExample : MonoBehaviour
 {
-    [SerializeField] private VoidEventSO voidEvent;
-    [SerializeField] private StringEventSO stringEvent;
-    [SerializeField] private IntEventSO intEvent;
+    [SerializeField] private SOEventVoid voidEvent;
+    [SerializeField] private SOStringEvent stringEvent;
+    [SerializeField] private SOIntEvent intEvent;
 
     void Update()
     {
