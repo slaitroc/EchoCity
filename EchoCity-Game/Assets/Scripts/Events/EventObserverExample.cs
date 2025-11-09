@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using UnityEngine;
 public class EventObserverExample : MonoBehaviour
@@ -13,21 +14,32 @@ public class EventObserverExample : MonoBehaviour
 
     void OnEnable()
     {
-        stringEvent.OnEventRaised -= gameManager.WriteMessage;
-        stringEvent.OnEventRaised += gameManager.WriteMessage;
+        if (stringEvent)
+        {
+            stringEvent.OnEventRaised -= gameManager.WriteMessage;
+            stringEvent.OnEventRaised += gameManager.WriteMessage;
+        }
+        if (voidEvent)
+        {
+            voidEvent.OnEventRaised -= gameManager.WriteMessage;
+            voidEvent.OnEventRaised += gameManager.WriteMessage;
+            voidEvent.OnEventRaised -= gameManager.PauseGame;
+            voidEvent.OnEventRaised += gameManager.PauseGame;
+        }
 
-        voidEvent.OnEventRaised -= gameManager.WriteMessage;
-        voidEvent.OnEventRaised += gameManager.WriteMessage;
-
-        intEvent.OnEventRaised -= gameManager.WriteIntMessage;
-        intEvent.OnEventRaised += gameManager.WriteIntMessage;
+        if (intEvent)
+        {
+            intEvent.OnEventRaised -= gameManager.WriteIntMessage;
+            intEvent.OnEventRaised += gameManager.WriteIntMessage;
+        }
 
     }
 
     void OnDisable()
     {
-        stringEvent.OnEventRaised -= gameManager.WriteMessage;
-        voidEvent.OnEventRaised -= gameManager.WriteMessage;
-        intEvent.OnEventRaised -= gameManager.WriteIntMessage;
+
+        if (stringEvent) stringEvent.OnEventRaised -= gameManager.WriteMessage;
+        if (voidEvent) voidEvent.OnEventRaised -= gameManager.WriteMessage;
+        if (intEvent) intEvent.OnEventRaised -= gameManager.WriteIntMessage;
     }
 }
