@@ -2,25 +2,28 @@ using UnityEngine;
 
 public class EventSubjectExample : MonoBehaviour
 {
+    [Header("Triggers")]
     [SerializeField] private SOEventVoid voidEvent;
     [SerializeField] private SOStringEvent stringEvent;
     [SerializeField] private SOIntEvent intEvent;
+
+
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            voidEvent.RaiseEvent();
+            voidEvent?.RaiseEvent();
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            stringEvent.RaiseEvent("'R' key pressed!");
+            stringEvent?.RaiseEvent("'R' key pressed!");
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            intEvent.RaiseEvent(42);
+            intEvent?.RaiseEvent(42);
         }
     }
 

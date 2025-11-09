@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59e0d46fc6f0634498a07c95784c96b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voidEvent: {fileID: 11400000, guid: fb2f9442456b7f446826059c40857b54, type: 2}
+  voidEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
   stringEvent: {fileID: 11400000, guid: f4609c07983ee5f4ebea85abfe03bf52, type: 2}
   intEvent: {fileID: 11400000, guid: 3bb7e0375aa9dca4db9c6c3d9993e3d0, type: 2}
 --- !u!4 &605805070
@@ -211,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87df2cc423a278f42b7eb2e26075c15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pause: 0
 --- !u!114 &1621864812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stringEvent: {fileID: 11400000, guid: f4609c07983ee5f4ebea85abfe03bf52, type: 2}
-  voidEvent: {fileID: 11400000, guid: fb2f9442456b7f446826059c40857b54, type: 2}
+  voidEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
   intEvent: {fileID: 11400000, guid: 3bb7e0375aa9dca4db9c6c3d9993e3d0, type: 2}
   gameManager: {fileID: 1621864811}
 --- !u!1660057539 &9223372036854775807
