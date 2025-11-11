@@ -1,9 +1,13 @@
-void ReconstructWorldPosition_float(float4 screenPos, float rawDepth, out float3 worldPos)
+void ReconstructWorldPosition_float(float4 screenPos, float depth, out float3 worldPos)
 {
-    float2 ndc = (screenPos.xy / screenPos.w) * 2.0 - 1.0;
-    float clipZ = rawDepth * 2.0 - 1.0;       // convert 0..1 to clip space
-    float4 clip = float4(ndc, clipZ, 1.0);
+    float2 ndc = screenPos.xy * 2.0 - 1.0;
 
-    float4 world = mul(UNITY_MATRIX_I_VP, clip);
+    float invDepth = rcp(max(depth, 1e-6));
+    float rawDepth = (invDepth - _ZBufferParams.y) / _ZBufferParams.x;
+
+    float clipZ = rawDepth * 2.0 - 1.0;
+    float4 clipPos = float4(ndc, clipZ, 1.0);
+
+    float4 world = mul(UNITY_MATRIX_I_VP, clipPos);
     worldPos = world.xyz / world.w;
 }
