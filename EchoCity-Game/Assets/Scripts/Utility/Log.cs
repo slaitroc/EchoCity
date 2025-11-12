@@ -10,6 +10,14 @@ public static class Log
 {
     private const string TAG = "D_LOG";
     private const string COLOR_INFO = "orange";
+
+    [Conditional("UNITY_EDITOR")]
+    [Conditional("DEVELOPMENT_BUILD")]
+    public static void D(object message)
+    {
+        UnityEngine.Debug.Log($"<color={COLOR_INFO}>{TAG}</color>-" + message);
+    }
+
     [Conditional("UNITY_EDITOR")]
     [Conditional("DEVELOPMENT_BUILD")]
     public static void D(object message, string color, string coloredMessage)
@@ -19,12 +27,6 @@ public static class Log
 
     [Conditional("UNITY_EDITOR")]
     [Conditional("DEVELOPMENT_BUILD")]
-    public static void D(object message)
-    {
-        UnityEngine.Debug.Log($"<color={COLOR_INFO}>{TAG}</color>-" + message);
-    }
-    [Conditional("UNITY_EDITOR")]
-    [Conditional("DEVELOPMENT_BUILD")]
     public static void W(object message)
     {
         UnityEngine.Debug.LogWarning($"<color={COLOR_INFO}>W_{TAG}</color>-" + message);
@@ -32,9 +34,23 @@ public static class Log
 
     [Conditional("UNITY_EDITOR")]
     [Conditional("DEVELOPMENT_BUILD")]
+    public static void W(object message, string color, string coloredMessage)
+    {
+        UnityEngine.Debug.LogWarning($"<color={COLOR_INFO}>W_{TAG}</color>-<color={color}>{coloredMessage}</color>:{message}");
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    [Conditional("DEVELOPMENT_BUILD")]
     public static void E(object message)
     {
         UnityEngine.Debug.LogError($"<color={COLOR_INFO}>E_{TAG}</color>-" + message);
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    [Conditional("DEVELOPMENT_BUILD")]
+    public static void E(object message, string color, string coloredMessage)
+    {
+        UnityEngine.Debug.LogError($"<color={COLOR_INFO}>E_{TAG}</color>-<color={color}>{coloredMessage}</color>:{message}");
     }
 
     // Lazy log: the lambda isn't evaluated at all if logging is disabled
