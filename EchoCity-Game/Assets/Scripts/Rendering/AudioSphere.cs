@@ -3,15 +3,20 @@ using UnityEngine;
 [System.Serializable]
 public struct AudioSphere
 {
-    public Vector3 position;
-    public float radius;
-    public float maxIntensity;
-    public float currentIntensity;
-    public float timeRemaining;
-    public float totalDuration;
-    public float audioClipDuration;
-    public float fadeInDuration;
-    public float fadeOutDuration;
+    [SerializeField] private Vector3 position;
+    [SerializeField] private float radius;
+    [SerializeField] private float maxIntensity;
+    [SerializeField] private float currentIntensity;
+    [SerializeField] private float timeRemaining;
+    [SerializeField] private float totalDuration;
+    [SerializeField] private float audioClipDuration;
+    [SerializeField] private float fadeInDuration;
+    [SerializeField] private float fadeOutDuration;
+
+    public Vector3 Position => position;
+    public float Radius => radius;
+    public float CurrentIntensity { get => currentIntensity; set => currentIntensity = value; }
+    public float TimeRemaining { get => timeRemaining; set => timeRemaining = value; }
 
     public AudioSphere(Vector3 pos, float rad, float intens, float audioDuration, float totalDur, float fadeIn = 0.1f, float fadeOut = 0.3f)
     {

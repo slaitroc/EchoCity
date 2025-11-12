@@ -8,28 +8,28 @@ public enum VisualizationMode
     GridPoints = 2
 }
 
-public class AudioVisibilityManager : MonoBehaviour
+public class EcholocationManager : MonoBehaviour
 {
     public VisualizationMode visualizationMode = VisualizationMode.GridLines;
 
     [Range(0.01f, 1.0f)]
-    public float fadeInDuration = 0.1f;
+    [SerializeField] private float fadeInDuration = 0.1f;
 
     [Range(0.1f, 3.0f)]
-    public float fadeOutDuration = 0.5f;
+    [SerializeField] private float fadeOutDuration = 0.5f;
 
     [Header("Grid Settings")]
     [Range(0.1f, 5.0f)]
-    public float gridCellSize = 1.0f;
+    [SerializeField] private float gridCellSize = 1.0f;
 
     [Range(0.01f, 0.2f)]
-    public float gridWidth = 0.05f;
+    [SerializeField] private float gridWidth = 0.05f;
 
     [Range(0.01f, 0.3f)]
-    public float gridPointSize = 0.08f;
+    [SerializeField] private float gridPointSize = 0.08f;
 
-    private List<AudioSphere> activeSpheres = new List<AudioSphere>();
-    private static AudioVisibilityManager instance;
+    [SerializeField] private List<AudioSphere> activeSpheres = new List<AudioSphere>();
+    private static EcholocationManager instance;
 
     private int spherePositionsID;
     private int sphereRadiiID;
@@ -44,17 +44,17 @@ public class AudioVisibilityManager : MonoBehaviour
     private float[] sphereRadii = new float[16];
     private float[] sphereIntensities = new float[16];
 
-    public static AudioVisibilityManager Instance
+    public static EcholocationManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindFirstObjectByType<AudioVisibilityManager>();
+                instance = FindFirstObjectByType<EcholocationManager>();
                 if (instance == null)
                 {
                     GameObject manager = new GameObject("AudioVisibilityManager");
-                    instance = manager.AddComponent<AudioVisibilityManager>();
+                    instance = manager.AddComponent<EcholocationManager>();
                 }
             }
             return instance;
@@ -77,10 +77,7 @@ public class AudioVisibilityManager : MonoBehaviour
             pointSizeID = Shader.PropertyToID("_PointSize");
             visualizationModeID = Shader.PropertyToID("_VisualizationMode");
         }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+        else if (instance != this) Destroy(gameObject);
     }
 
     void Update()
@@ -89,19 +86,13 @@ public class AudioVisibilityManager : MonoBehaviour
         for (int i = activeSpheres.Count - 1; i >= 0; i--)
         {
             AudioSphere sphere = activeSpheres[i];
-            sphere.timeRemaining -= Time.deltaTime;
+            sphere.TimeRemaining -= Time.deltaTime;
 
             // Update based on fade in/out
-            sphere.currentIntensity = sphere.GetCurrentIntensity();
+            sphere.CurrentIntensity = sphere.GetCurrentIntensity();
 
-            if (sphere.IsExpired)
-            {
-                activeSpheres.RemoveAt(i);
-            }
-            else
-            {
-                activeSpheres[i] = sphere;
-            }
+            if (sphere.IsExpired) activeSpheres.RemoveAt(i);
+            else activeSpheres[i] = sphere;
         }
 
         // Clear arrays
@@ -116,9 +107,10 @@ public class AudioVisibilityManager : MonoBehaviour
         int count = Mathf.Min(activeSpheres.Count, spherePositions.Length);
         for (int i = 0; i < count; i++)
         {
-            spherePositions[i] = new Vector4(activeSpheres[i].position.x, activeSpheres[i].position.y, activeSpheres[i].position.z, 1f);
-            sphereRadii[i] = activeSpheres[i].radius;
-            sphereIntensities[i] = activeSpheres[i].currentIntensity;
+            Vector3 pos = activeSpheres[i].Position;
+            spherePositions[i] = new Vector4(pos.x, pos.y, pos.z, 1f);
+            sphereRadii[i] = activeSpheres[i].Radius;
+            sphereIntensities[i] = activeSpheres[i].CurrentIntensity;
         }
 
         Shader.SetGlobalVectorArray(spherePositionsID, spherePositions);

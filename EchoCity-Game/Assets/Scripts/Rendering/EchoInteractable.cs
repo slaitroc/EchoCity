@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class EchoInteractable : MonoBehaviour
+[RequireComponent(typeof(AudioEmitter))]
+public class EchoTrigger : MonoBehaviour
 {
-    public TriggerType triggerType = TriggerType.OnClick;
+    [SerializeField] private TriggerType triggerType = TriggerType.OnClick;
 
-    private AudioEcholocator echolocator;
+    private AudioEmitter _audioEmitter;
 
     public enum TriggerType
     {
@@ -12,29 +13,17 @@ public class EchoInteractable : MonoBehaviour
         OnClick,      // Triggered by mouse click
     }
 
+    void Awake() => TryGetComponent(out _audioEmitter);
+
     void Start()
     {
-        echolocator = GetComponent<AudioEcholocator>();
-        if (echolocator == null)
-        {
-            Debug.LogWarning($"EchoInteractable '{gameObject.name}' requires an AudioEcholocator component!");
-        }
-
         if (triggerType == TriggerType.OnClick || triggerType == TriggerType.OnCollision)
         {
             Collider col = GetComponent<Collider>();
-            if (col == null)
-            {
-                Debug.LogWarning($"EchoInteractable '{gameObject.name}' requires a Collider!");
-            }
-
-            if (triggerType == TriggerType.OnCollision)
-            {
-                col.isTrigger = true;
-            }
+            if (col == null) Log.W($"EchoInteractable '{gameObject.name}' requires a Collider!", "purple", "ECHOLOCATION");
+            if (triggerType == TriggerType.OnCollision) col.isTrigger = true;
         }
     }
-
     void Update()
     {
         if (triggerType == TriggerType.OnClick)
@@ -44,10 +33,7 @@ public class EchoInteractable : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject == gameObject)
                 {
-                    if (echolocator != null)
-                    {
-                        echolocator.EmitEcho();
-                    }
+                    if (_audioEmitter != null) _audioEmitter.EmitSound();
                 }
             }
         }
@@ -57,10 +43,7 @@ public class EchoInteractable : MonoBehaviour
     {
         if (triggerType == TriggerType.OnCollision)
         {
-            if (echolocator != null)
-            {
-                echolocator.EmitEcho();
-            }
+            if (_audioEmitter != null) _audioEmitter.EmitSound();
         }
     }
 
@@ -68,10 +51,7 @@ public class EchoInteractable : MonoBehaviour
     {
         if (triggerType == TriggerType.OnCollision)
         {
-            if (echolocator != null)
-            {
-                echolocator.EmitEcho();
-            }
+            if (_audioEmitter != null) _audioEmitter.EmitSound();
         }
     }
 }
