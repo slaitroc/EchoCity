@@ -21,9 +21,9 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/Noah's Lab.unity
-  - m_enabled: 1
     m_path: Assets/Scenes/Persistent.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/Noah's Lab.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Events.unity
   m_ScriptingDefines: []
@@ -847,7 +847,7 @@ MonoBehaviour:
     - line: '|   webGLDebugSymbols: 0'
     - line: '|   webGLEmscriptenArgs: '
     - line: '|   webGLModulesDirectory: '
-    - line: '|   webGLTemplate: APPLICATION:Minimal'
+    - line: '|   webGLTemplate: APPLICATION:Default'
     - line: '|   webGLAnalyzeBuildSize: 0'
     - line: '|   webGLUseEmbeddedResources: 0'
     - line: '|   webGLCompressionFormat: 0'
@@ -988,7 +988,7 @@ MonoBehaviour:
     - rid: 2323323352073896024
       type: {class: WebGLPlatformSettings, ns: UnityEditor.WebGL, asm: UnityEditor.WebGL.Extensions}
       data:
-        m_Development: 0
+        m_Development: 1
         m_ConnectProfiler: 0
         m_BuildWithDeepProfilingSupport: 0
         m_AllowDebugging: 0
