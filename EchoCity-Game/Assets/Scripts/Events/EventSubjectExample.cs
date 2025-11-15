@@ -101,10 +101,12 @@ public class EventSubjectExample : MonoBehaviour
         {
             GameObject go = emittersPositionsList[UnityEngine.Random.Range(0, emittersPositionsList.Count)];
             AudioClip audioClip = audioClipsList[UnityEngine.Random.Range(0, audioClipsList.Count)];
-            AudioSource.PlayClipAtPoint(audioClip, go.transform.position);
+            AudioSource audioSource = go.GetComponent<AudioSource>();
+            audioSource.spatialBlend = 1f; // 3D sound
+            audioSource.PlayOneShot(audioClip);
+            // AudioSource.PlayClipAtPoint(audioClip, go.transform.position);
             if (enableMinimumDuration) return new SoundEmissionData(go.transform.position, radius, intensity, minimumDuration);
             return new SoundEmissionData(go.transform.position, radius, intensity, audioClip.length);
-
         }
         else return null;
     }
