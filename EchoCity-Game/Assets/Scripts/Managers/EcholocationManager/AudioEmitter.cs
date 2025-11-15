@@ -5,6 +5,9 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(AudioSource))]
 public class AudioEmitter : MonoBehaviour
 {
+    [Header("Invoking Events")]
+    [SerializeField] SONewAudioSphereEvent newAudioSphereEvent;
+
     [Header("Echo Settings")]
     [Min(0f)]
     [SerializeField] private float echoRadius = 10f;
@@ -62,21 +65,11 @@ public class AudioEmitter : MonoBehaviour
     public void EmitSound()
     {
         AudioClip clipToPlay = GetAudioClip();
-
-        if (clipToPlay != null)
-        {
-            audioSource.PlayOneShot(clipToPlay);
-        }
-
+        if (clipToPlay != null) audioSource.PlayOneShot(clipToPlay);
         float audioDuration = clipToPlay != null ? clipToPlay.length : minimumDuration;
-        EcholocationManager.Instance.AddAudioSphere( //FIX it shall invoke an event with an array of parameters 
-            transform.position,
-            echoRadius,
-            echoIntensity,
-            audioDuration
-        );
+        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, echoRadius, echoIntensity, audioDuration));
     }
-    AudioClip GetAudioClip()
+    private AudioClip GetAudioClip()
     {
         if (_validClips.Count > 0) return _validClips[Random.Range(0, _validClips.Count)];
         return audioClip;
@@ -92,7 +85,7 @@ public class AudioEmitter : MonoBehaviour
             }
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, echoRadius);

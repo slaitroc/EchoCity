@@ -10,7 +10,7 @@ public enum VisualizationMode
 
 public class EcholocationManager : MonoBehaviour
 {
-    public VisualizationMode visualizationMode = VisualizationMode.GridLines;
+    [SerializeField] private VisualizationMode visualizationMode = VisualizationMode.GridLines;
 
     [Range(0.01f, 1.0f)]
     [SerializeField] private float fadeInDuration = 0.1f;
@@ -43,23 +43,6 @@ public class EcholocationManager : MonoBehaviour
     private Vector4[] spherePositions = new Vector4[16];
     private float[] sphereRadii = new float[16];
     private float[] sphereIntensities = new float[16];
-
-    public static EcholocationManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindFirstObjectByType<EcholocationManager>();
-                if (instance == null)
-                {
-                    GameObject manager = new GameObject("AudioVisibilityManager");
-                    instance = manager.AddComponent<EcholocationManager>();
-                }
-            }
-            return instance;
-        }
-    }
 
     void Awake()
     {
@@ -123,32 +106,32 @@ public class EcholocationManager : MonoBehaviour
         Shader.SetGlobalFloat(pointSizeID, gridPointSize);
     }
 
-    public void AddAudioSphere(Vector3 position, float radius, float intensity, float audioClipDuration)
-    {
-        AudioSphere newSphere = new AudioSphere(
-            position,
-            radius,
-            intensity,
-            audioClipDuration,
-            this.fadeInDuration + audioClipDuration + this.fadeOutDuration,
-            this.fadeInDuration,
-            this.fadeOutDuration
-        );
-        activeSpheres.Add(newSphere);
-    }
 
-    public void AddAudioSphere(Vector3 position, float radius, float intensity, float audioClipDuration, float fadeIn, float fadeOut)
+    public void AddAudioSphere(SoundEmissionData data, float fadeIn, float fadeOut)
     {
         AudioSphere newSphere = new AudioSphere(
-            position,
-            radius,
-            intensity,
-            audioClipDuration,
-            fadeIn + audioClipDuration + fadeOut,
+            data.position,
+            data.radius,
+            data.intensity,
+            data.duration,
+            fadeIn + data.duration + fadeOut,
             fadeIn,
             fadeOut
         );
         activeSpheres.Add(newSphere);
     }
 
+    public void AddAudioSphereHandler(SoundEmissionData data)
+    {
+        AudioSphere newSphere = new AudioSphere(
+            data.position,
+            data.radius,
+            data.intensity,
+            data.duration,
+            this.fadeInDuration + data.duration + this.fadeOutDuration,
+            this.fadeInDuration,
+            this.fadeOutDuration
+        );
+        activeSpheres.Add(newSphere);
+    }
 }
