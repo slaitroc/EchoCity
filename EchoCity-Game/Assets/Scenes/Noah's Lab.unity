@@ -3182,8 +3182,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 0}
-  echoRadius: 3.37
-  autoEmitInterval: 0.99
+  echoRadius: 4.14
+  autoEmitInterval: 1.7
   echoIntensity: 0.5
   emitOnStart: 1
   audioClip: {fileID: 8300000, guid: 360280740f9b070408fbaf7dafb202f5, type: 3}
@@ -3225,7 +3225,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15.5
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -3260,7 +3260,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
