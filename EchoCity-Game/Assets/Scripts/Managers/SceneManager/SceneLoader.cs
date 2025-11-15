@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    private string _LOG_TAG = "SCENE LOADER";
+    private string _LOG_COLOR = "#ed600eff";
     [SerializeField] private string firstLevelName = "Noah's Lab";
     [SerializeField] private string debugSceneName = "none";
     private string _currentLevelName;
@@ -21,7 +23,7 @@ public class SceneLoader : MonoBehaviour
             _currentLevelName = sceneName;
             SceneManager.SetActiveScene(existingScene);
             PlacePlayerOnSpawn();
-            Log.D("Scene already loaded in editor, just activated: " + sceneName, "yellow", "SceneLoader");
+            Log.D("Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
             yield break;
         }
 #endif
@@ -42,7 +44,7 @@ public class SceneLoader : MonoBehaviour
         }
 
         PlacePlayerOnSpawn();
-        Log.D("Loaded active scene: " + sceneName, "red", "SceneLoader");
+        Log.D("Loaded active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
     }
 
     public void PlacePlayerOnSpawn()
@@ -64,7 +66,7 @@ public class SceneLoader : MonoBehaviour
         Scene existingScene = SceneManager.GetSceneByName(sceneName);
         if (existingScene.IsValid() && existingScene.isLoaded)
         {
-            Log.D("Scene already loaded in editor, just activated: " + sceneName, "yellow", "SceneLoader");
+            Log.D("Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
             yield break;
         }
 #endif
@@ -74,7 +76,7 @@ public class SceneLoader : MonoBehaviour
             yield return null;
         }
 
-        Log.D("Loaded non-active scene: " + sceneName, "red", "SceneLoader");
+        Log.D("Loaded non-active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
     }
 
 
