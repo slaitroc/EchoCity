@@ -4,6 +4,8 @@ using System.Collections.Generic;
 [Serializable]
 public class GameStatesFSM
 {
+    private string _LOG_TAG = "GM-FSM";
+    private string _LOG_COLOR = "green";
     public IGameState currentState { get; private set; }
     private IGameState _playingState;
     private IGameState _pauseState;
@@ -28,7 +30,7 @@ public class GameStatesFSM
 
     public void Initialize()
     {
-        Log.D($"Game State Initialized to {GameStatesEnum.PLAYING.ToString()}", "yellow", "Game State FSM");
+        Log.D($"Game State Initialized to {GameStatesEnum.PLAYING.ToString()}", $"{_LOG_COLOR}", $"{_LOG_TAG}");
         currentState = _statesDict[GameStatesEnum.PLAYING];
         currentState.Enter();
 
@@ -36,7 +38,7 @@ public class GameStatesFSM
     }
     public void Initialize(GameStatesEnum state)
     {
-        Log.D($"Game State Initialized to {state.ToString()}", "yellow", "Game State FSM");
+        Log.D($"Game State Initialized to {state.ToString()}", $"{_LOG_COLOR}", $"{_LOG_TAG}");
         currentState = _statesDict[state];
         currentState.Enter();
 
@@ -46,7 +48,7 @@ public class GameStatesFSM
 
     public void ChangeState(GameStatesEnum state)
     {
-        Log.D($"Game State changed from {currentState.Kind()} to {state.ToString()}", "yellow", "Game State FSM");
+        Log.D($"Game State changed from {currentState.Kind()} to {state.ToString()}", $"{_LOG_COLOR}", $"{_LOG_TAG}");
         IGameState oldState = currentState;
         currentState.Exit();
         currentState = _statesDict[state];
