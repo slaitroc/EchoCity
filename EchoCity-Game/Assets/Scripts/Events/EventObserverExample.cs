@@ -16,21 +16,21 @@ public class EventObserverExample : MonoBehaviour
     {
         if (stringEvent)
         {
-            stringEvent.OnEventRaised -= gameManager.WriteMessage;
-            stringEvent.OnEventRaised += gameManager.WriteMessage;
+            stringEvent.OnEventRaised -= gameManager.WriteMessageHandler;
+            stringEvent.OnEventRaised += gameManager.WriteMessageHandler;
         }
         if (voidEvent)
         {
-            voidEvent.OnEventRaised -= gameManager.WriteMessage;
-            voidEvent.OnEventRaised += gameManager.WriteMessage;
-            voidEvent.OnEventRaised -= gameManager.PauseGame;
-            voidEvent.OnEventRaised += gameManager.PauseGame;
+            voidEvent.OnEventRaised -= gameManager.WriteMessageHandler;
+            voidEvent.OnEventRaised += gameManager.WriteMessageHandler;
+            voidEvent.OnEventRaised -= gameManager.PauseGameHandler;
+            voidEvent.OnEventRaised += gameManager.PauseGameHandler;
         }
 
         if (intEvent)
         {
-            intEvent.OnEventRaised -= gameManager.WriteIntMessage;
-            intEvent.OnEventRaised += gameManager.WriteIntMessage;
+            intEvent.OnEventRaised -= gameManager.WriteMessageHandler;
+            intEvent.OnEventRaised += gameManager.WriteMessageHandler;
         }
 
     }
@@ -38,8 +38,8 @@ public class EventObserverExample : MonoBehaviour
     void OnDisable()
     {
 
-        if (stringEvent) stringEvent.OnEventRaised -= gameManager.WriteMessage;
-        if (voidEvent) voidEvent.OnEventRaised -= gameManager.WriteMessage;
-        if (intEvent) intEvent.OnEventRaised -= gameManager.WriteIntMessage;
+        if (stringEvent) stringEvent.OnEventRaised -= gameManager.WriteMessageHandler;
+        if (voidEvent) voidEvent.OnEventRaised -= gameManager.WriteMessageHandler;
+        if (intEvent) intEvent.OnEventRaised -= gameManager.WriteMessageHandler;
     }
 }
