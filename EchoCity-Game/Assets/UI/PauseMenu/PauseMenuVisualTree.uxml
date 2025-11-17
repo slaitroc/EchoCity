@@ -1,0 +1,12 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/PauseMenu/PauseMenuVisualTree.uss?fileID=7433441132597879392&amp;guid=67e25e9b895974162b490c6346040821&amp;type=3#PauseMenuVisualTree" />
+    <ui:VisualElement name="pause-root" class="pause-root">
+        <ui:VisualElement name="dimmer" class="dimmer" />
+        <ui:VisualElement name="panel" class="panel">
+            <ui:Label name="title" text="Paused" class="title" style="font-size: 150%;" />
+            <ui:Button name="ResumeButton" text="Resume" class="Button button" />
+            <ui:Button name="SettingsButton" text="Settings" class="button" />
+            <ui:Button name="QuitButton" text="Quit to Title" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
