@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+// using Managers.AudioManager;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(AudioSource))]
@@ -16,32 +17,17 @@ public class AudioEmitter : MonoBehaviour
     [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
 
     [Header("Echo Settings")]
-    [SerializeField] private Frequency objectFrequency = Frequency.Low;
-    [Min(0f)]
-    [SerializeField] private float echoRadius = 10f;
     [SerializeField] private bool emitOnStart = false;
-
-    [Tooltip("Time from the end of a sound to the start of the next sound (0 = single emission)")]
-    [Min(0f)]
-    [SerializeField] private float gapBetweenSounds = 0f;
 
     [Tooltip("Minimum visibility duration, use if audio is very short")]
     [Min(0.1f)]
     [SerializeField]
     private float minimumDuration = 0.1f;
-
-    [Min(0f)]
-    [SerializeField] private float echoIntensity = 0.5f;
-
-
-    [Header("Audio Settings")]
-    public AudioClip audioClip;
+    [SerializeField] public SOSoundSource soundSource;
 
     [Tooltip("Overrides audioClip")]
     [SerializeField] private AudioClip[] randomAudioClips;
     private List<AudioClip> _validClips = new();
-
-
     #endregion
 
     #region Private Fields
@@ -54,6 +40,13 @@ public class AudioEmitter : MonoBehaviour
 
     void Start()
     {
+        if (soundSource == null)
+        {
+            Log.E("AudioEmitter is missing a SOSoundSource reference!");
+            enabled = false;
+            return;
+        }
+
         TryGetComponent(out audioSource);
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 1f; // 3D sound
@@ -63,15 +56,15 @@ public class AudioEmitter : MonoBehaviour
             EmitSound();
         }
 
-        if (gapBetweenSounds > 0f)
+        if (soundSource.GapBetweenSounds > 0f)
         {
-            nextAutoEmit = Time.time + gapBetweenSounds;
+            nextAutoEmit = Time.time + soundSource.GapBetweenSounds;
         }
     }
 
     void Update()
     {
-        if (gapBetweenSounds > 0f && Time.time >= nextAutoEmit)
+        if (soundSource.GapBetweenSounds > 0f && Time.time >= nextAutoEmit)
         {
             EmitSound();
         }
@@ -90,11 +83,11 @@ public class AudioEmitter : MonoBehaviour
         {
             audioDuration = clipToPlay.length <= minimumDuration ? minimumDuration : clipToPlay.length;
 
-            nextAutoEmit = Time.time + audioDuration + gapBetweenSounds;
+            nextAutoEmit = Time.time + audioDuration + soundSource.GapBetweenSounds;
             audioSource.PlayOneShot(clipToPlay);
         }
 
-        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, echoRadius, echoIntensity, audioDuration, objectFrequency));
+        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, soundSource.Radius, soundSource.Intensity, soundSource.AudioClip.length, soundSource.Frequency));
     }
 
     // If randomAudioClips has valid clips, return one at random; otherwise return the main audioClip
@@ -105,7 +98,7 @@ public class AudioEmitter : MonoBehaviour
     private AudioClip GetAudioClip()
     {
         if (_validClips.Count > 0) return _validClips[Random.Range(0, _validClips.Count)];
-        return audioClip;
+        return soundSource.AudioClip;
     }
 
     private void RebuildValidClips()
@@ -118,9 +111,14 @@ public class AudioEmitter : MonoBehaviour
             }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, echoRadius);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     if (example1 == null)
+    //     {
+    //         Log.E("OnDrawGizmos | AudioEmitter is missing a SOSoundSource reference!");
+    //         return;
+    //     }
+    //     Gizmos.color = Color.cyan;
+    //     Gizmos.DrawWireSphere(transform.position, example1.Radius);
+    // }
 }
