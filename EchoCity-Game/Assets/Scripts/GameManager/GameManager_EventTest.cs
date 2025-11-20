@@ -15,7 +15,7 @@ public class GameManager_EventTest : MonoBehaviour
         pause = false;
     }
 
-    public void PauseGame()
+    public void PauseGameHandler()
     {
         if (!pause) gameStateFSM.ChangeState(GameStatesEnum.PAUSE);
         else gameStateFSM.ChangeState(GameStatesEnum.PLAYING);

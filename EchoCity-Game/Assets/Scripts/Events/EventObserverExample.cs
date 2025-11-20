@@ -23,8 +23,8 @@ public class EventObserverExample : MonoBehaviour
         {
             voidEvent.OnEventRaised -= gameManager.WriteMessage;
             voidEvent.OnEventRaised += gameManager.WriteMessage;
-            voidEvent.OnEventRaised -= gameManager.PauseGame;
-            voidEvent.OnEventRaised += gameManager.PauseGame;
+            voidEvent.OnEventRaised -= gameManager.PauseGameHandler;
+            voidEvent.OnEventRaised += gameManager.PauseGameHandler;
         }
 
         if (intEvent)
@@ -39,7 +39,12 @@ public class EventObserverExample : MonoBehaviour
     {
 
         if (stringEvent) stringEvent.OnEventRaised -= gameManager.WriteMessage;
-        if (voidEvent) voidEvent.OnEventRaised -= gameManager.WriteMessage;
+        if (voidEvent)
+        {
+            voidEvent.OnEventRaised -= gameManager.WriteMessage;
+            voidEvent.OnEventRaised -= gameManager.PauseGameHandler;
+        }
         if (intEvent) intEvent.OnEventRaised -= gameManager.WriteIntMessage;
+
     }
 }
