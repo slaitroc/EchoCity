@@ -8,30 +8,14 @@ public class EnemyAI : MonoBehaviour
 {
     public enum State { Patrol, Chase }
 
-    #region  Seriralized Fields
+    #region  Serialized Fields
     [Header("References")]
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Animator animator;
+    [SerializeField] public SOEnemyData enemyData;
+
     [SerializeField] private Transform player;
     [SerializeField] private Transform[] waypoints;
-    [SerializeField] private Animator animator;
-
-    [Header("Ranges")]
-    [SerializeField] private float killRange = 1.2f; // distance at which the player is "killed"
-    [SerializeField] private float attackRange = 3f;
-    [SerializeField] private float chaseRange = 15f;
-    [SerializeField] private float loseRange = 20f;
-
-    [Header("Velocity")]
-    [SerializeField] private float patrolSpeed = 3.5f;
-    [SerializeField] private float chaseSpeed = 5.4f;
-
-    [Header("Patrol")]
-    [SerializeField] private float waypointPauseDuration = 2f;
-    [SerializeField] private float waypointArrivalThreshold = 0.3f;
-
-    [Header("Attack")]
-    [SerializeField] private float attackCooldown = 2f;
-    [SerializeField] private float attackDuration = 1f;
 
     [Header("Animator Parameters")]
     [SerializeField] private State currentState = State.Patrol;
@@ -39,37 +23,45 @@ public class EnemyAI : MonoBehaviour
     #endregion
 
     #region Private Fields
-    private int speedParameter = Animator.StringToHash("Speed");
-    private int idleParameter = Animator.StringToHash("IsIdle");
-    private int chaseParameter = Animator.StringToHash("IsChasing");
-    private int attackTrigger = Animator.StringToHash("Attack");
-    private bool isWaitingAtWaypoint = false;
-    private float waitTimer = 0f;
-    private bool isAttacking = false;
-    private float lastAttackTime = -Mathf.Infinity;
+
+    private bool _isWaitingAtWaypoint = false;
+    private bool _isAttacking = false;
+    private float _lastAttackTime = -Mathf.Infinity;
+    private float _waitTimer = 0f;
+
     private Coroutine attackRoutine;
+
+
+    private int _speedParameter = Animator.StringToHash("Speed");
+    private int _idleParameter = Animator.StringToHash("IsIdle");
+    private int _chaseParameter = Animator.StringToHash("IsChasing");
+    private int _attackTrigger = Animator.StringToHash("Attack");
     #endregion
 
     void Awake()
     {
         TryGetComponent(out agent);
         TryGetComponent(out animator);
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if (!p) Log.D("No player found for EnemyAI on " + gameObject.name);
+        else player = p.transform;
+
+        if (enemyData == null)
+        {
+            Log.D("No SOEnemyData assigned to EnemyAI on " + gameObject.name);
+        }
     }
 
     void Start()
     {
-        if (waypoints != null && waypoints.Length > 0)
+        if (waypoints == null || waypoints.Length == 0)
         {
-            agent.speed = patrolSpeed;
-            agent.stoppingDistance = 0f;
-            GotoNextWaypoint();
+            Log.D("No waypoints assigned to EnemyAI on " + gameObject.name);
+            return;
         }
-
-        if (player == null)
-        {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
-            if (p != null) player = p.transform;
-        }
+        agent.speed = enemyData.PatrolSpeed;
+        agent.stoppingDistance = 0f;
+        GotoNextWaypoint();
     }
 
     void Update()
@@ -85,11 +77,11 @@ public class EnemyAI : MonoBehaviour
         switch (currentState)
         {
             case State.Patrol:
-                if (distToPlayer < chaseRange && !isAttacking) SwitchToChase();
+                if (distToPlayer < enemyData.ChaseRange && !_isAttacking) SwitchToChase();
                 else PatrolUpdate();
                 break;
             case State.Chase:
-                if (distToPlayer > loseRange && !isAttacking) SwitchToPatrol();
+                if (distToPlayer > enemyData.LoseRange && !_isAttacking) SwitchToPatrol();
                 else ChaseUpdate(distToPlayer);
                 break;
         }
@@ -102,25 +94,25 @@ public class EnemyAI : MonoBehaviour
         if (animator == null) return;
 
         // If attacking, speed is zero and not idle or chasing
-        if (isAttacking)
+        if (_isAttacking)
         {
-            animator.SetFloat(speedParameter, 0f);
-            animator.SetBool(idleParameter, false);
-            animator.SetBool(chaseParameter, false);
+            animator.SetFloat(_speedParameter, 0f);
+            animator.SetBool(_idleParameter, false);
+            animator.SetBool(_chaseParameter, false);
             return;
         }
 
         float normalizedSpeed = 0f;
-        float maxSpeed = Mathf.Max(patrolSpeed, chaseSpeed);
+        float maxSpeed = Mathf.Max(enemyData.PatrolSpeed, enemyData.ChaseSpeed);
 
         if (agent != null && maxSpeed > 0.01f)
         {
             normalizedSpeed = worldSpeed / maxSpeed;   // worldSpeed è agent.velocity.magnitude
             normalizedSpeed = Mathf.Clamp01(normalizedSpeed);
         }
-        animator.SetFloat(speedParameter, normalizedSpeed);
-        animator.SetBool(idleParameter, IsIdle());
-        animator.SetBool(chaseParameter, currentState == State.Chase && !isAttacking);
+        animator.SetFloat(_speedParameter, normalizedSpeed);
+        animator.SetBool(_idleParameter, IsIdle());
+        animator.SetBool(_chaseParameter, currentState == State.Chase && !_isAttacking);
     }
 
     bool IsIdle()
@@ -128,8 +120,8 @@ public class EnemyAI : MonoBehaviour
         if (agent == null)
             return currentState == State.Patrol;
 
-        if (isAttacking) return false;
-        if (currentState == State.Patrol && (isWaitingAtWaypoint || agent.velocity.sqrMagnitude < 0.01f))
+        if (_isAttacking) return false;
+        if (currentState == State.Patrol && (_isWaitingAtWaypoint || agent.velocity.sqrMagnitude < 0.01f))
             return true;
         return agent.isStopped && agent.velocity.sqrMagnitude < 0.01f;
     }
@@ -140,10 +132,10 @@ public class EnemyAI : MonoBehaviour
     {
         CancelAttack();
         currentState = State.Patrol;
-        agent.speed = patrolSpeed;
+        agent.speed = enemyData.PatrolSpeed;
         agent.stoppingDistance = 0f;
         agent.isStopped = false;
-        if (!isWaitingAtWaypoint)
+        if (!_isWaitingAtWaypoint)
             GotoNextWaypoint();
     }
 
@@ -151,26 +143,26 @@ public class EnemyAI : MonoBehaviour
     {
         CancelWait();
         currentState = State.Chase;
-        agent.speed = chaseSpeed;
-        agent.stoppingDistance = Mathf.Clamp(attackRange * 0.5f, 0.1f, attackRange);
+        agent.speed = enemyData.ChaseSpeed;
+        agent.stoppingDistance = Mathf.Clamp(enemyData.AttackRange * 0.5f, 0.1f, enemyData.AttackRange);
         agent.isStopped = false;
     }
 
     void PatrolUpdate()
     {
-        if (isWaitingAtWaypoint)
+        if (_isWaitingAtWaypoint)
         {
-            waitTimer -= Time.deltaTime;
-            if (waitTimer <= 0f)
+            _waitTimer -= Time.deltaTime;
+            if (_waitTimer <= 0f)
             {
-                isWaitingAtWaypoint = false;
+                _isWaitingAtWaypoint = false;
                 agent.isStopped = false;
                 GotoNextWaypoint();
             }
             return;
         }
 
-        if (!agent.pathPending && agent.remainingDistance <= waypointArrivalThreshold)
+        if (!agent.pathPending && agent.remainingDistance <= enemyData.WaypointArrivalThreshold)
         {
             StartWaitAtWaypoint();
         }
@@ -180,25 +172,25 @@ public class EnemyAI : MonoBehaviour
     {
         if (waypoints.Length == 0) return;
 
-        isWaitingAtWaypoint = true;
-        waitTimer = waypointPauseDuration;
+        _isWaitingAtWaypoint = true;
+        _waitTimer = enemyData.WaypointPauseDuration;
         agent.isStopped = true;
         agent.ResetPath();
     }
 
     void CancelWait()
     {
-        if (!isWaitingAtWaypoint) return;
+        if (!_isWaitingAtWaypoint) return;
 
-        isWaitingAtWaypoint = false;
-        waitTimer = 0f;
+        _isWaitingAtWaypoint = false;
+        _waitTimer = 0f;
         agent.isStopped = false;
     }
 
     void ChaseUpdate(float distToPlayer)
     {
-        if (isAttacking) return;
-        if (distToPlayer <= attackRange) TryAttack(distToPlayer);
+        if (_isAttacking) return;
+        if (distToPlayer <= enemyData.AttackRange) TryAttack(distToPlayer);
         else
         {
             agent.isStopped = false;
@@ -208,15 +200,15 @@ public class EnemyAI : MonoBehaviour
 
     void TryAttack(float distToPlayer)
     {
-        if (Time.time < lastAttackTime + attackCooldown)
+        if (Time.time < _lastAttackTime + enemyData.AttackCoolDown)
         {
             agent.isStopped = false;
             if (player != null) agent.SetDestination(player.position);
             return;
         }
 
-        lastAttackTime = Time.time;
-        isAttacking = true;
+        _lastAttackTime = Time.time;
+        _isAttacking = true;
         agent.isStopped = true;          // FERMO
         agent.velocity = Vector3.zero;   // STOP ASSOLUTO
         agent.ResetPath();               // NESSUNA DESTINAZIONE
@@ -232,13 +224,13 @@ public class EnemyAI : MonoBehaviour
                 transform.rotation = lookRotation;
             }
         }
-        animator.SetTrigger(attackTrigger);
+        animator.SetTrigger(_attackTrigger);
 
         if (attackRoutine != null)
             StopCoroutine(attackRoutine);
         attackRoutine = StartCoroutine(AttackRoutine());
 
-        if (distToPlayer <= killRange)
+        if (distToPlayer <= enemyData.KillRange)
         {
             KillPlayer();
         }
@@ -249,9 +241,9 @@ public class EnemyAI : MonoBehaviour
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
 
-        yield return new WaitForSeconds(attackDuration);
-        
-        isAttacking = false;
+        yield return new WaitForSeconds(enemyData.AttackDuration);
+
+        _isAttacking = false;
         agent.isStopped = false;  // torna a muoversi
         attackRoutine = null;
     }
@@ -263,7 +255,7 @@ public class EnemyAI : MonoBehaviour
             StopCoroutine(attackRoutine);
             attackRoutine = null;
         }
-        isAttacking = false;
+        _isAttacking = false;
         agent.isStopped = false;
     }
 
@@ -292,15 +284,15 @@ public class EnemyAI : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, chaseRange);
+        Gizmos.DrawWireSphere(transform.position, enemyData.ChaseRange);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, loseRange);
+        Gizmos.DrawWireSphere(transform.position, enemyData.LoseRange);
 
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, killRange);
+        Gizmos.DrawWireSphere(transform.position, enemyData.KillRange);
 
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(transform.position, enemyData.AttackRange);
     }
 }
