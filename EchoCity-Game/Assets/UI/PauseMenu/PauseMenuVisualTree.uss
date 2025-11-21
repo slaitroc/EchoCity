@@ -74,10 +74,7 @@
 }
 
 .button:focus {
-    border-left-color: rgb(255, 0, 0);
-    border-right-color: rgb(255, 0, 0);
-    border-top-color: rgb(255, 0, 0);
-    border-bottom-color: rgb(255, 0, 0);
+    border-color: rgb(255, 0, 0);
     background-image: url("project://database/Assets/LocalPackages/PolygonApocalypse/Textures/Misc/PolygonApocalypse_Blood.png?fileID=2800000&guid=ab3c9c81285cc4443b3b62ab3ba16da7&type=3#PolygonApocalypse_Blood");
     scale: 1.2 1.2;
     -unity-background-image-tint-color: rgb(106, 0, 0);
