@@ -664,30 +664,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0de813f7c7c046219848cad612cfa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 7207532777988949509}
+  animator: {fileID: 9220301935414629380}
+  enemyData: {fileID: 11400000, guid: aec0be87e710dc342a58f16b7e34ffad, type: 2}
   player: {fileID: 0}
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  agent: {fileID: 7207532777988949509}
-  animator: {fileID: 9220301935414629380}
-  chaseRange: 15
-  loseRange: 20
-  patrolSpeed: 3.5
-  chaseSpeed: 5.4
-  waypointPauseDuration: 2
-  waypointArrivalThreshold: 0.3
-  attackRange: 3
-  killRange: 1.2
-  attackCooldown: 2
-  attackDuration: 2.2
-  speedParameter: Speed
-  idleParameter: IsIdle
-  chaseParameter: IsChasing
-  attackTrigger: Attack
+  attackRangeDetector: {fileID: 5389396499559164408}
   currentState: 0
-  currentWaypointIndex: 0
 --- !u!1 &1540370375582538955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1967,6 +1954,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6962035731472993622}
+  - component: {fileID: 1009514968609265730}
+  - component: {fileID: 5389396499559164408}
   m_Layer: 0
   m_Name: Hand_L
   m_TagString: Untagged
@@ -1992,6 +1981,41 @@ Transform:
   - {fileID: 7614536707619158120}
   m_Father: {fileID: 3376597824635918334}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1009514968609265730
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5389292002068319289}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5389396499559164408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5389292002068319289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d0634e7471c6b408ae9dc4a09a2177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyAI: {fileID: 871536276072343635}
+  attackCollider: {fileID: 0}
 --- !u!1 &5831861901176706353
 GameObject:
   m_ObjectHideFlags: 0
