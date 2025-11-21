@@ -22,8 +22,8 @@ public class PauseMenu : MonoBehaviour
     
     #region Private Fields
     private VisualElement _root;
-    private Vector2 _lastMousePosition;
     private bool _isKeyboardMode;
+    private bool _suppressNextNavigation;
     
     private Button _currentHoveredButton;
     private Button _lastHoveredButton;
@@ -55,16 +55,7 @@ public class PauseMenu : MonoBehaviour
         
 
         _root = pauseMenu.rootVisualElement;
-        _root.RegisterCallback<KeyDownEvent>(OnKeyDown);
-        _root.RegisterCallback<NavigationMoveEvent>(OnNavigationMove);
-        _root.RegisterCallback<MouseMoveEvent>(OnMouseMove);
-        _root.RegisterCallback<MouseDownEvent>(OnMouseClick);
-        
-        // _lastMousePosition = Mouse.current != null ? Mouse.current.position.ReadValue() : Vector2.zero;
-        _isKeyboardMode = false;
-
-        ShowCursor();
-
+        _root.RegisterCallback<NavigationMoveEvent>(OnNavigationMove, TrickleDown.TrickleDown);
         
         foreach (var button in _root.Query<Button>().ToList())
         {
@@ -72,6 +63,14 @@ public class PauseMenu : MonoBehaviour
             button.RegisterCallback<MouseLeaveEvent>(evt => {_currentHoveredButton = null;});
         }
         
+        _isKeyboardMode = false;
+        ShowCursor();
+    }
+
+    private void Update()
+    {
+        HandleKeyBoard();
+        HandleMouse();
     }
 
     private void OnDisable()
@@ -79,14 +78,7 @@ public class PauseMenu : MonoBehaviour
         if (resumeButton != null) resumeButton.clicked -= OnResume;
         if (settingsButton != null) settingsButton.clicked -= OnSettings;
         if (quitToTitleButton != null) quitToTitleButton.clicked -= OnQuitToTitle;
-        
-        if (_root != null)
-        {
-            // _root.UnregisterCallback<KeyDownEvent>(OnKeyDown);
-            _root.UnregisterCallback<NavigationMoveEvent>(OnNavigationMove);
-            _root.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
-            _root.UnregisterCallback<MouseDownEvent>(OnMouseClick);
-        }
+        _root.UnregisterCallback<NavigationMoveEvent>(OnNavigationMove);
         
         HideCursor();
     }
@@ -110,7 +102,6 @@ public class PauseMenu : MonoBehaviour
     }
 
     
-    // TODO: Fix cursor not hiding when using keyboard and not showing back when moving mouse
     private void SwitchToKeyboardMode()
     {
         if (_isKeyboardMode) return;
@@ -118,7 +109,7 @@ public class PauseMenu : MonoBehaviour
         _isKeyboardMode = true;
         Log.D("Switched to Keyboard mode", "cyan", "UI MANAGER");
         
-        // HideCursor();
+        HideCursor();
         
         Log.D("Cursor hidden", "cyan", "UI MANAGER");
         
@@ -127,6 +118,12 @@ public class PauseMenu : MonoBehaviour
         {
             _currentHoveredButton.pickingMode = PickingMode.Ignore;
             _lastHoveredButton = _currentHoveredButton;
+        }
+        
+        if (_root.focusController?.focusedElement == null && resumeButton != null)
+        {
+            resumeButton.Focus();
+            _suppressNextNavigation = true;
         }
         
     }
@@ -138,9 +135,13 @@ public class PauseMenu : MonoBehaviour
         _isKeyboardMode = false;
         Log.D("Switched to Mouse mode", "cyan", "UI MANAGER");
         
-        // ShowCursor();
-        
-        if (_lastHoveredButton != null) _lastHoveredButton.pickingMode = PickingMode.Position;
+        ShowCursor();
+
+        if (_lastHoveredButton != null)
+        {
+            _lastHoveredButton.pickingMode = PickingMode.Position;
+            _lastHoveredButton = null;
+        }
         
         var focusedElement = _root.focusController?.focusedElement as VisualElement;
         focusedElement?.Blur();
@@ -156,36 +157,41 @@ public class PauseMenu : MonoBehaviour
     private void HideCursor()
     {
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
     }
 
-    private void OnKeyDown(KeyDownEvent evt)
+    private void HandleKeyBoard()
     {
-        SwitchToKeyboardMode();
+        if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame) SwitchToKeyboardMode();
+    }
+
+    private void HandleMouse()
+    {
+        if (Mouse.current == null) return;
+        
+        // Mouse movement
+        var delta = Mouse.current.delta.ReadValue();
+        bool moved = delta.sqrMagnitude > 0.01f;
+
+        // Mouse click
+        bool clicked = Mouse.current.leftButton.wasPressedThisFrame ||
+                       Mouse.current.rightButton.wasPressedThisFrame ||
+                       Mouse.current.middleButton.wasPressedThisFrame;
+
+        if (moved || clicked)
+        {
+            SwitchToMouseMode();
+        }
     }
     
     private void OnNavigationMove(NavigationMoveEvent evt)
     {
-        SwitchToKeyboardMode();
+        if (_suppressNextNavigation)
+        {
+            _suppressNextNavigation = false;
+            evt.PreventDefault();
+            evt.StopImmediatePropagation(); // Disables the first frame navigation event to keep the Resume button focused
+            return;
+        }
     }
-
-    private void OnMouseMove(MouseMoveEvent evt)
-    {
-        //
-        // Vector2 currentMousePosition = evt.mousePosition;
-        //
-        // if (Vector2.Distance(_lastMousePosition, currentMousePosition) > 1f)
-        // {
-        //     _lastMousePosition = currentMousePosition;
-        //     SwitchToMouseMode();
-        // }
-        
-        SwitchToMouseMode();
-    }
-    
-    private void OnMouseClick(MouseDownEvent evt)
-    {
-        SwitchToMouseMode();
-    }
-
 }
