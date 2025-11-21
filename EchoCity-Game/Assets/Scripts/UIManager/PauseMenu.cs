@@ -97,7 +97,7 @@ public class PauseMenu : MonoBehaviour
     
     private void OnQuitToTitle()
     {
-        Log.D("Quit To Title button clicked", "violet", "UI MANAGER");
+        Log.D("Quit To Title button clicked", _LOG_COLOR, _LOG_TAG);
         quitToTitleEvent.RaiseEvent();
     }
 
