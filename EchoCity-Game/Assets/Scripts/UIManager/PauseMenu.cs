@@ -7,6 +7,10 @@ using Cursor = UnityEngine.Cursor;
 
 public class PauseMenu : MonoBehaviour
 {
+    #region Constants
+    private const string _LOG_TAG = "UI-PauseMenu";
+    private const string _LOG_COLOR = "#d900ffff";
+    #endregion
     #region Serialized Fields
     [Header("Invoking events")]
     [SerializeField] private SOEventVoid pauseEvent;
@@ -134,7 +138,7 @@ public class PauseMenu : MonoBehaviour
         
         _isKeyboardMode = false;
         Log.D("Switched to Mouse mode", "cyan", "UI MANAGER");
-        
+        Log.D("Switched to Mouse mode", _LOG_COLOR, _LOG_TAG);
         ShowCursor();
 
         if (_lastHoveredButton != null)
