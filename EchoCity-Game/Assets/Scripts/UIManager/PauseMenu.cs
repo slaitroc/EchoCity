@@ -85,7 +85,7 @@ public class PauseMenu : MonoBehaviour
 
     private void OnResume()
     {
-        Log.D("Resume button clicked", "violet", "UI MANAGER");
+        Log.D("Resume button clicked", _LOG_COLOR, _LOG_TAG);
         pauseEvent.RaiseEvent();
     }
     
