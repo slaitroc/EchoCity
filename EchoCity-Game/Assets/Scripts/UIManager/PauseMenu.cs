@@ -108,7 +108,7 @@ public class PauseMenu : MonoBehaviour
         
         _isKeyboardMode = true;
         Log.D("Switched to Keyboard mode", "cyan", "UI MANAGER");
-        
+        Log.D("Switched to Keyboard mode", _LOG_COLOR, _LOG_TAG);
         HideCursor();
         
         Log.D("Cursor hidden", "cyan", "UI MANAGER");
