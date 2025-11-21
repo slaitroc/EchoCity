@@ -4,6 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class AttackEnemyState : EnemyState
 {
+    #region Constants
+    protected new string _LOG_TAG = "ATTACK ENEMY STATE";
+    #endregion
     private Coroutine attackCoroutine;
     private float _lastAttackTime;
 
@@ -13,6 +16,7 @@ public class AttackEnemyState : EnemyState
 
     public override void Enter()
     {
+        enemyAI.attackRangeDetector.enabled = true;
         enemyAI.currentState = EnemyStatesEnum.Attack;
 
         animator.SetTrigger(_attackTrigger);
@@ -45,4 +49,11 @@ public class AttackEnemyState : EnemyState
 
         fsm.SwitchState(fsm.chaseState);
     }
+
+    //Called by AttackRangeDetector script when player is hit
+    public void PlayerHitHandler(EnemyAI enemy)
+    {
+        Log.D($"{enemyAI.name} hit the player!", _LOG_COLOR, _LOG_TAG);
+    }
+
 }
