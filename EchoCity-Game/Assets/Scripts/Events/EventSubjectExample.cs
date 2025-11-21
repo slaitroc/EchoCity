@@ -48,13 +48,13 @@ public class EventSubjectExample : MonoBehaviour
         {
             triggeredVoidEvents++;
             voidEvent?.RaiseEvent();
-            Log.D($"Void event triggered {triggeredVoidEvents} times by pressing 'E'", $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            Log.D($"Void event triggered {triggeredVoidEvents} times by pressing 'V'", $"{_LOG_COLOR}", $"{_LOG_TAG}");
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
             triggeredStringEvents++;
-            stringEvent?.RaiseEvent($"'R' key pressed! Event count: {triggeredStringEvents}");
+            stringEvent?.RaiseEvent($"'T' key pressed! Event count: {triggeredStringEvents}");
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -85,7 +85,7 @@ public class EventSubjectExample : MonoBehaviour
                 SoundEmissionData actual = (data.HasValue) ? data.Value : fallbackSoundEmission;
                 newAudioSphereEvent?.RaiseEvent(actual);
 
-                Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'E'", $"{_LOG_COLOR}", $"{_LOG_TAG}");
+                Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'X'", $"{_LOG_COLOR}", $"{_LOG_TAG}");
             }
         }
         if (Input.GetKeyDown(KeyCode.R))

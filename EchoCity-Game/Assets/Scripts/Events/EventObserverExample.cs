@@ -39,7 +39,11 @@ public class EventObserverExample : MonoBehaviour
     {
 
         if (stringEvent) stringEvent.OnEventRaised -= gameManager.WriteMessageHandler;
-        if (voidEvent) voidEvent.OnEventRaised -= gameManager.WriteMessageHandler;
+        if (voidEvent)
+        {
+            voidEvent.OnEventRaised -= gameManager.WriteMessageHandler;
+            voidEvent.OnEventRaised -= gameManager.PauseGameHandler;
+        }
         if (intEvent) intEvent.OnEventRaised -= gameManager.WriteMessageHandler;
     }
 }
