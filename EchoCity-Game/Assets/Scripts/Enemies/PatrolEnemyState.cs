@@ -6,6 +6,10 @@ using UnityEngine.AI;
 [System.Serializable]
 public class PatrolEnemyState : EnemyState
 {
+    #region Constants
+    protected new string _LOG_TAG = "PATROL ENEMY STATE";
+    #endregion
+
     private Transform[] waypoints => enemyAI.waypoints;
     public int currentWaypointIndex = 0;
     private bool isWaitingAtWaypoint = false;
@@ -15,6 +19,7 @@ public class PatrolEnemyState : EnemyState
 
     public override void Enter()
     {
+        enemyAI.attackRangeDetector.enabled = false;
         enemyAI.currentState = EnemyStatesEnum.Patrol;
         agent.isStopped = false;
         agent.stoppingDistance = 0f;
@@ -74,4 +79,5 @@ public class PatrolEnemyState : EnemyState
         agent.SetDestination(waypoints[currentWaypointIndex].position);
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
     }
+
 }

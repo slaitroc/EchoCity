@@ -5,6 +5,11 @@ using UnityEngine.AI;
 [System.Serializable]
 public abstract class EnemyState
 {
+
+    #region Constants
+    protected string _LOG_TAG = "ENEMY STATE";
+    protected string _LOG_COLOR = "#ff0000ff";
+    #endregion 
     protected EnemyAI enemyAI;
     protected EnemyFSM fsm;
     protected NavMeshAgent agent;
