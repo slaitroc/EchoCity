@@ -113,7 +113,7 @@ public class PauseMenu : MonoBehaviour
         
         Log.D("Cursor hidden", "cyan", "UI MANAGER");
         
-        
+        Log.D("Cursor hidden", _LOG_COLOR, _LOG_TAG);
         if (_currentHoveredButton != null)
         {
             _currentHoveredButton.pickingMode = PickingMode.Ignore;
