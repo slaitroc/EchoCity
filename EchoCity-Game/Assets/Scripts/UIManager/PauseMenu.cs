@@ -91,7 +91,7 @@ public class PauseMenu : MonoBehaviour
     
     private void OnSettings()
     {
-        Log.D("Settings button clicked", "violet", "UI MANAGER");
+        Log.D("Settings button clicked", _LOG_COLOR, _LOG_TAG);
         settingsEvent.RaiseEvent();
     }
     
