@@ -50,7 +50,7 @@ public class EnemyAI : MonoBehaviour
         {
             Log.E("No AttackRangeDetector assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
         }
-
+        
         _fsm = new EnemyFSM(this);
         _fsm.Initialize();
     }
@@ -59,7 +59,7 @@ public class EnemyAI : MonoBehaviour
         _fsm.Update(Vector3.Distance(transform.position, player.position));
     }
 
-    public void InvokePlayerHitEvent()
+    public void RaisePlayerHitEvent()
     {
         _fsm.attackState.PlayerHitHandler(this);
         playerHitEvent?.RaiseEvent(this);
@@ -74,8 +74,8 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, enemyData.LoseRange);
 
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, enemyData.KillRange);
+        // Gizmos.color = Color.magenta;
+        // Gizmos.DrawWireSphere(transform.position, enemyData.KillRange);
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, enemyData.AttackRange);

@@ -3,7 +3,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-[System.Serializable]
 public class PatrolEnemyState : EnemyState
 {
     #region Constants
@@ -19,10 +18,12 @@ public class PatrolEnemyState : EnemyState
 
     public override void Enter()
     {
-        enemyAI.attackRangeDetector.enabled = false;
         enemyAI.currentState = EnemyStatesEnum.Patrol;
+        enemyAI.attackRangeDetector.attackCollider.enabled = false;
+
         agent.isStopped = false;
         agent.stoppingDistance = 0f;
+
         if (!isWaitingAtWaypoint)
             GotoNextWaypoint();
     }
@@ -32,7 +33,7 @@ public class PatrolEnemyState : EnemyState
         agent.speed = enemyData.PatrolSpeed * enemyData.ChaseSpeed;
 
         float targetSpeed = isWaitingAtWaypoint ? 0f : enemyData.PatrolSpeed;
-        animator.SetFloat(_speedParameter, targetSpeed, 0.4f, Time.deltaTime);
+        animator.SetFloat(_animSpeedParameter, targetSpeed, 0.4f, Time.deltaTime);
 
         if (distToPlayer < enemyData.ChaseRange) fsm.SwitchState(fsm.chaseState);
 

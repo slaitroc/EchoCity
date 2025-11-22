@@ -1,27 +1,33 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(SphereCollider))]
 public class AttackRangeDetector : MonoBehaviour
 {
     public EnemyAI enemyAI;
-    public Collider attackCollider;
+    public SphereCollider attackCollider;
 
-    void Awake()
+    void OnValidate()
     {
-        attackCollider = GetComponent<Collider>();
+        attackCollider = GetComponent<SphereCollider>();
+        attackCollider.excludeLayers = LayerMask.GetMask("Enemy", "Ignore Raycast");
     }
-
-
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        enemyAI.InvokePlayerHitEvent();
+        enemyAI.RaisePlayerHitEvent();
 
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!attackCollider.enabled) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, attackCollider.radius * 2);
     }
 }

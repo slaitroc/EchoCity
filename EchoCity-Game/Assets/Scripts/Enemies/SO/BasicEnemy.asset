@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3896ed5884f69ba4bbc46fe54dc31bdb, type: 3}
   m_Name: BasicEnemy
   m_EditorClassIdentifier: 
-  KillRange: 1.2
-  AttackRange: 3
-  ChaseRange: 15
-  LoseRange: 20
-  ChaseSpeed: 4
-  PatrolSpeed: 0.6
+  ChaseRange: 11.12
+  AttackRange: 3.43
+  LoseRange: 16.2
+  ChaseSpeed: 6.5
+  PatrolSpeed: 0.515
   WaypointPauseDuration: 2
   WaypointArrivalThreshold: 0.3
+  AttackAnimation: {fileID: 7400000, guid: c1a066f118e5d4c4e96a6dead7956b65, type: 2}
+  AttackDuration: 2.625
+  AttackDamageDelay: 1.2
+  AttackDamageWindowTime: 0.5
   AttackCoolDown: 2
-  AttackDuration: 2
+  CoolDownRotationSpeed: 12.66

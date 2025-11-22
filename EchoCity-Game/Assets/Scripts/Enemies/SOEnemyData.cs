@@ -4,9 +4,8 @@ using UnityEngine;
 public class SOEnemyData : ScriptableObject
 {
     [Header("Ranges")]
-    public float KillRange = 1.2f; // distance at which the player is "killed"
-    public float AttackRange = 3f;
     public float ChaseRange = 15f;
+    public float AttackRange = 3f;
     public float LoseRange = 20f;
 
     [Header("Velocity")]
@@ -20,16 +19,27 @@ public class SOEnemyData : ScriptableObject
     public float WaypointArrivalThreshold = 0.3f;
 
     [Header("Attack")]
+    //public float AttackCoolDown = 2f;
+    public AnimationClip AttackAnimation;
+    public float AttackDuration;
+    public float AttackDamageDelay = 0.5f;
+    public float AttackDamageWindowTime = 0.1f;
     public float AttackCoolDown = 2f;
-    public float AttackDuration = 1f;
+    public float CoolDownRotationSpeed = 5f;
 
     void OnValidate()
     {
-        KillRange = Mathf.Max(KillRange, 0.1f);
-        AttackRange = Mathf.Max(AttackRange, KillRange);
+        AttackDuration = AttackAnimation != null ? AttackAnimation.length : AttackDuration;
+        AttackDamageDelay = Mathf.Clamp(AttackDamageDelay, 0f, AttackDuration);
+        AttackDamageWindowTime = Mathf.Clamp(AttackDamageWindowTime, 0f, AttackDuration - AttackDamageDelay);
+        AttackCoolDown = Mathf.Max(AttackCoolDown, 0f);
+
+
+        AttackRange = Mathf.Clamp(AttackRange, 0f, ChaseRange);
         LoseRange = Mathf.Max(LoseRange, ChaseRange);
 
-        ChaseSpeed = Mathf.Max(ChaseSpeed, PatrolSpeed);
+
+        PatrolSpeed = Mathf.Clamp01(PatrolSpeed);
 
 
     }
