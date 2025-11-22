@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[System.Serializable]
 public abstract class EnemyState
 {
 
@@ -16,8 +15,8 @@ public abstract class EnemyState
     protected Animator animator;
     protected SOEnemyData enemyData;
 
-    protected int _speedParameter = Animator.StringToHash("Speed");
-    protected int _attackTrigger = Animator.StringToHash("Attack");
+    protected int _animSpeedParameter = Animator.StringToHash("Speed");
+    protected int _animIsAttacking = Animator.StringToHash("isAttacking");
 
     public EnemyState(EnemyAI enemyAI, EnemyFSM fsm)
     {
