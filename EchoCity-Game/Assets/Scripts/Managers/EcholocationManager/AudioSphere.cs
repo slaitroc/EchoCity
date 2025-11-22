@@ -5,6 +5,7 @@ public struct AudioSphere
 {
     [SerializeField] private Vector3 position;
     [SerializeField] private float radius;
+    [SerializeField] private float frequency;
     [SerializeField] private float maxIntensity;
     [SerializeField] private float currentIntensity;
     [SerializeField] private float timeRemaining;
@@ -15,13 +16,15 @@ public struct AudioSphere
 
     public Vector3 Position => position;
     public float Radius => radius;
+    public float Frequency => frequency;
     public float CurrentIntensity { get => currentIntensity; set => currentIntensity = value; }
     public float TimeRemaining { get => timeRemaining; set => timeRemaining = value; }
 
-    public AudioSphere(Vector3 pos, float rad, float intens, float audioDuration, float totalDur, float fadeIn = 0.1f, float fadeOut = 0.3f)
+    public AudioSphere(Vector3 pos, float rad, float freq, float intens, float audioDuration, float totalDur, float fadeIn = 0.1f, float fadeOut = 0.3f)
     {
         position = pos;
         radius = rad;
+        frequency = freq;
         maxIntensity = intens;
         currentIntensity = 0f;
         timeRemaining = totalDur;

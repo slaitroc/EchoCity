@@ -848,7 +848,8 @@ MonoBehaviour:
   stringEvent: {fileID: 11400000, guid: f4609c07983ee5f4ebea85abfe03bf52, type: 2}
   intEvent: {fileID: 11400000, guid: 3bb7e0375aa9dca4db9c6c3d9993e3d0, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  activeRenderer: 1
+  useEcholocationMaterial: 1
+  echolocationMaterial: {fileID: 2100000, guid: 93540b57ea56d16978865b3e9bfbed51, type: 2}
   triggeredIntEvents: 0
   triggeredVoidEvents: 0
   triggeredStringEvents: 0
@@ -882,6 +883,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
   - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
   radius: 4.61
+  frequency: 0
   intensity: 0.62
   enableMinimumDuration: 1
   minimumDuration: 5.2

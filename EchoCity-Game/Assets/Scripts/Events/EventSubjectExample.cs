@@ -1,48 +1,45 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-
+using Random = UnityEngine.Random;
 
 public class EventSubjectExample : MonoBehaviour
 {
+    [Header("Invoking Events")] [SerializeField]
+    private SOEventVoid voidEvent;
 
-    private string _LOG_TAG = "EVENT SUBJECT";
-    private string _LOG_COLOR = "#7039e8ff";
-
-    [Header("Invoking Events")]
-    [SerializeField] private SOEventVoid voidEvent;
     [SerializeField] private SOStringEvent stringEvent;
     [SerializeField] private SOIntEvent intEvent;
     [SerializeField] private SONewAudioSphereEvent newAudioSphereEvent;
 
     [Header("Script Variables")]
-    [Tooltip("0/false = PCF Renderer, 1/true = Audio Visual")]
-    [SerializeField] private bool activeRenderer = true; // 0/false = PCF Renderer, 1/true = Audio Visual
-    [SerializeField] private int triggeredIntEvents = 0;
-    [SerializeField] private int triggeredVoidEvents = 0;
-    [SerializeField] private int triggeredStringEvents = 0;
-    [SerializeField] private int triggeredEchoEvents = 0;
+    [Tooltip("0/false = Original Materials, 1/true = Echolocation Material")]
+    [SerializeField]
+    private bool useEcholocationMaterial = true;
+
+    [SerializeField] private Material echolocationMaterial;
+    [SerializeField] private int triggeredIntEvents;
+    [SerializeField] private int triggeredVoidEvents;
+    [SerializeField] private int triggeredStringEvents;
+    [SerializeField] private int triggeredEchoEvents;
     [SerializeField] private List<GameObject> emittersPositionsList;
     [SerializeField] private List<AudioClip> audioClipsList;
     [SerializeField] private float radius;
+    [SerializeField] private Frequency frequency;
     [SerializeField] private float intensity;
     [SerializeField] private bool enableMinimumDuration = true;
     [SerializeField] private float minimumDuration;
+    private readonly string _LOG_COLOR = "#7039e8ff";
+
+    private readonly string _LOG_TAG = "EVENT SUBJECT";
     [SerializeField] private SoundEmissionData fallbackSoundEmission;
 
-
-    void OnEnable()
+    private void Start()
     {
-        fallbackSoundEmission = new SoundEmissionData(Vector3.zero, radius, intensity, 2f);
+        if (useEcholocationMaterial && echolocationMaterial != null)
+            MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
     }
 
-    void Start()
-    {
-        Camera.main.GetUniversalAdditionalCameraData().SetRenderer(Convert.ToInt32(activeRenderer));
-    }
-
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
@@ -58,56 +55,73 @@ public class EventSubjectExample : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.I))
-        {
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 triggeredIntEvents++;
                 intEvent?.RaiseEvent(triggeredIntEvents);
             }
-        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             triggeredEchoEvents++;
-            SoundEmissionData? data = NewSoundEmissionData();
-            SoundEmissionData actual = (data.HasValue) ? data.Value : fallbackSoundEmission;
+            var data = NewSoundEmissionData();
+            var actual = data.HasValue ? data.Value : fallbackSoundEmission;
 
             newAudioSphereEvent?.RaiseEvent(actual);
             Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'E'", $"{_LOG_COLOR}", $"{_LOG_TAG}");
         }
 
         if (Input.GetKeyDown(KeyCode.X))
-        {
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 triggeredEchoEvents++;
-                SoundEmissionData? data = NewSoundEmissionData();
-                SoundEmissionData actual = (data.HasValue) ? data.Value : fallbackSoundEmission;
+                var data = NewSoundEmissionData();
+                var actual = data.HasValue ? data.Value : fallbackSoundEmission;
                 newAudioSphereEvent?.RaiseEvent(actual);
 
-                Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'X'", $"{_LOG_COLOR}", $"{_LOG_TAG}");
+                Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'X'", $"{_LOG_COLOR}",
+                    $"{_LOG_TAG}");
             }
-        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
-            activeRenderer = !activeRenderer;
-            Camera.main.GetUniversalAdditionalCameraData().SetRenderer(Convert.ToInt32(!activeRenderer));
+            useEcholocationMaterial = !useEcholocationMaterial;
+
+            if (useEcholocationMaterial && echolocationMaterial != null)
+            {
+                MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
+                Log.D("Switched to Echolocation Material", $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            }
+            else
+            {
+                MaterialSwitcher.RestoreOriginalMaterials();
+                Log.D("Restored Original Materials", $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            }
         }
+    }
+
+
+    private void OnEnable()
+    {
+        fallbackSoundEmission = new SoundEmissionData(Vector3.zero, radius, intensity, 2f, (float)frequency);
     }
 
     private SoundEmissionData? NewSoundEmissionData()
     {
         if (emittersPositionsList.Count > 0)
         {
-            GameObject go = emittersPositionsList[UnityEngine.Random.Range(0, emittersPositionsList.Count)];
-            AudioClip audioClip = audioClipsList[UnityEngine.Random.Range(0, audioClipsList.Count)];
-            AudioSource audioSource = go.GetComponent<AudioSource>();
+            var go = emittersPositionsList[Random.Range(0, emittersPositionsList.Count)];
+            var audioClip = audioClipsList[Random.Range(0, audioClipsList.Count)];
+            var audioSource = go.GetComponent<AudioSource>();
             audioSource.spatialBlend = 1f; // 3D sound
             audioSource.PlayOneShot(audioClip);
             // AudioSource.PlayClipAtPoint(audioClip, go.transform.position);
-            if (enableMinimumDuration) return new SoundEmissionData(go.transform.position, radius, intensity, minimumDuration);
-            return new SoundEmissionData(go.transform.position, radius, intensity, audioClip.length);
+            if (enableMinimumDuration)
+                return new SoundEmissionData(go.transform.position, radius, intensity, minimumDuration,
+                    (float)frequency);
+            return new SoundEmissionData(go.transform.position, radius, intensity, audioClip.length, (float)frequency);
         }
-        else return null;
+
+        return null;
     }
 }
