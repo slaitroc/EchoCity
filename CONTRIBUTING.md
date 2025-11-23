@@ -17,10 +17,12 @@ We use the **Conventional Commits** style:
 | `docs` | Documentation or comments |
 | `style` | Formatting or style-only changes |
 | `refactor` | Code refactoring |
+| `perf` | Performance improvements |
 | `chore` | Maintenance, configuration updates |
 | `test` | Adding or modifying tests |
 | `meta` | Project management materials: meeting summaries, planning notes, brainstorming docs |
 | `add` | New files of every kind (must be relevant) |
+| `remove` | Deleting files of every kind (must be relevant) |
 
 ### Examples
 
@@ -35,8 +37,7 @@ chore: ignore .vscode directory
 
 ### Main Branches
 
-- `main`: always stable and ready for release
-- `develop`: integration branch for new features
+- `develop`: default unstable branch for ongoing development
 
 Branches should be named using the following pattern:
 
@@ -72,6 +73,27 @@ fix/camera-follow-target
 docs/readme-update
 ```
 
+## PR's Title Convention
+
+| Type | Purpose |
+|------|----------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `hotfix` | Urgent fixes. Target branch: `main` |
+| `docs` | Documentation or comments |
+| `style` | Formatting or style-only changes |
+| `refactor` | Code refactoring |
+| `chore` | Maintenance or configuration updates |
+| `test` | Adding or modifying tests |
+
+Examples:
+
+```git
+feat: add input sprint action
+fix: correct camera follow target
+docs: update readme
+```
+
 ## Code Style
 
 - KISS!
@@ -87,7 +109,8 @@ docs/readme-update
 - prefix boolean with a **verb** (e.g. `isGameOver`, `hasKey`, `canJump`)
 - events start with **On** + **subject** + **Action** (e.g. `OnPlayerDeath`)
 - interfaces start with a capital **I** (e.g. `IInteractable`)
-- ScriptableObjects end with **SO** (e.g. `GameSettingsSO`)
+- scripts that inherit from ScriptableObjects starts with **SO** (e.g. `SOEnemyData`)
+- variables that hold a SO event end with **Event** (e.g. `playerDeathEvent`)
 
 #### Casing Schemes
 
@@ -102,8 +125,8 @@ In general, follow this order inside your scripts:
 
   1. Fields and properties
   2. Unity lifecycle methods (`Awake`, `OnEnable`, `Start`, `Update`, `OnDisable`, `OnDestroy`)
-  3. Public methods
-  4. Private methods
+  3. Private methods
+  4. Public methods
   5. Event handlers
 
 If you have a lot of code in one script, consider using `#region` blocks to organize related portions of code together.
@@ -112,9 +135,10 @@ If you have a lot of code in one script, consider using `#region` blocks to orga
 
 Before opening a pull request:
 
-1. Make sure your branch is up to date with `main` or `develop`.
+1. Make sure your branch is up to date with the base branch.
 2. Test the project in Unity to verify your changes.
-3. Use a clear PR title following the same commit convention.
+3. Use a clear PR title following the conventions above.
 4. Add a short description of what the PR does.
 5. Link related issues if any (e.g. `Closes #42`).
 6. Request reviews from relevant team members.
+7. Keep taking care of any feedback until the PR is approved and merged
