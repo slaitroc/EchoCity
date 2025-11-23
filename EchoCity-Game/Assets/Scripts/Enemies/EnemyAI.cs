@@ -15,7 +15,7 @@ public class EnemyAI : MonoBehaviour
     #region  Serialized Fields
 
     [Header("Invoking Events")]
-    [SerializeField] private SOEnemyIAEvent playerHitEvent;
+    [SerializeField] private SOEnemyAIEvent playerHitEvent;
 
     [Header("References")]
     public NavMeshAgent agent;
@@ -50,7 +50,7 @@ public class EnemyAI : MonoBehaviour
         {
             Log.E("No AttackRangeDetector assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
         }
-        
+
         _fsm = new EnemyFSM(this);
         _fsm.Initialize();
     }

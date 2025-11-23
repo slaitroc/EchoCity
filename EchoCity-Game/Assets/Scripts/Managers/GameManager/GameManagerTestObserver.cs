@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using UnityEngine;
-public class EventObserverExample : MonoBehaviour
+public class GameManagerTestObserver : MonoBehaviour
 {
 
     [Header("Observed Events")]
@@ -10,7 +10,7 @@ public class EventObserverExample : MonoBehaviour
     [SerializeField] private SOIntEvent intEvent;
 
     [Header("GO with Handlers")]
-    [SerializeField] private GameManager_EventTest gameManager;
+    [SerializeField] private GameManagerTest gameManager;
 
     void OnEnable()
     {

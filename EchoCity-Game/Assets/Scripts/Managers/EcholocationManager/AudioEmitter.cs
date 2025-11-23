@@ -13,7 +13,7 @@ public class AudioEmitter : MonoBehaviour
     #region Serialized Fields
 
     [Header("Invoking Events")]
-    [SerializeField] SONewAudioSphereEvent newAudioSphereEvent;
+    [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
 
     [Header("Echo Settings")]
     [Min(0f)]
@@ -43,7 +43,7 @@ public class AudioEmitter : MonoBehaviour
 
     #endregion
 
-    #region private fields
+    #region Private Fields
     private AudioSource audioSource;
     private float nextAutoEmit;
     #endregion

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyDataSO", menuName = "ECHO CITY/ENEMY/EnemyDataSO")]
+[CreateAssetMenu(fileName = "EnemyDataSO", menuName = "ECHO CITY/Enemies/EnemyDataSO")]
 public class SOEnemyData : ScriptableObject
 {
     [Header("Ranges")]
