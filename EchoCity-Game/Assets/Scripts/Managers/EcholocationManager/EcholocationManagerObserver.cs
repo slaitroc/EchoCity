@@ -4,7 +4,7 @@ public class EcholocationManagerObserver : MonoBehaviour
 {
 
     [Header("Observed Events")]
-    [SerializeField] private SONewAudioSphereEvent newAudioSphereEvent;
+    [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
     [Header("GO with Handlers")]
     [SerializeField] private EcholocationManager echolocationManager;
 

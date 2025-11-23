@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class GameManager_EventTest : MonoBehaviour
+public class GameManagerTest : MonoBehaviour
 {
     [SerializeField] private GameStatesFSM gameStateFSM;
     [SerializeField] private bool pause;

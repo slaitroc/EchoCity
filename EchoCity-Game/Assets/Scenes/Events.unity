@@ -848,11 +848,9 @@ MonoBehaviour:
   stringEvent: {fileID: 11400000, guid: f4609c07983ee5f4ebea85abfe03bf52, type: 2}
   intEvent: {fileID: 11400000, guid: 3bb7e0375aa9dca4db9c6c3d9993e3d0, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  areaInteractionEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
   activeRenderer: 1
-  triggeredIntEvents: 0
-  triggeredVoidEvents: 0
-  triggeredStringEvents: 0
-  triggeredEchoEvents: 0
+  radius: 4.61
   emittersPositionsList:
   - {fileID: 277301496}
   - {fileID: 1646088642}
@@ -881,10 +879,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 67c8b33e424ccdc4486edf538ab91c5a, type: 3}
   - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
   - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
-  radius: 4.61
   intensity: 0.62
   enableMinimumDuration: 1
   minimumDuration: 5.2
+  inInteractionRange: 0
+  inRangeInteractable: {fileID: 0}
 --- !u!4 &605805070
 Transform:
   m_ObjectHideFlags: 0
