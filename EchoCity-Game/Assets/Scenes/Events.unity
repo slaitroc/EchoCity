@@ -825,6 +825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 605805070}
   - component: {fileID: 605805069}
+  - component: {fileID: 605805071}
   m_Layer: 0
   m_Name: Input (Subject)
   m_TagString: Untagged
@@ -899,6 +900,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &605805071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605805068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45815cffe309c7349b54595052832e82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enterInteractableAreaEvent: {fileID: 11400000, guid: a6e2482d70ecea44580e52c9eabf4c1b, type: 2}
+  exitInteractableAreaEvent: {fileID: 11400000, guid: 79fb4cf20b90a47459463aa370e09029, type: 2}
+  inputManagerTest: {fileID: 605805069}
 --- !u!1 &843618176
 GameObject:
   m_ObjectHideFlags: 0
