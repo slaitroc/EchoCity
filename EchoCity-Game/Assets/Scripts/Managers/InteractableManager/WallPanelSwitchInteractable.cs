@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Animator))]
-public class WallPanelSwitchInteractable : Interactable
+public class WallPanelSwitchInteractable : LinkableInteractable
 {
     #region Constants
     protected override string _LOG_TAG => "WALL_PANEL_SWITCH";
@@ -11,7 +11,7 @@ public class WallPanelSwitchInteractable : Interactable
 
     #region Serialized Fields
     [Header("Wall Panel Switch Settings")]
-    [SerializeField] private GameObject linkedObject;
+    [SerializeField] private GameObject switchLinkedObject;
     #endregion
 
     #region Private Fields
@@ -31,12 +31,13 @@ public class WallPanelSwitchInteractable : Interactable
 
     #endregion
 
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         TryGetComponent(out wallPanelSwitchAnimator);
-        if (linkedObject)
+        if (switchLinkedObject)
         {
-            linkedObject.SetActive(isSwitchedOn);
+            switchLinkedObject.SetActive(isSwitchedOn);
         }
         else
         {
@@ -47,9 +48,9 @@ public class WallPanelSwitchInteractable : Interactable
     public override void Interact()
     {
         isSwitchedOn = !isSwitchedOn;
-        if (linkedObject)
+        if (switchLinkedObject)
         {
-            linkedObject.SetActive(isSwitchedOn);
+            switchLinkedObject.SetActive(isSwitchedOn);
         }
     }
 }
