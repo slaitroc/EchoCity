@@ -32,7 +32,6 @@ public class InteractionArea : MonoBehaviour
 
     void Awake()
     {
-        gameObject.layer = LayerMask.NameToLayer("Interactable Area");
         if (!interactable)
         {
             Log.E($"No Interactable assigned to InteractableRange on {gameObject.name}", _LOG_COLOR, _LOG_TAG);
@@ -60,6 +59,6 @@ public class InteractionArea : MonoBehaviour
 
     void OnValidate()
     {
-        gameObject.layer = LayerMask.NameToLayer("Interactable Area");
+        gameObject.layer = 6;
     }
 }
