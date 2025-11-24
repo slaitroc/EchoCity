@@ -16,6 +16,7 @@ public class AudioEmitter : MonoBehaviour
     [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
 
     [Header("Echo Settings")]
+    [SerializeField] private Frequency objectFrequency = Frequency.Low;
     [Min(0f)]
     [SerializeField] private float echoRadius = 10f;
     [SerializeField] private bool emitOnStart = false;
@@ -93,7 +94,7 @@ public class AudioEmitter : MonoBehaviour
             audioSource.PlayOneShot(clipToPlay);
         }
 
-        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, echoRadius, echoIntensity, audioDuration));
+        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, echoRadius, echoIntensity, audioDuration, objectFrequency));
     }
 
     // If randomAudioClips has valid clips, return one at random; otherwise return the main audioClip

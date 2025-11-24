@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-
+using Random = UnityEngine.Random;
 
 public class InputManagerTest : MonoBehaviour
 {
@@ -18,20 +17,19 @@ public class InputManagerTest : MonoBehaviour
     [SerializeField] private SOStringEvent stringEvent;
     [SerializeField] private SOIntEvent intEvent;
     [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+    [SerializeField] private SOEventVoid materialToggleEvent;
     [SerializeField] private SOEventVoid areaInteractionEvent;
 
 
     [Header("Echolocation Settings")]
-    [Tooltip("0/false = PCF Renderer, 1/true = Audio Visual")]
-    [SerializeField] private bool activeRenderer = true; // 0/false = PC Renderer, 1/true = Audio Visual
     [SerializeField] private float radius;
+    [SerializeField] private Frequency frequency;
     [SerializeField] private List<GameObject> emittersPositionsList;
     [SerializeField] private List<AudioClip> audioClipsList;
     [SerializeField] private float intensity;
     [SerializeField] private bool enableMinimumDuration = true;
     [SerializeField] private float minimumDuration;
     [SerializeField] private SoundEmissionData fallbackSoundEmission;
-
 
     [Header("Interaction Range Colliders")]
     [SerializeField] private bool inInteractionRange = false;
@@ -45,17 +43,12 @@ public class InputManagerTest : MonoBehaviour
     private int triggeredEchoEvents = 0;
     #endregion
 
-    void OnEnable()
+    private void OnEnable()
     {
-        fallbackSoundEmission = new SoundEmissionData(Vector3.zero, radius, intensity, 2f);
+        fallbackSoundEmission = new SoundEmissionData(Vector3.zero, radius, intensity, 2f, frequency);
     }
 
-    void Start()
-    {
-        Camera.main.GetUniversalAdditionalCameraData().SetRenderer(Convert.ToInt32(activeRenderer));
-    }
-
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
@@ -71,40 +64,36 @@ public class InputManagerTest : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.I))
-        {
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 triggeredIntEvents++;
                 intEvent?.RaiseEvent(triggeredIntEvents);
             }
-        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             triggeredEchoEvents++;
-            SoundEmissionData? data = NewSoundEmissionData();
-            SoundEmissionData actual = (data.HasValue) ? data.Value : fallbackSoundEmission;
+            var data = NewSoundEmissionData();
+            var actual = data.HasValue ? data.Value : fallbackSoundEmission;
 
             newAudioSphereEvent?.RaiseEvent(actual);
             Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'E'", _LOG_COLOR, _LOG_TAG);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
-        {
-            for (int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 triggeredEchoEvents++;
-                SoundEmissionData? data = NewSoundEmissionData();
-                SoundEmissionData actual = (data.HasValue) ? data.Value : fallbackSoundEmission;
+                var data = NewSoundEmissionData();
+                var actual = data.HasValue ? data.Value : fallbackSoundEmission;
                 newAudioSphereEvent?.RaiseEvent(actual);
 
                 Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'X'", _LOG_COLOR, _LOG_TAG);
             }
-        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
-            activeRenderer = !activeRenderer;
-            Camera.main.GetUniversalAdditionalCameraData().SetRenderer(Convert.ToInt32(!activeRenderer));
+            materialToggleEvent?.RaiseEvent();
         }
 
         if (Input.GetKeyDown(KeyCode.F) && inInteractionRange)
@@ -130,16 +119,19 @@ public class InputManagerTest : MonoBehaviour
     {
         if (emittersPositionsList.Count > 0)
         {
-            GameObject go = emittersPositionsList[UnityEngine.Random.Range(0, emittersPositionsList.Count)];
-            AudioClip audioClip = audioClipsList[UnityEngine.Random.Range(0, audioClipsList.Count)];
-            AudioSource audioSource = go.GetComponent<AudioSource>();
+            var go = emittersPositionsList[Random.Range(0, emittersPositionsList.Count)];
+            var audioClip = audioClipsList[Random.Range(0, audioClipsList.Count)];
+            var audioSource = go.GetComponent<AudioSource>();
             audioSource.spatialBlend = 1f; // 3D sound
             audioSource.PlayOneShot(audioClip);
             // AudioSource.PlayClipAtPoint(audioClip, go.transform.position);
-            if (enableMinimumDuration) return new SoundEmissionData(go.transform.position, radius, intensity, minimumDuration);
-            return new SoundEmissionData(go.transform.position, radius, intensity, audioClip.length);
+            if (enableMinimumDuration)
+                return new SoundEmissionData(go.transform.position, radius, intensity, minimumDuration,
+                    frequency);
+            return new SoundEmissionData(go.transform.position, radius, intensity, audioClip.length, frequency);
         }
-        else return null;
+
+        return null;
     }
 
     //DANGER distinct InteractableArea's colliders MUST NOT intersect otherwise this implementation WILL NOT WORK as expected!
