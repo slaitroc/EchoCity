@@ -115,8 +115,11 @@ public class InputManagerTest : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, ~(1 << 6), QueryTriggerInteraction.Collide);
+            var origin = Camera.main.transform.position;
+            var direction = Camera.main.transform.forward;
+            Ray ray = new Ray(origin, direction);
+            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
+            Debug.DrawRay(origin, direction * 10f, Color.red, 2f);
             Log.D($"Raycast hit: {(hitInfo.collider == null ? "none" : hitInfo.collider.gameObject.name)}", _LOG_COLOR, _LOG_TAG);
             var interactable = hitInfo.collider?.GetComponent<Interactable>();
             if (interactable != null)
