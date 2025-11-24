@@ -193,9 +193,9 @@ public class PauseMenu : MonoBehaviour
         if (_suppressNextNavigation)
         {
             _suppressNextNavigation = false;
+            // Disables the first frame navigation event to keep the Resume button focused
+            // Even if it is obsolete, StopPropagation() doesn't work on the first frame
             evt.PreventDefault();
-            evt.StopImmediatePropagation(); // Disables the first frame navigation event to keep the Resume button focused
-            return;
         }
     }
 }
