@@ -4,33 +4,34 @@ using UnityEngine.InputSystem;
 
 
 
-public class GameStatePause : IGameState
+public class PauseGameState : GameState
 {
     [Header("UI Action Map")]
     private const string UI_ACTION_MAP = "UI";
     private PlayerInput _playerInput;
     private string _previousActionMap;
 
-    public void Enter()
-    {
-        Time.timeScale = 0;
-        
-        _playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
-        SwitchToUIActionMap();
-    }
-    public void Update()
+    public PauseGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm)
     {
     }
 
-    public void Exit()
+    public override void Enter()
+    {
+        Time.timeScale = 0;
+        _playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+        SwitchToUIActionMap();
+    }
+
+    public override void Update()
+    {
+    }
+
+    public override void Exit()
     {
         Time.timeScale = 1;
         RestorePreviousActionMap();
     }
 
-    public GameStatesEnum GetEnum() => GameStatesEnum.PAUSE;
-    
-    
     private void SwitchToUIActionMap()
     {
         if (_playerInput != null)
@@ -44,6 +45,15 @@ public class GameStatePause : IGameState
     {
         if (_playerInput != null) _playerInput.SwitchCurrentActionMap(_previousActionMap);
     }
-    
 
+    public override GameStatesEnum GetEnum()
+    {
+        return GameStatesEnum.Pause;
+    }
+
+    public override bool PauseGameHandler()
+    {
+        _fsm.SwitchState(_fsm.PreviousState);
+        return true;
+    }
 }

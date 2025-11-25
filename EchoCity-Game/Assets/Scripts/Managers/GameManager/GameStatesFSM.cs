@@ -4,61 +4,51 @@ using System.Collections.Generic;
 [Serializable]
 public class GameStatesFSM
 {
-    private string _LOG_TAG = "GM-FSM";
-    private string _LOG_COLOR = "green";
-    public IGameState currentState { get; private set; }
-    private IGameState _playingState;
-    private IGameState _pauseState;
-    private IGameState _narrationState;
+#pragma warning disable CS0414
+    private readonly string _LOG_TAG = "GM-FSM";
+    private readonly string _LOG_COLOR = "green";
+#pragma warning restore CS0414
 
-    private Dictionary<GameStatesEnum, IGameState> _statesDict;
-    private event Action<GameStatesEnum, GameStatesEnum> OnStateChange;
+    private readonly GameManager _gameManager;
+    public GameState CurrentState { get; private set; }
+    public GameState PreviousState { get; private set; }
+    public readonly GameState PlayingState;
+    public readonly GameState PauseState;
+    public readonly GameState NarrationState;
 
-
-    public GameStatesFSM()
+    public GameStatesFSM(GameManager gameManager)
     {
-        _playingState = new GameStatePlaying();
-        _pauseState = new GameStatePause();
-        _narrationState = new GameStateNarration();
-
-        _statesDict = new Dictionary<GameStatesEnum, IGameState>   {
-            { GameStatesEnum.PLAYING,   _playingState   },
-            { GameStatesEnum.PAUSE,     _pauseState     },
-            { GameStatesEnum.NARRATION, _narrationState },
-        };
+        PlayingState = new PlayingGameState(gameManager, this);
+        PauseState = new PauseGameState(gameManager, this);
+        NarrationState = new NarrationGameState(gameManager, this);
+        _gameManager = gameManager;
     }
 
     public void Initialize()
     {
-        Log.D($"Game State Initialized to {GameStatesEnum.PLAYING.ToString()}", $"{_LOG_COLOR}", $"{_LOG_TAG}");
-        currentState = _statesDict[GameStatesEnum.PLAYING];
-        currentState.Enter();
-
-        OnStateChange?.Invoke(GameStatesEnum.NONE, GameStatesEnum.PLAYING);
+        CurrentState = PlayingState;
+        CurrentState.Enter();
+        _gameManager.RaiseSwitchStateEvent(GameStatesEnum.None, GameStatesEnum.Playing);
     }
-    public void Initialize(GameStatesEnum state)
+    public void Initialize(GameState state)
     {
-        Log.D($"Game State Initialized to {state.ToString()}", $"{_LOG_COLOR}", $"{_LOG_TAG}");
-        currentState = _statesDict[state];
-        currentState.Enter();
-
-        OnStateChange?.Invoke(GameStatesEnum.NONE, state);
+        CurrentState = state;
+        CurrentState.Enter();
+        _gameManager.RaiseSwitchStateEvent(GameStatesEnum.None, state.GetEnum());
     }
 
 
-    public void ChangeState(GameStatesEnum state)
+    public void SwitchState(GameState state)
     {
-        Log.D($"Game State changed from {currentState.Kind()} to {state.ToString()}", $"{_LOG_COLOR}", $"{_LOG_TAG}");
-        IGameState oldState = currentState;
-        currentState.Exit();
-        currentState = _statesDict[state];
-        currentState.Enter();
-
-        OnStateChange?.Invoke(oldState.GetEnum(), currentState.GetEnum());
+        CurrentState.Exit();
+        PreviousState = CurrentState;
+        CurrentState = state;
+        CurrentState.Enter();
+        _gameManager.RaiseSwitchStateEvent(PreviousState.GetEnum(), state.GetEnum());
     }
 
     public void Update()
     {
-        currentState?.Update();
+        CurrentState?.Update();
     }
 }

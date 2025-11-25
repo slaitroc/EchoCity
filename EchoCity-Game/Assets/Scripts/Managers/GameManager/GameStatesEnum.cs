@@ -1,7 +1,7 @@
 public enum GameStatesEnum
 {
-    NONE,
-    PLAYING,
-    PAUSE,
-    NARRATION,
+    None,
+    Playing,
+    Pause,
+    Narration,
 }
