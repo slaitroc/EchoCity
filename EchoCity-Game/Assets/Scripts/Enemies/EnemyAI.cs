@@ -6,14 +6,14 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator))]
 public class EnemyAI : MonoBehaviour
 {
+#pragma warning disable CS0414
     #region Constants 
     private string _LOG_TAG = "ENEMY AI";
     private string _LOG_COLOR = "#ff0000ff";
     #endregion
-    public enum State { Patrol, Chase }
+#pragma warning restore CS0414
 
     #region  Serialized Fields
-
     [Header("Invoking Events")]
     [SerializeField] private SOEnemyAIEvent playerHitEvent;
 
@@ -24,11 +24,10 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     public Transform[] waypoints;
     public AttackRangeDetector attackRangeDetector;
-
-    [Header("FSM")]
-    private EnemyFSM _fsm;
-    public EnemyStatesEnum currentState;
+    public EnemyStatesEnum CurrentState;
     #endregion
+
+    private EnemyFSM _fsm;
 
     void Awake()
     {
@@ -59,10 +58,10 @@ public class EnemyAI : MonoBehaviour
         _fsm.Update(Vector3.Distance(transform.position, player.position));
     }
 
-    public void RaisePlayerHitEvent()
+    public void OnPlayerHit()
     {
-        _fsm.attackState.PlayerHitHandler(this);
-        playerHitEvent?.RaiseEvent(this);
+        if (_fsm.CurrentState.OnPlayerHit())
+            playerHitEvent?.RaiseEvent(this);
     }
 
     void OnDrawGizmosSelected()

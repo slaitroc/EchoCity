@@ -15,7 +15,7 @@ public class AttackRangeDetector : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        enemyAI.RaisePlayerHitEvent();
+        enemyAI.OnPlayerHit();
 
     }
 
