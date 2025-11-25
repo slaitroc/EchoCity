@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 
 
 public class InputManagerTest : MonoBehaviour
@@ -19,6 +20,8 @@ public class InputManagerTest : MonoBehaviour
     [SerializeField] private SOIntEvent intEvent;
     [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
     [SerializeField] private SOEventVoid areaInteractionEvent;
+    [SerializeField] private SOEventVoid canInteractStartEvent;
+    [SerializeField] private SOEventVoid canInteractStopEvent;
 
 
     [Header("Echolocation Settings")]
@@ -43,6 +46,7 @@ public class InputManagerTest : MonoBehaviour
     private int triggeredVoidEvents = 0;
     private int triggeredStringEvents = 0;
     private int triggeredEchoEvents = 0;
+    private bool canInteract = false;
     #endregion
 
     void OnEnable()
@@ -54,9 +58,33 @@ public class InputManagerTest : MonoBehaviour
     {
         Camera.main.GetUniversalAdditionalCameraData().SetRenderer(Convert.ToInt32(activeRenderer));
     }
+    
 
     void Update()
     {
+        #region raycast always active
+        var origin = Camera.main.transform.position;
+        var direction = Camera.main.transform.forward;
+        Ray ray = new Ray(origin, direction);
+        Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
+        var interactable = hitInfo.collider?.GetComponent<Interactable>();
+        if (interactable != null)
+        {
+            if (!canInteract)
+            {
+                canInteractStartEvent.RaiseEvent();
+                Log.D("Can interact", _LOG_COLOR, _LOG_TAG);
+                canInteract = true;
+            }
+        }
+        else if (canInteract)
+        {
+            canInteractStopEvent.RaiseEvent();
+            Log.D("Can no longer interact", _LOG_COLOR, _LOG_TAG);
+            canInteract = false;
+        }
+        #endregion
+        
         if (Input.GetKeyDown(KeyCode.V))
         {
             triggeredVoidEvents++;
@@ -115,13 +143,13 @@ public class InputManagerTest : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            var origin = Camera.main.transform.position;
-            var direction = Camera.main.transform.forward;
-            Ray ray = new Ray(origin, direction);
-            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
+            // var origin = Camera.main.transform.position;
+            // var direction = Camera.main.transform.forward;
+            // Ray ray = new Ray(origin, direction);
+            // Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
             Debug.DrawRay(origin, direction * 10f, Color.red, 2f);
             Log.D($"Raycast hit: {(hitInfo.collider == null ? "none" : hitInfo.collider.gameObject.name)}", _LOG_COLOR, _LOG_TAG);
-            var interactable = hitInfo.collider?.GetComponent<Interactable>();
+            // var interactable = hitInfo.collider?.GetComponent<Interactable>();
             if (interactable != null)
             {
                 interactable.Interact();

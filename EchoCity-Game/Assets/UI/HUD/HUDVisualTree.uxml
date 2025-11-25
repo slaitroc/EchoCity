@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/HUD/HUDStyleSheet.uss?fileID=7433441132597879392&amp;guid=d83f1d3204d7e494baca4adaac9ecc97&amp;type=3#HUDStyleSheet" />
+    <ui:VisualElement name="hud-root" class="hud-root">
+        <ui:VisualElement name="crosshair-layer" class="crosshair-layer" style="top: 0; bottom: 0; right: 0; left: 0;">
+            <ui:VisualElement name="crosshair" class="crosshair" />
+        </ui:VisualElement>
+        <ui:VisualElement name="interaction-panel" class="interaction-panel">
+            <ui:Label name="interaction-key" class="interaction-key" />
+            <ui:Label name="interaction-text" text="Interact" class="interaction-text" />
+        </ui:VisualElement>
+        <ui:VisualElement name="top-left-panel" class="hud-panel top-left" />
+        <ui:VisualElement name="top-right-panel" class="hud-panel top-right" />
+        <ui:VisualElement name="bottom-center-panel" class="hud-panel bottom-center" />
+        <ui:VisualElement name="status-messages" class="status-messages" />
+    </ui:VisualElement>
+</ui:UXML>
