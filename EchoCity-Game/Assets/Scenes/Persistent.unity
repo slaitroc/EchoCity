@@ -967,6 +967,45 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!4 &3763557791213006542
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8533159536675297858}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.1842284, y: -0.10874612, z: -6.0145645}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5248069546546145712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8533159536675297858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e809fecfabf77b9489f04a721824d2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  switchGameStateEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
+  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
+  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  pauseGameEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
+  interactEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
+  intEventExample: {fileID: 11400000, guid: 3bb7e0375aa9dca4db9c6c3d9993e3d0, type: 2}
+  stringEventExample: {fileID: 11400000, guid: f4609c07983ee5f4ebea85abfe03bf52, type: 2}
+  voidEventExample: {fileID: 11400000, guid: fb2f9442456b7f446826059c40857b54, type: 2}
+  enterInteractionAreaEvent: {fileID: 11400000, guid: a6e2482d70ecea44580e52c9eabf4c1b, type: 2}
+  exitInteractionAreaEvent: {fileID: 11400000, guid: 79fb4cf20b90a47459463aa370e09029, type: 2}
+  quitToTitleEvent: {fileID: 11400000, guid: adc0531a0eb174fc3bc0336a6a52e416, type: 2}
+  settingsEvent: {fileID: 11400000, guid: 536aa6449a5ff467aa474f72c77a3b29, type: 2}
 --- !u!224 &5744832671528307599
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1162,6 +1201,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 9130984274066437260}
+--- !u!1 &8533159536675297858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3763557791213006542}
+  - component: {fileID: 5248069546546145712}
+  m_Layer: 0
+  m_Name: Eevnts Logger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &8736896098809052319
 Transform:
   m_ObjectHideFlags: 0
@@ -1239,3 +1295,4 @@ SceneRoots:
   - {fileID: 814197900}
   - {fileID: 8736896098809052319}
   - {fileID: 9046182333041855954}
+  - {fileID: 3763557791213006542}
