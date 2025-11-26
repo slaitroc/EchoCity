@@ -5,11 +5,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private HUD hud;
 
-    void Awake()
-    {
-        
-    }
-
+    void Awake() { }
     public void PauseMenuHandler()
     {
         pauseMenu.SetActive(!pauseMenu.activeSelf);
@@ -20,5 +16,4 @@ public class UIManager : MonoBehaviour
         hud.IsInteractable(!hud.isInteractable);
         Log.D("HUD Interactable Handler", "green", "UI MANAGER");
     }
-    
 }
