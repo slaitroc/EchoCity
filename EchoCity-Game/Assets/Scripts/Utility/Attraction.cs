@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class Attraction : MonoBehaviour
@@ -27,17 +26,20 @@ public class Attraction : MonoBehaviour
     void Update()
     {
         distance = Vector3.Distance(player.transform.position, transform.position);
-        attraction += intensity
-                      * intensityFactor
-                      / Mathf.Pow(distance * rangeFactor, decay)
-                      * Time.deltaTime;
+
         if (!AttractionManager.calculateAttraction)
         {
-            attraction = 0f;
+            if (attraction > 0f)
+                attraction -= decay * 0.08f * Time.deltaTime;
+            else
+                attraction = 0f;
         }
         else
         {
-            duration += Time.deltaTime;
+            attraction += intensity
+                          * intensityFactor
+                          / Mathf.Pow((distance + 0.01f) * rangeFactor, decay)
+                          * Time.deltaTime;
         }
         attractionText.text = attraction.ToString("F2");
 
