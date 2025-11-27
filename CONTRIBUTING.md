@@ -106,9 +106,9 @@ docs: update readme
 
 - Use **nouns** for variables and properties (e.g., `playerScore`) because they represent data or state.
 - Use **verbs** for functions and methods (e.g., `CalculateScore()`) because they perform actions or calculations.
-- Prefix boolean variables with a **verb** that expresses condition or ability (e.g., `isGameOver`, `hasKey`, `canJump`) to clearly signify true/false values.
+- Prefix boolean variables and methods with a **verb** that expresses condition or ability (e.g., `isGameOver`, `hasKey`, `IsPlayerHit()`) to clearly signify true/false values.
 - C# events start with **On** + **subject** + **Action** (e.g., `OnPlayerDeath`) to indicate they notify something happening.
-- Methods that are triggered when "something happens," but **are not directly tied to an event subscription**, also start with **On** + **subject** + **Action** (e.g., `OnPlayerDeath()`) to represent internal logic invoked at those moments.
+- Methods that are triggered when "something happens", but **are not directly tied to an event subscription**, also start with **On** + **subject** + **Action** (e.g., `OnPlayerDeath()`) to represent internal logic invoked at those moments.
 - Variables holding ScriptableObject (SO) events end with **Event** (e.g., `playerDeathEvent`) to clearly identify them as event objects.
 - Methods that **raise (trigger)** SO events start with **Raise** (e.g., `RaisePlayerDeathEvent()`) to show their role in firing the event.
 - Methods that **handle an event** end with **Handler** (e.g., `PlayerDeathEventHandler()`) indicating they respond as subscribers to the event.
@@ -136,7 +136,7 @@ In general, follow this order inside your scripts:
   
 If you have a lot of code in one script, consider using `#region` blocks to organize related portions of code together.
 
-### Patters
+### Patterns
 
 #### State Machine Pattern
 
@@ -145,7 +145,7 @@ When implementing the State Machine pattern, follow these guidelines:
 - Create an abstract base state class that defines the common methods every state must implement, such as `Enter`, `Update`, and `Exit`.  
   - This base state class should hold a reference to the finite state machine (FSM) controller and any shared data needed by all states.  
   - Methods in the state class ending with `Handler` are event handlers called by the main controller in response to events (for example, `_fsm.CurrentState.PauseGameHandler()` is called by `GameManager` in its homonymous method when the player is hit, as it is subscribed to that event).  
-  - Methods in the state class that return a `bool` are used as checks by the main controller to decide whether an action can be performed or an event triggered (for example, `_fsm.CurrentState.OnPlayerHit()` is called by `EnemyAI` to verify if the player was hit).  
+  - Methods in the state class that return a `bool` are used as checks by the main controller to decide whether an action can be performed or an event triggered (for example, `_fsm.CurrentState.IsPlayerHit()` is called by `EnemyAI` to verify if the player was hit).  
   - Each state class should implement all the methods defined in the base class, even if some implementations are empty (to maintain consistency).  
 - Each concrete state class inherits from the base state and implements behavior specific to that state.  
 - The FSM class is responsible for managing state transitions and holds references to all possible states.
