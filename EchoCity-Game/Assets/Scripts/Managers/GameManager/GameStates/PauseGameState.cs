@@ -18,7 +18,7 @@ public class PauseGameState : GameState
     public override void Enter()
     {
         Time.timeScale = 0;
-        _playerInput = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+        _playerInput = GameObject.FindGameObjectWithTag("InputManager").GetComponent<PlayerInput>();
         SwitchToUIActionMap();
     }
 

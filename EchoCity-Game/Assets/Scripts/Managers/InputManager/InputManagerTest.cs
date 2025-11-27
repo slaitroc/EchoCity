@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 
@@ -74,18 +76,16 @@ public class InputManagerTest : MonoBehaviour
             canInteract = false;
         }
         #endregion
-        
+
         if (Input.GetKeyDown(KeyCode.V))
         {
             triggeredVoidEvents++;
             voidEvent?.RaiseEvent();
-            Log.D($"Void event triggered {triggeredVoidEvents} times by pressing 'V'", _LOG_COLOR, _LOG_TAG);
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
             triggeredStringEvents++;
-            stringEvent?.RaiseEvent($"'T' key pressed! Event count: {triggeredStringEvents}");
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -102,7 +102,6 @@ public class InputManagerTest : MonoBehaviour
             var actual = data.HasValue ? data.Value : fallbackSoundEmission;
 
             newAudioSphereEvent?.RaiseEvent(actual);
-            Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'E'", _LOG_COLOR, _LOG_TAG);
         }
 
         if (Input.GetKeyDown(KeyCode.X))
@@ -113,7 +112,6 @@ public class InputManagerTest : MonoBehaviour
                 var actual = data.HasValue ? data.Value : fallbackSoundEmission;
                 newAudioSphereEvent?.RaiseEvent(actual);
 
-                Log.D($"Echo event triggered {triggeredEchoEvents} times by pressing 'X'", _LOG_COLOR, _LOG_TAG);
             }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -124,7 +122,6 @@ public class InputManagerTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && inInteractionRange)
         {
             areaInteractionEvent?.RaiseEvent();
-            Log.D($"Interacted with {inRangeInteractable.gameObject.name}'s Interaction Area by pressing 'F'", _LOG_COLOR, _LOG_TAG);
         }
 
         if (Input.GetMouseButtonDown(0))
