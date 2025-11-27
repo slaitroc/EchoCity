@@ -16,17 +16,9 @@ public class AudioEmitter : MonoBehaviour
     [Header("Invoking Events")]
     [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
 
-    [Header("Echo Settings")]
-    [SerializeField] private bool emitOnStart = false;
-
-    [Tooltip("Minimum visibility duration, use if audio is very short")]
-    [Min(0.1f)]
-    [SerializeField]
-    private float minimumDuration = 0.1f;
+    [Header("Audio Settings")]
     [SerializeField] public SOSoundSource soundSource;
 
-    [Tooltip("Overrides audioClip")]
-    [SerializeField] private AudioClip[] randomAudioClips;
     private List<AudioClip> _validClips = new();
     #endregion
 
@@ -51,7 +43,7 @@ public class AudioEmitter : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 1f; // 3D sound
 
-        if (emitOnStart)
+        if (soundSource.IsAutoEmit)
         {
             EmitSound();
         }
@@ -81,7 +73,7 @@ public class AudioEmitter : MonoBehaviour
         }
         else
         {
-            audioDuration = clipToPlay.length <= minimumDuration ? minimumDuration : clipToPlay.length;
+            audioDuration = clipToPlay.length <= soundSource.MinimumDuration ? soundSource.MinimumDuration : clipToPlay.length;
 
             nextAutoEmit = Time.time + audioDuration + soundSource.GapBetweenSounds;
             audioSource.PlayOneShot(clipToPlay);
@@ -104,8 +96,8 @@ public class AudioEmitter : MonoBehaviour
     private void RebuildValidClips()
     {
         _validClips.Clear();
-        if (randomAudioClips != null)
-            foreach (var sound in randomAudioClips)
+        if (soundSource.RandomAudioClips != null)
+            foreach (var sound in soundSource.RandomAudioClips)
             {
                 if (sound) _validClips.Add(sound);
             }
@@ -113,12 +105,12 @@ public class AudioEmitter : MonoBehaviour
 
     // private void OnDrawGizmos()
     // {
-    //     if (example1 == null)
+    //     if (soundSource == null)
     //     {
     //         Log.E("OnDrawGizmos | AudioEmitter is missing a SOSoundSource reference!");
     //         return;
     //     }
     //     Gizmos.color = Color.cyan;
-    //     Gizmos.DrawWireSphere(transform.position, example1.Radius);
+    //     Gizmos.DrawWireSphere(transform.position, soundSource.Radius);
     // }
 }
