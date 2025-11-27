@@ -18,16 +18,14 @@ public class InteractionArea : MonoBehaviour
     #region Private Fields
     #endregion
 
+#pragma warning disable CS0414
     #region Debug Fields
-#pragma warning disable CS0414
     [SerializeField] private bool isPlayerInRange = false; //DEBUG
-#pragma warning restore CS0414
 #if UNITY_EDITOR
-#pragma warning disable CS0414
     [TextArea][SerializeField] private string notes = "InteractableArea's colliders must not intersect with each other otherwise the OnTriggerEnter and OnTriggerExit events will misbehave.";
-#pragma warning restore CS0414
 #endif
     #endregion
+#pragma warning restore CS0414
 
 
     void Awake()
@@ -53,7 +51,7 @@ public class InteractionArea : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         isPlayerInRange = false;
         interactable.OnExitingRangeArea(other);
-        exitInteractableAreaEvent?.RaiseEvent(null);
+        exitInteractableAreaEvent?.RaiseEvent(interactable);
         //Log.D($"Player exited interactable range", _LOG_COLOR, _LOG_TAG);
     }
 
