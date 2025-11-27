@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Attraction : MonoBehaviour
 {
-    [Range(0f, 5f)]
+    [Range(0f, 1f)]
     [SerializeField] private float intensity = 1f;
     [SerializeField] private float intensityFactor = 1f;
     [SerializeField] private float rangeFactor = 1f;
