@@ -125,7 +125,10 @@ public class InputManager : MonoBehaviour
     private void OnSprint(InputAction.CallbackContext context)
     {
         if (context.performed)
-            starterAssetsInputs.SprintInput(context.performed);
+        {
+            // For passthrough/value bindings read the numeric value and treat >0.5 as pressed
+            starterAssetsInputs.SprintInput(context.ReadValue<float>() > 0.5f);
+        }
     }
 
     private void OnWearEcholocator(InputAction.CallbackContext context)
