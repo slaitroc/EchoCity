@@ -38,8 +38,22 @@ void CalculateAudioVisibility_float(float3 WorldPosition, float _ObjectFrequency
                                     float4 HighColor, out float Visibility, out float3 OutColor)
 {
     int objectFrequency = (int)round(_ObjectFrequency);
+    float3 objectColor;
     float3 accumulatedColor = float3(0.0, 0.0, 0.0);
     float totalWeight = 0.0;
+    
+    if (objectFrequency <= 0)
+    {
+        objectColor = LowColor.rgb;
+    }
+    else if (objectFrequency == 1)
+    {
+        objectColor = MidColor.rgb;
+    }
+    else
+    {
+        objectColor = HighColor.rgb;
+    }
 
     for (int i = 0; i < _AudioSphereCount && i < 16; i++)
     {
@@ -63,21 +77,8 @@ void CalculateAudioVisibility_float(float3 WorldPosition, float _ObjectFrequency
             // Determine color and update accumulate color
             if (sphereVisibility > 0.0)
             {
-                float3 sphereColor;
-                if (sphereFrequency <= 0)
-                {
-                    sphereColor = LowColor.rgb;
-                }
-                else if (sphereFrequency == 1)
-                {
-                    sphereColor = MidColor.rgb;
-                }
-                else
-                {
-                    sphereColor = HighColor.rgb;
-                }
 
-                accumulatedColor += sphereColor * sphereVisibility * sphereVisibility;
+                accumulatedColor += objectColor * sphereVisibility * sphereVisibility;
                 totalWeight += sphereVisibility * sphereVisibility;
             }
         }
