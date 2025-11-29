@@ -24,6 +24,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private SOEventVoid pauseEvent;
     [SerializeField] private SOEventVoid canInteractStartEvent;
     [SerializeField] private SOEventVoid canInteractStopEvent;
+    [SerializeField] private SOEventVoid materialToggleEvent;
+
 
     [Header("Interaction Range Colliders")]
     [SerializeField] private bool inInteractionRange = false;
@@ -130,8 +132,7 @@ public class InputManager : MonoBehaviour
     {
         if (context.performed)
         {
-            _activeRenderer = !_activeRenderer;
-            Camera.main.GetUniversalAdditionalCameraData().SetRenderer(Convert.ToInt32(!_activeRenderer));
+            materialToggleEvent?.RaiseEvent();
         }
     }
 
@@ -139,11 +140,12 @@ public class InputManager : MonoBehaviour
     {
         if (context.performed)
         {
+            var origin = Camera.main.transform.position;
+            var direction = Camera.main.transform.forward;
+            Ray ray = new Ray(origin, direction);
+            Debug.DrawRay(origin, direction * 10f, Color.red, 4f);
             if (_canInteract)
             {
-                var origin = Camera.main.transform.position;
-                var direction = Camera.main.transform.forward;
-                Ray ray = new Ray(origin, direction);
                 Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
                 var interactable = hitInfo.collider?.GetComponent<Interactable>();
                 if (interactable != null)
