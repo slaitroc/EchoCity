@@ -1,0 +1,94 @@
+.hud-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.crosshair-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.crosshair {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: white;
+    background-color: transparent;
+    opacity: 0.9;
+    border-left-color: rgb(135, 135, 135);
+    border-right-color: rgb(135, 135, 135);
+    border-top-color: rgb(135, 135, 135);
+    border-bottom-color: rgb(135, 135, 135);
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+}
+
+.crosshair.interact {
+    background-color: rgb(255, 221, 85);
+    width: 25px;
+    height: 25px;
+}
+
+.interaction-panel {
+    position: absolute;
+    bottom: 6%;
+    left: 50%;
+    translate: -50% 10px;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.65);
+    -unity-background-image-tint-color: white;
+    opacity: 0;
+    transition-property: opacity, translate;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out;
+    pointer-events: none;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.interaction-panel.visible {
+    opacity: 1;
+    translate: -50% 0;
+}
+
+.interaction-key {
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(255, 255, 255);
+    unity-text-align: middle-center;
+    font-size: 200%;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.05);
+    min-width: 50px;
+    min-height: 50px;
+    background-image: url("project://database/Assets/UI/GameInputControllerIcons/mouse/mouse-outlined/mouse-left.png?fileID=2800000&guid=fd1a0dff4c167f04898c69eedd2b810c&type=3#mouse-left");
+}
+
+.interaction-text {
+    font-size: 300%;
+    color: rgb(255, 255, 255);
+    unity-text-align: middle-left;
+    opacity: 0.9;
+}
