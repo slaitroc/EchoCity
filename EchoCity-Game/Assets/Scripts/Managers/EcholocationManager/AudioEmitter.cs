@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-// using Managers.AudioManager;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioEmitter : MonoBehaviour
@@ -16,15 +14,16 @@ public class AudioEmitter : MonoBehaviour
     [Header("Invoking Events")]
     [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
 
-    [Header("Audio Settings")]
-    [SerializeField] public SOSoundSource soundSource;
-
-    private List<AudioClip> _validClips = new();
+    [Header("Echo Settings")]
+    [SerializeField] private SOSoundSource soundSource;
+    [Min(0f)]
     #endregion
+
 
     #region Private Fields
     private AudioSource audioSource;
     private float nextAutoEmit;
+    private List<AudioClip> _validClips = new List<AudioClip>();
     #endregion
 
 
@@ -43,7 +42,7 @@ public class AudioEmitter : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 1f; // 3D sound
 
-        if (soundSource.IsAutoEmit)
+        if (soundSource.EmitOnStart)
         {
             EmitSound();
         }
@@ -79,7 +78,7 @@ public class AudioEmitter : MonoBehaviour
             audioSource.PlayOneShot(clipToPlay);
         }
 
-        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, soundSource.Radius, soundSource.Intensity, soundSource.AudioClip.length, soundSource.Frequency));
+        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, soundSource.Radius, soundSource.Intensity, audioDuration, soundSource.SoundClass.Frequency, new SoundClass(soundSource.SoundClass.RangeFactor, soundSource.SoundClass.IntensityFactor, soundSource.SoundClass.Decay)));
     }
 
     // If randomAudioClips has valid clips, return one at random; otherwise return the main audioClip
@@ -89,8 +88,8 @@ public class AudioEmitter : MonoBehaviour
     // - If randomAudioClips has valid clips, returns one of them at random regardless of audioClip
     private AudioClip GetAudioClip()
     {
-        if (_validClips.Count > 0) return _validClips[Random.Range(0, _validClips.Count)];
-        return soundSource.AudioClip;
+        if (_validClips != null && _validClips.Count > 0) return _validClips[Random.Range(0, _validClips.Count)];
+        else return soundSource.AudioClip;
     }
 
     private void RebuildValidClips()

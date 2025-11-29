@@ -10,16 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: LowGeneratorHumSoundSource
+  m_Name: HighGeneratorHumSoundSource
   m_EditorClassIdentifier: 
-  frequencyID: 1
+  soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
   audioClip: {fileID: 8300000, guid: 360280740f9b070408fbaf7dafb202f5, type: 3}
-  intensity: 3
+  intensity: 1
   radius: 6
   gapBetweenSounds: 2
   minimumDuration: 2
-  isAutoEmit: 0
-  randomAudioClips:
-  - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
-  - {fileID: 8300000, guid: 67c8b33e424ccdc4486edf538ab91c5a, type: 3}
-  - {fileID: 8300000, guid: 14e8a8d2158bec840b56c54f5266e692, type: 3}
+  emitOnStart: 1
+  randomAudioClips: []
