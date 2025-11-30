@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000006, guid: 2869dc54d93acea489ace51f9bd4cb41, type: 2}
+  m_LightingDataAsset: {fileID: 112000004, guid: 279b357bb214a594887b18e3ee12b0a0, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 3e3e21b469bf97c48aa72e2e12d6d0e4, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 511452570}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 052e1c07648e9c5478b87e3324f11f85, type: 3}
   m_Name: 
@@ -948,6 +948,18 @@ PrefabInstance:
       propertyPath: newAudioSphereEvent
       value: 
       objectReference: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+    - target: {fileID: 929088703355979148, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.7822628
+      objectReference: {fileID: 0}
+    - target: {fileID: 929088703355979148, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.790666
+      objectReference: {fileID: 0}
+    - target: {fileID: 929088703355979148, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.0929651
+      objectReference: {fileID: 0}
     - target: {fileID: 1984932080341711509, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -991,6 +1003,18 @@ PrefabInstance:
     - target: {fileID: 6241368557785818447, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183879222992690176, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.7822628
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183879222992690176, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.790666
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183879222992690176, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.0929651
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
