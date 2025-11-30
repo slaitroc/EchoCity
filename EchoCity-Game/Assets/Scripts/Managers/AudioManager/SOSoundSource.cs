@@ -10,7 +10,8 @@ public class SOSoundSource : ScriptableObject
     [Header("Echo Settings")]
     [SerializeField] private AudioClip audioClip;
     [Range(0f, 1f)][SerializeField] private float intensity;
-    [SerializeField, Min(0f)] private float radius;
+    [Range(0f, 1f)][SerializeField] private float volume;
+    [Range(0f, 50f)][SerializeField, Min(0f)] private float radius;
     [Tooltip("Time from the end of a sound to the start of the next sound (0 = single emission)")]
     [SerializeField, Min(0f)] private float gapBetweenSounds = 0f;
     [Tooltip("Minimum visibility duration, use if audio is very short")]
@@ -24,6 +25,7 @@ public class SOSoundSource : ScriptableObject
     public SOSoundClass SoundClass => soundClass;
     public AudioClip AudioClip => audioClip;
     public float Intensity => intensity;
+    public float Volume => volume;
     public float Radius => radius;
     public float GapBetweenSounds => gapBetweenSounds;
     public float MinimumDuration => minimumDuration;
