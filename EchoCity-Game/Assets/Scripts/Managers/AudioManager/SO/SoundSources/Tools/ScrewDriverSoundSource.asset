@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
+  m_Name: ScrewDriverSoundSource
+  m_EditorClassIdentifier: 
+  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  audioClip: {fileID: 8300000, guid: 671c0d9548cf5584fae64393d1f2330f, type: 3}
+  intensity: 1
+  radius: 5
+  gapBetweenSounds: 0.58
+  minimumDuration: 0.1
+  emitOnStart: 1
+  randomAudioClips: []

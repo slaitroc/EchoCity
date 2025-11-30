@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: HighGeneratorHumSoundSource
+  m_Name: SwitchOn
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
-  audioClip: {fileID: 8300000, guid: 360280740f9b070408fbaf7dafb202f5, type: 3}
-  intensity: 1
-  radius: 6
-  gapBetweenSounds: 2
-  minimumDuration: 2
-  emitOnStart: 1
+  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  audioClip: {fileID: 8300000, guid: 19addf6844596564baf57aafbd54757a, type: 3}
+  intensity: 0.4
+  volume: 0.2
+  radius: 2
+  gapBetweenSounds: 0
+  minimumDuration: 0.1
+  emitOnStart: 0
   randomAudioClips: []
