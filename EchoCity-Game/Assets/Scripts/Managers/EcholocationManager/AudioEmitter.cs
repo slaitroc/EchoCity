@@ -78,7 +78,7 @@ public class AudioEmitter : MonoBehaviour
             audioSource.PlayOneShot(clipToPlay);
         }
 
-        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, soundSource.Radius, soundSource.Intensity, audioDuration, soundSource.SoundClass.Frequency, new SoundClass(soundSource.SoundClass.RangeFactor, soundSource.SoundClass.IntensityFactor, soundSource.SoundClass.Decay)));
+        newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, soundSource.Radius, soundSource.Intensity, soundSource.AudioClip.length, soundSource.SoundClass.Frequency, new SoundClass(soundSource.SoundClass.RangeFactor, soundSource.SoundClass.IntensityFactor, soundSource.SoundClass.Decay)));
     }
 
     // If randomAudioClips has valid clips, return one at random; otherwise return the main audioClip

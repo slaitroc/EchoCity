@@ -1,3 +1,4 @@
+using EchoCity;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -14,6 +15,16 @@ namespace StarterAssets
 #endif
     public class EC_ThirdPersonController : MonoBehaviour
     {
+
+        [Header("ECHO CITY")]
+        [Header("Invoking Events")]
+        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+
+        [Header("Sound Sources")]
+        [Tooltip("Sound played when character lands on ground")]
+        public SOSoundSource LandingSoundSource;
+        [Tooltip("Sounds played when character takes a step")]
+        public SOSoundSource FootstepSoundSource;
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -27,10 +38,6 @@ namespace StarterAssets
 
         [Tooltip("Acceleration and deceleration")]
         public float SpeedChangeRate = 10.0f;
-
-        public AudioClip LandingAudioClip;
-        public AudioClip[] FootstepAudioClips;
-        [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -372,21 +379,15 @@ namespace StarterAssets
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
-            {
-                if (FootstepAudioClips.Length > 0)
-                {
-                    var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
-                }
-            }
+                ECSound.PlayRandomClipAtPosition(FootstepSoundSource, transform.TransformPoint(_controller.center), newAudioSphereEvent, "SFX");
+
         }
 
         private void OnLand(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
-            {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
-            }
+                ECSound.PlaySoundAtPosition(LandingSoundSource, transform.TransformPoint(_controller.center), newAudioSphereEvent, "SFX");
+
         }
     }
 }

@@ -5,8 +5,9 @@ public abstract class LinkableInteractable : Interactable
     protected override string _TYPE_LOG_TAG => "LINKABLE";
     [SerializeField] protected bool hasFixDetector = false;
     [SerializeField] protected InteractableFixDetector detector;
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if (hasFixDetector)
         {
             gameObject.layer = 1; // Set to Default layer

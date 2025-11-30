@@ -1,56 +1,73 @@
 using UnityEngine;
 
-
-[RequireComponent(typeof(Animator))]
-public class WallPanelSwitchInteractable : LinkableInteractable
+namespace EchoCity
 {
-    #region Constants
-    protected override string _LOG_TAG => "WALL_PANEL_SWITCH";
-    protected override string _TYPE_LOG_TAG => "GENERAL";
-    #endregion
 
-    #region Serialized Fields
-    [Header("Wall Panel Switch Settings")]
-    [SerializeField] private GameObject switchLinkedObject;
-    #endregion
+    [RequireComponent(typeof(Animator))]
 
-    #region Private Fields
-    [SerializeField] private Animator wallPanelSwitchAnimator;
-    private readonly int _hashIsSwitchedOn = Animator.StringToHash("isSwitchedOn");
-    [SerializeField] private bool _isSwitchedOn = false;
-    private bool isSwitchedOn
+    public class WallPanelSwitchInteractable : LinkableInteractable
     {
-        get { return _isSwitchedOn; }
-        set
-        {
-            if (wallPanelSwitchAnimator.IsInTransition(0)) return;
-            _isSwitchedOn = value;
-            wallPanelSwitchAnimator?.SetBool(_hashIsSwitchedOn, _isSwitchedOn);
-        }
-    }
+        #region Constants
+        protected override string _LOG_TAG => "WALL_PANEL_SWITCH";
+        protected override string _TYPE_LOG_TAG => "GENERAL";
+        #endregion
 
-    #endregion
+        #region Serialized Fields
+        [Header("Invoking Events")]
+        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+        [Header("Wall Panel Switch Settings")]
+        [SerializeField] private GameObject switchLinkedObject;
+        [SerializeField] private SOSoundSource switchOnSound;
+        [SerializeField] private SOSoundSource switchOffSound;
+        #endregion
 
-    protected override void Awake()
-    {
-        base.Awake();
-        TryGetComponent(out wallPanelSwitchAnimator);
-        if (switchLinkedObject)
+        #region Private Fields
+        [SerializeField] private Animator wallPanelSwitchAnimator;
+        private readonly int _hashIsSwitchedOn = Animator.StringToHash("isSwitchedOn");
+        [SerializeField] private bool _isSwitchedOn = false;
+        private bool isSwitchedOn
         {
-            switchLinkedObject.SetActive(isSwitchedOn);
+            get { return _isSwitchedOn; }
+            set
+            {
+                if (wallPanelSwitchAnimator.IsInTransition(0)) return;
+                if (_isSwitchedOn)
+                {
+                    ECSound.PlaySoundAtPosition(switchOnSound, transform.position, newAudioSphereEvent, "SFX");
+                }
+                else
+                {
+                    ECSound.PlaySoundAtPosition(switchOffSound, transform.position, newAudioSphereEvent, "SFX");
+                }
+                if (switchLinkedObject)
+                {
+                    switchLinkedObject.SetActive(isSwitchedOn);
+                }
+                _isSwitchedOn = value;
+                wallPanelSwitchAnimator?.SetBool(_hashIsSwitchedOn, _isSwitchedOn);
+            }
         }
-        else
-        {
-            Log.W($"No linked object assigned to WallPanelSwitchInteractable on {gameObject.name}", _LOG_COLOR, _LOG_TAG_FULL);
-        }
-    }
 
-    public override void Interact()
-    {
-        isSwitchedOn = !isSwitchedOn;
-        if (switchLinkedObject)
+        #endregion
+
+        protected override void Awake()
         {
-            switchLinkedObject.SetActive(isSwitchedOn);
+            base.Awake();
+            TryGetComponent(out wallPanelSwitchAnimator);
+            if (switchLinkedObject)
+            {
+                switchLinkedObject.SetActive(isSwitchedOn);
+            }
+            else
+            {
+                Log.W($"No linked object assigned to WallPanelSwitchInteractable on {gameObject.name}", _LOG_COLOR, _LOG_TAG_FULL);
+            }
+        }
+
+        public override void Interact()
+        {
+            isSwitchedOn = !isSwitchedOn;
         }
     }
 }
+

@@ -7,8 +7,9 @@ public abstract class AreaInteractable : Interactable
     [SerializeField] protected Collider _playerInRange;
     private Collider _rangeCollider;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         if (!interactableArea)
         {
             Log.E($"No InteractableArea assigned to Interactable on {gameObject.name}", _LOG_COLOR, _LOG_TAG_FULL);

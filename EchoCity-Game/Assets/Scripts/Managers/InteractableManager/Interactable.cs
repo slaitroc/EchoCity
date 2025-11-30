@@ -9,5 +9,10 @@ public abstract class Interactable : MonoBehaviour
     protected string _LOG_TAG_FULL => $"{_TYPE_LOG_TAG}-{_INTERACTABLE_LOG_TAG}:::{_LOG_TAG}";
     protected string _LOG_COLOR = "#ff5733ff";
 
+    protected virtual void Awake()
+    {
+        gameObject.layer = 6; // Set to Interactable layer
+    }
+
     public abstract void Interact();
 }
