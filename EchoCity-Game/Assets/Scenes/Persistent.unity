@@ -874,6 +874,7 @@ MonoBehaviour:
   voidEventExample: {fileID: 11400000, guid: fb2f9442456b7f446826059c40857b54, type: 2}
   enterInteractionAreaEvent: {fileID: 11400000, guid: a6e2482d70ecea44580e52c9eabf4c1b, type: 2}
   exitInteractionAreaEvent: {fileID: 11400000, guid: 79fb4cf20b90a47459463aa370e09029, type: 2}
+  pickedPickableEvent: {fileID: 0}
   quitToTitleEvent: {fileID: 11400000, guid: adc0531a0eb174fc3bc0336a6a52e416, type: 2}
   settingsEvent: {fileID: 11400000, guid: 536aa6449a5ff467aa474f72c77a3b29, type: 2}
 --- !u!224 &5744832671528307599
@@ -935,6 +936,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 776465952077833284, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: LandingSoundSource
+      value: 
+      objectReference: {fileID: 11400000, guid: 7cf6aa575695af14cb9b626c3f531e78, type: 2}
+    - target: {fileID: 776465952077833284, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: FootstepSoundSource
+      value: 
+      objectReference: {fileID: 11400000, guid: b334c8d639c6d3f4c918dfc0239fb98c, type: 2}
+    - target: {fileID: 776465952077833284, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
     - target: {fileID: 1984932080341711509, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1109,7 +1122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8736896098809052319
 Transform:
   m_ObjectHideFlags: 0
