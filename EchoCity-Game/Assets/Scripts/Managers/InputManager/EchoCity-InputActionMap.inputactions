@@ -77,6 +77,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenRadialMenu",
+                    "type": "Button",
+                    "id": "e524179f-e5aa-4b8c-bd59-4f2c65b2b2a3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -297,6 +306,17 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "WearEcholocator",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "40172f29-4ae7-42f1-8e18-d4ea4ef6116c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "OpenRadialMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
