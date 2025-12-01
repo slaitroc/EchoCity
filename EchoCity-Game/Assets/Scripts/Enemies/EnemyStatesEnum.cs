@@ -3,5 +3,7 @@ public enum EnemyStatesEnum
 {
     Patrol,
     Chase,
-    Attack
+    Attack,
+    ChaseSound,
+    StandAndExaminate
 }

@@ -19,31 +19,19 @@ public class SOEnemyData : ScriptableObject
     public float WaypointArrivalThreshold = 0.3f;
 
     [Header("Noise Detection")]
-    [Tooltip("Noise threshold for UI display: when noise reaches this level, UI bar appears")]
+    [Tooltip("Noise threshold for chasing: when noise exceeds this value (1.0), enemy starts chasing PLAYER")]
     [Min(0f)]
-    public float NoiseUIThreshold = 5f;
+    public float NoiseThreshold = 1.0f;
 
-    [Tooltip("Noise threshold for chasing: when noise exceeds this value, enemy starts chasing")]
+    [Tooltip("Noise threshold for continuing chase: enemy continues chasing PLAYER if attraction > 0.8 (after min duration)")]
     [Min(0f)]
-    public float NoiseThreshold = 10f;
-
-    [Tooltip("Noise threshold for losing chase: when noise drops below this value while chasing, enemy stops chasing")]
-    [Min(0f)]
-    public float NoiseLoseThreshold = 3f;
+    public float NoiseLoseThreshold = 0.8f;
 
     [Tooltip("Minimum chase duration: enemy will chase for at least this many seconds regardless of noise level")]
     [Min(0f)]
     public float MinChaseDuration = 3f;
 
-    [Tooltip("Rate at which noise decays over time (per second)")]
-    [Range(0f, 10f)]
-    public float NoiseDecayRate = 1f;
 
-    [Tooltip("Maximum distance at which noise can be perceived (beyond this, noise has no effect)")]
-    [Min(0f)]
-    public float MaxNoisePerceptionDistance = 50f;
-
-    [Header("Noise Calculation (Attraction Formula)")]
     [Tooltip("Intensity factor for noise calculation")]
     [Min(0f)]
     public float NoiseIntensityFactor = 1f;
@@ -54,11 +42,32 @@ public class SOEnemyData : ScriptableObject
 
     [Tooltip("Decay exponent for distance falloff (higher = faster falloff)")]
     [Range(0.1f, 5f)]
-    public float NoiseDistanceDecay = 1f;
+    public float NoiseDistanceDecay = 0.5f;
+
+    [Tooltip("Rate at which attraction decays per second when no sound is active")]
+    [Min(0f)]
+    public float NoiseDecayRate = 0.5f;
 
     [Header("Investigation")]
     [Tooltip("Audio clips the enemy plays when arriving at noise position and finding nothing")]
     public AudioClip[] InvestigationPhrases;
+    
+    [Tooltip("Sound emitted by enemy when investigating (for echolocation system)")]
+    [Header("Investigation Sound Emission")]
+    [Min(0f)]
+    public float InvestigationSoundIntensity = 0.3f;
+    
+    [Tooltip("Duration of investigation sound (seconds)")]
+    [Min(0.1f)]
+    public float InvestigationSoundDuration = 1.0f;
+    
+    [Tooltip("Frequency of investigation sound: 0=Low, 1=Mid, 2=High")]
+    [Range(0f, 2f)]
+    public float InvestigationSoundFrequency = 0f;
+    
+    [Tooltip("Radius of investigation sound emission")]
+    [Min(0f)]
+    public float InvestigationSoundRadius = 5f;
 
     [Header("Attack")]
     //public float AttackCoolDown = 2f;
@@ -83,10 +92,9 @@ public class SOEnemyData : ScriptableObject
 
         PatrolSpeed = Mathf.Clamp01(PatrolSpeed);
 
-        // Ensure thresholds are in correct order: Lose < UI < Chase
+        // Ensure thresholds are in correct order: Lose < Chase
         NoiseLoseThreshold = Mathf.Max(0f, NoiseLoseThreshold);
-        NoiseUIThreshold = Mathf.Max(NoiseUIThreshold, NoiseLoseThreshold);
-        NoiseThreshold = Mathf.Max(NoiseThreshold, NoiseUIThreshold);
+        NoiseThreshold = Mathf.Max(NoiseLoseThreshold, NoiseThreshold);
     }
 
 }

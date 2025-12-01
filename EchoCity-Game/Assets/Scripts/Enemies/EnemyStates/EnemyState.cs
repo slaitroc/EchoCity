@@ -28,7 +28,7 @@ public abstract class EnemyState
     }
 
     public abstract void Enter();
-    public abstract void Update(float distToPlayer);
+    public abstract void Update(float attraction);
     public abstract void Exit();
 
     /// From this point onward, the methods represent the state-specific behaviors 

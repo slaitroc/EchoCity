@@ -19,7 +19,7 @@ public class AttackEnemyState : EnemyState
         _enemyAI.CurrentState = EnemyStatesEnum.Attack;
         _enemyAI.StartCoroutine(AttackRoutine());
     }
-    public override void Update(float distToPlayer)
+    public override void Update(float attraction)
     {
         _animator.SetFloat(_animSpeedParameter, 0f, 0.2f, Time.deltaTime);
 
@@ -35,7 +35,23 @@ public class AttackEnemyState : EnemyState
             );
             _coolDownTimer += Time.deltaTime;
             if (_coolDownTimer >= _enemyData.AttackCoolDown)
-                _fsm.SwitchState(_fsm.chaseState);
+            {
+                // After attack, check attraction to decide next state
+                if (attraction >= _enemyData.NoiseThreshold)
+                {
+                    _fsm.SwitchState(_fsm.chaseState);
+                }
+                else if (attraction < _enemyData.NoiseLoseThreshold)
+                {
+                    // Low attraction - go to ChaseSoundState to investigate
+                    _fsm.SwitchState(_fsm.chaseSoundState);
+                }
+                else
+                {
+                    // Medium attraction - continue chase
+                    _fsm.SwitchState(_fsm.chaseState);
+                }
+            }
         }
     }
 

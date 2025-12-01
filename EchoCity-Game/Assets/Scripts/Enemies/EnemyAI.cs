@@ -19,9 +19,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private SOEnemyIAEvent playerHitEvent;
     [SerializeField] private SOEnemyNoiseUIEvent noiseUIEvent;
     public SOEnemyInvestigationEvent investigationEvent;
+    [Tooltip("Event for emitting sounds from enemy (for echolocation system). Used by states.")]
+    public SONewAudioSphereEvent enemySoundEmissionEvent;
 
     [Header("Observed Events")]
-    [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+    [Tooltip("Event raised by InputManager when player performs an action (e.g., hitting object with item)")]
+    [SerializeField] private SOPlayerActionEvent playerActionEvent;
 
     [Header("References")]
     public NavMeshAgent agent;
@@ -37,32 +40,23 @@ public class EnemyAI : MonoBehaviour
     public EnemyStatesEnum CurrentState;
     #endregion
 
-    #region Noise/Annoyance System
-    private float _currentNoiseLevel = 0f;
-    private bool _wasShowingUI = false;
-    private Vector3 _lastNoisePosition = Vector3.zero;
-    private bool _hasLastNoisePosition = false;
+    #region Noise/Annoyance System (Centralized)
+    // Single active player action (only one action at a time)
+    // Actions come from InputManager when player performs actions (e.g., hitting object with item)
+    private PlayerActionData? _activePlayerAction = null;
+    private float _actionTimeRemaining = 0f;
     
-    // List of active sounds contributing to noise
-    private struct ActiveSound
-    {
-        public Vector3 position;
-        public float intensity;
-        public float frequency;
-        public float radius;
-        public float timeRemaining;
-        
-        public ActiveSound(SoundEmissionData soundData)
-        {
-            position = soundData.position;
-            intensity = soundData.intensity;
-            frequency = soundData.frequency;
-            radius = soundData.radius;
-            timeRemaining = soundData.duration;
-        }
-    }
+    // Attraction value (calculated and ready for states)
+    private float _attraction = 0f;
     
-    private System.Collections.Generic.List<ActiveSound> _activeSounds = new System.Collections.Generic.List<ActiveSound>();
+    // Action position (for states to use - where the action occurred)
+    private Vector3 _actionPosition = Vector3.zero;
+    private bool _hasActiveAction = false;
+    
+    // Last action position that triggered chase (saved even after action expires)
+    // Used by ChaseSoundState to investigate the source
+    private Vector3 _lastChaseActionPosition = Vector3.zero;
+    private bool _hasLastChaseActionPosition = false;
     #endregion
 
     void Awake()
@@ -93,17 +87,17 @@ public class EnemyAI : MonoBehaviour
 
     void OnEnable()
     {
-        if (newAudioSphereEvent != null)
+        if (playerActionEvent != null)
         {
-            newAudioSphereEvent.OnEventRaised += OnSoundEmitted;
+            playerActionEvent.OnEventRaised += OnPlayerAction;
         }
     }
 
     void OnDisable()
     {
-        if (newAudioSphereEvent != null)
+        if (playerActionEvent != null)
         {
-            newAudioSphereEvent.OnEventRaised -= OnSoundEmitted;
+            playerActionEvent.OnEventRaised -= OnPlayerAction;
         }
     }
 
@@ -111,207 +105,125 @@ public class EnemyAI : MonoBehaviour
     {
         if (enemyData == null)
         {
-            _fsm.Update(Vector3.Distance(transform.position, player.position));
+            _fsm.Update(_attraction);
             return;
         }
 
-        // Remove expired sounds
-        for (int i = _activeSounds.Count - 1; i >= 0; i--)
-        {
-            var sound = _activeSounds[i];
-            sound.timeRemaining -= Time.deltaTime;
-            
-            if (sound.timeRemaining <= 0f)
-            {
-                _activeSounds.RemoveAt(i);
-            }
-            else
-            {
-                _activeSounds[i] = sound;
-            }
-        }
-
-        // Accumulate noise from active sounds (continuous accumulation)
-        float noiseAccumulation = 0f;
-        Vector3 strongestNoisePosition = Vector3.zero;
-        float strongestNoiseContribution = 0f;
+        // Update player action duration and remove if expired
+        UpdateActiveAction();
         
-        foreach (var sound in _activeSounds)
-        {
-            float distance = Vector3.Distance(sound.position, transform.position);
-            
-            // Skip if sound is too far away
-            if (distance > enemyData.MaxNoisePerceptionDistance) continue;
+        // Calculate attraction (centralized logic)
+        CalculateAttraction();
+        
+        // Notify UI with current attraction value (UI developer handles thresholds)
+        NotifyUI();
+        
+        // Update FSM with calculated attraction (states receive ready value)
+        _fsm.Update(_attraction);
+    }
 
-            // Calculate noise contribution using Attraction formula
-            float frequencyMultiplier = GetFrequencyMultiplier(sound.frequency);
-            float distanceMultiplier = GetDistanceMultiplier(distance, sound.radius);
+    /// <summary>
+    /// Updates active player action duration and removes it if expired
+    /// </summary>
+    void UpdateActiveAction()
+    {
+        if (_hasActiveAction && _activePlayerAction.HasValue)
+        {
+            _actionTimeRemaining -= Time.deltaTime;
             
-            // Continuous accumulation per frame (like Attraction.cs)
-            float contribution = sound.intensity * frequencyMultiplier * distanceMultiplier * Time.deltaTime;
-            noiseAccumulation += contribution;
-            
-            // Track position of strongest contributing sound (for investigation)
-            if (contribution > strongestNoiseContribution)
+            if (_actionTimeRemaining <= 0f)
             {
-                strongestNoiseContribution = contribution;
-                strongestNoisePosition = sound.position;
+                // Action expired - clear it
+                // BUT keep the position if it triggered a chase (for ChaseSoundState)
+                _activePlayerAction = null;
+                _hasActiveAction = false;
+                // Don't reset _actionPosition here - it's used by GetSoundPosition()
+                // It will be updated when a new action arrives or cleared when chase ends
             }
         }
+    }
+
+    /// <summary>
+    /// Centralized attraction calculation using Attraction.cs formula
+    /// Handles: accumulation when player action is active, decay when no action, clamp to 0
+    /// Uses action properties (intensity, duration, frequency) from the object/item used by player
+    /// </summary>
+    void CalculateAttraction()
+    {
+        if (_hasActiveAction && _activePlayerAction.HasValue)
+        {
+            var action = _activePlayerAction.Value;
+            
+            // Update action position (where the action occurred)
+            _actionPosition = action.position;
+            
+            // Calculate distance to action position 
+            float distance = Vector3.Distance(transform.position, action.position);    
+            
+            // Calculate frequency multiplier
+            float frequencyMultiplier = GetFrequencyMultiplier(action.frequency);
+            
+            // Calculate distance multiplier using Attraction.cs formula
+            // Formula: intensity * intensityFactor / Pow((distance + 0.01) * rangeFactor, decay)
+            float distanceMultiplier = 1f / Mathf.Pow((distance + 0.01f) * enemyData.NoiseRangeFactor, enemyData.NoiseDistanceDecay);
+            
+            // Accumulate attraction per frame (continuous accumulation)
+            // Uses action intensity (from object/item used by player)
+            float contribution = action.intensity 
+                                * enemyData.NoiseIntensityFactor 
+                                * frequencyMultiplier 
+                                * distanceMultiplier 
+                                * Time.deltaTime;
+            
+            _attraction += contribution;
+        }
+        else
+        {
+            // No active action - apply decay
+            ApplyDecay();
+        }
         
-        // Update last noise position with strongest sound position (only if we have active sounds)
-        if (strongestNoiseContribution > 0f)
-        {
-            _lastNoisePosition = strongestNoisePosition;
-            _hasLastNoisePosition = true;
-        }
-
-        // Add accumulated noise
-        _currentNoiseLevel += noiseAccumulation;
-
-        // Decay noise over time
-        _currentNoiseLevel = Mathf.Max(0f, _currentNoiseLevel - enemyData.NoiseDecayRate * Time.deltaTime);
-
-        // Check if UI should be shown/hidden and notify
-        UpdateNoiseUI();
-
-        _fsm.Update(Vector3.Distance(transform.position, player.position));
+        // Clamp attraction to 0 (never negative)
+        _attraction = Mathf.Max(0f, _attraction);
     }
 
-    private void OnSoundEmitted(SoundEmissionData soundData)
+    /// <summary>
+    /// Applies decay to attraction when no player action is active or action is too far
+    /// </summary>
+    void ApplyDecay()
     {
-        if (enemyData == null) return;
-
-        // Add sound to active sounds list (will accumulate continuously in Update)
-        _activeSounds.Add(new ActiveSound(soundData));
-    }
-
-    private float GetFrequencyMultiplier(float frequency)
-    {
-        // Frequency enum: Low = 0, Mid = 1, High = 2
-        // Convert to multiplier: Low = 1x, Mid = 1.5x, High = 2x
-        if (frequency <= 0.5f) return 1f;      // Low
-        if (frequency <= 1.5f) return 1.5f;     // Mid
-        return 2f;                               // High
-    }
-
-    private float GetDistanceMultiplier(float distance, float soundRadius)
-    {
-        if (enemyData == null) return 0f;
-
-        // Use Attraction.cs formula: intensityFactor / Pow((distance + 0.01) * rangeFactor, decay)
-        // Adapted to include soundRadius as rangeFactor if needed, or use enemyData parameters
-        float rangeFactor = enemyData.NoiseRangeFactor;
-        float decay = enemyData.NoiseDistanceDecay;
-        float intensityFactor = enemyData.NoiseIntensityFactor;
-
-        // Calculate using inverse power law (like Attraction.cs)
-        float distMult = intensityFactor / Mathf.Pow((distance + 0.01f) * rangeFactor, decay);
-
-        // Clamp to 0 if beyond max perception distance
-        if (distance > enemyData.MaxNoisePerceptionDistance)
+        if (_attraction > 0f)
         {
-            return 0f;
-        }
-
-        return distMult;
-    }
-
-    private void UpdateNoiseUI()
-    {
-        if (enemyData == null || noiseUIEvent == null) return;
-
-        bool shouldShowUI = _currentNoiseLevel >= enemyData.NoiseUIThreshold && 
-                           _currentNoiseLevel < enemyData.NoiseThreshold;
-
-        // Notify UI if state changed (show or hide)
-        if (shouldShowUI != _wasShowingUI)
-        {
-            var noiseData = new EnemyNoiseData(
-                this,
-                _currentNoiseLevel,
-                enemyData.NoiseUIThreshold,
-                enemyData.NoiseThreshold
-            );
-            noiseUIEvent.RaiseEvent(noiseData);
-            _wasShowingUI = shouldShowUI;
-        }
-        // Also update if already showing (for continuous updates)
-        else if (shouldShowUI)
-        {
-            var noiseData = new EnemyNoiseData(
-                this,
-                _currentNoiseLevel,
-                enemyData.NoiseUIThreshold,
-                enemyData.NoiseThreshold
-            );
-            noiseUIEvent.RaiseEvent(noiseData);
+            _attraction -= enemyData.NoiseDecayRate * Time.deltaTime;
         }
     }
 
     /// <summary>
-    /// Get the current noise/annoyance level for this enemy
+    /// Called when player performs an action (e.g., hitting object with item)
+    /// Raised by InputManager - replaces current action (only one action at a time)
+    /// Action properties (intensity, duration, frequency) come from the object/item used
     /// </summary>
-    public float GetNoiseLevel()
+    void OnPlayerAction(PlayerActionData actionData)
     {
-        return _currentNoiseLevel;
+        // Replace current action with new one (only one action active at a time)
+        _activePlayerAction = actionData;
+        _actionTimeRemaining = actionData.duration;
+        _hasActiveAction = true;
+        _actionPosition = actionData.position;
+        
+        // Save position for chase investigation (even if action expires later)
+        _lastChaseActionPosition = actionData.position;
+        _hasLastChaseActionPosition = true;
     }
 
     /// <summary>
-    /// Reset noise level (useful for special events)
+    /// Emits a sound from the enemy (for echolocation system).
+    /// Called by states when enemy makes noise (e.g., investigation phrases).
     /// </summary>
-    public void ResetNoiseLevel()
-    {
-        _currentNoiseLevel = 0f;
-        _wasShowingUI = false;
-        _activeSounds.Clear(); // Clear active sounds when resetting
-    }
-
-    /// <summary>
-    /// Set noise level directly (used when entering chase to ensure minimum threshold)
-    /// </summary>
-    public void SetNoiseLevel(float level)
-    {
-        _currentNoiseLevel = Mathf.Max(0f, level);
-    }
-
-    /// <summary>
-    /// Get the last known noise position (where the enemy heard the sound that triggered chase)
-    /// </summary>
-    public Vector3 GetLastNoisePosition()
-    {
-        return _hasLastNoisePosition ? _lastNoisePosition : transform.position;
-    }
-
-    /// <summary>
-    /// Check if there's a valid last noise position
-    /// </summary>
-    public bool HasLastNoisePosition()
-    {
-        return _hasLastNoisePosition;
-    }
-
-    /// <summary>
-    /// Set the last known noise position (called when starting to chase)
-    /// </summary>
-    public void SetLastNoisePosition(Vector3 position)
-    {
-        _lastNoisePosition = position;
-        _hasLastNoisePosition = true;
-    }
-
-    /// <summary>
-    /// Clear the last noise position
-    /// </summary>
-    public void ClearLastNoisePosition()
-    {
-        _hasLastNoisePosition = false;
-    }
-
     public void OnPlayerHit()
     {
         if (_fsm.CurrentState.OnPlayerHit())
-            playerHitEvent?.RaiseEvent(this);
+        playerHitEvent?.RaiseEvent(this);
     }
 
     /// <summary>
@@ -348,6 +260,91 @@ public class EnemyAI : MonoBehaviour
             investigationEvent.RaiseEvent(investigationData);
         }
     }
+
+    #region Public Getters for States
+    /// <summary>
+    /// Returns current attraction value (ready to use by states)
+    /// </summary>
+    public float GetAttraction()
+    {
+        return _attraction;
+    }
+
+    /// <summary>
+    /// Returns the position of the active player action (or last chase action position if expired)
+    /// This is where the action occurred (e.g., where player hit an object)
+    /// Used by ChaseSoundState to investigate the source
+    /// </summary>
+    public Vector3 GetSoundPosition()
+    {
+        // If there's an active action, return its position
+        if (_hasActiveAction && _actionPosition != Vector3.zero)
+        {
+            return _actionPosition;
+        }
+        
+        // Otherwise, return the last known action position that triggered chase
+        if (_hasLastChaseActionPosition)
+        {
+            return _lastChaseActionPosition;
+        }
+        
+        // Fallback: return current action position (might be zero)
+        return _actionPosition;
+    }
+
+    /// <summary>
+    /// Returns whether there is an active player action
+    /// </summary>
+    public bool HasActiveSound()
+    {
+        return _hasActiveAction;
+    }
+    
+    /// <summary>
+    /// Clears the last chase action position (called when investigation is complete)
+    /// </summary>
+    public void ClearLastChaseActionPosition()
+    {
+        _hasLastChaseActionPosition = false;
+        _lastChaseActionPosition = Vector3.zero;
+    }
+
+    /// <summary>
+    /// Resets attraction to 0 (called by states when needed)
+    /// </summary>
+    public void ResetAttraction()
+    {
+        _attraction = 0f;
+    }
+    #endregion
+
+    #region Helper Methods (used internally)
+    /// <summary>
+    /// Calculates frequency multiplier: Low=1x, Mid=1.5x, High=2x
+    /// </summary>
+    float GetFrequencyMultiplier(float frequency)
+    {
+        if (frequency <= 0f) return 1f;      // Low
+        if (frequency <= 1f) return 1.5f;      // Mid
+        return 2f;                             // High
+    }
+
+    /// <summary>
+    /// Notifies UI with current attraction value (UI developer handles all thresholds and logic)
+    /// </summary>
+    void NotifyUI()
+    {
+        if (noiseUIEvent == null || enemyData == null) return;
+
+        // Check if enemy is currently chasing (Chase or Attack state)
+        bool isChasing = CurrentState == EnemyStatesEnum.Chase || CurrentState == EnemyStatesEnum.Attack;
+
+        // Pass attraction value and chase status - UI developer decides when to show/hide
+        var noiseData = new EnemyNoiseData(this, _attraction, 0f, enemyData.NoiseThreshold, isChasing);
+        noiseUIEvent.RaiseEvent(noiseData);
+    }
+    #endregion
 
     void OnDrawGizmosSelected()
     {

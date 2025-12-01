@@ -27,20 +27,18 @@ public class PatrolEnemyState : EnemyState
         if (!isWaitingAtWaypoint)
             GotoNextWaypoint();
     }
-    public override void Update(float distToPlayer)
+    public override void Update(float attraction)
     {
-
         _agent.speed = _enemyData.PatrolSpeed * _enemyData.ChaseSpeed;
 
         float targetSpeed = isWaitingAtWaypoint ? 0f : _enemyData.PatrolSpeed;
         _animator.SetFloat(_animSpeedParameter, targetSpeed, 0.4f, Time.deltaTime);
 
-        // Check noise level - if noise threshold is exceeded, start chasing
-        float currentNoiseLevel = _enemyAI.GetNoiseLevel();
-        if (currentNoiseLevel >= _enemyData.NoiseThreshold)
+        // Check attraction - if threshold is exceeded, start chasing
+        // States only react to attraction (already calculated by EnemyAI)
+        if (attraction >= _enemyData.NoiseThreshold)
         {
-            // Save the current player position as the noise source when starting chase
-            _enemyAI.SetLastNoisePosition(_enemyAI.player.position);
+            // Switch to chase state (will chase towards sound position, not player)
             _fsm.SwitchState(_fsm.chaseState);
             return;
         }

@@ -19,6 +19,19 @@ MonoBehaviour:
   PatrolSpeed: 0.515
   WaypointPauseDuration: 2
   WaypointArrivalThreshold: 0.3
+  NoiseThreshold: 1
+  NoiseLoseThreshold: 0.8
+  MinChaseDuration: 3
+  NoiseIntensityFactor: 1
+  NoiseRangeFactor: 1
+  NoiseDistanceDecay: 0.5
+  NoiseDecayRate: 0.5
+  InvestigationPhrases:
+  - {fileID: 8300000, guid: e0c5a25958ea848228c2188da1243119, type: 3}
+  InvestigationSoundIntensity: 0.3
+  InvestigationSoundDuration: 1
+  InvestigationSoundFrequency: 0
+  InvestigationSoundRadius: 5
   AttackAnimation: {fileID: 7400000, guid: c1a066f118e5d4c4e96a6dead7956b65, type: 2}
   AttackDuration: 2.625
   AttackDamageDelay: 1.2

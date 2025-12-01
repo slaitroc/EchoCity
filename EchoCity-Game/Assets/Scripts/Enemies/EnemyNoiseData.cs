@@ -10,14 +10,16 @@ public struct EnemyNoiseData
     public float uiThreshold;
     public float chaseThreshold;
     public bool shouldShowUI;
+    public bool isChasing; // True if enemy is currently chasing (regardless of attraction level)
 
-    public EnemyNoiseData(EnemyAI enemy, float currentNoise, float uiThreshold, float chaseThreshold)
+    public EnemyNoiseData(EnemyAI enemy, float currentNoise, float uiThreshold, float chaseThreshold, bool isChasing = false)
     {
         this.enemy = enemy;
         this.currentNoiseLevel = currentNoise;
         this.uiThreshold = uiThreshold;
         this.chaseThreshold = chaseThreshold;
         this.shouldShowUI = currentNoise >= uiThreshold && currentNoise < chaseThreshold;
+        this.isChasing = isChasing;
     }
 
     /// <summary>

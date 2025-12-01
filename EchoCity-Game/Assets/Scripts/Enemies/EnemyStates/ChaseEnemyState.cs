@@ -16,23 +16,25 @@ public class ChaseEnemyState : EnemyState
         _enemyAI.CurrentState = EnemyStatesEnum.Chase;
         _enemyAI.attackRangeDetector.attackCollider.enabled = false;
 
+        // Stop any playing audio when entering chase (e.g., from StandAndExaminateState)
+        if (_enemyAI.audioSource != null && _enemyAI.audioSource.isPlaying)
+        {
+            _enemyAI.audioSource.Stop();
+        }
+
         // Record chase start time for minimum duration
         _chaseStartTime = Time.time;
         _minChaseDurationElapsed = false;
 
-        // Ensure we have a last noise position to investigate (should be set by PatrolEnemyState)
-        // If not set, use player position as fallback
-        if (!_enemyAI.HasLastNoisePosition())
-        {
-            _enemyAI.SetLastNoisePosition(_enemyAI.player.position);
-        }
-
         _agent.speed = _enemyData.ChaseSpeed;
         _agent.isStopped = false;
         _agent.stoppingDistance = _enemyData.AttackRange;
+        
+        // Ensure animator speed is set correctly for chase
+        _animator.SetFloat(_animSpeedParameter, 1f, 0.2f, Time.deltaTime);
     }
 
-    public override void Update(float distToPlayer)
+    public override void Update(float attraction)
     {
         _animator.SetFloat(_animSpeedParameter, 1, 0.2f, Time.deltaTime);
         
@@ -42,87 +44,39 @@ public class ChaseEnemyState : EnemyState
             _minChaseDurationElapsed = true;
         }
 
-        float currentNoiseLevel = _enemyAI.GetNoiseLevel();
-        bool isInvestigating = false;
+        // Calculate distance to player (for range check and attack)
+        float distToPlayer = Vector3.Distance(_enemyAI.transform.position, _enemyAI.player.position);
 
-        // Always chase player during minimum duration
-        if (!_minChaseDurationElapsed)
+        // PRIORITY 1: If attraction > 1.0, ALWAYS chase PLAYER (regardless of duration)
+        if (attraction >= _enemyData.NoiseThreshold)
         {
             _agent.SetDestination(_enemyAI.player.position);
         }
+        // During minimum duration: always chase PLAYER
+        else if (!_minChaseDurationElapsed)
+        {
+            _agent.SetDestination(_enemyAI.player.position);
+        }
+        // After minimum duration: check attraction and player range
         else
         {
-            // After minimum duration, check noise level
-            if (currentNoiseLevel >= _enemyData.NoiseThreshold)
+            // PRIORITY 2: Continue chasing if attraction > 0.8 AND player in range (15m)
+            if (attraction > _enemyData.NoiseLoseThreshold && distToPlayer <= _enemyData.ChaseRange)
             {
-                // Noise still high (or rised again) - continue chasing player
+                // Continue chasing PLAYER
                 _agent.SetDestination(_enemyAI.player.position);
             }
-            else if (currentNoiseLevel < _enemyData.NoiseLoseThreshold)
-            {
-                // Noise dropped - go investigate last known noise position
-                if (_enemyAI.HasLastNoisePosition())
-                {
-                    Vector3 noisePos = _enemyAI.GetLastNoisePosition();
-                    float distToNoise = Vector3.Distance(_enemyAI.transform.position, noisePos);
-                    
-                    // If we're close to the noise position, check if we found something
-                    if (distToNoise < 2f)
-                    {
-                        // Check conditions: player not there AND noise still low
-                        float distToPlayerAtNoisePos = Vector3.Distance(noisePos, _enemyAI.player.position);
-                        bool playerNotThere = distToPlayerAtNoisePos > _enemyData.AttackRange;
-                        bool noiseStillLow = currentNoiseLevel < _enemyData.NoiseLoseThreshold;
-                        
-                        if (playerNotThere && noiseStillLow)
-                        {
-                            // Found nothing - play investigation phrase and return to patrol
-                            _enemyAI.PlayInvestigationPhrase();
-                            _enemyAI.ClearLastNoisePosition();
-                            _fsm.SwitchState(_fsm.patrolState);
-                            return;
-                        }
-                        else
-                        {
-                            // Player is there or noise rised - continue chasing
-                            _agent.SetDestination(_enemyAI.player.position);
-                            return;
-                        }
-                    }
-                    
-                    // Otherwise, continue investigating the noise position (maintain ChaseSpeed)
-                    _agent.SetDestination(noisePos);
-                    isInvestigating = true;
-                }
-                else
-                {
-                    // No noise position to investigate, return to patrol
-                    _fsm.SwitchState(_fsm.patrolState);
-                    return;
-                }
-            }
+            // PRIORITY 3: If attraction < 0.8 OR player out of range, go to sound position
             else
             {
-                // Noise between NoiseLoseThreshold and NoiseThreshold - continue chasing player
-                _agent.SetDestination(_enemyAI.player.position);
+                // Switch to ChaseSoundState (will go to last known sound position)
+                _fsm.SwitchState(_fsm.chaseSoundState);
+                return;
             }
         }
 
-        // Check if we should lose the chase: BOTH conditions must be true
-        // 1. Noise below NoiseLoseThreshold
-        // 2. Distance greater than LoseRange
-        // Only check after minimum duration
-        if (_minChaseDurationElapsed && 
-            currentNoiseLevel < _enemyData.NoiseLoseThreshold && 
-            distToPlayer > _enemyData.LoseRange && 
-            !isInvestigating)
-        {
-            _fsm.SwitchState(_fsm.patrolState);
-            return;
-        }
-
-        // Check attack range (only if not investigating)
-        if (!isInvestigating && distToPlayer <= _enemyData.AttackRange)
+        // Check attack range (if player is close, attack)
+        if (distToPlayer <= _enemyData.AttackRange)
         {
             _fsm.SwitchState(_fsm.attackState);
         }

@@ -461,6 +461,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 385488519677314369, guid: 06980187e3c794cb98a9715013d289ee, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 464688787440393333, guid: 06980187e3c794cb98a9715013d289ee, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -630,9 +634,21 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6713517091936708092, guid: 06980187e3c794cb98a9715013d289ee, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1531885499}
+    - target: {fileID: 6713517091936708092, guid: 06980187e3c794cb98a9715013d289ee, type: 3}
+      propertyPath: playerActionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: a727c08ab0d8c42c6ada7b8eab0da3a5, type: 2}
+    - target: {fileID: 6713517091936708092, guid: 06980187e3c794cb98a9715013d289ee, type: 3}
       propertyPath: waypoints.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6713517091936708092, guid: 06980187e3c794cb98a9715013d289ee, type: 3}
+      propertyPath: enemySoundEmissionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
     - target: {fileID: 6713517091936708092, guid: 06980187e3c794cb98a9715013d289ee, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
       value: 
@@ -813,6 +829,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5206415104258688287, guid: 976150b4ace8a1f42afbb754b142f433, type: 3}
   m_PrefabInstance: {fileID: 446572576}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1531885499 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1398750796142275055, guid: ce5f325af0b7ac84990210a048529482, type: 3}
+  m_PrefabInstance: {fileID: 1796695285815742741}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1710507091
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,6 +865,60 @@ Transform:
   m_Children:
   - {fileID: 357117056}
   - {fileID: 681571093}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1871054764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1871054766}
+  - component: {fileID: 1871054765}
+  m_Layer: 0
+  m_Name: InputManagerTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1871054765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871054764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df3666a3a24194323a1ebd393b012f4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerActionEvent: {fileID: 11400000, guid: a727c08ab0d8c42c6ada7b8eab0da3a5, type: 2}
+  actionPositionSource: {fileID: 0}
+  testPositionsList: []
+  baseIntensity: 0.5
+  baseDuration: 1
+  baseRadius: 5
+  lowFreqIntensity: 0.3
+  midFreqIntensity: 0.6
+  highFreqIntensity: 0.9
+  logActions: 1
+--- !u!4 &1871054766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871054764}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -22.334913, y: -12.586605, z: 19.969193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &188367683530292507
@@ -1377,6 +1452,7 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1871054766}
   - {fileID: 364384944}
   - {fileID: 941517273}
   - {fileID: 1710507092}
