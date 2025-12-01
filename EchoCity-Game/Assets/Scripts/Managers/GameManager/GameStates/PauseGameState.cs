@@ -19,7 +19,7 @@ public class PauseGameState : GameState
     {
         Time.timeScale = 0;
         _playerInput = GameObject.FindGameObjectWithTag("InputManager").GetComponent<PlayerInput>();
-        SwitchToUIActionMap();
+        // SwitchToUIActionMap();
     }
 
     public override void Update()
@@ -29,7 +29,7 @@ public class PauseGameState : GameState
     public override void Exit()
     {
         Time.timeScale = 1;
-        RestorePreviousActionMap();
+        // RestorePreviousActionMap();
     }
 
     private void SwitchToUIActionMap()

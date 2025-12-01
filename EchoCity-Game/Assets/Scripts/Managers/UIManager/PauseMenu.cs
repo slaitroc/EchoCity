@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
+[RequireComponent(typeof(MethodsUI))]
 public class PauseMenu : MonoBehaviour
 {
     #region Constants
@@ -16,6 +17,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private SOEventVoid pauseEvent;
     [SerializeField] private SOEventVoid settingsEvent;
     [SerializeField] private SOEventVoid quitToTitleEvent;
+    [SerializeField] private SOEventVoid switchToPlayerActionMapEvent;
     
     [Header("UI Elements")]
     [SerializeField] private UIDocument pauseMenu;
@@ -63,12 +65,12 @@ public class PauseMenu : MonoBehaviour
         
         foreach (var button in _root.Query<Button>().ToList())
         {
-            button.RegisterCallback<MouseEnterEvent>(evt => {_currentHoveredButton = button;});
-            button.RegisterCallback<MouseLeaveEvent>(evt => {_currentHoveredButton = null;});
+            button.RegisterCallback<PointerEnterEvent>(evt => {_currentHoveredButton = button;});
+            button.RegisterCallback<PointerLeaveEvent>(evt => {_currentHoveredButton = null;});
         }
         
         _isKeyboardMode = false;
-        ShowCursor();
+        MethodsUI.ShowCursor();
     }
 
     private void Update()
@@ -84,7 +86,8 @@ public class PauseMenu : MonoBehaviour
         if (quitToTitleButton != null) quitToTitleButton.clicked -= OnQuitToTitle;
         _root.UnregisterCallback<NavigationMoveEvent>(OnNavigationMove);
         
-        HideCursor();
+        MethodsUI.HideCursor();
+        switchToPlayerActionMapEvent.RaiseEvent();
     }
 
     private void OnResume()
@@ -111,13 +114,11 @@ public class PauseMenu : MonoBehaviour
         if (_isKeyboardMode) return;
         
         _isKeyboardMode = true;
-        Log.D("Switched to Keyboard mode", "cyan", "UI MANAGER");
         Log.D("Switched to Keyboard mode", _LOG_COLOR, _LOG_TAG);
-        HideCursor();
-        
-        Log.D("Cursor hidden", "cyan", "UI MANAGER");
-        
+
+        MethodsUI.HideCursor();
         Log.D("Cursor hidden", _LOG_COLOR, _LOG_TAG);
+        
         if (_currentHoveredButton != null)
         {
             _currentHoveredButton.pickingMode = PickingMode.Ignore;
@@ -139,7 +140,7 @@ public class PauseMenu : MonoBehaviour
         _isKeyboardMode = false;
         Log.D("Switched to Mouse mode", "cyan", "UI MANAGER");
         Log.D("Switched to Mouse mode", _LOG_COLOR, _LOG_TAG);
-        ShowCursor();
+        MethodsUI.ShowCursor();
 
         if (_lastHoveredButton != null)
         {
@@ -152,17 +153,6 @@ public class PauseMenu : MonoBehaviour
 
     }
     
-    private void ShowCursor()
-    {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-    }
-    
-    private void HideCursor()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.None;
-    }
 
     private void HandleKeyBoard()
     {

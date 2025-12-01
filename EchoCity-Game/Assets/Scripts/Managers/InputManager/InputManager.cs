@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 
 
 [RequireComponent(typeof(PlayerInput))]
@@ -25,6 +26,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private SOEventVoid canInteractStartEvent;
     [SerializeField] private SOEventVoid canInteractStopEvent;
     [SerializeField] private SOEventVoid materialToggleEvent;
+    [SerializeField] private SOEventVoid openRadialMenuEvent;
+    [SerializeField] private SOEventVoid closeRadialMenuEvent;
 
 
     [Header("Interaction Range Colliders")]
@@ -32,9 +35,14 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Interactable inRangeInteractable;
     #endregion
     #region Private Fields
+    private const string UI_ACTION_MAP = "UI";
+    private const string PLAYER_ACTION_MAP = "Player";
+    private PlayerInput _playerInput;
     private bool _canInteract;
     private bool _activeRenderer = true; // 0/false = PC Renderer, 1/true = Audio Visual
-
+    private bool _isRadialMenuOpen;
+    
+    
     #endregion
 
     void Awake()
@@ -43,6 +51,8 @@ public class InputManager : MonoBehaviour
         starterAssetsInputs = GameObject.FindGameObjectWithTag("Player")?.GetComponent<StarterAssetsInputs>();
         if (starterAssetsInputs == null)
             Log.E("StarterAssetsInputs component not found on Player GameObject", _LOG_COLOR, _LOG_TAG);
+
+        TryGetComponent(out _playerInput);
     }
 
     void Update()
@@ -96,8 +106,18 @@ public class InputManager : MonoBehaviour
         if (context.action.name == "RangeInteract")
             OnAreaInteract(context);
 
-        if (context.action.name == "Pause")
-            OnPause(context);
+        if (context.action.name == "EnterPause")
+            OnEnterPause(context);
+
+        if (context.action.name == "ExitPause")
+            OnExitPause(context);
+
+        if (context.action.name == "OpenRadialMenu")
+        {
+
+            OnOpenRadialMenu(context);
+        }
+
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -110,7 +130,7 @@ public class InputManager : MonoBehaviour
 
     private void OnLook(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !_isRadialMenuOpen)
             starterAssetsInputs.LookInput(context.ReadValue<Vector2>());
         else if (context.canceled)
             starterAssetsInputs.LookInput(Vector2.zero);
@@ -168,11 +188,38 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void OnPause(InputAction.CallbackContext context)
+    private void OnEnterPause(InputAction.CallbackContext context)
     {
         if (context.performed)
+        {
+            _playerInput.SwitchCurrentActionMap(UI_ACTION_MAP);
+            Log.D("Switched to Action Map: " + _playerInput.currentActionMap.ToString(), _LOG_COLOR, _LOG_TAG);
             pauseEvent?.RaiseEvent();
+        }
     }
+
+     private void OnExitPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _playerInput.SwitchCurrentActionMap(PLAYER_ACTION_MAP);
+        }
+    }
+
+    private void OnOpenRadialMenu(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            openRadialMenuEvent?.RaiseEvent();
+            _isRadialMenuOpen = true;
+        }
+        else if (context.canceled)
+        {
+            closeRadialMenuEvent?.RaiseEvent();
+            _isRadialMenuOpen = false;
+        }
+    }
+
 
 
 
@@ -187,5 +234,9 @@ public class InputManager : MonoBehaviour
     {
         inInteractionRange = false;
         inRangeInteractable = null;
+    }
+    public void SwitchToPlayerActionMapHandler()
+    { 
+        _playerInput.SwitchCurrentActionMap(PLAYER_ACTION_MAP);
     }
 }

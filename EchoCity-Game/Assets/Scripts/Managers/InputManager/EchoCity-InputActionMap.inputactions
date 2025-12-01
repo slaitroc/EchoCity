@@ -43,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "EnterPause",
                     "type": "Button",
                     "id": "460bfb43-b706-4af1-8491-86854e1a898f",
                     "expectedControlType": "",
@@ -263,7 +263,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "Pause",
+                    "action": "EnterPause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -316,7 +316,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PauseMenu",
+                    "name": "ExitPause",
                     "type": "Button",
                     "id": "12d4ef3d-9e7a-4f64-a215-d670252cff32",
                     "expectedControlType": "",
@@ -678,7 +678,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "PauseMenu",
+                    "action": "ExitPause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -36,5 +36,7 @@ public class UIManagerObserver : MonoBehaviour
     void OnDisable()
     {
         if (pauseEvent) pauseEvent.OnEventRaised -= uiManager.PauseMenuHandler;
+        if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= uiManager.HUDInteractableHandler;
+        if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= uiManager.HUDInteractableHandler;
     }
 }

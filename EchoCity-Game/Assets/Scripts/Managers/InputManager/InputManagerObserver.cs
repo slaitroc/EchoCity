@@ -8,6 +8,7 @@ public class InputManagerObserver : MonoBehaviour
     [Header("Observed Events")]
     [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
     [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
+    [SerializeField] private SOEventVoid switchToPlayerActionMapEvent;
 
 
 
@@ -37,6 +38,11 @@ public class InputManagerObserver : MonoBehaviour
             exitInteractableAreaEvent.OnEventRaised -= inputManager.ExitInteractionRangeHandler;
             exitInteractableAreaEvent.OnEventRaised += inputManager.ExitInteractionRangeHandler;
         }
+        if (switchToPlayerActionMapEvent)
+        {
+            switchToPlayerActionMapEvent.OnEventRaised -= inputManager.SwitchToPlayerActionMapHandler;
+            switchToPlayerActionMapEvent.OnEventRaised += inputManager.SwitchToPlayerActionMapHandler;
+        }
     }
 
     void OnDisable()
@@ -44,6 +50,7 @@ public class InputManagerObserver : MonoBehaviour
         if (playerInput) playerInput.onActionTriggered -= inputManager.HandleInput;
         if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised -= inputManager.EnterInteractionRangeHandler;
         if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= inputManager.ExitInteractionRangeHandler;
+        if (switchToPlayerActionMapEvent) switchToPlayerActionMapEvent.OnEventRaised -= inputManager.SwitchToPlayerActionMapHandler;
     }
 
 
