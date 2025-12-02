@@ -937,6 +937,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 776465952077833284, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: GroundedOffset
+      value: -0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 776465952077833284, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: GroundedRadius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 776465952077833284, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: LandingSoundSource
       value: 
       objectReference: {fileID: 11400000, guid: 7cf6aa575695af14cb9b626c3f531e78, type: 2}
@@ -963,6 +971,14 @@ PrefabInstance:
     - target: {fileID: 1984932080341711509, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2597816537864987501, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2597816537864987501, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6241368557785818447, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1015,6 +1031,26 @@ PrefabInstance:
     - target: {fileID: 7183879222992690176, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_LocalPosition.z
       value: -1.0929651
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356871915578086178, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_Height
+      value: 3.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356871915578086178, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_Radius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356871915578086178, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_Center.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356871915578086178, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_SlopeLimit
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7356871915578086178, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
