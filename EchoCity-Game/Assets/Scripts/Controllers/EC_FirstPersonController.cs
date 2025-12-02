@@ -1,3 +1,4 @@
+using EchoCity;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -51,6 +52,21 @@ namespace StarterAssets
         [Tooltip("How far in degrees can you move the camera down")]
         public float BottomClamp = -90.0f;
 
+        [System.Serializable]
+        public class GroundFootstep
+        {
+            public LayerMask layer;
+            public SOSoundSource SoundSource;
+        }
+
+        [Header("Invoking Events")]
+        public SOSoundEmissionDataEvent newAudioSphereEvent;
+
+        [Header("Footstep/Ground Settings")]
+        public GroundFootstep[] groundTypes;
+        public float rayDistance = 1.3f;
+        public float stepSpeedMultiplier = 0.5f;
+
         // cinemachine
         private float _cinemachineTargetPitch;
 
@@ -59,6 +75,7 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        private float _stepTimer = 0f;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -115,6 +132,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            HandlePlayerFootsteps();
         }
 
         private void LateUpdate()
@@ -263,6 +281,47 @@ namespace StarterAssets
 
             // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
             Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
+        }
+
+        private void HandlePlayerFootsteps()
+        {
+            if (!Grounded) return;
+
+            if (_speed <= 0.01f)
+            {
+                _stepTimer = 0f;
+                return;
+            }
+
+            _stepTimer -= Time.deltaTime;
+
+            if (_stepTimer <= 0f)
+            {
+                PlayFootstepSound();
+
+                float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+                _stepTimer = (1f / targetSpeed) / stepSpeedMultiplier;
+            }
+        }
+        private void PlayFootstepSound()
+        {
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, rayDistance))
+            {
+                int hitLayer = hit.collider.gameObject.layer;
+
+                for (int i = 0; i < groundTypes.Length; i++)
+                {
+                    if ((groundTypes[i].layer.value & (1 << hitLayer)) != 0)
+                    {
+                        SOSoundSource soundSource = groundTypes[i].SoundSource;
+                        ECSound.PlayRandomClipAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                        return;
+                    }
+                }
+            }
+
         }
     }
 }
