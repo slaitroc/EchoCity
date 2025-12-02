@@ -105,8 +105,8 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
-#if ENABLE_INPUT_SYSTEM 
-        private PlayerInput _playerInput;
+#if ENABLE_INPUT_SYSTEM
+    // PlayerInput removed: controllers read directly from StarterAssetsInputs
 #endif
         private Animator _animator;
         private CharacterController _controller;
@@ -122,9 +122,9 @@ namespace StarterAssets
             get
             {
 #if ENABLE_INPUT_SYSTEM
-                return _playerInput.currentControlScheme == "KeyboardMouse";
+                return UnityEngine.InputSystem.Mouse.current != null;
 #else
-				return false;
+                return false;
 #endif
             }
         }
@@ -146,11 +146,22 @@ namespace StarterAssets
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM
-            _playerInput = GameObject.FindGameObjectWithTag("InputManager")?.GetComponent<PlayerInput>();
-#else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-#endif
+
+            // try to find StarterAssetsInputs on the Player object if not on this GameObject
+            if (_input == null)
+            {
+                _input = GameObject.FindGameObjectWithTag("Player")?.GetComponent<StarterAssetsInputs>();
+                if (_input == null)
+                {
+                    Debug.LogError("StarterAssetsInputs component not found. EC_ThirdPersonController requires StarterAssetsInputs to read input values.");
+                }
+            }
+
+            // Ensure we have a main camera reference as a fallback
+            if (_mainCamera == null && Camera.main != null)
+            {
+                _mainCamera = Camera.main.gameObject;
+            }
 
             AssignAnimationIDs();
 
@@ -200,7 +211,7 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (_input != null && _input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;

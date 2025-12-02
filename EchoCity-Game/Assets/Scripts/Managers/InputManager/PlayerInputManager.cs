@@ -1,15 +1,9 @@
-using System;
 using StarterAssets;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.UIElements;
 
 
-[RequireComponent(typeof(PlayerInput))]
-[RequireComponent(typeof(InputManagerObserver))]
-public class InputManager : MonoBehaviour
+public class PlayerInputManager : MonoBehaviour
 {
 #pragma warning disable CS0414
     #region Constants
@@ -19,6 +13,9 @@ public class InputManager : MonoBehaviour
 #pragma warning restore CS0414
 
     #region Serialized Fields
+    [Header("Input")]
+    [SerializeField] private InputActionAsset inputActionAsset;
+    private InputActionMap _playerActionMap;
     [SerializeField] private StarterAssetsInputs starterAssetsInputs;
     [Header("Invoking Events")]
     [SerializeField] private SOEventVoid areaInteractionEvent;
@@ -29,6 +26,15 @@ public class InputManager : MonoBehaviour
     [SerializeField] private SOEventVoid openRadialMenuEvent;
     [SerializeField] private SOEventVoid closeRadialMenuEvent;
 
+    [Header("Observed Events")]
+    [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
+    [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
+    [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
+    [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
+
+
+
+
 
     [Header("Interaction Range Colliders")]
     [SerializeField] private bool inInteractionRange = false;
@@ -37,23 +43,45 @@ public class InputManager : MonoBehaviour
     #region Private Fields
     private const string UI_ACTION_MAP = "UI";
     private const string PLAYER_ACTION_MAP = "Player";
-    private PlayerInput _playerInput;
     private bool _canInteract;
     private bool _activeRenderer = true; // 0/false = PC Renderer, 1/true = Audio Visual
-    private bool _isRadialMenuOpen;
-    
-    
+    private bool _isLookLocked;
+
+
     #endregion
 
     void Awake()
     {
         gameObject.tag = "InputManager";
         starterAssetsInputs = GameObject.FindGameObjectWithTag("Player")?.GetComponent<StarterAssetsInputs>();
+        _playerActionMap = inputActionAsset.FindActionMap("Player");
+        if (_playerActionMap != null)
+        {
+            _playerActionMap["Move"].performed += OnMove;
+            _playerActionMap["Move"].canceled += OnMove;
+            _playerActionMap["Look"].performed += OnLook;
+            _playerActionMap["Look"].canceled += OnLook;
+            _playerActionMap["Jump"].performed += OnJump;
+            _playerActionMap["Sprint"].performed += OnSprint;
+            _playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
+            _playerActionMap["Interact"].performed += OnInteract;
+            _playerActionMap["UIRadialMenu"].performed += OnUIRadialMenu;
+            _playerActionMap["UIRadialMenu"].canceled += OnUIRadialMenu;
+            _playerActionMap["EnterPause"].performed += OnEnterPause;
+        }
+
+        _playerActionMap.Enable();
+        MethodsUI.HideCursor();
+
+        //Error Logs
+        if (inputActionAsset == null)
+            Log.E("InputActionAsset reference is missing", _LOG_COLOR, _LOG_TAG);
         if (starterAssetsInputs == null)
             Log.E("StarterAssetsInputs component not found on Player GameObject", _LOG_COLOR, _LOG_TAG);
-
-        TryGetComponent(out _playerInput);
     }
+
+    void OnEnable() => SubscribeToEvents();
+    void OnDisable() => UnsubscribeFromEvents();
 
     void Update()
     {
@@ -81,69 +109,36 @@ public class InputManager : MonoBehaviour
         #endregion
     }
 
-    public void HandleInput(InputAction.CallbackContext context)
-    {
-        if (context.action == null) return;
-
-        if (context.action.name == "Move")
-            OnMove(context);
-
-        if (context.action.name == "Look")
-            OnLook(context);
-
-        if (context.action.name == "Jump")
-            OnJump(context);
-
-        if (context.action.name == "Sprint")
-            OnSprint(context);
-
-        if (context.action.name == "WearEcholocator")
-            OnWearEcholocator(context);
-
-        if (context.action.name == "Interact")
-            OnInteract(context);
-
-        if (context.action.name == "RangeInteract")
-            OnAreaInteract(context);
-
-        if (context.action.name == "EnterPause")
-            OnEnterPause(context);
-
-        if (context.action.name == "ExitPause")
-            OnExitPause(context);
-
-        if (context.action.name == "OpenRadialMenu")
-        {
-
-            OnOpenRadialMenu(context);
-        }
-
-    }
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        if (context.performed)
-            starterAssetsInputs.MoveInput(context.ReadValue<Vector2>());
-        else if (context.canceled)
-            starterAssetsInputs.MoveInput(Vector2.zero);
+        if (starterAssetsInputs == null) return;
+        // Always forward the current Vector2 value. This works for passthrough and
+        // button interactions and avoids missing inputs due to phase checking.
+        starterAssetsInputs.MoveInput(context.ReadValue<Vector2>());
     }
 
     private void OnLook(InputAction.CallbackContext context)
     {
-        if (context.performed && !_isRadialMenuOpen)
-            starterAssetsInputs.LookInput(context.ReadValue<Vector2>());
-        else if (context.canceled)
-            starterAssetsInputs.LookInput(Vector2.zero);
+        if (starterAssetsInputs == null) return;
+
+        // Forward current look value unless look is locked. Some devices/actions
+        // may not deliver a Performed phase the way we expect; reading the value
+        // directly is more consistent across bindings.
+        var look = context.ReadValue<Vector2>();
+        starterAssetsInputs.LookInput(_isLookLocked ? Vector2.zero : look);
     }
 
     private void OnJump(InputAction.CallbackContext context)
     {
+        if (starterAssetsInputs == null) return;
         if (context.performed)
             starterAssetsInputs.JumpInput(context.performed);
     }
 
     private void OnSprint(InputAction.CallbackContext context)
     {
+        if (starterAssetsInputs == null) return;
         if (context.performed)
         {
             // For passthrough/value bindings read the numeric value and treat >0.5 as pressed
@@ -181,45 +176,46 @@ public class InputManager : MonoBehaviour
 
     private void OnAreaInteract(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            if (inInteractionRange && inRangeInteractable != null)
-                areaInteractionEvent.RaiseEvent();
-        }
+        if (!context.performed) return;
+        if (inInteractionRange && inRangeInteractable != null)
+            areaInteractionEvent.RaiseEvent();
+
     }
 
     private void OnEnterPause(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            _playerInput.SwitchCurrentActionMap(UI_ACTION_MAP);
-            Log.D("Switched to Action Map: " + _playerInput.currentActionMap.ToString(), _LOG_COLOR, _LOG_TAG);
-            pauseEvent?.RaiseEvent();
-        }
+        if (!context.performed) return;
+        pauseEvent?.RaiseEvent();
+
     }
 
-     private void OnExitPause(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            _playerInput.SwitchCurrentActionMap(PLAYER_ACTION_MAP);
-        }
-    }
 
-    private void OnOpenRadialMenu(InputAction.CallbackContext context)
+
+    private void OnUIRadialMenu(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             openRadialMenuEvent?.RaiseEvent();
-            _isRadialMenuOpen = true;
+            //enableUIActionMapEvent?.RaiseEvent();
         }
-        else if (context.canceled)
+
+        if (context.canceled)
         {
             closeRadialMenuEvent?.RaiseEvent();
-            _isRadialMenuOpen = false;
+            //disableUIActionMapEvent?.RaiseEvent();
         }
     }
 
+    private void EnablePlayerActionMap()
+    {
+        _playerActionMap.Enable();
+        MethodsUI.HideCursor();
+    }
+
+    private void DisablePlayerActionMap()
+    {
+        _playerActionMap.Disable();
+    }
 
 
 
@@ -235,8 +231,35 @@ public class InputManager : MonoBehaviour
         inInteractionRange = false;
         inRangeInteractable = null;
     }
-    public void SwitchToPlayerActionMapHandler()
-    { 
-        _playerInput.SwitchCurrentActionMap(PLAYER_ACTION_MAP);
+
+    private void SubscribeToEvents()
+    {
+        if (enterInteractableAreaEvent)
+        {
+            enterInteractableAreaEvent.OnEventRaised -= EnterInteractionRangeHandler;
+            enterInteractableAreaEvent.OnEventRaised += EnterInteractionRangeHandler;
+        }
+        if (exitInteractableAreaEvent)
+        {
+            exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
+            exitInteractableAreaEvent.OnEventRaised += ExitInteractionRangeHandler;
+        }
+        if (enablePlayerActionMapEvent)
+        {
+            enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMap;
+            enablePlayerActionMapEvent.OnEventRaised += EnablePlayerActionMap;
+        }
+        if (disablePlayerActionMapEvent)
+        {
+            disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMap;
+            disablePlayerActionMapEvent.OnEventRaised += DisablePlayerActionMap;
+        }
+    }
+    private void UnsubscribeFromEvents()
+    {
+        if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised -= EnterInteractionRangeHandler;
+        if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
+        if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMap;
+        if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMap;
     }
 }
