@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: PlayerFootstepsSoundSource
+  m_Name: EnemyFootstepsSoundSource
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 41fd454975b4c9d4bb0812b491ce11b5, type: 2}
+  soundClass: {fileID: 11400000, guid: 49281afd3aa455741af4c174c271f1b2, type: 2}
   audioClip: {fileID: 0}
   intensity: 0.3
   volume: 0.2
-  radius: 5
+  radius: 3
   gapBetweenSounds: 0
   minimumDuration: 0.2
   emitOnStart: 0

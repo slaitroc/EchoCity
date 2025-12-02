@@ -797,6 +797,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6564644645471230419, guid: 38ac2edf6376bf046a763dc147011a03, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+    - target: {fileID: 6564644645471230419, guid: 38ac2edf6376bf046a763dc147011a03, type: 3}
+      propertyPath: groundTypes.Array.data[0].SoundSource
+      value: 
+      objectReference: {fileID: 11400000, guid: b334c8d639c6d3f4c918dfc0239fb98c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -971,7 +979,7 @@ PrefabInstance:
     - target: {fileID: 5448521187450186339, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: groundTypes.Array.data[0].SoundSource
       value: 
-      objectReference: {fileID: 11400000, guid: b334c8d639c6d3f4c918dfc0239fb98c, type: 2}
+      objectReference: {fileID: 11400000, guid: 76f77206056e9014f861517c71af8e2d, type: 2}
     - target: {fileID: 5448521187450186339, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: groundTypes.Array.data[0].layer.m_Bits
       value: 4294967295
