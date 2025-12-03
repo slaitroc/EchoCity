@@ -102,7 +102,7 @@ namespace EchoCity
         #endregion
 
         #region Echolocation 
-        private void OnNewAudioSphereEvent(SoundEmissionData soundEmissionData) => Log.D($"New Audio Sphere Event Raised at Position: {soundEmissionData.position}, Radius: {soundEmissionData.radius}, Intensity: {soundEmissionData.intensity}", _LOG_COLOR, _LOG_TAG);
+        private void OnNewAudioSphereEvent(SoundEmissionData soundEmissionData) => Log.D($"New Audio Sphere Event Raised at Position: {soundEmissionData.Position}, Radius: {soundEmissionData.Radius}, Intensity: {soundEmissionData.Intensity}", _LOG_COLOR, _LOG_TAG);
         #endregion
 
         #region Input 

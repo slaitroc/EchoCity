@@ -129,12 +129,12 @@ public class EcholocationManager : MonoBehaviour
     public void AddAudioSphere(SoundEmissionData data, float fadeIn, float fadeOut)
     {
         var newSphere = new AudioSphere(
-            data.position,
-            data.radius,
-            data.frequency,
-            data.intensity,
-            data.duration,
-            fadeIn + data.duration + fadeOut,
+            data.Position,
+            data.Radius,
+            data.SoundClass.Frequency,
+            data.Intensity,
+            data.Duration,
+            fadeIn + data.Duration + fadeOut,
             fadeIn,
             fadeOut
         );
@@ -144,12 +144,12 @@ public class EcholocationManager : MonoBehaviour
     public void AddAudioSphereHandler(SoundEmissionData data)
     {
         var newSphere = new AudioSphere(
-            data.position,
-            data.radius,
-            data.frequency,
-            data.intensity,
-            data.duration,
-            fadeInDuration + data.duration + fadeOutDuration,
+            data.Position,
+            data.Radius,
+            data.SoundClass.Frequency,
+            data.Intensity,
+            data.Duration,
+            fadeInDuration + data.Duration + fadeOutDuration,
             fadeInDuration,
             fadeOutDuration
         );
