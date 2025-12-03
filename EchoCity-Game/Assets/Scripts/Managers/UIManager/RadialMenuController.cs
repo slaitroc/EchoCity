@@ -19,20 +19,18 @@ public class RadialMenuController : MonoBehaviour
     private VisualElement _radialCenter;
     private VisualElement _infoPanel;
     private Label _infoText;
-
     private Camera _camera;
     private bool _isOpen;
 
-    #region Keep track of runtime inventory items
-    private class RuntimeItem
+
+    void Awake()
     {
-        public InventoryItem InventoryItem;
-        public VisualElement Element;
+        
+        if (playerInventory == null)
+        {
+            Log.E("PlayerInventory not found in RadialMenuController", "#ff0000", "RADIAL MENU");
+        }
     }
-
-    private readonly List<RuntimeItem> _runtimeItems = new();
-    #endregion
-
 
     IEnumerator InitCallbacksNextFrame()
     {
@@ -55,7 +53,6 @@ public class RadialMenuController : MonoBehaviour
 
         _radialCenter.RegisterCallback<GeometryChangedEvent>(evt => LayoutItems());
 
-        MethodsUI.ShowCursor();
         RebuildFromInventory();
     }
 
@@ -79,6 +76,11 @@ public class RadialMenuController : MonoBehaviour
         ClearHover();
         _infoPanel.style.display = DisplayStyle.None;
         MethodsUI.HideCursor();
+    }
+
+    void Update()
+    {
+        MethodsUI.SetCursorState(true);
     }
 
     private void UpdateHover(VisualElement picked)
@@ -114,9 +116,9 @@ public class RadialMenuController : MonoBehaviour
             return;
 
         InventoryItem invItem = item.userData as InventoryItem;
-        if (invItem != null && invItem.Data != null)
+        if (invItem != null)
         {
-            _infoText.text = invItem.Data.PickableDescription;
+            _infoText.text = invItem.Data.Description;
         }
         else
         {
@@ -156,41 +158,19 @@ public class RadialMenuController : MonoBehaviour
 
     public void RebuildFromInventory()
     {
-        ClearRadialItems();
-
         if (playerInventory == null) return;
 
         foreach (InventoryItem invItem in playerInventory.Items)
         {
+            if (invItem == null) continue;
             CreateRadialItem(invItem);
         }
     }
 
-    private void ClearRadialItems()
-    {
-        // Remove existing runtime elements from UI
-        foreach (RuntimeItem runtimeItem in _runtimeItems)
-        {
-            runtimeItem.Element.RemoveFromHierarchy();
-        }
-
-        _runtimeItems.Clear();
-
-        // If you still have static radial-item elements in UXML and want to remove them too:
-        var staticItems = _radialCenter
-            .Query<VisualElement>(className: "radial-item")
-            .ToList();
-
-        foreach (var element in staticItems)
-        {
-            element.RemoveFromHierarchy();
-        }
-    }
 
     private void CreateRadialItem(InventoryItem invItem)
     {
-        SOPickableData data = invItem.Data;
-        if (data == null) return;
+        PickableData data = invItem.Data;
 
         VisualElement itemElement = new VisualElement();
         itemElement.AddToClassList("radial-item");
@@ -199,26 +179,20 @@ public class RadialMenuController : MonoBehaviour
         itemElement.userData = invItem;
 
         // Icon
-        if (data.PickableIcon != null)
+        if (data.Icon != null)
         {
             VisualElement iconElement = new VisualElement();
             iconElement.AddToClassList("radial-item-icon");
-            iconElement.style.backgroundImage = new StyleBackground(data.PickableIcon);
+            iconElement.style.backgroundImage = new StyleBackground(data.Icon);
             itemElement.Add(iconElement);
         }
 
         // Label with the item name
-        Label label = new Label(data.PickableName);
+        Label label = new Label(data.Name);
         label.AddToClassList("radial-item-label");
         itemElement.Add(label);
 
         _radialCenter.Add(itemElement);
-
-        _runtimeItems.Add(new RuntimeItem
-        {
-            InventoryItem = invItem,
-            Element = itemElement
-        });
     }
 
     private void SelectUnderPointer(Vector2 mouseScreenPos)
@@ -235,9 +209,9 @@ public class RadialMenuController : MonoBehaviour
         {
             InventoryItem invItem = item.userData as InventoryItem;
 
-            if (invItem != null && invItem.Data != null)
+            if (invItem != null)
             {
-                Debug.Log($"Radial menu selected: {invItem.Data.PickableName}");
+                Debug.Log($"Radial menu selected: {invItem.Data.Name}");
                 // TODO: raise event to gameplay (e.g. use/equip this InventoryItem)
             }
         }

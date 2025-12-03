@@ -15,13 +15,12 @@ public class PauseMenuController : MonoBehaviour
     private const string _LOG_COLOR = "#d900ffff";
 
     [Header("Invoking events")]
-    [SerializeField] private SOEventVoid pauseEvent;
-    [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
+    [SerializeField] private SOEventVoid pauseGameEvent;
+    [SerializeField] private SOEventVoid pauseMenuEvent;
 
     [Header("UI ")]
     [SerializeField] private UIManager uiManager;
     [SerializeField] private UIDocument uiDocument;
-    [SerializeField] private InputActionAsset inputActionAsset;
 
     #region Private Fields
     private VisualElement _root;
@@ -41,7 +40,6 @@ public class PauseMenuController : MonoBehaviour
 
         StartCoroutine(InitCallbacksNextFrame());
 
-        uiManager.DisablePlayerActionMap();
         uiManager.EnableUIActionMap();
         _showCursor = true;
     }
@@ -66,7 +64,7 @@ public class PauseMenuController : MonoBehaviour
                 _isNavMode = false;
             }
         });
-        
+
         _root.RegisterCallback<MouseOverEvent>(evt =>
         {
             foreach (var button in buttons)
@@ -111,7 +109,11 @@ public class PauseMenuController : MonoBehaviour
             button?.Blur();
     }
 
-    private void ResumeClickHandler() => pauseEvent.RaiseEvent();
+    private void ResumeClickHandler()
+    {
+        pauseMenuEvent?.RaiseEvent();
+        pauseGameEvent?.RaiseEvent();
+    }
     private void SettingsClickHandler() => Log.D("Settings button clicked", _LOG_COLOR, _LOG_TAG);
     private void QuitClickHandler() => Log.D("Quit To Title button clicked", _LOG_COLOR, _LOG_TAG);
 
