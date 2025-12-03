@@ -438,6 +438,17 @@ MonoBehaviour:
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
   echolocationManager: {fileID: 814197899}
+--- !u!114 &2009965282 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4735677539010842759, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+  m_PrefabInstance: {fileID: 6669080887246322971}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e087ecce43ebbff45a1b360637807d93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2054989319
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,19 +515,6 @@ MonoBehaviour:
   disablePlayerActionMapEvent: {fileID: 11400000, guid: 724e4739b1e766149aa1e28897dc63c7, type: 2}
   disableUIActionMapEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
   enableUIActionMapEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
---- !u!114 &424348136419952812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6478278466478294477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a9a965804c3d4fdbb0f47a6aa6e2e35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
 --- !u!223 &678364005207803202
 Canvas:
   m_ObjectHideFlags: 0
@@ -553,7 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputActionAsset: {fileID: -944628639613478452, guid: f24b24b4444f04457a7a21a9f6824076, type: 3}
-  starterAssetsInputs: {fileID: 0}
+  starterAssetsInputs: {fileID: 2009965282}
   areaInteractionEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
   pauseEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
   canInteractStartEvent: {fileID: 11400000, guid: 96d2037cf95b248c69bf68e590b210f4, type: 2}
@@ -717,13 +715,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6478278466478294477}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfbc07f97f77643a592992fff687fed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hudDocument: {fileID: 5473256389446626667}
-  playerInventory: {fileID: 424348136419952812}
+  playerInventory: {fileID: 0}
   startAngleDegrees: -90
 --- !u!1 &2949632668922807616
 GameObject:
@@ -936,7 +934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   switchGameStateEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
   playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
-  newAudioSphereEvent: {fileID: 0}
+  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   pauseGameEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
   interactEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
   intEventExample: {fileID: 11400000, guid: 3bb7e0375aa9dca4db9c6c3d9993e3d0, type: 2}
@@ -967,7 +965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6421207039007059204
 RectTransform:
   m_ObjectHideFlags: 0
@@ -999,7 +997,6 @@ GameObject:
   - component: {fileID: 5473256389446626667}
   - component: {fileID: 2290967412196608277}
   - component: {fileID: 2942993492690879484}
-  - component: {fileID: 424348136419952812}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -1315,10 +1312,10 @@ SceneRoots:
   - {fileID: 6669080887246322971}
   - {fileID: 2762836760863263313}
   - {fileID: 2054989320}
-  - {fileID: 3701613254484343400}
   - {fileID: 6493981165238674845}
   - {fileID: 6491948652976068362}
   - {fileID: 511452572}
   - {fileID: 460323341}
   - {fileID: 814197900}
   - {fileID: 9046182333041855954}
+  - {fileID: 3701613254484343400}
