@@ -49,9 +49,16 @@ public class EnemyFSM
         float distToPlayer = Vector3.Distance(enemyAI.transform.position, enemyAI.player.position);
         
         // GLOBAL TRIGGER 1: MandatoryChase
-        // From ANY state (except if already in MandatoryChaseState):
-        // If A >= A_enter (1.0) → MandatoryChaseState
-        if (CurrentState != mandatoryChaseState && attraction >= enemyAI.enemyData.NoiseThreshold)
+        // Solo se: !HasConfirmedPlayer, !IsNoiseChaseActive, e CurrentState è uno degli stati non-chase specifici
+        // Se A >= A_enter (1.0) → MandatoryChaseState
+        bool canEnterMandatoryChase = !enemyAI.HasConfirmedPlayer 
+            && !enemyAI.IsNoiseChaseActive
+            && (CurrentState == patrolState || 
+                CurrentState == standAndExaminateState || 
+                CurrentState == checkSoundState || 
+                CurrentState == gettingConfusedState);
+
+        if (canEnterMandatoryChase && attraction >= enemyAI.enemyData.NoiseThreshold)
         {
             SwitchState(mandatoryChaseState);
             return;

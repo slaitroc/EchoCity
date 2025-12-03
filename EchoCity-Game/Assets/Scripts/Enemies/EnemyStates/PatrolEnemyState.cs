@@ -20,7 +20,7 @@ public class PatrolEnemyState : EnemyState
     {
         _enemyAI.CurrentState = EnemyStatesEnum.Patrol;
         _enemyAI.attackRangeDetector.attackCollider.enabled = false;
-        
+
         // Reset confirmation flag when returning to patrol (after losing player)
         _enemyAI.HasConfirmedPlayer = false;
         

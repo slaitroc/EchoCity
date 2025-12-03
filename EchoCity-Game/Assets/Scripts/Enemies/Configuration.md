@@ -196,13 +196,13 @@ public class NoiseUIManager : MonoBehaviour
     void OnEnable()
     {
         if (noiseUIEvent != null)
-            noiseUIEvent.OnEventRaised += OnNoiseUpdate;
+        noiseUIEvent.OnEventRaised += OnNoiseUpdate;
     }
     
     void OnDisable()
     {
         if (noiseUIEvent != null)
-            noiseUIEvent.OnEventRaised -= OnNoiseUpdate;
+        noiseUIEvent.OnEventRaised -= OnNoiseUpdate;
     }
     
     void OnNoiseUpdate(EnemyNoiseData data)
@@ -242,13 +242,13 @@ public class InvestigationEventListener : MonoBehaviour
     void OnEnable()
     {
         if (investigationEvent != null)
-            investigationEvent.OnEventRaised += OnInvestigation;
+        investigationEvent.OnEventRaised += OnInvestigation;
     }
     
     void OnDisable()
     {
         if (investigationEvent != null)
-            investigationEvent.OnEventRaised -= OnInvestigation;
+        investigationEvent.OnEventRaised -= OnInvestigation;
     }
     
     void OnInvestigation(EnemyInvestigationData data)

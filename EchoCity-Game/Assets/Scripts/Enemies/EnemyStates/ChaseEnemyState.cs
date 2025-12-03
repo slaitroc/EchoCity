@@ -11,8 +11,9 @@ public class ChaseEnemyState : EnemyState
     public override void Enter()
     {
         _enemyAI.CurrentState = EnemyStatesEnum.Chase;
-        _enemyAI.attackRangeDetector.attackCollider.enabled = false;
         
+        _enemyAI.attackRangeDetector.attackCollider.enabled = false;
+
         // Enemy has confirmed player's existence (real chase started)
         _enemyAI.HasConfirmedPlayer = true;
 
@@ -56,7 +57,7 @@ public class ChaseEnemyState : EnemyState
             // Esci dal ChaseState solo quando: A < 0.8 E d > 10m
             // Il nemico ha PERSO il player dopo un vero chase → sempre LostTargetState
             _fsm.SwitchState(_fsm.lostTargetState);
-        }
+    }
     }
 
 
