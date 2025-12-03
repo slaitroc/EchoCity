@@ -83,7 +83,7 @@ namespace StarterAssets
 
 
 #if ENABLE_INPUT_SYSTEM
-        private PlayerInput _playerInput;
+    // PlayerInput removed: controllers read directly from StarterAssetsInputs
 #endif
         private CharacterController _controller;
         private StarterAssetsInputs _input;
@@ -96,9 +96,9 @@ namespace StarterAssets
             get
             {
 #if ENABLE_INPUT_SYSTEM
-                return _playerInput.currentControlScheme == "KeyboardMouse";
+                return UnityEngine.InputSystem.Mouse.current != null;
 #else
-				return false;
+                return false;
 #endif
             }
         }
@@ -116,11 +116,16 @@ namespace StarterAssets
         {
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM
-            _playerInput = GameObject.FindGameObjectWithTag("InputManager")?.GetComponent<PlayerInput>();
-#else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-#endif
+
+            // fallback: try to find StarterAssetsInputs on the Player-tagged object
+            if (_input == null)
+            {
+                _input = GameObject.FindGameObjectWithTag("Player")?.GetComponent<StarterAssetsInputs>();
+                if (_input == null)
+                {
+                    Debug.LogError("StarterAssetsInputs component not found. EC_FirstPersonController requires StarterAssetsInputs to read input values.");
+                }
+            }
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;

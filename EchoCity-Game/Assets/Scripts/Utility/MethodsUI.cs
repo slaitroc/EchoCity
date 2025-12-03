@@ -2,16 +2,24 @@ using UnityEngine;
 
 public static class MethodsUI
 {
+
+    public static void SetCursorState(bool visible = true)
+    {
+        if (visible)
+            ShowCursor();
+        else
+            HideCursor();
+    }
     public static void ShowCursor()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
     }
 
     public static void HideCursor()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
     }
 
 }
