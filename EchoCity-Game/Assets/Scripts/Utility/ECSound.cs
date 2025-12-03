@@ -69,6 +69,7 @@ namespace EchoCity
             GameObject tempGO = new GameObject("TempAudio");
             tempGO.transform.position = position;
             AudioSource aSource = tempGO.AddComponent<AudioSource>();
+            aSource.spatialBlend = 1.0f; // 3D sound
             aSource.clip = clip;
             aSource.volume = volume;
             aSource.outputAudioMixerGroup = mixerGroup == null ? _mixer.FindMatchingGroups("Master")[0] : _mixer.FindMatchingGroups(mixerGroup)[0];
