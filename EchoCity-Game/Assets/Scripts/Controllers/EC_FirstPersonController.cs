@@ -53,7 +53,7 @@ namespace StarterAssets
         public float BottomClamp = -90.0f;
 
         [System.Serializable]
-        public class GroundFootstep
+        public class GroundSound
         {
             public LayerMask layer;
             public SOSoundSource SoundSource;
@@ -62,8 +62,13 @@ namespace StarterAssets
         [Header("Invoking Events")]
         public SOSoundEmissionDataEvent newAudioSphereEvent;
 
+        [Header("Sound Sources")]
+        [Tooltip("Sound played when character lands on ground")]
+        public GroundSound[] landingSounds;
+        [Tooltip("Sounds played on different types of ground")]
+        public GroundSound[] footstepSounds;
+
         [Header("Footstep/Ground Settings")]
-        public GroundFootstep[] groundTypes;
         public float rayDistance = 1.3f;
         public float stepSpeedMultiplier = 0.5f;
 
@@ -81,6 +86,8 @@ namespace StarterAssets
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
+        // landing detection
+        private bool _prevGrounded;
 
 #if ENABLE_INPUT_SYSTEM
     // PlayerInput removed: controllers read directly from StarterAssetsInputs
@@ -130,14 +137,22 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            // init landing detection
+            _prevGrounded = Grounded;
         }
 
         private void Update()
         {
+            _prevGrounded = Grounded;
+
             JumpAndGravity();
             GroundedCheck();
             Move();
             HandlePlayerFootsteps();
+
+            if (!_prevGrounded && Grounded && _verticalVelocity < -1.0f)
+                PlayLandingSound();
         }
 
         private void LateUpdate()
@@ -316,12 +331,32 @@ namespace StarterAssets
             {
                 int hitLayer = hit.collider.gameObject.layer;
 
-                for (int i = 0; i < groundTypes.Length; i++)
+                for (int i = 0; i < footstepSounds.Length; i++)
                 {
-                    if ((groundTypes[i].layer.value & (1 << hitLayer)) != 0)
+                    if ((footstepSounds[i].layer.value & (1 << hitLayer)) != 0)
                     {
-                        SOSoundSource soundSource = groundTypes[i].SoundSource;
+                        SOSoundSource soundSource = footstepSounds[i].SoundSource;
                         ECSound.PlayRandomClipAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void PlayLandingSound()
+        {
+            RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, rayDistance))
+            {
+                int hitLayer = hit.collider.gameObject.layer;
+
+                for (int i = 0; i < landingSounds.Length; i++)
+                {
+                    if ((landingSounds[i].layer.value & (1 << hitLayer)) != 0)
+                    {
+                        SOSoundSource soundSource = landingSounds[i].SoundSource;
+                        ECSound.PlaySoundAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
                         return;
                     }
                 }
