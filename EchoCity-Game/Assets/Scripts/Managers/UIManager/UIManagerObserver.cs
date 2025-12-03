@@ -4,26 +4,26 @@ using UnityEngine;
 public class UIManagerObserver : MonoBehaviour
 {
     [Header("Observed Events")]
-    [SerializeField] private SOEventVoid pauseEvent;
+    [SerializeField] private SOEventVoid pauseMenuEvent;
     [SerializeField] private SOEventVoid canInteractStartEvent;
     [SerializeField] private SOEventVoid canInteractStopEvent;
     [SerializeField] private SOEventVoid openRadialMenuEvent;
     [SerializeField] private SOEventVoid closeRadialMenuEvent;
-    [SerializeField] private SOPickableDataEvent addInventoryItemEvent;
+    [SerializeField] private SOPickableDataGameObjectEvent addInventoryItemEvent;
     // [SerializeField] private SOPickableDataEvent removeInventoryItemEvent;
     [SerializeField] private SOEventVoid rebuildRadialMenuEvent;
-   
-    
+
+
     [Header("GO with Handlers")]
     [SerializeField] private UIManager uiManager;
 
-    
+
     void OnEnable()
     {
-        if (pauseEvent)
+        if (pauseMenuEvent)
         {
-            pauseEvent.OnEventRaised -= uiManager.PauseMenuHandler;
-            pauseEvent.OnEventRaised += uiManager.PauseMenuHandler;
+            pauseMenuEvent.OnEventRaised -= uiManager.PauseMenuHandler;
+            pauseMenuEvent.OnEventRaised += uiManager.PauseMenuHandler;
         }
 
         if (canInteractStartEvent)
@@ -40,21 +40,17 @@ public class UIManagerObserver : MonoBehaviour
 
         if (openRadialMenuEvent)
         {
-            openRadialMenuEvent.OnEventRaised -= uiManager.RadialMenuOpenHandler;
-            openRadialMenuEvent.OnEventRaised += uiManager.RadialMenuOpenHandler;
+            openRadialMenuEvent.OnEventRaised -= uiManager.OpenRadialMenuHandler;
+            openRadialMenuEvent.OnEventRaised += uiManager.OpenRadialMenuHandler;
         }
 
         if (closeRadialMenuEvent)
         {
-            closeRadialMenuEvent.OnEventRaised -= uiManager.RadialMenuCloseHandler;
-            closeRadialMenuEvent.OnEventRaised += uiManager.RadialMenuCloseHandler;
+            closeRadialMenuEvent.OnEventRaised -= uiManager.CloseRadialMenuHandler;
+            closeRadialMenuEvent.OnEventRaised += uiManager.CloseRadialMenuHandler;
         }
 
-        if (addInventoryItemEvent)
-        {
-            addInventoryItemEvent.OnEventRaised -= uiManager.AddInventoryItemHandler;
-            addInventoryItemEvent.OnEventRaised += uiManager.AddInventoryItemHandler;
-        }
+
 
         // if (removeInventoryItemEvent)
         // {
@@ -68,16 +64,15 @@ public class UIManagerObserver : MonoBehaviour
             rebuildRadialMenuEvent.OnEventRaised += uiManager.RebuildRadialMenuHandler;
         }
     }
-    
-    
+
+
     void OnDisable()
     {
-        if (pauseEvent) pauseEvent.OnEventRaised -= uiManager.PauseMenuHandler;
+        if (pauseMenuEvent) pauseMenuEvent.OnEventRaised -= uiManager.PauseMenuHandler;
         if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= uiManager.HUDInteractableHandler;
         if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= uiManager.HUDInteractableHandler;
-        if (openRadialMenuEvent) openRadialMenuEvent.OnEventRaised -= uiManager.RadialMenuOpenHandler;
-        if (closeRadialMenuEvent) closeRadialMenuEvent.OnEventRaised -= uiManager.RadialMenuCloseHandler;
-        if (addInventoryItemEvent) addInventoryItemEvent.OnEventRaised -= uiManager.AddInventoryItemHandler;
+        if (openRadialMenuEvent) openRadialMenuEvent.OnEventRaised -= uiManager.OpenRadialMenuHandler;
+        if (closeRadialMenuEvent) closeRadialMenuEvent.OnEventRaised -= uiManager.CloseRadialMenuHandler;
         // if (removeInventoryItemEvent) removeInventoryItemEvent.OnEventRaised -= uiManager.RemoveInventoryItemHandler;
         if (rebuildRadialMenuEvent) rebuildRadialMenuEvent.OnEventRaised -= uiManager.RebuildRadialMenuHandler;
     }

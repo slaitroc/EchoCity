@@ -4,6 +4,12 @@ using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
+#pragma warning disable CS0414
+    private const string _LOG_COLOR = "cyan";
+    private const string _LOG_TAG_FULL = "UI MANAGER";
+#pragma warning restore CS0414
+
+    [SerializeField] private UIInput _uiInput;
     [SerializeField] private PauseMenuController _pauseMenuController;
 
     [Header("HUD")]
@@ -12,29 +18,28 @@ public class UIManager : MonoBehaviour
 
     [Header("Invoking Events")]
     [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
-    [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
-    [SerializeField] private SOEventVoid disableUIActionMapEvent;
-    [SerializeField] private SOEventVoid enableUIActionMapEvent;
+    // [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
 
     private GameObject _pauseMenu;
     private GameObject HUD;
 
-    private PlayerInventory _playerInventory;
-
+    [SerializeField] private PlayerInventory _playerInventory;
 
     void Awake()
     {
         _pauseMenu = _pauseMenuController.gameObject;
         HUD = _crosshairController.gameObject;
 
-        _playerInventory = _crosshairController.GetComponent<PlayerInventory>();
+        if (_playerInventory == null)
+        {
+            Log.E("PlayerInventory reference is missing in UIManager!", _LOG_COLOR, _LOG_TAG_FULL);
+        }
     }
 
     public void PauseMenuHandler() => _pauseMenu.SetActive(!_pauseMenu.activeSelf);
     public void HUDInteractableHandler() => _crosshairController.IsInteractable(!_crosshairController.isInteractable);
-    public void RadialMenuOpenHandler() => _radialMenuController.enabled = true;
-    public void RadialMenuCloseHandler() => _radialMenuController.enabled = false;
-    public void AddInventoryItemHandler(SOPickableData data) => _playerInventory.AddItem(data);
+    public void OpenRadialMenuHandler() => _radialMenuController.enabled = true;
+    public void CloseRadialMenuHandler() => _radialMenuController.enabled = false;
 
     public void RemoveInventoryItemHandler(InventoryItem item)
     {
@@ -48,9 +53,7 @@ public class UIManager : MonoBehaviour
         Log.D("Rebuild Radial Menu Handler", "green", "UI MANAGER");
     }
 
-
-    public void DisablePlayerActionMap() => disablePlayerActionMapEvent?.RaiseEvent();
-    public void DisableUIActionMap() => disableUIActionMapEvent?.RaiseEvent();
-    public void EnableUIActionMap() => enableUIActionMapEvent?.RaiseEvent();
     public void EnablePlayerActionMap() => enablePlayerActionMapEvent?.RaiseEvent();
+    public void EnableUIActionMap() => _uiInput.EnableUIActionMap();
+    public void DisableUIActionMap() => _uiInput.DisableUIActionMap();
 }
