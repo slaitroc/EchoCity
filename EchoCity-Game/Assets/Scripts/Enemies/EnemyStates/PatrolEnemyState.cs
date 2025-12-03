@@ -20,6 +20,12 @@ public class PatrolEnemyState : EnemyState
     {
         _enemyAI.CurrentState = EnemyStatesEnum.Patrol;
         _enemyAI.attackRangeDetector.attackCollider.enabled = false;
+        
+        // Reset confirmation flag when returning to patrol (after losing player)
+        _enemyAI.HasConfirmedPlayer = false;
+        
+        // Reset noise chase flag: quando torno in patrol, considero chiusa qualsiasi noise-chase
+        _enemyAI.IsNoiseChaseActive = false;
 
         _agent.isStopped = false;
         _agent.stoppingDistance = 0f;
@@ -34,14 +40,17 @@ public class PatrolEnemyState : EnemyState
         float targetSpeed = isWaitingAtWaypoint ? 0f : _enemyData.PatrolSpeed;
         _animator.SetFloat(_animSpeedParameter, targetSpeed, 0.4f, Time.deltaTime);
 
-        // Check attraction - if threshold is exceeded, start chasing
-        // States only react to attraction (already calculated by EnemyAI)
-        if (attraction >= _enemyData.NoiseThreshold)
+        // Check for confusing sound source (before other checks)
+        if (_enemyAI.ShouldBeDistractedByConfusingSound())
         {
-            // Switch to chase state (will chase towards sound position, not player)
-            _fsm.SwitchState(_fsm.chaseState);
+            _fsm.SwitchState(_fsm.gettingConfusedState);
             return;
         }
+
+        // Note: Global triggers in EnemyFSM handle:
+        // - A >= 1.0 → MandatoryChaseState
+        // - d <= 10m → ChaseDistanceState
+        // So PatrolState just continues patrolling if conditions are met
 
         if (isWaitingAtWaypoint)
         {
@@ -58,7 +67,6 @@ public class PatrolEnemyState : EnemyState
         {
             StartWaitAtWaypoint();
         }
-
     }
 
     public override void Exit()

@@ -1,8 +1,10 @@
 using UnityEngine;
 
 /// <summary>
-/// State where enemy stands at the sound position and examines the area.
-/// Plays investigation phrases and checks if player is nearby or if attraction rises.
+/// State of SUSPICION before confirming player's existence.
+/// Enemy has only HEARD something, hasn't done a real chase yet.
+/// Used only when HasConfirmedPlayer == false.
+/// Phrases like: "Mi è sembrato di sentire qualcosa...", "Strano...".
 /// </summary>
 public class StandAndExaminateState : EnemyState
 {
@@ -14,8 +16,7 @@ public class StandAndExaminateState : EnemyState
     private float _examinationStartTime;
     private bool _hasPlayedPhrase = false;
     private float _lastPhrasePlayTime = 0f;
-    private const float EXAMINATION_DURATION = 7f; // How long to examine before returning to patrol
-    private const float PLAYER_DETECTION_RANGE = 3f; // If player is this close, start chasing
+    private const float EXAMINATION_DURATION = 5f; // How long to examine before checking conditions
     private const float PHRASE_COOLDOWN = 3f; // Minimum time between playing phrases (prevents spam)
     
     public StandAndExaminateState(EnemyAI enemyAI, EnemyFSM fsm) : base(enemyAI, fsm) { }
@@ -24,6 +25,18 @@ public class StandAndExaminateState : EnemyState
     {
         _enemyAI.CurrentState = EnemyStatesEnum.StandAndExaminate;
         _enemyAI.attackRangeDetector.attackCollider.enabled = false;
+
+        // Play StandAndExamine animation using trigger
+        PlayStandAndExamineAnimation();
+
+        // Verifica: questo stato è solo per sospetto PRE-CHASE
+        // Se HasConfirmedPlayer == true, non dovresti essere qui (errore)
+        if (_enemyAI.HasConfirmedPlayer)
+        {
+            Log.W("StandAndExaminateState entered but HasConfirmedPlayer is true. This should not happen. Going to LostTargetState.", _LOG_COLOR, _LOG_TAG);
+            _fsm.SwitchState(_fsm.lostTargetState);
+            return;
+        }
 
         // Store examination position (sound position)
         _examinationPosition = _enemyAI.GetSoundPosition();
@@ -41,11 +54,11 @@ public class StandAndExaminateState : EnemyState
         _agent.isStopped = true;
         _agent.ResetPath();
         
-        // Play investigation phrase (audio clip) only if cooldown has passed
+        // Play suspicion phrase (audio clip) only if cooldown has passed
         // This prevents audio from playing too frequently if state is re-entered
         if (Time.time - _lastPhrasePlayTime >= PHRASE_COOLDOWN)
         {
-            _enemyAI.PlayInvestigationPhrase();
+            _enemyAI.PlaySuspicionPhrase();
             _hasPlayedPhrase = true;
             _lastPhrasePlayTime = Time.time;
         }
@@ -59,47 +72,33 @@ public class StandAndExaminateState : EnemyState
         // Stand still during examination
         _animator.SetFloat(_animSpeedParameter, 0f, 0.2f, Time.deltaTime);
 
-        // PRIORITY 1: If attraction > 1.0, ALWAYS resume chase of PLAYER
-        if (attraction >= _enemyData.NoiseThreshold)
-        {
-            _fsm.SwitchState(_fsm.chaseState);
-            return;
-        }
-
-        // PRIORITY 2: Check if player is very close (<= 3m) - start chasing
         float distToPlayer = Vector3.Distance(_enemyAI.transform.position, _enemyAI.player.position);
-        
-        if (distToPlayer <= PLAYER_DETECTION_RANGE)
+
+        // Check for confusing sound source (enemy gets bored and goes to investigate)
+        if (_enemyAI.ShouldBeDistractedByConfusingSound())
         {
-            // Player is close - start chasing PLAYER
-            _fsm.SwitchState(_fsm.chaseState);
+            _fsm.SwitchState(_fsm.gettingConfusedState);
             return;
         }
 
-        // Rotate to look around (optional - can be enhanced with actual rotation logic)
-        // For now, just look towards player direction
-        Vector3 dirToPlayer = _enemyAI.player.position - _enemyAI.transform.position;
-        dirToPlayer.y = 0f;
-        if (dirToPlayer.magnitude > 0.1f)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(dirToPlayer);
-            _enemyAI.transform.rotation = Quaternion.Slerp(
-                _enemyAI.transform.rotation,
-                targetRot,
-                2f * Time.deltaTime
-            );
-        }
+        // Note: Global triggers in EnemyFSM handle:
+        // - A >= 1.0 → MandatoryChaseState
+        // - d <= 10m → ChaseDistanceState
 
         // Check if examination duration elapsed
         if (Time.time - _examinationStartTime >= EXAMINATION_DURATION)
         {
-            // Examination complete - return to patrol
-            // Reset attraction since we didn't find anything
-            _enemyAI.ResetAttraction();
-            // Clear the last chase action position since investigation is complete
-            _enemyAI.ClearLastChaseActionPosition();
-            _fsm.SwitchState(_fsm.patrolState);
-            return;
+            // Examination complete - check conditions:
+            // Se A < A_exit (0.8) E d > D_enter (10m) → PatrolState
+            // Se A >= A_exit (0.8) E d > D_enter (10m) → rimane in StandAndExamineState
+            if (attraction < _enemyData.NoiseLoseThreshold && distToPlayer > _enemyData.D_enter)
+            {
+                // Lost interest and player is far → return to patrol
+                _enemyAI.ResetAttraction();
+                _enemyAI.ClearLastChaseActionPosition();
+                _fsm.SwitchState(_fsm.patrolState);
+            }
+            // Otherwise, continue examining (stay in state)
         }
     }
 

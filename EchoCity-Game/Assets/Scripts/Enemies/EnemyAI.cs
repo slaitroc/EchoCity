@@ -38,6 +38,21 @@ public class EnemyAI : MonoBehaviour
     [Header("FSM")]
     private EnemyFSM _fsm;
     public EnemyStatesEnum CurrentState;
+    
+    [HideInInspector]
+    /// <summary>
+    /// Flag indicating if the enemy has confirmed the player's existence (has chased the player).
+    /// Used to differentiate between StandAndExamineState (suspicion before confirmation) 
+    /// and LostTargetState (loss after a real chase).
+    /// </summary>
+    public bool HasConfirmedPlayer = false;
+    
+    /// <summary>
+    /// True se il nemico sta inseguendo il player perché ha superato la soglia di rumore
+    /// (NoiseThreshold) o è arrivato da un suono investigato. False se sta inseguendo solo
+    /// per distanza (ChaseDistance/Attack senza threshold superata).
+    /// </summary>
+    public bool IsNoiseChaseActive { get; set; } = false;
     #endregion
 
     #region Noise/Annoyance System (Centralized)
@@ -54,7 +69,7 @@ public class EnemyAI : MonoBehaviour
     private bool _hasActiveAction = false;
     
     // Last action position that triggered chase (saved even after action expires)
-    // Used by ChaseSoundState to investigate the source
+    // Used by CheckSoundState to investigate the source
     private Vector3 _lastChaseActionPosition = Vector3.zero;
     private bool _hasLastChaseActionPosition = false;
     #endregion
@@ -134,7 +149,7 @@ public class EnemyAI : MonoBehaviour
             if (_actionTimeRemaining <= 0f)
             {
                 // Action expired - clear it
-                // BUT keep the position if it triggered a chase (for ChaseSoundState)
+                // BUT keep the position if it triggered a chase (for CheckSoundState)
                 _activePlayerAction = null;
                 _hasActiveAction = false;
                 // Don't reset _actionPosition here - it's used by GetSoundPosition()
@@ -227,38 +242,62 @@ public class EnemyAI : MonoBehaviour
     }
 
     /// <summary>
-    /// Play a random investigation phrase audio clip and raise the investigation event
+    /// Helper method to play a random phrase from an array of audio clips
     /// </summary>
-    public void PlayInvestigationPhrase()
+    private void PlayRandomPhrase(AudioClip[] clips)
     {
-        if (enemyData == null || enemyData.InvestigationPhrases == null || enemyData.InvestigationPhrases.Length == 0)
+        if (enemyData == null || clips == null || clips.Length == 0)
             return;
-
+        
         // Filter out null clips
-        System.Collections.Generic.List<AudioClip> validClips = new System.Collections.Generic.List<AudioClip>();
-        foreach (var clip in enemyData.InvestigationPhrases)
+        var validClips = new System.Collections.Generic.List<AudioClip>();
+        foreach (var clip in clips)
         {
             if (clip != null) validClips.Add(clip);
         }
-
         if (validClips.Count == 0) return;
 
-        // Pick a random phrase from the array
         int randomIndex = Random.Range(0, validClips.Count);
         AudioClip selectedClip = validClips[randomIndex];
 
-        // Play the audio clip
         if (audioSource != null && selectedClip != null)
         {
             audioSource.PlayOneShot(selectedClip);
         }
 
-        // Raise investigation event
+        // Raise investigation event (optional: can decide if to raise for each type)
         if (investigationEvent != null)
         {
             var investigationData = new EnemyInvestigationData(this, selectedClip);
             investigationEvent.RaiseEvent(investigationData);
         }
+    }
+
+    /// <summary>
+    /// Play a random investigation phrase audio clip (generic/legacy)
+    /// </summary>
+    public void PlayInvestigationPhrase()
+    {
+        // If you want to keep it as "generic", continue using InvestigationPhrases
+        PlayRandomPhrase(enemyData != null ? enemyData.InvestigationPhrases : null);
+    }
+
+    /// <summary>
+    /// Play a random suspicion phrase (used in StandAndExaminateState)
+    /// Phrases like: "Mi sembrava di sentire qualcosa...", "Strano..."
+    /// </summary>
+    public void PlaySuspicionPhrase()
+    {
+        PlayRandomPhrase(enemyData != null ? enemyData.SuspicionPhrases : null);
+    }
+
+    /// <summary>
+    /// Play a random lost target phrase (used in LostTargetState)
+    /// Phrases like: "So che eri qui... ti ritroverò"
+    /// </summary>
+    public void PlayLostTargetPhrase()
+    {
+        PlayRandomPhrase(enemyData != null ? enemyData.LostTargetPhrases : null);
     }
 
     #region Public Getters for States
@@ -269,11 +308,61 @@ public class EnemyAI : MonoBehaviour
     {
         return _attraction;
     }
+    
+    /// <summary>
+    /// Finds the nearest active confusing sound source within detection range.
+    /// Returns null if no active confusing sound source is found.
+    /// </summary>
+    public IConfusingSoundSource FindNearestConfusingSoundSource()
+    {
+        if (enemyData == null) return null;
+        
+        IConfusingSoundSource nearest = null;
+        float nearestDistance = float.MaxValue;
+        float detectionRange = enemyData.ConfusingSoundDetectionRange;
+        
+        // Find all ConfusingSoundSource components in the scene
+        ConfusingSoundSource[] allSources = FindObjectsOfType<ConfusingSoundSource>();
+        
+        foreach (var source in allSources)
+        {
+            if (!source.IsActive) continue;
+            
+            float distance = Vector3.Distance(transform.position, source.Position);
+            
+            if (distance <= detectionRange && distance < nearestDistance)
+            {
+                nearest = source;
+                nearestDistance = distance;
+            }
+        }
+        
+        return nearest;
+    }
+    
+    /// <summary>
+    /// Checks if there's an active confusing sound source that should distract the enemy.
+    /// Returns true if conditions are met (active source, in range, attraction not too high).
+    /// Note: Player distance check is handled by global trigger in EnemyFSM (ChaseDistance if d <= 10m).
+    /// </summary>
+    public bool ShouldBeDistractedByConfusingSound()
+    {
+        if (enemyData == null) return false;
+        
+        IConfusingSoundSource source = FindNearestConfusingSoundSource();
+        if (source == null) return false;
+        
+        // Check if attraction is too high (already in MandatoryChase territory)
+        // If attraction >= 1.0, global trigger will switch to MandatoryChase anyway
+        if (_attraction >= enemyData.NoiseThreshold) return false;
+        
+        return true;
+    }
 
     /// <summary>
     /// Returns the position of the active player action (or last chase action position if expired)
     /// This is where the action occurred (e.g., where player hit an object)
-    /// Used by ChaseSoundState to investigate the source
+    /// Used by CheckSoundState to investigate the source
     /// </summary>
     public Vector3 GetSoundPosition()
     {
@@ -337,8 +426,11 @@ public class EnemyAI : MonoBehaviour
     {
         if (noiseUIEvent == null || enemyData == null) return;
 
-        // Check if enemy is currently chasing (Chase or Attack state)
-        bool isChasing = CurrentState == EnemyStatesEnum.Chase || CurrentState == EnemyStatesEnum.Attack;
+        // Check if enemy is currently chasing (any chase-related state)
+        bool isChasing = CurrentState == EnemyStatesEnum.MandatoryChase ||
+                         CurrentState == EnemyStatesEnum.Chase ||
+                         CurrentState == EnemyStatesEnum.ChaseDistance ||
+                         CurrentState == EnemyStatesEnum.Attack;
 
         // Pass attraction value and chase status - UI developer decides when to show/hide
         var noiseData = new EnemyNoiseData(this, _attraction, 0f, enemyData.NoiseThreshold, isChasing);
@@ -349,15 +441,16 @@ public class EnemyAI : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         if (enemyData == null) return;
+        
+        // D_enter: distance threshold for proximity chase (yellow)
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, enemyData.ChaseRange);
+        Gizmos.DrawWireSphere(transform.position, enemyData.D_enter);
 
+        // D_exit: distance threshold for losing player (red)
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, enemyData.LoseRange);
+        Gizmos.DrawWireSphere(transform.position, enemyData.D_exit);
 
-        // Gizmos.color = Color.magenta;
-        // Gizmos.DrawWireSphere(transform.position, enemyData.KillRange);
-
+        // AttackRange: distance at which enemy can attack (cyan)
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, enemyData.AttackRange);
     }

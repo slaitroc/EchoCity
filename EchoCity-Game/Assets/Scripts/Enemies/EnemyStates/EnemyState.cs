@@ -36,4 +36,47 @@ public abstract class EnemyState
     /// to events (Handler) or require the EnemyAI to trigger 
     /// an event or a specific action based on their return values.
     public abstract bool OnPlayerHit();
+
+    #region Animation Helper Methods
+    
+    /// <summary>
+    /// Plays the StandAndExamine animation using trigger.
+    /// Resets other special animation triggers and sets Speed to 0.
+    /// </summary>
+    protected void PlayStandAndExamineAnimation()
+    {
+        if (_animator == null) return;
+        _animator.ResetTrigger("Trig_LostTarget");
+        _animator.ResetTrigger("Trig_Confused");
+        _animator.SetTrigger("Trig_StandAndExamine");
+        _animator.SetFloat(_animSpeedParameter, 0f, 0.1f, Time.deltaTime);
+    }
+
+    /// <summary>
+    /// Plays the LostTarget animation using trigger.
+    /// Resets other special animation triggers and sets Speed to 0.
+    /// </summary>
+    protected void PlayLostTargetAnimation()
+    {
+        if (_animator == null) return;
+        _animator.ResetTrigger("Trig_StandAndExamine");
+        _animator.ResetTrigger("Trig_Confused");
+        _animator.SetTrigger("Trig_LostTarget");
+        _animator.SetFloat(_animSpeedParameter, 0f, 0.1f, Time.deltaTime);
+    }
+
+    /// <summary>
+    /// Plays the Confused animation using trigger.
+    /// Resets other special animation triggers and sets Speed to 0.
+    /// </summary>
+    protected void PlayConfusedAnimation()
+    {
+        if (_animator == null) return;
+        _animator.ResetTrigger("Trig_StandAndExamine");
+        _animator.ResetTrigger("Trig_LostTarget");
+        _animator.SetTrigger("Trig_Confused");
+        _animator.SetFloat(_animSpeedParameter, 0f, 0.1f, Time.deltaTime);
+    }
+    
+    #endregion
 }
