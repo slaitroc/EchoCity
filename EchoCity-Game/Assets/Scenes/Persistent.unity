@@ -194,7 +194,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364384940}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -272,7 +272,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 9.999999, y: 2.2204459e-16, z: 9.999999}
   m_Center: {x: 0, y: 0, z: 0}
@@ -14240,7 +14240,7 @@ MonoBehaviour:
   groundTypes:
   - layer:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 0
     SoundSource: {fileID: 11400000, guid: b334c8d639c6d3f4c918dfc0239fb98c, type: 2}
   rayDistance: 1.5
 --- !u!82 &9029115697583543171
