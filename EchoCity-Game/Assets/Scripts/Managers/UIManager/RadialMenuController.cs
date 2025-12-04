@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 
 
 public class RadialMenuController : MonoBehaviour
-{   
+{
     [Header("Needed scripts")]
     [SerializeField] private UIDocument hudDocument;
     [SerializeField] private PlayerInventory playerInventory;
@@ -24,7 +24,7 @@ public class RadialMenuController : MonoBehaviour
     private VisualElement _radialRoot;
     private VisualElement _radialCenter;
     private VisualElement _infoPanel;
-    
+
     private Label _infoTitle;
     private Label _infoText;
     #endregion
@@ -59,7 +59,7 @@ public class RadialMenuController : MonoBehaviour
         _infoTitle = _root.Q<Label>("RadialInfoTitle");
         _infoText = _root.Q<Label>("RadialInfoText");
 
-        for (int i=0; i<_inventoryItems.Length; i++)
+        for (int i = 0; i < _inventoryItems.Length; i++)
         {
             int itemIdx = i; // Capture index for the lambda
 
@@ -108,7 +108,7 @@ public class RadialMenuController : MonoBehaviour
     public void OnDisable()
     {
         if (_selectedIndex != -1) equipItemEvent.RaiseEvent(_selectedIndex, _selectedItem.Data, _selectedPrefab);
-        
+
         _isOpen = false;
         _radialRoot.RemoveFromClassList("active");
         _radialRoot.style.display = DisplayStyle.None;
@@ -116,7 +116,7 @@ public class RadialMenuController : MonoBehaviour
         _crosshair.style.display = DisplayStyle.Flex;
         MethodsUI.HideCursor();
     }
-    
+
 
     void Update()
     {
@@ -144,7 +144,7 @@ public class RadialMenuController : MonoBehaviour
     {
         if (_infoPanel == null || _infoText == null || _radialCenter == null)
             return;
-        
+
         if (item != null)
         {
             InventoryItem invItem = item.userData as InventoryItem;
@@ -168,7 +168,7 @@ public class RadialMenuController : MonoBehaviour
     {
         if (playerInventory == null) return;
 
-        for (int i = 0; i<_inventoryItems.Length; i++)
+        for (int i = 0; i < _inventoryItems.Length; i++)
         {
             UpdateRadialItem(_inventoryItems[i], i);
         }
@@ -189,11 +189,12 @@ public class RadialMenuController : MonoBehaviour
             PickableData data = invItem.Data;
             itemButton.userData = invItem;
 
-            if(data.Icon != null){
-                itemButton.style.backgroundImage = new StyleBackground(data.Icon); 
+            if (data.Icon != null)
+            {
+                itemButton.style.backgroundImage = new StyleBackground(data.Icon);
                 itemButton.Q<Label>().text = "";
             }
-                
+
             itemButton.style.display = DisplayStyle.Flex;
         }
     }

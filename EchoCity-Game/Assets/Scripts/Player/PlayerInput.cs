@@ -76,10 +76,10 @@ namespace EchoCity
                 _playerActionMap["UIRadialMenu"].started += OnOpenUIRadialMenu;
                 _playerActionMap["UIRadialMenu"].performed += OnCloseUIRadialMenu;
                 _playerActionMap["EnterPause"].performed += OnEnterPause;
+                _playerActionMap["DropItem"].performed += OnDropItem;
+                _playerActionMap["UseTool"].performed += OnUseTool;
 
                 _playerActionMap["Test1"].performed += OnTest1;
-                _playerActionMap["Test2"].performed += OnTest2;
-                _playerActionMap["Test3"].performed += OnTest3;
 
             }
 
@@ -225,26 +225,22 @@ namespace EchoCity
 
         private void OnTest1(InputAction.CallbackContext context)
         {
-            //EQUIP ITEM TEST
-            if (context.performed)
-            {
-                itemEquippedEvent.RaiseEvent(0, new PickableData(examplePickable), examplePickable.PickablePrefab);
-            }
+            //TESTS HERE
         }
 
-        private void OnTest2(InputAction.CallbackContext context)
+        private void OnDropItem(InputAction.CallbackContext context)
         {
             //DROP ITEM TEST
             if (context.performed)
                 playerController.DropItem();
         }
 
-        private void OnTest3(InputAction.CallbackContext context)
+        private void OnUseTool(InputAction.CallbackContext context)
         {
             //USE TOOL TEST
             if (context.performed)
             {
-                playerController.UseTool(0);
+                playerController.UseTool();
             }
         }
 

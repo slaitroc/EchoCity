@@ -25,12 +25,16 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
+        [SerializeField] private SOIntEvent itemDroppedEvent;
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
-        [Header("Inventory Sound")]
+
+
+        [Header("Inventory")]
         public SOSoundSource fullInventorySound;
         public EquippedItem equippedItem = null;
+        [SerializeField] private Transform dropPoint;
 
         void OnEnable()
         {
@@ -57,9 +61,9 @@ namespace EchoCity
 
         }
 
-        public void UseTool(int index)
+        public void UseTool()
         {
-            if (equippedItem != null && equippedItem.Index == index)
+            if (equippedItem != null)
             {
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
@@ -79,7 +83,7 @@ namespace EchoCity
         public void DropItem()
         {
             if (equippedItem == null) return;
-            Vector3 dropPosition = transform.position + transform.forward * 1.0f + Vector3.up * 0.5f;
+            Vector3 dropPosition = dropPoint != null ? dropPoint.position : transform.position + transform.forward;
             if (equippedItem.Prefab == null)
             {
                 Log.E("Tried to drop an item but equipped prefab is null. Drop cancelled.", "#ff6666ff", "PLAYER CONTROLLER");
@@ -90,6 +94,7 @@ namespace EchoCity
             }
             materialToggleEvent?.RaiseEvent();
             materialToggleEvent?.RaiseEvent();
+            itemDroppedEvent?.RaiseEvent(equippedItem.Index);
             equippedItem = null;
         }
     }

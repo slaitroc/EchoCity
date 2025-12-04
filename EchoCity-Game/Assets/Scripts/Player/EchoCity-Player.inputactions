@@ -97,7 +97,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Test2",
+                    "name": "DropItem",
                     "type": "Button",
                     "id": "16b84c6d-7149-4f9a-91e4-6e11f7c92ac7",
                     "expectedControlType": "",
@@ -106,7 +106,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Test3",
+                    "name": "UseTool",
                     "type": "Button",
                     "id": "4f8f9cb7-916f-42ab-bfa5-af41bb0a5324",
                     "expectedControlType": "",
@@ -365,7 +365,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "Test2",
+                    "action": "DropItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -376,7 +376,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "Test3",
+                    "action": "UseTool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ab2a089-cb96-4921-b054-bc8348b8947f",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "UseTool",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
