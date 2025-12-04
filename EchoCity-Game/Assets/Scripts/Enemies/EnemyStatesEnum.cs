@@ -2,6 +2,12 @@
 public enum EnemyStatesEnum
 {
     Patrol,
+    MandatoryChase,
     Chase,
-    Attack
+    ChaseDistance,
+    Attack,
+    CheckSound,
+    StandAndExaminate,
+    LostTarget,
+    GettingConfused
 }
