@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace EchoCity
 {
@@ -39,10 +40,11 @@ namespace EchoCity
         [Header("Health Settings")]
         public float maxHealth = 100f;
         public float damageAmount = 70f;
-        public float healthRegenRate = 8f;
-        public float healthRegenDelay = 3f;
+        public float healthRegenRate = 10f;
+        public float healthRegenDelay = 2f;
 
         public float currentHealth = 100f;
+        public Image overlayImage;
 
         private float _lastTimeDamaged;
 
@@ -76,6 +78,15 @@ namespace EchoCity
             {
                 currentHealth += healthRegenRate * Time.deltaTime;
                 currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            }
+
+            // Update overlay opacity based on health
+            if (overlayImage != null)
+            {
+                float healthPercentage = currentHealth / maxHealth;
+                Color overlayColor = overlayImage.color;
+                overlayColor.a = 1f - Mathf.Pow(healthPercentage, 2);
+                overlayImage.color = overlayColor;
             }
         }
 
