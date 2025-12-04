@@ -1617,6 +1617,7 @@ GameObject:
   - component: {fileID: 2220234293748822964}
   - component: {fileID: 4576708405525276458}
   - component: {fileID: 4545727169994910403}
+  - component: {fileID: 6564644645471230419}
   m_Layer: 3
   m_Name: 'EnemyOne '
   m_TagString: Untagged
@@ -1741,6 +1742,25 @@ CapsuleCollider:
   m_Height: 1.68
   m_Direction: 1
   m_Center: {x: 0, y: 0.88, z: 0}
+--- !u!114 &6564644645471230419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467560084565554733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad07c6b1b37f1ed4f8669cb80335127f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newAudioSphereEvent: {fileID: 0}
+  groundTypes:
+  - layer:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    SoundSource: {fileID: 0}
+  rayDistance: 1.5
 --- !u!1 &4999761379328100884
 GameObject:
   m_ObjectHideFlags: 0

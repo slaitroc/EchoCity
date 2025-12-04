@@ -22,18 +22,7 @@ namespace EchoCity
                 Log.W("SoundSource or AudioClip is null. Cannot play sound.", _LOG_COLOR, _LOG_TAG);
                 return;
             }
-            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(
-                position,
-                soundSource.Radius,
-                soundSource.Intensity,
-                soundSource.AudioClip.length,
-                soundSource.SoundClass.Frequency,
-                new SoundClass(
-                    soundSource.SoundClass.RangeFactor,
-                    soundSource.SoundClass.IntensityFactor,
-                    soundSource.SoundClass.Decay
-                )
-            ));
+            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(position, soundSource));
             PlayClipWithTemporaryAudioSource(soundSource.AudioClip, position, soundSource.Volume, mixerGroup);
         }
 
@@ -48,18 +37,7 @@ namespace EchoCity
             var index = Random.Range(0, soundSource.RandomAudioClips.Length);
             AudioClip clip = soundSource.RandomAudioClips[index];
 
-            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(
-                position,
-                soundSource.Radius,
-                soundSource.Intensity,
-                clip.length,
-                soundSource.SoundClass.Frequency,
-                new SoundClass(
-                    soundSource.SoundClass.RangeFactor,
-                    soundSource.SoundClass.IntensityFactor,
-                    soundSource.SoundClass.Decay
-                )
-            ));
+            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(position, soundSource, clip));
             PlayClipWithTemporaryAudioSource(clip, position, soundSource.Volume, mixerGroup);
 
         }
@@ -69,6 +47,7 @@ namespace EchoCity
             GameObject tempGO = new GameObject("TempAudio");
             tempGO.transform.position = position;
             AudioSource aSource = tempGO.AddComponent<AudioSource>();
+            aSource.spatialBlend = 1.0f; // 3D sound
             aSource.clip = clip;
             aSource.volume = volume;
             aSource.outputAudioMixerGroup = mixerGroup == null ? _mixer.FindMatchingGroups("Master")[0] : _mixer.FindMatchingGroups(mixerGroup)[0];

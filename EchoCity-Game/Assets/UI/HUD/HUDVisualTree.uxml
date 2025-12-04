@@ -8,6 +8,50 @@
             <ui:Label name="interaction-key" class="interaction-key" />
             <ui:Label name="interaction-text" text="Interact" class="interaction-text" />
         </ui:VisualElement>
+
+        <!-- Radial Menu Overlay -->
+        <ui:VisualElement name="RadialMenuRoot" class="radial-menu-root">
+            <ui:VisualElement name="RadialCenter" class="radial-center">
+                <!-- menu items -->
+                <ui:VisualElement name="Item_1" class="radial-item">
+                    <ui:Label text="Clap Hands"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_2" class="radial-item">
+                    <ui:Label text="Whistle"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_3" class="radial-item">
+                    <ui:Label text="Maracas"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_4" class="radial-item">
+                    <ui:Label text="Drums"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_5" class="radial-item">
+                    <ui:Label text="Scream"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_6" class="radial-item">
+                    <ui:Label text="Clap Hands"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_7" class="radial-item">
+                    <ui:Label text="Whistle"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_8" class="radial-item">
+                    <ui:Label text="Maracas"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_9" class="radial-item">
+                    <ui:Label text="Drums"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Item_10" class="radial-item">
+                    <ui:Label text="Scream"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="RadialInfoPanel" class="radial-info-panel">
+                <ui:Label name="RadialInfoText" text="" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+
+        <!-- Placeholder for additional HUD panels -->
         <ui:VisualElement name="top-left-panel" class="hud-panel top-left" />
         <ui:VisualElement name="top-right-panel" class="hud-panel top-right" />
         <ui:VisualElement name="bottom-center-panel" class="hud-panel bottom-center" />

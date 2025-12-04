@@ -5,6 +5,8 @@ public class GameManagerObserver : MonoBehaviour
 
     [Header("Observed Events")]
     [SerializeField] private SOEventVoid pauseGameEvent;
+    [SerializeField] private SOEventVoid openRadialMenuEvent;
+    [SerializeField] private SOEventVoid closeRadialMenuEvent;
 
     [Header("GO with Handlers")]
     [SerializeField] private GameManager gameManager;
@@ -21,10 +23,24 @@ public class GameManagerObserver : MonoBehaviour
             pauseGameEvent.OnEventRaised -= gameManager.PauseGameHandler;
             pauseGameEvent.OnEventRaised += gameManager.PauseGameHandler;
         }
+
+        if (openRadialMenuEvent)
+        {
+            openRadialMenuEvent.OnEventRaised -= gameManager.PauseGameHandler;
+            openRadialMenuEvent.OnEventRaised += gameManager.PauseGameHandler;
+        }
+
+        if (closeRadialMenuEvent)
+        {
+            closeRadialMenuEvent.OnEventRaised -= gameManager.PauseGameHandler;
+            closeRadialMenuEvent.OnEventRaised += gameManager.PauseGameHandler;
+        }
     }
 
     void OnDisable()
     {
         if (pauseGameEvent) pauseGameEvent.OnEventRaised -= gameManager.PauseGameHandler;
+        if (openRadialMenuEvent) openRadialMenuEvent.OnEventRaised -= gameManager.PauseGameHandler;
+        if (closeRadialMenuEvent) closeRadialMenuEvent.OnEventRaised -= gameManager.PauseGameHandler;
     }
 }

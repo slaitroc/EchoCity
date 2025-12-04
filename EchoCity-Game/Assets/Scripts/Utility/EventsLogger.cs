@@ -31,11 +31,17 @@ namespace EchoCity
         [SerializeField] private SOIntEvent intEventExample;
         [SerializeField] private SOStringEvent stringEventExample;
         [SerializeField] private SOEventVoid voidEventExample;
+        [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
+        [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
+        [SerializeField] private SOEventVoid enableUIActionMapEvent;
+        [SerializeField] private SOEventVoid disableUIActionMapEvent;
+
+
 
         [Header("Interactables")]
         [SerializeField] private SOAreaInteractableEvent enterInteractionAreaEvent;
         [SerializeField] private SOAreaInteractableEvent exitInteractionAreaEvent;
-        [SerializeField] private SOPickableDataEvent pickedPickableEvent;
+        [SerializeField] private SOPickableDataGameObjectEvent pickedPickableEvent;
 
         [Header("UI")]
         [SerializeField] private SOEventVoid quitToTitleEvent;
@@ -44,75 +50,23 @@ namespace EchoCity
 
         void OnEnable()
         {
-            if (switchGameStateEvent != null)
-            {
-                switchGameStateEvent.OnEventRaised -= OnSwitchGameStateEvent;
-                switchGameStateEvent.OnEventRaised += OnSwitchGameStateEvent;
-            }
-            if (playerHitEvent != null)
-            {
-                playerHitEvent.OnEventRaised -= OnPlayerHit;
-                playerHitEvent.OnEventRaised += OnPlayerHit;
-            }
-
-            if (newAudioSphereEvent != null)
-            {
-                newAudioSphereEvent.OnEventRaised -= OnNewAudioSphereEvent;
-                newAudioSphereEvent.OnEventRaised += OnNewAudioSphereEvent;
-            }
-            if (interactEvent != null)
-            {
-                interactEvent.OnEventRaised -= OnInteractEvent;
-                interactEvent.OnEventRaised += OnInteractEvent;
-            }
-            if (intEventExample != null)
-            {
-                intEventExample.OnEventRaised -= OnIntEventExample;
-                intEventExample.OnEventRaised += OnIntEventExample;
-            }
-            if (stringEventExample != null)
-            {
-                stringEventExample.OnEventRaised -= OnStringEventExample;
-                stringEventExample.OnEventRaised += OnStringEventExample;
-            }
-            if (voidEventExample != null)
-            {
-                voidEventExample.OnEventRaised -= OnVoidEventExample;
-                voidEventExample.OnEventRaised += OnVoidEventExample;
-            }
-            if (enterInteractionAreaEvent != null)
-            {
-                enterInteractionAreaEvent.OnEventRaised -= OnEnterInteractionRangeEvent;
-                enterInteractionAreaEvent.OnEventRaised += OnEnterInteractionRangeEvent;
-            }
-            if (exitInteractionAreaEvent != null)
-            {
-                exitInteractionAreaEvent.OnEventRaised -= OnExitInteractionRangeEvent;
-                exitInteractionAreaEvent.OnEventRaised += OnExitInteractionRangeEvent;
-            }
-            if (pickedPickableEvent != null)
-            {
-                pickedPickableEvent.OnEventRaised -= OnPickedPickableEvent;
-                pickedPickableEvent.OnEventRaised += OnPickedPickableEvent;
-            }
-            if (pauseGameEvent != null)
-            {
-                pauseGameEvent.OnEventRaised -= OnPauseEvent;
-                pauseGameEvent.OnEventRaised += OnPauseEvent;
-            }
-            if (quitToTitleEvent != null)
-            {
-                quitToTitleEvent.OnEventRaised -= OnQuitToTitleEvent;
-                quitToTitleEvent.OnEventRaised += OnQuitToTitleEvent;
-            }
-            if (settingsEvent != null)
-            {
-                settingsEvent.OnEventRaised -= OnSettingsEvent;
-                settingsEvent.OnEventRaised += OnSettingsEvent;
-            }
-
-
-
+            if (switchGameStateEvent != null) switchGameStateEvent.OnEventRaised += OnSwitchGameStateEvent;
+            if (playerHitEvent != null) playerHitEvent.OnEventRaised += OnPlayerHit;
+            if (newAudioSphereEvent != null) newAudioSphereEvent.OnEventRaised += OnNewAudioSphereEvent;
+            if (interactEvent != null) interactEvent.OnEventRaised += OnInteractEvent;
+            if (intEventExample != null) intEventExample.OnEventRaised += OnIntEventExample;
+            if (stringEventExample != null) stringEventExample.OnEventRaised += OnStringEventExample;
+            if (voidEventExample != null) voidEventExample.OnEventRaised += OnVoidEventExample;
+            if (enablePlayerActionMapEvent != null) enablePlayerActionMapEvent.OnEventRaised += OnEnablePlayerActionMapEvent;
+            if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised += OnDisablePlayerActionMapEvent;
+            if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised += OnEnableUIActionMapEvent;
+            if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised += OnDisableUIActionMapEvent;
+            if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised += OnEnterInteractionRangeEvent;
+            if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised += OnExitInteractionRangeEvent;
+            if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised += OnPickedPickableEvent;
+            if (pauseGameEvent != null) pauseGameEvent.OnEventRaised += OnPauseEvent;
+            if (quitToTitleEvent != null) quitToTitleEvent.OnEventRaised += OnQuitToTitleEvent;
+            if (settingsEvent != null) settingsEvent.OnEventRaised += OnSettingsEvent;
         }
 
 
@@ -126,90 +80,52 @@ namespace EchoCity
             if (intEventExample != null) intEventExample.OnEventRaised -= OnIntEventExample;
             if (stringEventExample != null) stringEventExample.OnEventRaised -= OnStringEventExample;
             if (voidEventExample != null) voidEventExample.OnEventRaised -= OnVoidEventExample;
+            if (enablePlayerActionMapEvent != null) enablePlayerActionMapEvent.OnEventRaised -= OnEnablePlayerActionMapEvent;
+            if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised -= OnDisablePlayerActionMapEvent;
+            if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised -= OnEnableUIActionMapEvent;
+            if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised -= OnDisableUIActionMapEvent;
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised -= OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised -= OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised -= OnPickedPickableEvent;
             if (quitToTitleEvent != null) quitToTitleEvent.OnEventRaised -= OnQuitToTitleEvent;
             if (settingsEvent != null) settingsEvent.OnEventRaised -= OnSettingsEvent;
-
         }
 
         #region Game Manager Events
-        private void OnSwitchGameStateEvent(GameStatesEnum from, GameStatesEnum to)
-        {
-            Log.D($"Switch Game State Event Raised from {from} to {to}", _LOG_COLOR, _LOG_TAG);
-        }
-
+        private void OnSwitchGameStateEvent(GameStatesEnum from, GameStatesEnum to) => Log.D($"Switch Game State Event Raised from {from} to {to}", _LOG_COLOR, _LOG_TAG);
         //ui
-        private void OnPauseEvent()
-        {
-            Log.D("Pause Event Raised", _LOG_COLOR, _LOG_TAG);
-        }
+        private void OnPauseEvent() => Log.D("Pause Event Raised", _LOG_COLOR, _LOG_TAG);
         #endregion
 
         #region Enemies
-        private void OnPlayerHit(EnemyAI enemyAI)
-        {
-            Log.D($"Player Hit Event Raised by Enemy: {enemyAI.gameObject.name}", _LOG_COLOR, _LOG_TAG);
-        }
+        private void OnPlayerHit(EnemyAI enemyAI) => Log.D($"Player Hit Event Raised by Enemy: {enemyAI.gameObject.name}", _LOG_COLOR, _LOG_TAG);
         #endregion
 
         #region Echolocation 
-        private void OnNewAudioSphereEvent(SoundEmissionData soundEmissionData)
-        {
-            Log.D($"New Audio Sphere Event Raised at Position: {soundEmissionData.position}, Radius: {soundEmissionData.radius}, Intensity: {soundEmissionData.intensity}", _LOG_COLOR, _LOG_TAG);
-        }
+        private void OnNewAudioSphereEvent(SoundEmissionData soundEmissionData) => Log.D($"New Audio Sphere Event Raised at Position: {soundEmissionData.Position}, Radius: {soundEmissionData.Radius}, Intensity: {soundEmissionData.Intensity}", _LOG_COLOR, _LOG_TAG);
         #endregion
 
         #region Input 
-        private void OnInteractEvent()
-        {
-            Log.D("Interact Event Raised", _LOG_COLOR, _LOG_TAG);
-        }
+        private void OnInteractEvent() => Log.D("Interact Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnIntEventExample(int value) => Log.D($"Int Event Raised with Value: {value}", _LOG_COLOR, _LOG_TAG);
+        private void OnStringEventExample(string value) => Log.D($"String Event Raised with Value: {value}", _LOG_COLOR, _LOG_TAG);
+        private void OnVoidEventExample() => Log.D("Void Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnEnablePlayerActionMapEvent() => Log.D("Enable Player Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnDisablePlayerActionMapEvent() => Log.D("Disable Player Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnEnableUIActionMapEvent() => Log.D("Enable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnDisableUIActionMapEvent() => Log.D("Disable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
 
-        private void OnIntEventExample(int value)
-        {
-            Log.D($"Int Event Raised with Value: {value}", _LOG_COLOR, _LOG_TAG);
-        }
-
-        private void OnStringEventExample(string value)
-        {
-            Log.D($"String Event Raised with Value: {value}", _LOG_COLOR, _LOG_TAG);
-        }
-
-        private void OnVoidEventExample()
-        {
-            Log.D("Void Event Raised", _LOG_COLOR, _LOG_TAG);
-        }
         #endregion
 
         #region Interactable
-        private void OnEnterInteractionRangeEvent(Interactable interactable)
-        {
-            Log.D($"Enter Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_COLOR, _LOG_TAG);
-        }
-
-        private void OnExitInteractionRangeEvent(Interactable interactable)
-        {
-            Log.D($"Exit Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_COLOR, _LOG_TAG);
-        }
-
-        private void OnPickedPickableEvent(SOPickableData data)
-        {
-            Log.D($"Picked Pickable Event Raised for Pickable Data: {data.name}", _LOG_COLOR, _LOG_TAG);
-        }
+        private void OnEnterInteractionRangeEvent(Interactable interactable) => Log.D($"Enter Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_COLOR, _LOG_TAG);
+        private void OnExitInteractionRangeEvent(Interactable interactable) => Log.D($"Exit Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_COLOR, _LOG_TAG);
+        private void OnPickedPickableEvent(PickableData data, GameObject prefab) => Log.D($"Picked Pickable Event Raised for Pickable Data: {data.Name}", _LOG_COLOR, _LOG_TAG);
         #endregion
 
         #region UI
-        private void OnQuitToTitleEvent()
-        {
-            Log.D("Quit To Title Event Raised", _LOG_COLOR, _LOG_TAG);
-        }
-
-        private void OnSettingsEvent()
-        {
-            Log.D("Settings Event Raised", _LOG_COLOR, _LOG_TAG);
-        }
+        private void OnQuitToTitleEvent() => Log.D("Quit To Title Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnSettingsEvent() => Log.D("Settings Event Raised", _LOG_COLOR, _LOG_TAG);
         #endregion
     }
 }
