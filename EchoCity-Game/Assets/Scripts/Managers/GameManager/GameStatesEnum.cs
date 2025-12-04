@@ -4,4 +4,5 @@ public enum GameStatesEnum
     Playing,
     Pause,
     Narration,
+    Death,
 }

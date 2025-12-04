@@ -29,4 +29,10 @@ public class PlayingGameState : GameState
         _fsm.SwitchState(_fsm.PauseState);
         return true;
     }
+
+    public override bool DeathHandler()
+    {
+        _fsm.SwitchState(_fsm.DeathState);
+        return true;
+    }
 }

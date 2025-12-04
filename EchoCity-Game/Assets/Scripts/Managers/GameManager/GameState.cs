@@ -19,4 +19,5 @@ public abstract class GameState
     public abstract GameStatesEnum GetEnum();
 
     public abstract bool PauseGameHandler();
+    public abstract bool DeathHandler();
 }

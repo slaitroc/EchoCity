@@ -22,5 +22,6 @@ public class GameManager : MonoBehaviour
     void Update() => _fsm.Update();
     public void RaiseSwitchStateEvent(GameStatesEnum from, GameStatesEnum to) => switchGameStateEvent.RaiseEvent(from, to);
     public void PauseGameHandler() => _fsm.CurrentState.PauseGameHandler();
+    public void DeathHandler() => _fsm.CurrentState.DeathHandler();
 
 }

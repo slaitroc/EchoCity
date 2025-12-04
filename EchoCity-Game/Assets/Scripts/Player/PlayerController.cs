@@ -27,6 +27,7 @@ namespace EchoCity
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
         [SerializeField] private SOIntEvent itemDroppedEvent;
+        [SerializeField] private SOEventVoid deathEvent;
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
@@ -112,7 +113,7 @@ namespace EchoCity
             if (currentHealth <= 0)
             {
                 Log.W("YOU DIED", "red", LOG_TAG);
-                // TODO: Handle player death
+                deathEvent?.RaiseEvent();
             }
         }
 

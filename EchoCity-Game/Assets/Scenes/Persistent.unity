@@ -344,6 +344,7 @@ MonoBehaviour:
   pauseGameEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
   openRadialMenuEvent: {fileID: 11400000, guid: e584cfa22e1c34caa84982dfcbcb464b, type: 2}
   closeRadialMenuEvent: {fileID: 11400000, guid: a2f0d36f1d42c420e81fd7516009ce1f, type: 2}
+  deathEvent: {fileID: 11400000, guid: 5443b9fde1571418fbe02e900f690105, type: 2}
   gameManager: {fileID: 460323340}
 --- !u!114 &460323340
 MonoBehaviour:
@@ -583,6 +584,7 @@ MonoBehaviour:
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
   itemDroppedEvent: {fileID: 11400000, guid: 3bb7e0375aa9dca4db9c6c3d9993e3d0, type: 2}
+  deathEvent: {fileID: 11400000, guid: 5443b9fde1571418fbe02e900f690105, type: 2}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
   playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
   fullInventorySound: {fileID: 11400000, guid: d2cef0896b5120044ac451ee4dcda5c6, type: 2}
