@@ -10,90 +10,80 @@ public class EnemyAIDebugDisplay : MonoBehaviour
     [Tooltip("Enable/disable the debug display")]
     public bool showDebug = true;
     
-    [Tooltip("Position offset for the debug text (in screen space)")]
-    public Vector2 screenOffset = new Vector2(10, 10);
-    
-    [Tooltip("Font size for debug text")]
-    public int fontSize = 14;
-    
     private EnemyAI _enemyAI;
-    private Camera _mainCamera;
     
     void Start()
     {
         _enemyAI = GetComponent<EnemyAI>();
-        if (_enemyAI == null)
-        {
-            Debug.LogWarning("EnemyAIDebugDisplay: EnemyAI component not found!");
-            enabled = false;
-            return;
-        }
-        
-        _mainCamera = Camera.main;
-        if (_mainCamera == null)
-        {
-            _mainCamera = FindObjectOfType<Camera>();
-        }
     }
     
     void OnGUI()
     {
-        if (!showDebug || _enemyAI == null) return;
+        if (!showDebug || !enabled)
+        {
+            return;
+        }
         
-        // Get current values
-        float attraction = _enemyAI.GetAttraction();
+        if (_enemyAI == null)
+        {
+            GUI.Box(new Rect(20, 20, 400, 150), "ERROR: EnemyAI not found!");
+            return;
+        }
+        
+        // Calcola valori
         float distance = 0f;
+        bool playerFound = false;
         
         if (_enemyAI.player != null)
         {
             distance = Vector3.Distance(transform.position, _enemyAI.player.position);
+            playerFound = true;
         }
         
-        // Get current state
-        string currentState = _enemyAI.CurrentState.ToString();
+        float attraction = _enemyAI.GetAttraction();
         
-        // Create debug text
-        string debugText = $"=== ENEMY DEBUG ===\n";
-        debugText += $"State: {currentState}\n";
-        debugText += $"Distance: {distance:F2}m\n";
-        debugText += $"Attraction: {attraction:F3}\n";
-        debugText += $"HasConfirmedPlayer: {_enemyAI.HasConfirmedPlayer}\n";
-        debugText += $"IsNoiseChaseActive: {_enemyAI.IsNoiseChaseActive}";
+        // Disegna display principale
+        float x = 20f;
+        float y = 20f;
+        float width = 500f;
+        float height = 200f;
         
-        // Set up GUI style
-        GUIStyle style = new GUIStyle(GUI.skin.label);
-        style.fontSize = fontSize;
-        style.normal.textColor = Color.white;
-        style.alignment = TextAnchor.UpperLeft;
-        style.padding = new RectOffset(10, 10, 10, 10);
-        
-        // Background box
+        // Background nero semi-trasparente
+        Texture2D bg = new Texture2D(1, 1);
+        bg.SetPixel(0, 0, new Color(0, 0, 0, 0.8f));
+        bg.Apply();
         GUIStyle boxStyle = new GUIStyle(GUI.skin.box);
-        boxStyle.normal.background = MakeTex(2, 2, new Color(0, 0, 0, 0.7f));
+        boxStyle.normal.background = bg;
         
-        // Calculate position
-        Vector2 position = screenOffset;
+        GUI.Box(new Rect(x, y, width, height), "", boxStyle);
         
-        // Draw background box
-        Vector2 textSize = style.CalcSize(new GUIContent(debugText));
-        Rect boxRect = new Rect(position.x - 5, position.y - 5, textSize.x + 10, textSize.y + 10);
-        GUI.Box(boxRect, "", boxStyle);
+        // Testo
+        GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
+        labelStyle.fontSize = 24;
+        labelStyle.fontStyle = FontStyle.Bold;
+        labelStyle.normal.textColor = Color.white;
         
-        // Draw text
-        GUI.Label(new Rect(position.x, position.y, textSize.x, textSize.y), debugText, style);
-    }
-    
-    private Texture2D MakeTex(int width, int height, Color col)
-    {
-        Color[] pix = new Color[width * height];
-        for (int i = 0; i < pix.Length; i++)
-            pix[i] = col;
+        GUIStyle valueStyle = new GUIStyle(labelStyle);
+        valueStyle.fontSize = 32;
         
-        Texture2D result = new Texture2D(width, height);
-        result.SetPixels(pix);
-        result.Apply();
+        float lineY = y + 20f;
         
-        return result;
+        // Header
+        GUI.Label(new Rect(x + 10f, lineY, width - 20f, 40f), "ENEMY DEBUG", labelStyle);
+        lineY += 50f;
+        
+        // Distance
+        labelStyle.normal.textColor = Color.white;
+        GUI.Label(new Rect(x + 10f, lineY, 200f, 40f), "DISTANCE:", labelStyle);
+        valueStyle.normal.textColor = Color.yellow;
+        string distStr = playerFound ? distance.ToString("F2") + " m" : "NO PLAYER";
+        GUI.Label(new Rect(x + 220f, lineY, 250f, 40f), distStr, valueStyle);
+        lineY += 50f;
+        
+        // Attraction
+        labelStyle.normal.textColor = Color.white;
+        GUI.Label(new Rect(x + 10f, lineY, 200f, 40f), "ATTRACTION:", labelStyle);
+        valueStyle.normal.textColor = Color.cyan;
+        GUI.Label(new Rect(x + 220f, lineY, 250f, 40f), attraction.ToString("F3"), valueStyle);
     }
 }
-
