@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000006, guid: 2869dc54d93acea489ace51f9bd4cb41, type: 2}
+  m_LightingDataAsset: {fileID: 112000004, guid: 279b357bb214a594887b18e3ee12b0a0, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 3e3e21b469bf97c48aa72e2e12d6d0e4, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 511452570}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 052e1c07648e9c5478b87e3324f11f85, type: 3}
   m_Name: 
@@ -3243,17 +3243,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0de813f7c7c046219848cad612cfa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
+  playerHitEvent: {fileID: 0}
+  noiseUIEvent: {fileID: 0}
+  investigationEvent: {fileID: 0}
+  enemySoundEmissionEvent: {fileID: 0}
+  playerActionEvent: {fileID: 11400000, guid: e646675eafdc44eb29d4a73e04f1fb59, type: 2}
   agent: {fileID: 4078091062578297317}
   animator: {fileID: 5033251669108520399}
+  audioSource: {fileID: 0}
   enemyData: {fileID: 11400000, guid: aec0be87e710dc342a58f16b7e34ffad, type: 2}
-  player: {fileID: 0}
+  player: {fileID: 2306399146470024413}
   waypoints:
   - {fileID: 298037754147474255}
   - {fileID: 8406407354695503543}
   - {fileID: 362087561054639675}
   attackRangeDetector: {fileID: 6086960229466930306}
   CurrentState: 0
+  HasConfirmedPlayer: 0
 --- !u!1 &1869618010628685260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3393,6 +3399,7 @@ GameObject:
   - component: {fileID: 1861162498766777723}
   - component: {fileID: 1820082773005050002}
   - component: {fileID: 9029115697583543170}
+  - component: {fileID: 9029115697583543171}
   m_Layer: 3
   m_Name: 'EnemyOne '
   m_TagString: Untagged
@@ -8150,7 +8157,7 @@ GameObject:
   - component: {fileID: 725253370649270356}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8708,6 +8715,7 @@ GameObject:
   - component: {fileID: 4127272097190155765}
   - component: {fileID: 2104821609085824412}
   - component: {fileID: 1125411431}
+  - component: {fileID: 5864102228902920923}
   m_Layer: 8
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -9161,6 +9169,28 @@ CharacterController:
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1.42, z: 0}
+--- !u!114 &5864102228902920923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5384218266141610076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e2466711a4d48eba9a8793a876d661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerActionEvent: {fileID: 11400000, guid: e646675eafdc44eb29d4a73e04f1fb59, type: 2}
+  actionPositionSource: {fileID: 0}
+  testPositionsList: []
+  baseIntensity: 0.5
+  baseDuration: 1
+  baseRadius: 5
+  lowFreqIntensity: 0.3
+  midFreqIntensity: 0.6
+  highFreqIntensity: 1
+  logActions: 1
 --- !u!4 &5892278437768183632
 Transform:
   m_ObjectHideFlags: 0
@@ -14136,9 +14166,106 @@ MonoBehaviour:
   groundTypes:
   - layer:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 0
     SoundSource: {fileID: 11400000, guid: b334c8d639c6d3f4c918dfc0239fb98c, type: 2}
   rayDistance: 1.5
+--- !u!82 &9029115697583543171
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992956494351121532}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &9046182333041855954
 Transform:
   m_ObjectHideFlags: 0

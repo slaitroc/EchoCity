@@ -5,11 +5,9 @@ using UnityEngine.AI;
 
 public class PatrolEnemyState : EnemyState
 {
-#pragma warning disable CS0414
     #region Constants
     protected new string _LOG_TAG = "PATROL ENEMY STATE";
     #endregion
-#pragma warning restore CS0414
 
     private Transform[] waypoints => _enemyAI.waypoints;
     public int currentWaypointIndex = 0;
@@ -23,21 +21,36 @@ public class PatrolEnemyState : EnemyState
         _enemyAI.CurrentState = EnemyStatesEnum.Patrol;
         _enemyAI.attackRangeDetector.attackCollider.enabled = false;
 
+        // Reset confirmation flag when returning to patrol (after losing player)
+        _enemyAI.HasConfirmedPlayer = false;
+        
+        // Reset noise chase flag: quando torno in patrol, considero chiusa qualsiasi noise-chase
+        _enemyAI.IsNoiseChaseActive = false;
+
         _agent.isStopped = false;
         _agent.stoppingDistance = 0f;
 
         if (!isWaitingAtWaypoint)
             GotoNextWaypoint();
     }
-    public override void Update(float distToPlayer)
+    public override void Update(float attraction)
     {
-
         _agent.speed = _enemyData.PatrolSpeed * _enemyData.ChaseSpeed;
 
         float targetSpeed = isWaitingAtWaypoint ? 0f : _enemyData.PatrolSpeed;
         _animator.SetFloat(_animSpeedParameter, targetSpeed, 0.4f, Time.deltaTime);
 
-        if (distToPlayer < _enemyData.ChaseRange) _fsm.SwitchState(_fsm.chaseState);
+        // Check for confusing sound source (before other checks)
+        if (_enemyAI.ShouldBeDistractedByConfusingSound())
+        {
+            _fsm.SwitchState(_fsm.gettingConfusedState);
+            return;
+        }
+
+        // Note: Global triggers in EnemyFSM handle:
+        // - A >= 1.0 → MandatoryChaseState
+        // - d <= 10m → ChaseDistanceState
+        // So PatrolState just continues patrolling if conditions are met
 
         if (isWaitingAtWaypoint)
         {
@@ -54,7 +67,6 @@ public class PatrolEnemyState : EnemyState
         {
             StartWaitAtWaypoint();
         }
-
     }
 
     public override void Exit()
