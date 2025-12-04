@@ -167,8 +167,9 @@ MonoBehaviour:
   inRangeInteractable: {fileID: 0}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
   examplePickable: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
-  spawnDialogEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
-  exampleDialogData: {fileID: 11400000, guid: c3ab2b4e980ee4d0f84e2f9c0b0fb561, type: 2}
+  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
+  spawnDialogEvent: {fileID: 0}
+  exampleDialogData: {fileID: 0}
 --- !u!1 &364384940
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +197,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364384940}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -504,11 +505,17 @@ MonoBehaviour:
   materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
   itemDroppedEvent: {fileID: 11400000, guid: 3bb7e0375aa9dca4db9c6c3d9993e3d0, type: 2}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
+  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
   fullInventorySound: {fileID: 11400000, guid: d2cef0896b5120044ac451ee4dcda5c6, type: 2}
   equippedItem:
     Index: 0
     Prefab: {fileID: 0}
   dropPoint: {fileID: 1784468959}
+  maxHealth: 100
+  damageAmount: 70
+  healthRegenRate: 8
+  healthRegenDelay: 3
+  currentHealth: 100
 --- !u!1 &1784468958
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,7 +3331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0de813f7c7c046219848cad612cfa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHitEvent: {fileID: 0}
+  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
   noiseUIEvent: {fileID: 0}
   investigationEvent: {fileID: 0}
   enemySoundEmissionEvent: {fileID: 0}
@@ -3846,7 +3853,7 @@ MonoBehaviour:
   _pauseMenuController: {fileID: 3518349431216853814}
   _crosshairController: {fileID: 3181077754219851117}
   _radialMenuController: {fileID: 7584868572702135338}
-  dialogController: {fileID: 2326301572860870920}
+  dialogController: {fileID: 0}
   enablePlayerActionMapEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
   _playerInventory: {fileID: 56267960}
 --- !u!4 &2265206441730420913
@@ -8024,7 +8031,7 @@ MonoBehaviour:
   closeRadialMenuEvent: {fileID: 11400000, guid: a2f0d36f1d42c420e81fd7516009ce1f, type: 2}
   addInventoryItemEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   rebuildRadialMenuEvent: {fileID: 11400000, guid: 38586fbb1d4b4454cbcf0aabccdf4ae4, type: 2}
-  spawnDialogEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
+  spawnDialogEvent: {fileID: 0}
   uiManager: {fileID: 2251285943395813150}
 --- !u!1 &5027234052332595210
 GameObject:
@@ -9364,7 +9371,7 @@ MonoBehaviour:
   openRadialMenuEvent: {fileID: 11400000, guid: e584cfa22e1c34caa84982dfcbcb464b, type: 2}
   closeRadialMenuEvent: {fileID: 11400000, guid: a2f0d36f1d42c420e81fd7516009ce1f, type: 2}
   rebuildRadialMenuEvent: {fileID: 11400000, guid: 38586fbb1d4b4454cbcf0aabccdf4ae4, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
+  dialogDataEvent: {fileID: 0}
 --- !u!1 &5952290909324962685
 GameObject:
   m_ObjectHideFlags: 0

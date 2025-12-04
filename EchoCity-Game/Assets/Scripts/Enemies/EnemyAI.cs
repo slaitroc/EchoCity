@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     #region  Serialized Fields
 
     [Header("Invoking Events")]
-    [SerializeField] public SOEnemyIAEvent playerHitEvent;
+    [SerializeField] public SOEnemyAIEvent playerHitEvent;
     [SerializeField] private SOEnemyNoiseUIEvent noiseUIEvent;
     public SOEnemyInvestigationEvent investigationEvent;
     [Tooltip("Event for emitting sounds from enemy (for echolocation system). Used by states.")]

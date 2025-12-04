@@ -29,23 +29,54 @@ namespace EchoCity
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
-
+        [SerializeField] private SOEnemyAIEvent playerHitEvent;
 
         [Header("Inventory")]
         public SOSoundSource fullInventorySound;
         public EquippedItem equippedItem = null;
         [SerializeField] private Transform dropPoint;
 
+        [Header("Health Settings")]
+        public float maxHealth = 100f;
+        public float damageAmount = 70f;
+        public float healthRegenRate = 8f;
+        public float healthRegenDelay = 3f;
+
+        public float currentHealth = 100f;
+
+        private float _lastTimeDamaged;
+
         void OnEnable()
         {
             if (itemEquippedEvent)
                 itemEquippedEvent.OnEventRaised += EquipItem;
+
+            if (playerHitEvent)
+                playerHitEvent.OnEventRaised += playerHit;
         }
 
         void OnDisable()
         {
             if (itemEquippedEvent)
                 itemEquippedEvent.OnEventRaised -= EquipItem;
+
+            if (playerHitEvent)
+                playerHitEvent.OnEventRaised -= playerHit;
+        }
+
+        void Start()
+        {
+            currentHealth = maxHealth;
+            _lastTimeDamaged = float.NegativeInfinity;
+        }
+
+        void Update()
+        {
+            if (currentHealth < maxHealth && currentHealth > 0 && Time.time - _lastTimeDamaged > healthRegenDelay)
+            {
+                currentHealth += healthRegenRate * Time.deltaTime;
+                currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+            }
         }
 
         public void EmitFullInventorySound()
@@ -55,10 +86,23 @@ namespace EchoCity
 
         public void EquipItem(int index, PickableData data, GameObject prefab)
         {
+            Log.D($"Equipping item", LOG_COLOR, LOG_TAG);
             equippedItem = new EquippedItem(index, data, prefab);
             if (prefab == null)
                 Log.E($"EquipItem received null prefab for item '{data.Name}' (index {index})", LOG_COLOR, LOG_TAG);
 
+        }
+
+        public void playerHit(EnemyAI enemy)
+        {
+            Log.D($"Taking {damageAmount} damage.", LOG_COLOR, LOG_TAG);
+            currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
+            _lastTimeDamaged = Time.time;
+            if (currentHealth <= 0)
+            {
+                Log.W("YOU DIED", "red", LOG_TAG);
+                // TODO: Handle player death
+            }
         }
 
         public void UseTool()

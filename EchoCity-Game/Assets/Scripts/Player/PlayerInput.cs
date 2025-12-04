@@ -45,6 +45,8 @@ namespace EchoCity
         [Header("Invoking")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
         [SerializeField] private SOPickable examplePickable;
+        [SerializeField] private SOEnemyAIEvent playerHitEvent;
+
         [Header("Dialog")]
         [SerializeField] private SODialogDataEvent spawnDialogEvent;
         [SerializeField] private SODialogContainer exampleDialogData;
@@ -81,6 +83,7 @@ namespace EchoCity
                 _playerActionMap["EnterPause"].performed += OnEnterPause;
                 _playerActionMap["DropItem"].performed += OnDropItem;
                 _playerActionMap["UseTool"].performed += OnUseTool;
+                _playerActionMap["PlayerHit"].performed += OnPlayerHit;
 
                 _playerActionMap["Test1"].performed += OnTest1;
                 _playerActionMap["Test4"].performed += OnTest4;
@@ -231,6 +234,16 @@ namespace EchoCity
         {
             //TESTS HERE
         }
+
+        private void OnPlayerHit(InputAction.CallbackContext context)
+        {
+            //PLAYER HIT TEST
+            if (context.performed)
+            {
+                playerHitEvent?.RaiseEvent(null);
+            }
+        }
+
 
         private void OnDropItem(InputAction.CallbackContext context)
         {
