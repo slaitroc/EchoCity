@@ -45,6 +45,9 @@ namespace EchoCity
         [Header("Invoking")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
         [SerializeField] private SOPickable examplePickable;
+        [Header("Dialog")]
+        [SerializeField] private SODialogDataEvent spawnDialogEvent;
+        [SerializeField] private SODialogContainer exampleDialogData;
 
 
 
@@ -80,6 +83,7 @@ namespace EchoCity
                 _playerActionMap["UseTool"].performed += OnUseTool;
 
                 _playerActionMap["Test1"].performed += OnTest1;
+                _playerActionMap["Test4"].performed += OnTest4;
 
             }
 
@@ -244,6 +248,15 @@ namespace EchoCity
             }
         }
 
+        private void OnTest4(InputAction.CallbackContext context)
+        {
+            // SPAWN DIALOG TEST
+            if (context.performed)
+            {
+                spawnDialogEvent.RaiseEvent(new DialogData(exampleDialogData.DialogLines));
+                _playerActionMap.Disable();
+            }
+        }
 
         private void EnablePlayerActionMap()
         {

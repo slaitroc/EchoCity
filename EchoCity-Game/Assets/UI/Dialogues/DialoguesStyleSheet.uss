@@ -1,0 +1,43 @@
+.dialog-root {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    pointer-events: none;
+}
+
+.textbox {
+    width: 80%;
+    min-height: 200px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    padding: 16px;
+    pointer-events: auto;
+    align-self: center;
+}
+
+.speaker-label {
+    unity-font-style: bold;
+    font-size: 32px;
+    margin-bottom: 5px;
+    color: rgb(255, 210, 127);
+}
+
+.dialog-label {
+    font-size: 26px;
+    color: white;
+}
+
+.continue-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}

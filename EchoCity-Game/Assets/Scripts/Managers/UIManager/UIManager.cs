@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [Header("HUD")]
     [SerializeField] private CrosshairController _crosshairController;
     [SerializeField] private RadialMenuController _radialMenuController;
+    [SerializeField] private DialogController dialogController;
 
     [Header("Invoking Events")]
     [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
@@ -51,6 +52,12 @@ public class UIManager : MonoBehaviour
     {
         _radialMenuController.RebuildFromInventory();
         Log.D("Rebuild Radial Menu Handler", "green", "UI MANAGER");
+    }
+
+    public void SpawnDialogHandler(DialogData dialogData)
+    {
+        dialogController.gameObject.SetActive(true);
+        dialogController.SpawnDialogHandler(dialogData);
     }
 
     public void EnablePlayerActionMap() => enablePlayerActionMapEvent?.RaiseEvent();

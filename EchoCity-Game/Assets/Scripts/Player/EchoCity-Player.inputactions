@@ -113,6 +113,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Test4",
+                    "type": "Button",
+                    "id": "da7152de-bbb0-4647-aadc-80558cc9928d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -388,6 +397,17 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "UseTool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3d36b9f-9bd5-4b6e-a857-9ad715f8eb28",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Test4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
