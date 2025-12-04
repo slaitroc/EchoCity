@@ -56,6 +56,7 @@ namespace EchoCity
 
             if (playerHitEvent)
                 playerHitEvent.OnEventRaised += playerHit;
+
         }
 
         void OnDisable()
