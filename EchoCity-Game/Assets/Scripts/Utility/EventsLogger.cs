@@ -46,6 +46,9 @@ namespace EchoCity
         [Header("UI")]
         [SerializeField] private SOEventVoid quitToTitleEvent;
         [SerializeField] private SOEventVoid settingsEvent;
+        [SerializeField] private SOEventVoid openRadialMenuEvent;
+        [SerializeField] private SOEventVoid closeRadialMenuEvent;
+        [SerializeField] private SOEventVoid rebuildRadialMenuEvent;
         #endregion
 
         void OnEnable()
@@ -67,6 +70,9 @@ namespace EchoCity
             if (pauseGameEvent != null) pauseGameEvent.OnEventRaised += OnPauseEvent;
             if (quitToTitleEvent != null) quitToTitleEvent.OnEventRaised += OnQuitToTitleEvent;
             if (settingsEvent != null) settingsEvent.OnEventRaised += OnSettingsEvent;
+            if (openRadialMenuEvent != null) openRadialMenuEvent.OnEventRaised += OnOpenRadialMenuEvent;
+            if (closeRadialMenuEvent != null) closeRadialMenuEvent.OnEventRaised += OnCloseRadialMenuEvent;
+            if (rebuildRadialMenuEvent != null) rebuildRadialMenuEvent.OnEventRaised += OnRebuildRadialMenuEvent;
         }
 
 
@@ -89,6 +95,9 @@ namespace EchoCity
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised -= OnPickedPickableEvent;
             if (quitToTitleEvent != null) quitToTitleEvent.OnEventRaised -= OnQuitToTitleEvent;
             if (settingsEvent != null) settingsEvent.OnEventRaised -= OnSettingsEvent;
+            if (openRadialMenuEvent != null) openRadialMenuEvent.OnEventRaised -= OnOpenRadialMenuEvent;
+            if (closeRadialMenuEvent != null) closeRadialMenuEvent.OnEventRaised -= OnCloseRadialMenuEvent;
+            if (rebuildRadialMenuEvent != null) rebuildRadialMenuEvent.OnEventRaised -= OnRebuildRadialMenuEvent;
         }
 
         #region Game Manager Events
@@ -126,6 +135,9 @@ namespace EchoCity
         #region UI
         private void OnQuitToTitleEvent() => Log.D("Quit To Title Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnSettingsEvent() => Log.D("Settings Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnOpenRadialMenuEvent() => Log.D("Open Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnCloseRadialMenuEvent() => Log.D("Close Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnRebuildRadialMenuEvent() => Log.D("Rebuild Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
         #endregion
     }
 }

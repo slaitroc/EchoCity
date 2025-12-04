@@ -5,154 +5,162 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using EchoCity;
 using System.Collections;
+using Unity.VisualScripting;
 
 
 public class RadialMenuController : MonoBehaviour
-{
+{   
+    [Header("Needed scripts")]
     [SerializeField] private UIDocument hudDocument;
     [SerializeField] private PlayerInventory playerInventory;
-    [Tooltip("Optional: offset in degrees so that the first item is at the top (-90) instead of on the right (0).")]
-    [SerializeField] private float startAngleDegrees = -90f;
 
+    [Header("Invoking Events")]
+    [SerializeField] private SOIntegerPickableDataGameObjectEvent equipItemEvent;
+
+
+    #region Private Fields UI
     private VisualElement _root;
+    private VisualElement _crosshair;
     private VisualElement _radialRoot;
     private VisualElement _radialCenter;
     private VisualElement _infoPanel;
+    
+    private Label _infoTitle;
     private Label _infoText;
+    #endregion
+    #region Private Fields Inventory
+    private InventoryItem[] _inventoryItems;
+    private GameObject[] _itemsPrefabs;
+    private Button[] _radialItems;
+    private int _selectedIndex;
+    private InventoryItem _selectedItem;
+    private GameObject _selectedPrefab;
+    #endregion
+    #region Private Fields Other
     private Camera _camera;
     private bool _isOpen;
 
+    #endregion
 
-    void Awake()
+    private void Awake()
     {
-        
         if (playerInventory == null)
         {
-            Log.E("PlayerInventory not found in RadialMenuController", "#ff0000", "RADIAL MENU");
+            Log.E("PlayerInventory reference is missing in RadialMenuController!", "#ff0000", "RADIAL MENU");
         }
     }
 
     IEnumerator InitCallbacksNextFrame()
     {
+        _crosshair = _root.Q<VisualElement>("crosshair");
         _radialRoot = _root.Q<VisualElement>("RadialMenuRoot");
         _radialCenter = _root.Q<VisualElement>("RadialCenter");
         _infoPanel = _root.Q<VisualElement>("RadialInfoPanel");
+        _infoTitle = _root.Q<Label>("RadialInfoTitle");
         _infoText = _root.Q<Label>("RadialInfoText");
+
+        for (int i=0; i<_inventoryItems.Length; i++)
+        {
+            int itemIdx = i; // Capture index for the lambda
+
+            _radialItems[i] = _radialCenter.Q<Button>($"Item{i}");
+            if (_radialItems[i] == null)
+            {
+                Log.E($"Radial item UI element Item{i} not found in RadialMenuController", "#ff0000", "RADIAL MENU");
+            }
+            _radialItems[i].RegisterCallback<MouseEnterEvent>(evt =>
+            {
+                var hoveredItem = evt.currentTarget as Button;
+                OnHover(hoveredItem, itemIdx);
+            });
+            _radialItems[i].RegisterCallback<MouseLeaveEvent>(evt =>
+            {
+                ClearHover();
+            });
+        }
 
         _radialRoot.style.display = DisplayStyle.None;
         _infoPanel.style.display = DisplayStyle.None;
+        RebuildFromInventory(); // moved here before the yield because otherwise the menu would open with all the items for a frame
 
         yield return null;
-        _radialRoot.RegisterCallback<PointerMoveEvent>(evt =>
-        {
-            if (!_isOpen) return;
-
-            VisualElement picked = _root.panel.Pick(evt.position);
-            UpdateHover(picked);
-        });
-
-        _radialCenter.RegisterCallback<GeometryChangedEvent>(evt => LayoutItems());
-
-        RebuildFromInventory();
     }
 
 
     public void OnEnable()
     {
         _root = hudDocument.rootVisualElement;
+        _inventoryItems = playerInventory.Items.ToArray();
+        _itemsPrefabs = playerInventory.Prefabs.ToArray();
+        _radialItems = new Button[_inventoryItems.Length];
         StartCoroutine(InitCallbacksNextFrame());
 
         _isOpen = true;
+        _selectedIndex = -1;
+        _selectedItem = null;
+        _selectedPrefab = null;
         _radialRoot.AddToClassList("active");
         _radialRoot.style.display = DisplayStyle.Flex;
+        _infoPanel.style.display = DisplayStyle.Flex;
+        _crosshair.style.display = DisplayStyle.None;
     }
 
     public void OnDisable()
     {
+        if (_selectedIndex != -1) equipItemEvent.RaiseEvent(_selectedIndex, _selectedItem.Data, _selectedPrefab);
+        
         _isOpen = false;
         _radialRoot.RemoveFromClassList("active");
         _radialRoot.style.display = DisplayStyle.None;
-
-        ClearHover();
         _infoPanel.style.display = DisplayStyle.None;
+        _crosshair.style.display = DisplayStyle.Flex;
         MethodsUI.HideCursor();
     }
+    
 
     void Update()
     {
         MethodsUI.SetCursorState(true);
     }
 
-    private void UpdateHover(VisualElement picked)
+    private void OnHover(Button item, int idx)
     {
-        ClearHover();
-        _infoPanel.style.display = DisplayStyle.None;
-
-        if (picked == null) return;
-
-        VisualElement item = picked;
-        while (item != null && !item.ClassListContains("radial-item"))
-            item = item.parent;
-
-        if (item == null) return;
-
-        item.AddToClassList("hovered");
+        _selectedIndex = idx;
+        _selectedItem = _inventoryItems[idx];
+        _selectedPrefab = _itemsPrefabs[idx];
         ShowItemDescription(item);
     }
 
+
     private void ClearHover()
     {
-        List<VisualElement> items = _radialRoot
-            .Query<VisualElement>(className: "radial-item")
-            .ToList();
-
-        foreach (VisualElement item in items)
-            item.RemoveFromClassList("hovered");
+        _selectedItem = null;
+        _selectedPrefab = null;
+        _selectedIndex = -1;
+        ShowItemDescription(null, clear: true);
     }
 
-    private void ShowItemDescription(VisualElement item)
+    private void ShowItemDescription(VisualElement item, bool clear = false)
     {
         if (_infoPanel == null || _infoText == null || _radialCenter == null)
             return;
-
-        InventoryItem invItem = item.userData as InventoryItem;
-        if (invItem != null)
+        
+        if (item != null)
         {
+            InventoryItem invItem = item.userData as InventoryItem;
+            _infoTitle.text = invItem.Data.Name;
             _infoText.text = invItem.Data.Description;
+        }
+        else if (!clear)
+        {
+            _infoTitle.text = "Unknown Item";
+            _infoText.text = "";
         }
         else
         {
-            _infoText.text = "Unknown item.";
+            _infoTitle.text = "No Item Selected";
+            _infoText.text = "Select an Item and release the button to equip";
         }
-
-        // Fixed tooltip size must match USS
-        float tooltipWidth = 220f;
-        float tooltipHeight = 80f; // approximate height with padding
-
-        Rect itemRect = item.worldBound;
-        Rect centerRect = _radialCenter.worldBound;
-
-        Vector2 itemCenter = itemRect.center;
-        Vector2 center = centerRect.center;
-
-        Vector2 dir = (itemCenter - center);
-        if (dir.sqrMagnitude < 0.0001f)
-            dir = Vector2.up;
-
-        dir.Normalize();
-
-        float itemRadius = Mathf.Max(itemRect.width, itemRect.height) * 0.5f;
-        float padding = 10f;
-        float offsetDistance = itemRadius + tooltipHeight * 0.5f + padding;
-
-        Vector2 anchor = itemCenter + dir * offsetDistance;
-
-        float left = anchor.x - tooltipWidth * 0.5f;
-        float top = anchor.y - tooltipHeight * 0.5f;
-
-        _infoPanel.style.left = left;
-        _infoPanel.style.top = top;
-        _infoPanel.style.display = DisplayStyle.Flex;
     }
 
 
@@ -160,115 +168,34 @@ public class RadialMenuController : MonoBehaviour
     {
         if (playerInventory == null) return;
 
-        foreach (InventoryItem invItem in playerInventory.Items)
+        for (int i = 0; i<_inventoryItems.Length; i++)
         {
-            if (invItem == null) continue;
-            CreateRadialItem(invItem);
+            UpdateRadialItem(_inventoryItems[i], i);
         }
     }
 
 
-    private void CreateRadialItem(InventoryItem invItem)
+    private void UpdateRadialItem(InventoryItem invItem, int idx)
     {
-        PickableData data = invItem.Data;
+        Button itemButton = _radialItems[idx];
 
-        VisualElement itemElement = new VisualElement();
-        itemElement.AddToClassList("radial-item");
-
-        // Store the InventoryItem (or directly the SOPickableData) in userData
-        itemElement.userData = invItem;
-
-        // Icon
-        if (data.Icon != null)
+        if (invItem == null)
         {
-            VisualElement iconElement = new VisualElement();
-            iconElement.AddToClassList("radial-item-icon");
-            iconElement.style.backgroundImage = new StyleBackground(data.Icon);
-            itemElement.Add(iconElement);
-        }
-
-        // Label with the item name
-        Label label = new Label(data.Name);
-        label.AddToClassList("radial-item-label");
-        itemElement.Add(label);
-
-        _radialCenter.Add(itemElement);
-    }
-
-    private void SelectUnderPointer(Vector2 mouseScreenPos)
-    {
-        Vector2 panelPos = ScreenToPanelPosition(mouseScreenPos);
-        VisualElement picked = _root.panel.Pick(panelPos);
-        if (picked == null) return;
-
-        VisualElement item = picked;
-        while (item != null && !item.ClassListContains("radial-item"))
-            item = item.parent;
-
-        if (item != null)
-        {
-            InventoryItem invItem = item.userData as InventoryItem;
-
-            if (invItem != null)
-            {
-                Debug.Log($"Radial menu selected: {invItem.Data.Name}");
-                // TODO: raise event to gameplay (e.g. use/equip this InventoryItem)
-            }
-        }
-    }
-
-    private Vector2 ScreenToPanelPosition(Vector2 screenPos)
-    {
-        if (_camera == null)
-            _camera = Camera.main;
-
-        Vector2 panelPos = screenPos;
-        panelPos.y = _camera.pixelHeight - panelPos.y;
-        return panelPos;
-    }
-
-
-    private void LayoutItems()
-    {
-        List<VisualElement> items = _radialCenter
-            .Query<VisualElement>(className: "radial-item")
-            .ToList();
-
-        int count = items.Count;
-        if (count == 0)
+            itemButton.style.display = DisplayStyle.None;
             return;
-
-        float centerWidth = _radialCenter.resolvedStyle.width;
-        float centerHeight = _radialCenter.resolvedStyle.height;
-
-        float cx = centerWidth * 0.5f;
-        float cy = centerHeight * 0.5f;
-
-        // Use the smallest dimension as circle base
-        float radiusBase = Mathf.Min(centerWidth, centerHeight) * 0.5f;
-
-        // Use item size to keep them inside the circle
-        float itemWidth = items[0].resolvedStyle.width;
-        float itemHeight = items[0].resolvedStyle.height;
-        float itemRadius = Mathf.Max(itemWidth, itemHeight) * 0.5f;
-
-        float radius = radiusBase - itemRadius;
-
-        float angleStep = 360f / count;
-
-        for (int i = 0; i < count; i++)
+        }
+        else
         {
-            VisualElement item = items[i];
+            PickableData data = invItem.Data;
+            itemButton.userData = invItem;
 
-            float angleDeg = startAngleDegrees + angleStep * i;
-            float angleRad = angleDeg * Mathf.Deg2Rad;
-
-            float x = cx + Mathf.Cos(angleRad) * radius;
-            float y = cy - Mathf.Sin(angleRad) * radius; // minus because UI y grows downwards
-
-            // Position top-left of the item so it is centered on (x, y)
-            item.style.left = x - itemWidth * 0.5f;
-            item.style.top = y - itemHeight * 0.5f;
+            if(data.Icon != null){
+                itemButton.style.backgroundImage = new StyleBackground(data.Icon); 
+                itemButton.Q<Label>().text = "";
+            }
+                
+            itemButton.style.display = DisplayStyle.Flex;
         }
     }
+
 }

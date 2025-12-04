@@ -13,35 +13,49 @@
         <ui:VisualElement name="RadialMenuRoot" class="radial-menu-root">
             <ui:VisualElement name="RadialCenter" class="radial-center">
                 <!-- menu items -->
-                <ui:VisualElement name="Item_1" class="radial-item">
-                    <ui:Label text="Clap Hands"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_2" class="radial-item">
-                    <ui:Label text="Whistle"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_3" class="radial-item">
-                    <ui:Label text="Maracas"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_4" class="radial-item">
-                    <ui:Label text="Drums"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_5" class="radial-item">
-                    <ui:Label text="Scream"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_6" class="radial-item">
-                    <ui:Label text="Clap Hands"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_7" class="radial-item">
-                    <ui:Label text="Whistle"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_8" class="radial-item">
-                    <ui:Label text="Maracas"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_9" class="radial-item">
-                    <ui:Label text="Drums"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_10" class="radial-item">
-                    <ui:Label text="Scream"/>
+                <ui:Button name="Item0" class="radial-item item-0" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 0"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item1" class="radial-item item-1" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 1"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item2" class="radial-item item-2" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 2"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item3" class="radial-item item-3" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 3"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item4" class="radial-item item-4" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 4"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item5" class="radial-item item-5" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 5"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item6" class="radial-item item-6" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 6"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item7" class="radial-item item-7" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 7"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:VisualElement name="RadialInfoPanel" class="radial-info-panel">
+                    <ui:Label name="RadialInfoTitle" text="No Item Selected" class="radial-info-title" />
+                    <ui:Label name="RadialInfoText" text="Select an Item and release the button to equip" class="radial-info-text" />
                 </ui:VisualElement>
             </ui:VisualElement>
 

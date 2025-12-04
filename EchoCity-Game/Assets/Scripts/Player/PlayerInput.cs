@@ -73,8 +73,8 @@ namespace EchoCity
                 _playerActionMap["Sprint"].performed += OnSprint;
                 _playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
                 _playerActionMap["Interact"].performed += OnInteract;
-                _playerActionMap["UIRadialMenu"].performed += OnUIRadialMenu;
-                _playerActionMap["UIRadialMenu"].canceled += OnUIRadialMenu;
+                _playerActionMap["UIRadialMenu"].started += OnOpenUIRadialMenu;
+                _playerActionMap["UIRadialMenu"].performed += OnCloseUIRadialMenu;
                 _playerActionMap["EnterPause"].performed += OnEnterPause;
 
                 _playerActionMap["Test1"].performed += OnTest1;
@@ -204,15 +204,19 @@ namespace EchoCity
 
         }
 
-        private void OnUIRadialMenu(InputAction.CallbackContext context)
+
+        private void OnOpenUIRadialMenu(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (context.started)
             {
                 openRadialMenuEvent?.RaiseEvent();
                 pauseGameEvent?.RaiseEvent();
             }
+        }
 
-            if (context.canceled)
+        private void OnCloseUIRadialMenu(InputAction.CallbackContext context)
+        {
+            if (context.performed)
             {
                 closeRadialMenuEvent?.RaiseEvent();
                 pauseGameEvent?.RaiseEvent();

@@ -9322,6 +9322,9 @@ MonoBehaviour:
   pickedPickableEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   quitToTitleEvent: {fileID: 11400000, guid: adc0531a0eb174fc3bc0336a6a52e416, type: 2}
   settingsEvent: {fileID: 11400000, guid: 536aa6449a5ff467aa474f72c77a3b29, type: 2}
+  openRadialMenuEvent: {fileID: 11400000, guid: e584cfa22e1c34caa84982dfcbcb464b, type: 2}
+  closeRadialMenuEvent: {fileID: 11400000, guid: a2f0d36f1d42c420e81fd7516009ce1f, type: 2}
+  rebuildRadialMenuEvent: {fileID: 11400000, guid: 38586fbb1d4b4454cbcf0aabccdf4ae4, type: 2}
 --- !u!1 &5952290909324962685
 GameObject:
   m_ObjectHideFlags: 0
@@ -10140,7 +10143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hudDocument: {fileID: 5473256389446626667}
   playerInventory: {fileID: 56267960}
-  startAngleDegrees: -90
+  equipItemEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
 --- !u!1 &6482201475941850552
 GameObject:
   m_ObjectHideFlags: 0
