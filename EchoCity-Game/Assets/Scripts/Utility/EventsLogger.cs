@@ -41,7 +41,7 @@ namespace EchoCity
         [Header("Interactables")]
         [SerializeField] private SOAreaInteractableEvent enterInteractionAreaEvent;
         [SerializeField] private SOAreaInteractableEvent exitInteractionAreaEvent;
-        [SerializeField] private SOPickableDataEvent pickedPickableEvent;
+        [SerializeField] private SOPickableDataGameObjectEvent pickedPickableEvent;
 
         [Header("UI")]
         [SerializeField] private SOEventVoid quitToTitleEvent;
@@ -120,7 +120,7 @@ namespace EchoCity
         #region Interactable
         private void OnEnterInteractionRangeEvent(Interactable interactable) => Log.D($"Enter Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_COLOR, _LOG_TAG);
         private void OnExitInteractionRangeEvent(Interactable interactable) => Log.D($"Exit Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_COLOR, _LOG_TAG);
-        private void OnPickedPickableEvent(SOPickableData data) => Log.D($"Picked Pickable Event Raised for Pickable Data: {data.name}", _LOG_COLOR, _LOG_TAG);
+        private void OnPickedPickableEvent(PickableData data, GameObject prefab) => Log.D($"Picked Pickable Event Raised for Pickable Data: {data.Name}", _LOG_COLOR, _LOG_TAG);
         #endregion
 
         #region UI
