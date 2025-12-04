@@ -49,6 +49,7 @@ namespace EchoCity
         [SerializeField] private SOEventVoid openRadialMenuEvent;
         [SerializeField] private SOEventVoid closeRadialMenuEvent;
         [SerializeField] private SOEventVoid rebuildRadialMenuEvent;
+        [SerializeField] private SODialogDataEvent dialogDataEvent;
         #endregion
 
         void OnEnable()
@@ -73,6 +74,7 @@ namespace EchoCity
             if (openRadialMenuEvent != null) openRadialMenuEvent.OnEventRaised += OnOpenRadialMenuEvent;
             if (closeRadialMenuEvent != null) closeRadialMenuEvent.OnEventRaised += OnCloseRadialMenuEvent;
             if (rebuildRadialMenuEvent != null) rebuildRadialMenuEvent.OnEventRaised += OnRebuildRadialMenuEvent;
+            if (dialogDataEvent != null) dialogDataEvent.OnEventRaised += OnDialogDataEvent;
         }
 
 
@@ -98,6 +100,7 @@ namespace EchoCity
             if (openRadialMenuEvent != null) openRadialMenuEvent.OnEventRaised -= OnOpenRadialMenuEvent;
             if (closeRadialMenuEvent != null) closeRadialMenuEvent.OnEventRaised -= OnCloseRadialMenuEvent;
             if (rebuildRadialMenuEvent != null) rebuildRadialMenuEvent.OnEventRaised -= OnRebuildRadialMenuEvent;
+            if (dialogDataEvent != null) dialogDataEvent.OnEventRaised -= OnDialogDataEvent;
         }
 
         #region Game Manager Events
@@ -138,6 +141,7 @@ namespace EchoCity
         private void OnOpenRadialMenuEvent() => Log.D("Open Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnCloseRadialMenuEvent() => Log.D("Close Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnRebuildRadialMenuEvent() => Log.D("Rebuild Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnDialogDataEvent(DialogData dialogData) => Log.D($"Dialog Data Event Raised with: {dialogData.DialogLines.Length} lines", _LOG_COLOR, _LOG_TAG);
         #endregion
     }
 }

@@ -167,6 +167,8 @@ MonoBehaviour:
   inRangeInteractable: {fileID: 0}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
   examplePickable: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
+  spawnDialogEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
+  exampleDialogData: {fileID: 11400000, guid: c3ab2b4e980ee4d0f84e2f9c0b0fb561, type: 2}
 --- !u!1 &364384940
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,6 +925,7 @@ MonoBehaviour:
   _pauseMenuController: {fileID: 2350180283016460034}
   _crosshairController: {fileID: 2290967412196608277}
   _radialMenuController: {fileID: 6478278466478294478}
+  dialogController: {fileID: 1506549335}
   enablePlayerActionMapEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
   _playerInventory: {fileID: 56267960}
 --- !u!4 &298037754147474255
@@ -5299,6 +5302,7 @@ MonoBehaviour:
   closeRadialMenuEvent: {fileID: 11400000, guid: a2f0d36f1d42c420e81fd7516009ce1f, type: 2}
   addInventoryItemEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   rebuildRadialMenuEvent: {fileID: 11400000, guid: 38586fbb1d4b4454cbcf0aabccdf4ae4, type: 2}
+  spawnDialogEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
   uiManager: {fileID: 295065281228368969}
 --- !u!1 &3223371857072147653
 GameObject:
@@ -5383,6 +5387,7 @@ RectTransform:
   - {fileID: 4186211812493334070}
   - {fileID: 4740330340974681068}
   - {fileID: 6421207039007059204}
+  - {fileID: 1506549337}
   m_Father: {fileID: 6491948652976068362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9278,6 +9283,7 @@ MonoBehaviour:
   openRadialMenuEvent: {fileID: 11400000, guid: e584cfa22e1c34caa84982dfcbcb464b, type: 2}
   closeRadialMenuEvent: {fileID: 11400000, guid: a2f0d36f1d42c420e81fd7516009ce1f, type: 2}
   rebuildRadialMenuEvent: {fileID: 11400000, guid: 38586fbb1d4b4454cbcf0aabccdf4ae4, type: 2}
+  dialogDataEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
 --- !u!1 &5952290909324962685
 GameObject:
   m_ObjectHideFlags: 0

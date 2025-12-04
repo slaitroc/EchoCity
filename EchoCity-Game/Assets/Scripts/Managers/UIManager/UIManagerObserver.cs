@@ -12,6 +12,7 @@ public class UIManagerObserver : MonoBehaviour
     [SerializeField] private SOPickableDataGameObjectEvent addInventoryItemEvent;
     // [SerializeField] private SOPickableDataEvent removeInventoryItemEvent;
     [SerializeField] private SOEventVoid rebuildRadialMenuEvent;
+    [SerializeField] private SODialogDataEvent spawnDialogEvent;
 
 
     [Header("GO with Handlers")]
@@ -63,6 +64,12 @@ public class UIManagerObserver : MonoBehaviour
             rebuildRadialMenuEvent.OnEventRaised -= uiManager.RebuildRadialMenuHandler;
             rebuildRadialMenuEvent.OnEventRaised += uiManager.RebuildRadialMenuHandler;
         }
+
+        if (spawnDialogEvent)
+        {
+            spawnDialogEvent.OnEventRaised -= uiManager.SpawnDialogHandler;
+            spawnDialogEvent.OnEventRaised += uiManager.SpawnDialogHandler;
+        }
     }
 
 
@@ -75,5 +82,6 @@ public class UIManagerObserver : MonoBehaviour
         if (closeRadialMenuEvent) closeRadialMenuEvent.OnEventRaised -= uiManager.CloseRadialMenuHandler;
         // if (removeInventoryItemEvent) removeInventoryItemEvent.OnEventRaised -= uiManager.RemoveInventoryItemHandler;
         if (rebuildRadialMenuEvent) rebuildRadialMenuEvent.OnEventRaised -= uiManager.RebuildRadialMenuHandler;
+        if (spawnDialogEvent) spawnDialogEvent.OnEventRaised -= uiManager.SpawnDialogHandler;
     }
 }
