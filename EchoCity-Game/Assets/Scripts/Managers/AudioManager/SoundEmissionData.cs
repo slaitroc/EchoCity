@@ -69,5 +69,35 @@ public struct SoundEmissionData
             soundSource.SoundClass.Frequency
         );
     }
+
+    /// <summary>
+    /// Constructor for creating SoundEmissionData directly with parameters.
+    /// Frequency is a float: 0=Low, 1=Mid, 2=High
+    /// </summary>
+    public SoundEmissionData(Vector3 pos, float rad, float intens, float dur, float freq)
+    {
+        position = pos;
+        radius = rad;
+        intensity = intens;
+        duration = dur;
+        
+        // Convert float frequency to Frequency enum
+        Frequency frequencyEnum;
+        if (freq <= 0f)
+            frequencyEnum = Frequency.Low;
+        else if (freq <= 1f)
+            frequencyEnum = Frequency.Mid;
+        else
+            frequencyEnum = Frequency.High;
+        
+        // Create SoundClass with default values (these are typically from SOSoundSource)
+        // Using reasonable defaults for investigation sounds
+        soundClass = new SoundClass(
+            rangeF: 1f,           // Default range factor
+            intensityF: 1f,       // Default intensity factor
+            dec: 0.1f,            // Default decay
+            frequency: frequencyEnum
+        );
+    }
 }
 
