@@ -54,15 +54,15 @@ public class SOEnemyData : ScriptableObject
     public float NoiseDecayRate = 0.05f;
 
     [Header("Investigation")]
-    [Tooltip("Audio clips the enemy plays when arriving at noise position and finding nothing (generic/legacy)")]
-    public AudioClip[] InvestigationPhrases;
+    [Tooltip("SoundSource for investigation phrases when arriving at noise position and finding nothing (generic/legacy). Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource InvestigationPhrases;
     
     [Header("Voice Lines")]
-    [Tooltip("Audio clips for suspicion phrases: 'Mi sembrava di sentire qualcosa...', 'Strano...' (used in StandAndExaminateState)")]
-    public AudioClip[] SuspicionPhrases;
+    [Tooltip("SoundSource for suspicion phrases: 'Mi sembrava di sentire qualcosa...', 'Strano...' (used in StandAndExaminateState). Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource SuspicionPhrases;
     
-    [Tooltip("Audio clips for lost target phrases: 'So che eri qui... ti ritroverò' (used in LostTargetState)")]
-    public AudioClip[] LostTargetPhrases;
+    [Tooltip("SoundSource for lost target phrases: 'So che eri qui... ti ritroverò' (used in LostTargetState). Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource LostTargetPhrases;
     
     [Tooltip("Sound emitted by enemy when investigating (for echolocation system)")]
     [Header("Investigation Sound Emission")]
