@@ -168,8 +168,9 @@ MonoBehaviour:
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
   examplePickable: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
   playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
-  spawnDialogEvent: {fileID: 0}
-  exampleDialogData: {fileID: 0}
+  spawnWarningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
+  spawnDialogEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
+  exampleDialogData: {fileID: 11400000, guid: c3ab2b4e980ee4d0f84e2f9c0b0fb561, type: 2}
 --- !u!1 &364384940
 GameObject:
   m_ObjectHideFlags: 0
@@ -4077,6 +4078,7 @@ MonoBehaviour:
   _pauseMenuController: {fileID: 3518349431216853814}
   _crosshairController: {fileID: 3181077754219851117}
   _radialMenuController: {fileID: 7584868572702135338}
+  warningController: {fileID: 0}
   dialogController: {fileID: 0}
   enablePlayerActionMapEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
   _playerInventory: {fileID: 56267960}
@@ -8256,6 +8258,7 @@ MonoBehaviour:
   addInventoryItemEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   rebuildRadialMenuEvent: {fileID: 11400000, guid: 38586fbb1d4b4454cbcf0aabccdf4ae4, type: 2}
   spawnDialogEvent: {fileID: 0}
+  spawnWarningEvent: {fileID: 0}
   uiManager: {fileID: 2251285943395813150}
 --- !u!1 &5027234052332595210
 GameObject:
