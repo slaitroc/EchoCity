@@ -25,6 +25,9 @@ public class UIManager : MonoBehaviour
     [Header("Dialogs")]
     [SerializeField] private DialogController dialogController;
 
+    [Header("Death Screen")]
+    [SerializeField] private DeathScreenController deathScreenController;
+
 
     [Header("Invoking Events")]
     [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
@@ -34,6 +37,7 @@ public class UIManager : MonoBehaviour
     private GameObject _hud;
     private GameObject _pauseMenu;
     private GameObject _dialog;
+    private GameObject _deathScreen;
 
     [SerializeField] private PlayerInventory _playerInventory;
 
@@ -43,6 +47,7 @@ public class UIManager : MonoBehaviour
         _hud = crosshairController.gameObject;
         _pauseMenu = pauseMenuController.gameObject;
         _dialog = dialogController.gameObject;
+        _deathScreen = deathScreenController.gameObject;
 
         if (_playerInventory == null)
         {
@@ -83,6 +88,7 @@ public class UIManager : MonoBehaviour
         _titleMenu.SetActive(false);
         _pauseMenu.SetActive(false);
         _dialog.SetActive(false);
+        _deathScreen.SetActive(false);
         
         _hud.SetActive(true);
     }
@@ -92,6 +98,7 @@ public class UIManager : MonoBehaviour
         _hud.SetActive(false);
         _pauseMenu.SetActive(false);
         _dialog.SetActive(false);
+        _deathScreen.SetActive(false);
 
         _titleMenu.SetActive(true);
     }
@@ -101,8 +108,19 @@ public class UIManager : MonoBehaviour
         _titleMenu.SetActive(false);
         _pauseMenu.SetActive(false);
         _dialog.SetActive(false);
+        _deathScreen.SetActive(false);
         
         _hud.SetActive(true);
+    }
+
+    public void DeathScreenHandler()
+    {
+        _hud.SetActive(false);
+        _pauseMenu.SetActive(false);
+        _dialog.SetActive(false);
+        _titleMenu.SetActive(false);
+
+        _deathScreen.SetActive(true);
     }
 
 

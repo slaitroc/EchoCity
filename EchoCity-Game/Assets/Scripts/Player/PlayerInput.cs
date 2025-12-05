@@ -48,6 +48,7 @@ namespace EchoCity
         [SerializeField] private SOPickable examplePickable;
         [SerializeField] private SOEnemyAIEvent playerHitEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
+        [SerializeField] private SOEventVoid deathEvent;
 
         [Header("Dialog")]
         [SerializeField] private SODialogDataEvent spawnDialogEvent;
@@ -237,7 +238,7 @@ namespace EchoCity
             //TESTS HERE
             if (context.performed)
             {
-                spawnWarningEvent.RaiseEvent("INVENTORY FULL", Color.red);
+                deathEvent.RaiseEvent();
             }
         }
 
