@@ -42,7 +42,6 @@ public class TitleMenuController : MonoBehaviour
         StartCoroutine(RedBlinkLoop());
         StartCoroutine(BlueBlinkLoop());
 
-        // uiManager.EnableUIActionMap();
         _showCursor = true;
     }
     
@@ -99,10 +98,6 @@ public class TitleMenuController : MonoBehaviour
         if (startGameButton != null) startGameButton.clicked -= StartGameClickHandler;
         if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
         if (quitButton != null) quitButton.clicked -= QuitClickHandler;
-
-        uiManager.DisableUIActionMap();
-        uiManager.EnablePlayerActionMap();
-        _showCursor = false;
     }
 
 
@@ -129,7 +124,11 @@ public class TitleMenuController : MonoBehaviour
     IEnumerator StartGameDelay (float delay)
     {   
         _titleMenuContainer.AddToClassList("hide");
+        uiManager.EnablePlayerActionMap();
+        _showCursor = false;
+
         startGameEvent?.RaiseEvent();
+        
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
     }
