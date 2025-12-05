@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3896ed5884f69ba4bbc46fe54dc31bdb, type: 3}
   m_Name: BasicEnemy
   m_EditorClassIdentifier: 
-  ChaseRange: 11.12
+  D_enter: 10
+  D_exit: 15
   AttackRange: 3.43
-  LoseRange: 16.2
   ChaseSpeed: 6.5
   PatrolSpeed: 0.515
   WaypointPauseDuration: 2
@@ -28,10 +28,14 @@ MonoBehaviour:
   NoiseDecayRate: 0.5
   InvestigationPhrases:
   - {fileID: 8300000, guid: e0c5a25958ea848228c2188da1243119, type: 3}
+  SuspicionPhrases: []
+  LostTargetPhrases: []
   InvestigationSoundIntensity: 0.3
   InvestigationSoundDuration: 1
   InvestigationSoundFrequency: 0
   InvestigationSoundRadius: 5
+  ConfusingSoundDetectionRange: 30
+  ConfusingSoundDuration: 6
   AttackAnimation: {fileID: 7400000, guid: c1a066f118e5d4c4e96a6dead7956b65, type: 2}
   AttackDuration: 2.625
   AttackDamageDelay: 1.2
