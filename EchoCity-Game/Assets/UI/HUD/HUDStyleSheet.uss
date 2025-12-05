@@ -83,7 +83,7 @@
     background-color: rgba(255, 255, 255, 0.05);
     min-width: 50px;
     min-height: 50px;
-    background-image: url("project://database/Assets/LocalPackages/GameInputControllerIcons/mouse/mouse-outlined/mouse-left.png?fileID=2800000&guid=fd1a0dff4c167f04898c69eedd2b810c&type=3#mouse-left");
+    background-image: resource('Icons/EchoCity-mouse-left');
 }
 
 .interaction-text {
@@ -95,7 +95,10 @@
 
 .radial-menu-root {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     opacity: 0;
     justify-content: center;
     align-items: center;
@@ -147,22 +150,69 @@
     border-color: rgb(255, 127, 80);
 }
 
-.item-0 {rotate: 0;}
-.item-0 .radial-item-content{rotate: 0deg;}
-.item-1 {rotate: 45deg;}
-.item-1 .radial-item-content{rotate: -45deg;}
-.item-2 {rotate: 90deg;}
-.item-2 .radial-item-content{rotate: -90deg;}
-.item-3 {rotate: 135deg;}
-.item-3 .radial-item-content{rotate: -135deg;}
-.item-4 {rotate: 180deg;}
-.item-4 .radial-item-content{rotate: -180deg;}
-.item-5 {rotate: 225deg;}
-.item-5 .radial-item-content{rotate: -225deg;}
-.item-6 {rotate: 270deg;}
-.item-6 .radial-item-content{rotate: -270deg;}
-.item-7 {rotate: 315deg;}
-.item-7 .radial-item-content{rotate: -315deg;}
+.item-0 {
+    rotate: 0;
+}
+
+.item-0 .radial-item-content {
+    rotate: 0;
+}
+
+.item-1 {
+    rotate: 45deg;
+}
+
+.item-1 .radial-item-content {
+    rotate: -45deg;
+}
+
+.item-2 {
+    rotate: 90deg;
+}
+
+.item-2 .radial-item-content {
+    rotate: -90deg;
+}
+
+.item-3 {
+    rotate: 135deg;
+}
+
+.item-3 .radial-item-content {
+    rotate: -135deg;
+}
+
+.item-4 {
+    rotate: 180deg;
+}
+
+.item-4 .radial-item-content {
+    rotate: -180deg;
+}
+
+.item-5 {
+    rotate: 225deg;
+}
+
+.item-5 .radial-item-content {
+    rotate: -225deg;
+}
+
+.item-6 {
+    rotate: 270deg;
+}
+
+.item-6 .radial-item-content {
+    rotate: -270deg;
+}
+
+.item-7 {
+    rotate: 315deg;
+}
+
+.item-7 .radial-item-content {
+    rotate: -315deg;
+}
 
 .radial-item-content {
     width: 100%;
@@ -173,7 +223,6 @@
     font-size: 32px;
 }
 
-
 .radial-item.hovered {
     background-color: rgba(154, 104, 255, 0.8);
     border-color: rgb(255, 127, 80);
@@ -181,7 +230,7 @@
 
 .radial-info-panel {
     position: absolute;
-    width: 380px;             
+    width: 380px;
     min-height: 100px;
     max-height: 230px;
     justify-content: center;
@@ -236,7 +285,7 @@
     background-color: rgba(0, 0, 0, 0.75);
     border-width: 2px;
     border-style: solid;
-    border-color: rgba(255, 0, 0, 1);
+    border-color: rgb(255, 0, 0);
     align-self: center;
     justify-content: center;
     align-items: center;
@@ -244,7 +293,7 @@
 
 .warning-text {
     font-size: 18px;
-    color: rgba(255, 0, 0, 1);
+    color: rgb(255, 0, 0);
     -unity-font-style: bold;
     unity-text-align: middle-center;
 }

@@ -55,7 +55,7 @@
     letter-spacing: 4px;
     text-shadow: 0 0 18px rgba(120, 0, 0, 0.9), 0 0 10px rgba(60, 0, 0, 0.8);
     border-bottom-width: 3px;
-    -unity-font-definition: url("project://database/Assets/Fonts/Echotopia_Font/Echotopia-Regular.otf?fileID=12800000&guid=bbfdabf7e80c84e8183948de3149f98e&type=3#Echotopia-Regular");
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
     -unity-background-scale-mode: scale-to-fit;
 }
 
@@ -70,23 +70,23 @@
     border-radius: 15px;
     align-content: center;
     align-items: center;
-    -unity-font-definition: url("project://database/Assets/Fonts/Echotopia_Font/Echotopia-Regular.otf?fileID=12800000&guid=bbfdabf7e80c84e8183948de3149f98e&type=3#Echotopia-Regular");
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
     transition-duration: 0.5s;
-    background-image: url("project://database/Assets/LocalPackages/PolygonApocalypse/Textures/Misc/PolygonApocalypse_Blood.png?fileID=2800000&guid=ab3c9c81285cc4443b3b62ab3ba16da7&type=3#PolygonApocalypse_Blood");
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
     -unity-background-scale-mode: scale-and-crop;
     -unity-background-image-tint-color: rgb(0, 0, 0);
 }
 
 .title-menu-button:hover {
     border-color: rgb(255, 0, 0);
-    background-image: url("project://database/Assets/LocalPackages/PolygonApocalypse/Textures/Misc/PolygonApocalypse_Blood.png?fileID=2800000&guid=ab3c9c81285cc4443b3b62ab3ba16da7&type=3#PolygonApocalypse_Blood");
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
     scale: 1.2 1.2;
     -unity-background-image-tint-color: rgb(106, 0, 0);
 }
 
 .title-menu-button:focus {
     border-color: rgb(255, 0, 0);
-    background-image: url("project://database/Assets/LocalPackages/PolygonApocalypse/Textures/Misc/PolygonApocalypse_Blood.png?fileID=2800000&guid=ab3c9c81285cc4443b3b62ab3ba16da7&type=3#PolygonApocalypse_Blood");
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
     scale: 1.2 1.2;
     -unity-background-image-tint-color: rgb(106, 0, 0);
 }
@@ -95,7 +95,7 @@
     opacity: 0.3;
 }
 
-.screen-blink-overlay-red{
+.screen-blink-overlay-red {
     position: absolute;
     top: 0;
     left: 0;
@@ -104,7 +104,7 @@
     -unity-background-scale-mode: scale-and-crop;
     opacity: 0;
     picking-mode: Ignore;
-    background-image: resource('EchoCity-BackgroundRed');
+    background-image: resource('Images/EchoCity-BackgroundRed');
     transition-property: opacity, background-image;
     transition-duration: 160ms;
     transition-timing-function: ease-in-out;
@@ -119,19 +119,18 @@
     -unity-background-scale-mode: scale-and-crop;
     opacity: 0;
     picking-mode: Ignore;
-    background-image: resource('EchoCity-BackgroundBlue');
+    background-image: resource('Images/EchoCity-BackgroundBlue');
     transition-property: opacity, background-image;
     transition-duration: 500ms;
     transition-timing-function: ease-in-out;
 }
 
-
 .screen-blink-overlay-red.active {
     opacity: 1;
-    background-image: resource('EchoCity-BackgroundRed');
+    background-image: resource('Images/EchoCity-BackgroundRed');
 }
 
 .screen-blink-overlay-blue.active {
     opacity: 1;
-    background-image: resource('EchoCity-BackgroundBlue');
+    background-image: resource('Images/EchoCity-BackgroundBlue');
 }
