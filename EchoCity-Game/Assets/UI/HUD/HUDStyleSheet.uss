@@ -208,3 +208,43 @@
     opacity: 0.9;
     color: rgb(200, 200, 200);
 }
+
+.warning-panel {
+    opacity: 1;
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    min-height: 60px;
+    display: none;
+    justify-content: center;
+    pointer-events: none;
+    transition-property: opacity;
+    transition-duration: 0ms;
+}
+
+.warning-panel.hide {
+    opacity: 0;
+    transition-duration: 500ms;
+    transition-timing-function: ease-in;
+}
+
+.warning-box {
+    position: absolute;
+    width: 50%;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(255, 0, 0, 1);
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.warning-text {
+    font-size: 18px;
+    color: rgba(255, 0, 0, 1);
+    -unity-font-style: bold;
+    unity-text-align: middle-center;
+}

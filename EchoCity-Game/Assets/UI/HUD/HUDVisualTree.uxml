@@ -60,11 +60,11 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
-
-        <!-- Placeholder for additional HUD panels -->
-        <ui:VisualElement name="top-left-panel" class="hud-panel top-left" />
-        <ui:VisualElement name="top-right-panel" class="hud-panel top-right" />
-        <ui:VisualElement name="bottom-center-panel" class="hud-panel bottom-center" />
-        <ui:VisualElement name="status-messages" class="status-messages" />
+        <ui:VisualElement name="WarningPanel" class="warning-panel">
+            <ui:VisualElement name="WarningBox" class="warning-box">
+                <ui:Label name="WarningText" class="warning-text" text="Warning text placeholder"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        
     </ui:VisualElement>
 </ui:UXML>
