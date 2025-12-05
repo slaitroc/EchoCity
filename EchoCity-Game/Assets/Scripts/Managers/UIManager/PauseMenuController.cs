@@ -14,13 +14,13 @@ public class PauseMenuController : MonoBehaviour
     private const string _LOG_TAG = "UI-PauseMenu";
     private const string _LOG_COLOR = "#d900ffff";
 
-    [Header("Invoking events")]
-    [SerializeField] private SOEventVoid pauseGameEvent;
-    [SerializeField] private SOEventVoid pauseMenuEvent;
-
     [Header("UI ")]
     [SerializeField] private UIManager uiManager;
     [SerializeField] private UIDocument uiDocument;
+
+    [Header("Invoking events")]
+    [SerializeField] private SOEventVoid pauseGameEvent;
+    [SerializeField] private SOEventVoid pauseMenuEvent;
 
     #region Private Fields
     private VisualElement _root;

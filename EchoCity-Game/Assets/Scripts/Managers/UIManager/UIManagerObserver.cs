@@ -14,6 +14,7 @@ public class UIManagerObserver : MonoBehaviour
     [SerializeField] private SOEventVoid rebuildRadialMenuEvent;
     [SerializeField] private SODialogDataEvent spawnDialogEvent;
     [SerializeField] private SOStringColorEvent spawnWarningEvent;
+    [SerializeField] private SOEventVoid startGameEvent;
 
 
     [Header("GO with Handlers")]
@@ -69,6 +70,12 @@ public class UIManagerObserver : MonoBehaviour
             spawnWarningEvent.OnEventRaised -= uiManager.SpawnWarningHandler;
             spawnWarningEvent.OnEventRaised += uiManager.SpawnWarningHandler;
         }
+
+        if (startGameEvent)
+        {
+            startGameEvent.OnEventRaised -= uiManager.StartGameHandler;
+            startGameEvent.OnEventRaised += uiManager.StartGameHandler;
+        }
     }
 
 
@@ -82,6 +89,7 @@ public class UIManagerObserver : MonoBehaviour
         // if (removeInventoryItemEvent) removeInventoryItemEvent.OnEventRaised -= uiManager.RemoveInventoryItemHandler;
         if (rebuildRadialMenuEvent) rebuildRadialMenuEvent.OnEventRaised -= uiManager.RebuildRadialMenuHandler;
         if (spawnDialogEvent) spawnDialogEvent.OnEventRaised -= uiManager.SpawnDialogHandler;
-        if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= uiManager.SpawnWarningHandler;
+        if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= uiManager.SpawnWarningHandler;   
+        if (startGameEvent) startGameEvent.OnEventRaised -= uiManager.StartGameHandler;
     }
 }

@@ -92,8 +92,8 @@ namespace EchoCity
 
             }
 
-            _playerActionMap.Enable();
-            MethodsUI.HideCursor();
+            // _playerActionMap.Enable();
+            // MethodsUI.HideCursor();
 
             //Error Logs
             if (inputActionAsset == null)
