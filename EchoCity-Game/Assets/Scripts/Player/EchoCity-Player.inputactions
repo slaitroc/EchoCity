@@ -97,6 +97,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "PlayerHit",
+                    "type": "Button",
+                    "id": "80360ffb-f1e9-41a9-911c-9fe42a45364b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "DropItem",
                     "type": "Button",
                     "id": "16b84c6d-7149-4f9a-91e4-6e11f7c92ac7",
@@ -408,6 +417,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Test4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5cc21fd9-c45c-4a93-b91e-9194b4383a8a",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "PlayerHit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -4,15 +4,14 @@ using UnityEngine.InputSystem;
 
 
 
-public class PauseGameState : GameState
+public class DeathState : GameState
 {
     [Header("UI Action Map")]
     private const string UI_ACTION_MAP = "UI";
 
-    public PauseGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+    public DeathState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
     public override void Enter()
     {
-        Log.D("Game Paused");
         Time.timeScale = 0;
     }
 
@@ -29,7 +28,7 @@ public class PauseGameState : GameState
 
     public override GameStatesEnum GetEnum()
     {
-        return GameStatesEnum.Pause;
+        return GameStatesEnum.Death;
     }
 
     public override bool PauseGameHandler()

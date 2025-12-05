@@ -15,12 +15,14 @@ public class GameStatesFSM
     public readonly GameState PlayingState;
     public readonly GameState PauseState;
     public readonly GameState NarrationState;
+    public readonly GameState DeathState;
 
     public GameStatesFSM(GameManager gameManager)
     {
         PlayingState = new PlayingGameState(gameManager, this);
         PauseState = new PauseGameState(gameManager, this);
         NarrationState = new NarrationGameState(gameManager, this);
+        DeathState = new DeathState(gameManager, this);
         _gameManager = gameManager;
     }
 

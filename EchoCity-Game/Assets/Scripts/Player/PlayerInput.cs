@@ -1,4 +1,5 @@
 using StarterAssets;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -45,6 +46,9 @@ namespace EchoCity
         [Header("Invoking")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
         [SerializeField] private SOPickable examplePickable;
+        [SerializeField] private SOEnemyAIEvent playerHitEvent;
+        [SerializeField] private SOStringColorEvent spawnWarningEvent;
+
         [Header("Dialog")]
         [SerializeField] private SODialogDataEvent spawnDialogEvent;
         [SerializeField] private SODialogContainer exampleDialogData;
@@ -81,6 +85,7 @@ namespace EchoCity
                 _playerActionMap["EnterPause"].performed += OnEnterPause;
                 _playerActionMap["DropItem"].performed += OnDropItem;
                 _playerActionMap["UseTool"].performed += OnUseTool;
+                _playerActionMap["PlayerHit"].performed += OnPlayerHit;
 
                 _playerActionMap["Test1"].performed += OnTest1;
                 _playerActionMap["Test4"].performed += OnTest4;
@@ -230,7 +235,21 @@ namespace EchoCity
         private void OnTest1(InputAction.CallbackContext context)
         {
             //TESTS HERE
+            if (context.performed)
+            {
+                spawnWarningEvent.RaiseEvent("INVENTORY FULL", Color.red);
+            }
         }
+
+        private void OnPlayerHit(InputAction.CallbackContext context)
+        {
+            //PLAYER HIT TEST
+            if (context.performed)
+            {
+                playerHitEvent?.RaiseEvent(null);
+            }
+        }
+
 
         private void OnDropItem(InputAction.CallbackContext context)
         {

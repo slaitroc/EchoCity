@@ -13,6 +13,7 @@ public class UIManagerObserver : MonoBehaviour
     // [SerializeField] private SOPickableDataEvent removeInventoryItemEvent;
     [SerializeField] private SOEventVoid rebuildRadialMenuEvent;
     [SerializeField] private SODialogDataEvent spawnDialogEvent;
+    [SerializeField] private SOStringColorEvent spawnWarningEvent;
 
 
     [Header("GO with Handlers")]
@@ -51,14 +52,6 @@ public class UIManagerObserver : MonoBehaviour
             closeRadialMenuEvent.OnEventRaised += uiManager.CloseRadialMenuHandler;
         }
 
-
-
-        // if (removeInventoryItemEvent)
-        // {
-        //     removeInventoryItemEvent.OnEventRaised -= uiManager.RemoveInventoryItemHandler;
-        //     removeInventoryItemEvent.OnEventRaised += uiManager.RemoveInventoryItemHandler;
-        // }
-
         if (rebuildRadialMenuEvent)
         {
             rebuildRadialMenuEvent.OnEventRaised -= uiManager.RebuildRadialMenuHandler;
@@ -69,6 +62,12 @@ public class UIManagerObserver : MonoBehaviour
         {
             spawnDialogEvent.OnEventRaised -= uiManager.SpawnDialogHandler;
             spawnDialogEvent.OnEventRaised += uiManager.SpawnDialogHandler;
+        }
+
+        if (spawnWarningEvent)
+        {
+            spawnWarningEvent.OnEventRaised -= uiManager.SpawnWarningHandler;
+            spawnWarningEvent.OnEventRaised += uiManager.SpawnWarningHandler;
         }
     }
 
@@ -83,5 +82,6 @@ public class UIManagerObserver : MonoBehaviour
         // if (removeInventoryItemEvent) removeInventoryItemEvent.OnEventRaised -= uiManager.RemoveInventoryItemHandler;
         if (rebuildRadialMenuEvent) rebuildRadialMenuEvent.OnEventRaised -= uiManager.RebuildRadialMenuHandler;
         if (spawnDialogEvent) spawnDialogEvent.OnEventRaised -= uiManager.SpawnDialogHandler;
+        if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= uiManager.SpawnWarningHandler;
     }
 }
