@@ -11,6 +11,7 @@ using Unity.VisualScripting;
 public class RadialMenuController : MonoBehaviour
 {
     [Header("Needed scripts")]
+    [SerializeField] private UIManager uiManager;
     [SerializeField] private UIDocument hudDocument;
     [SerializeField] private PlayerInventory playerInventory;
 
@@ -103,6 +104,8 @@ public class RadialMenuController : MonoBehaviour
         _radialRoot.style.display = DisplayStyle.Flex;
         _infoPanel.style.display = DisplayStyle.Flex;
         _crosshair.style.display = DisplayStyle.None;
+
+        uiManager.EnableUIActionMap();
     }
 
     public void OnDisable()
@@ -115,6 +118,9 @@ public class RadialMenuController : MonoBehaviour
         _infoPanel.style.display = DisplayStyle.None;
         _crosshair.style.display = DisplayStyle.Flex;
         MethodsUI.HideCursor();
+
+        uiManager.DisableUIActionMap();
+        uiManager.EnablePlayerActionMap();
     }
 
 

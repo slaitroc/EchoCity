@@ -66,13 +66,7 @@
     -unity-background-image-tint-color: rgb(0, 0, 0);
 }
 
-.button:hover {
-    border-color: rgb(0, 255, 0);
-    background-image: url("project://database/Assets/LocalPackages/PolygonApocalypse/Textures/Misc/PolygonApocalypse_Blood.png?fileID=2800000&guid=ab3c9c81285cc4443b3b62ab3ba16da7&type=3#PolygonApocalypse_Blood");
-    scale: 1.2 1.2;
-    -unity-background-image-tint-color: rgb(106, 0, 0);
-}
-
+.button:hover,
 .button:focus {
     border-color: rgb(255, 0, 0);
     background-image: url("project://database/Assets/LocalPackages/PolygonApocalypse/Textures/Misc/PolygonApocalypse_Blood.png?fileID=2800000&guid=ab3c9c81285cc4443b3b62ab3ba16da7&type=3#PolygonApocalypse_Blood");

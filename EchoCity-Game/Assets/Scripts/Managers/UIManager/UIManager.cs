@@ -8,14 +8,21 @@ public class UIManager : MonoBehaviour
     private const string _LOG_COLOR = "cyan";
     private const string _LOG_TAG_FULL = "UI MANAGER";
 #pragma warning restore CS0414
+    [Header("Input")]
+    [SerializeField] private UIInput uiInput;
 
-    [SerializeField] private UIInput _uiInput;
-    [SerializeField] private PauseMenuController _pauseMenuController;
+    [Header ("Title Menu")]
+    [SerializeField] private TitleMenuController titleMenuController;
 
     [Header("HUD")]
-    [SerializeField] private CrosshairController _crosshairController;
-    [SerializeField] private RadialMenuController _radialMenuController;
+    [SerializeField] private CrosshairController crosshairController;
+    [SerializeField] private RadialMenuController radialMenuController;
     [SerializeField] private WarningController warningController;
+
+    [Header("Pause Menu")]
+    [SerializeField] private PauseMenuController pauseMenuController;
+
+    [Header("Dialogs")]
     [SerializeField] private DialogController dialogController;
 
 
@@ -23,15 +30,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
     // [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
 
+    private GameObject _titleMenu;
+    private GameObject _hud;
     private GameObject _pauseMenu;
-    private GameObject HUD;
+    private GameObject _dialog;
 
     [SerializeField] private PlayerInventory _playerInventory;
 
     void Awake()
     {
-        _pauseMenu = _pauseMenuController.gameObject;
-        HUD = _crosshairController.gameObject;
+        _titleMenu = titleMenuController.gameObject;
+        _hud = crosshairController.gameObject;
+        _pauseMenu = pauseMenuController.gameObject;
+        _dialog = dialogController.gameObject;
 
         if (_playerInventory == null)
         {
@@ -40,9 +51,9 @@ public class UIManager : MonoBehaviour
     }
 
     public void PauseMenuHandler() => _pauseMenu.SetActive(!_pauseMenu.activeSelf);
-    public void HUDInteractableHandler() => _crosshairController.IsInteractable(!_crosshairController.isInteractable);
-    public void OpenRadialMenuHandler() => _radialMenuController.enabled = true;
-    public void CloseRadialMenuHandler() => _radialMenuController.enabled = false;
+    public void HUDInteractableHandler() => crosshairController.IsInteractable(!crosshairController.isInteractable);
+    public void OpenRadialMenuHandler() => radialMenuController.enabled = true;
+    public void CloseRadialMenuHandler() => radialMenuController.enabled = false;
 
     public void RemoveInventoryItemHandler(InventoryItem item)
     {
@@ -51,13 +62,11 @@ public class UIManager : MonoBehaviour
 
     public void RebuildRadialMenuHandler()
     {
-        _radialMenuController.RebuildFromInventory();
-        Log.D("Rebuild Radial Menu Handler", "green", "UI MANAGER");
+        radialMenuController.RebuildFromInventory();
     }
 
     public void SpawnWarningHandler(string warningText, Color color)
     {
-        Log.D("Spawn Warning Handler", "green", "UI MANAGER");
         warningController.SpawnWarning(warningText, color);
     }
     
@@ -67,14 +76,38 @@ public class UIManager : MonoBehaviour
         dialogController.SpawnDialogHandler(dialogData);
     }
 
+    // In the following handlers we enable/disable the relevant UI elements
+    // The element to be enabled must be enabled after disabling others to ensure proper activation of the UI Action Map
     public void StartGameHandler()
     {
-        HUD.SetActive(true);
+        _titleMenu.SetActive(false);
+        _pauseMenu.SetActive(false);
+        _dialog.SetActive(false);
+        
+        _hud.SetActive(true);
+    }
+
+    public void QuitToTitleHandler()
+    {
+        _hud.SetActive(false);
+        _pauseMenu.SetActive(false);
+        _dialog.SetActive(false);
+
+        _titleMenu.SetActive(true);
+    }
+
+    public void RestartGameHandler()
+    {
+        _titleMenu.SetActive(false);
+        _pauseMenu.SetActive(false);
+        _dialog.SetActive(false);
+        
+        _hud.SetActive(true);
     }
 
 
 
     public void EnablePlayerActionMap() => enablePlayerActionMapEvent?.RaiseEvent();
-    public void EnableUIActionMap() => _uiInput.EnableUIActionMap();
-    public void DisableUIActionMap() => _uiInput.DisableUIActionMap();
+    public void EnableUIActionMap() => uiInput.EnableUIActionMap();
+    public void DisableUIActionMap() => uiInput.DisableUIActionMap();
 }
