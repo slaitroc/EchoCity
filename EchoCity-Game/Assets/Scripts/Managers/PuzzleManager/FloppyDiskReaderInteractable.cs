@@ -51,7 +51,7 @@ namespace EchoCity
 
             if (puzzleController == null)
             {
-                puzzleController = FindObjectOfType<BunkerPuzzleController>();
+                puzzleController = FindFirstObjectByType<BunkerPuzzleController>();
                 if (puzzleController == null)
                 {
                     Log.E($"BunkerPuzzleController not found in scene for {gameObject.name}", _LOG_COLOR, _LOG_TAG_FULL);

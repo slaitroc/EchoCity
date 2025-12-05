@@ -70,7 +70,7 @@ namespace EchoCity
             // Find puzzle controller
             if (puzzleController == null)
             {
-                puzzleController = FindObjectOfType<BunkerPuzzleController>();
+                puzzleController = FindFirstObjectByType<BunkerPuzzleController>();
             }
 
             // Store initial AudioEmitter state

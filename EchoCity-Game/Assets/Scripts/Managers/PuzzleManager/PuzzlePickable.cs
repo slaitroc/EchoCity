@@ -13,17 +13,36 @@ namespace EchoCity
         protected override string _TYPE_LOG_TAG => "PUZZLE_PICKABLE";
         #endregion
 
+        #region Enums
+
+        /// <summary>
+        /// Type of puzzle item this pickable represents
+        /// </summary>
+        public enum PuzzleItemType
+        {
+            None,
+            Cable,
+            FloppyDisk,
+            CommunicationDevice,
+            MetalTool
+        }
+
+        #endregion
+
         #region Serialized Fields
 
         [Header("Puzzle Integration")]
-        [Tooltip("Whether this pickable is part of the bunker puzzle")]
-        [SerializeField] private bool isPuzzleItem = true;
-
-        [Tooltip("Item names that should trigger puzzle events")]
-        [SerializeField] private string[] puzzleItemNames = { "Loose Cable", "Kael's Research Data", "Walkie-Talkie", "Satellite Phone", "Metal Bar" };
+        [Tooltip("Type of puzzle item this pickable represents")]
+        [SerializeField] private PuzzleItemType puzzleItemType = PuzzleItemType.None;
 
         [Header("References")]
         [SerializeField] private BunkerPuzzleController puzzleController;
+
+        #endregion
+
+        #region Private Fields
+
+        private bool _hasNotifiedPuzzle = false;
 
         #endregion
 
@@ -33,9 +52,9 @@ namespace EchoCity
         {
             base.Awake();
 
-            if (puzzleController == null && isPuzzleItem)
+            if (puzzleController == null && puzzleItemType != PuzzleItemType.None)
             {
-                puzzleController = FindObjectOfType<BunkerPuzzleController>();
+                puzzleController = FindFirstObjectByType<BunkerPuzzleController>();
             }
         }
 
@@ -47,10 +66,12 @@ namespace EchoCity
         {
             base.Interact();
 
-            // Check if this is a puzzle item and notify controller
-            if (isPuzzleItem && puzzleController != null && pickableData != null)
+            // Notify puzzle controller when player interacts with the item
+            // This happens when the player attempts to pick up the item
+            if (!_hasNotifiedPuzzle && puzzleItemType != PuzzleItemType.None && puzzleController != null)
             {
-                NotifyPuzzleController(pickableData.PickableName);
+                _hasNotifiedPuzzle = true;
+                NotifyPuzzleController(puzzleItemType);
             }
         }
 
@@ -61,44 +82,34 @@ namespace EchoCity
         /// <summary>
         /// Notifies the puzzle controller when a specific item is picked up
         /// </summary>
-        private void NotifyPuzzleController(string itemName)
+        private void NotifyPuzzleController(PuzzleItemType itemType)
         {
-            if (puzzleController == null || string.IsNullOrEmpty(itemName))
+            if (puzzleController == null)
             {
                 return;
             }
 
-            // Check item name and call appropriate puzzle controller method
-            switch (itemName)
+            // Call appropriate puzzle controller method based on item type
+            switch (itemType)
             {
-                case "Loose Cable":
+                case PuzzleItemType.Cable:
                     puzzleController.OnCablePickedUp();
                     break;
 
-                case "Kael's Research Data":
+                case PuzzleItemType.FloppyDisk:
                     puzzleController.OnFloppyPickedUp();
                     break;
 
-                case "Walkie-Talkie":
-                case "Satellite Phone":
+                case PuzzleItemType.CommunicationDevice:
                     puzzleController.OnCommsDevicePickedUp();
                     break;
 
-                case "Metal Bar":
+                case PuzzleItemType.MetalTool:
                     puzzleController.OnMetalToolPickedUp();
                     break;
 
+                case PuzzleItemType.None:
                 default:
-                    // Check if item name is in the puzzle item names array
-                    foreach (string puzzleItemName in puzzleItemNames)
-                    {
-                        if (itemName == puzzleItemName)
-                        {
-                            // Generic puzzle item picked up - you can add specific handling here
-                            Log.D($"Puzzle item picked up: {itemName}", _LOG_COLOR, _LOG_TAG_FULL);
-                            break;
-                        }
-                    }
                     break;
             }
         }
