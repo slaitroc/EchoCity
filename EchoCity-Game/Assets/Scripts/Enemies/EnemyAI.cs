@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using EchoCity;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -242,34 +243,45 @@ public class EnemyAI : MonoBehaviour
     }
 
     /// <summary>
-    /// Helper method to play a random phrase from an array of audio clips
+    /// Helper method to play a random phrase from a SOSoundSource using ECSound utility.
+    /// Uses RandomAudioClips array if available, otherwise uses main AudioClip.
     /// </summary>
-    private void PlayRandomPhrase(AudioClip[] clips)
+    private void PlayRandomPhrase(SOSoundSource soundSource)
     {
-        if (enemyData == null || clips == null || clips.Length == 0)
+        if (enemyData == null || soundSource == null)
             return;
         
-        // Filter out null clips
-        var validClips = new System.Collections.Generic.List<AudioClip>();
-        foreach (var clip in clips)
+        // Use ECSound utility to play sound at enemy position
+        // Pass null for echolocation event since voice lines don't need to emit sounds for echolocation
+        // Use "SFX" mixer group (or null for Master)
+        if (soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0)
         {
-            if (clip != null) validClips.Add(clip);
+            // Use random clip from array
+            ECSound.PlayRandomClipAtPosition(soundSource, transform.position, null, "SFX");
         }
-        if (validClips.Count == 0) return;
-
-        int randomIndex = Random.Range(0, validClips.Count);
-        AudioClip selectedClip = validClips[randomIndex];
-
-        if (audioSource != null && selectedClip != null)
+        else if (soundSource.AudioClip != null)
         {
-            audioSource.PlayOneShot(selectedClip);
+            // Use main audio clip
+            ECSound.PlaySoundAtPosition(soundSource, transform.position, null, "SFX");
+        }
+        else
+        {
+            Log.W("SOSoundSource has no AudioClip or RandomAudioClips. Cannot play phrase.", _LOG_COLOR, _LOG_TAG);
+            return;
         }
 
         // Raise investigation event (optional: can decide if to raise for each type)
         if (investigationEvent != null)
         {
-            var investigationData = new EnemyInvestigationData(this, selectedClip);
-            investigationEvent.RaiseEvent(investigationData);
+            AudioClip selectedClip = soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0
+                ? soundSource.RandomAudioClips[Random.Range(0, soundSource.RandomAudioClips.Length)]
+                : soundSource.AudioClip;
+            
+            if (selectedClip != null)
+            {
+                var investigationData = new EnemyInvestigationData(this, selectedClip);
+                investigationEvent.RaiseEvent(investigationData);
+            }
         }
     }
 
