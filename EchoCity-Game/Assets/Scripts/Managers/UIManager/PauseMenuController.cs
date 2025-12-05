@@ -1,11 +1,6 @@
-using System;
-using System.Drawing;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
 
 [RequireComponent(typeof(MethodsUI))]
 [RequireComponent(typeof(UIDocument))]

@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(MethodsUI))]
 [RequireComponent(typeof(UIDocument))]
 public class TitleMenuController : MonoBehaviour
 {
@@ -42,6 +41,7 @@ public class TitleMenuController : MonoBehaviour
         StartCoroutine(RedBlinkLoop());
         StartCoroutine(BlueBlinkLoop());
 
+        uiManager.EnableUIActionMap();
         _showCursor = true;
     }
     
@@ -93,46 +93,6 @@ public class TitleMenuController : MonoBehaviour
         if (quitButton != null) quitButton.clicked += QuitClickHandler;
     }
 
-    private void OnDisable()
-    {
-        if (startGameButton != null) startGameButton.clicked -= StartGameClickHandler;
-        if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
-        if (quitButton != null) quitButton.clicked -= QuitClickHandler;
-    }
-
-
-    private void DisableFocusHandler()
-    {
-        foreach (var button in buttons)
-            button?.Blur();
-    }
-
-    private void StartGameClickHandler()
-    {
-        StartCoroutine(StartGameDelay(startGameDelay));
-
-    }
-    private void SettingsClickHandler() => Log.D("Settings button clicked", _LOG_COLOR, _LOG_TAG);
-    private void QuitClickHandler() => Log.D("Quit To Title button clicked", _LOG_COLOR, _LOG_TAG);
-
-
-    private void Update()
-    {
-        MethodsUI.SetCursorState(_showCursor);
-    }
-
-    IEnumerator StartGameDelay (float delay)
-    {   
-        _titleMenuContainer.AddToClassList("hide");
-        uiManager.EnablePlayerActionMap();
-        _showCursor = false;
-
-        startGameEvent?.RaiseEvent();
-        
-        yield return new WaitForSeconds(delay);
-        gameObject.SetActive(false);
-    }
-
     IEnumerator RedBlinkLoop()
     {
         while (true)
@@ -164,5 +124,39 @@ public class TitleMenuController : MonoBehaviour
         _blueBlinkOverlay.AddToClassList("active");
         yield return new WaitForSeconds(duration);
         _blueBlinkOverlay.RemoveFromClassList("active");
+    }
+
+    private void Update()
+    {
+        MethodsUI.SetCursorState(_showCursor);
+    }
+
+
+    private void DisableFocusHandler()
+    {
+        foreach (var button in buttons)
+            button?.Blur();
+    }
+
+    private void StartGameClickHandler()
+    {
+
+        _titleMenuContainer.AddToClassList("hide");
+        _showCursor = false;
+
+        startGameEvent?.RaiseEvent();
+    }
+
+    private void SettingsClickHandler() => Log.D("Settings button clicked", _LOG_COLOR, _LOG_TAG);
+    private void QuitClickHandler() => Log.D("Quit button clicked", _LOG_COLOR, _LOG_TAG);
+
+    private void OnDisable()
+    {
+        if (startGameButton != null) startGameButton.clicked -= StartGameClickHandler;
+        if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
+        if (quitButton != null) quitButton.clicked -= QuitClickHandler;
+
+        uiManager.DisableUIActionMap();
+        uiManager.EnablePlayerActionMap();
     }
 }
