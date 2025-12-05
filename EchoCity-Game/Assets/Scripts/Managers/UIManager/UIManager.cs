@@ -67,6 +67,11 @@ public class UIManager : MonoBehaviour
         dialogController.SpawnDialogHandler(dialogData);
     }
 
+    public void StartGameHandler()
+    {
+        HUD.SetActive(true);
+    }
+
 
 
     public void EnablePlayerActionMap() => enablePlayerActionMapEvent?.RaiseEvent();
