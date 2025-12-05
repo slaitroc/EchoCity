@@ -14,6 +14,7 @@ public class DeathState : GameState
     public override void Enter()
     {
         _gameManager.RaiseReloadLevelEvent();
+        _fsm.SwitchState(_fsm.PlayingState);
     }
 
     public override void Update()
