@@ -307,7 +307,7 @@ namespace StarterAssets
         {
             if (!Grounded) return;
 
-            if (_speed <= 0.01f)
+            if (_input.move.sqrMagnitude < 0.01f)
             {
                 _stepTimer = 0f;
                 return;
