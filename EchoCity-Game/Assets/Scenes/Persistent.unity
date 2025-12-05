@@ -361,6 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchGameStateEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
+  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
   CurrentState: 0
 --- !u!4 &460323341
 Transform:
@@ -387,6 +388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 511452572}
   - component: {fileID: 511452571}
+  - component: {fileID: 511452573}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -401,7 +403,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 511452570}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 052e1c07648e9c5478b87e3324f11f85, type: 3}
   m_Name: 
@@ -423,6 +425,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &511452573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511452570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5045af3f3603be39da75d223f7f067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadLevelEvent: {fileID: 11400000, guid: 3a0bc9b40debd8a88900a4227a73277e, type: 2}
+  loadSceneNoActiveEvent: {fileID: 11400000, guid: 4aaf3d32d4786e83ca63a9174b65a47a, type: 2}
+  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
+  sceneLoader: {fileID: 511452571}
 --- !u!1 &814197898
 GameObject:
   m_ObjectHideFlags: 0
