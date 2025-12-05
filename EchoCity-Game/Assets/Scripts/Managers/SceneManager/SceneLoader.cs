@@ -1,4 +1,5 @@
 using System.Collections;
+using EchoCity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -51,11 +52,13 @@ public class SceneLoader : MonoBehaviour
     {
         GameObject spawn = GameObject.FindWithTag("Respawn");
         GameObject player = GameObject.FindWithTag("Player");
+        PlayerController pc = player?.GetComponent<PlayerController>();
 
-        if (spawn != null && player != null)
+        if (spawn != null && player != null && pc != null)
         {
             player.transform.position = spawn.transform.position;
             player.transform.rotation = spawn.transform.rotation;
+            pc.currentHealth = pc.maxHealth;
         }
 
     }
@@ -78,10 +81,19 @@ public class SceneLoader : MonoBehaviour
 
         Log.D("Loaded non-active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
     }
-
-
-
-
-
+    public void LoadLevelAdditiveEvent(string sceneName) => StartCoroutine(LoadLevelAdditive(sceneName));
+    public void LoadSceneAdditiveNoActiveEvent(string sceneName) => StartCoroutine(LoadSceneAdditiveNoActive(sceneName));
+    public void ReloadCurrentLevelEvent()
+    {
+        var existingScene = SceneManager.GetSceneByName(_currentLevelName);
+        if (!string.IsNullOrEmpty(_currentLevelName))
+        {
+            if (existingScene.IsValid() && existingScene.isLoaded)
+            {
+                SceneManager.UnloadSceneAsync(existingScene);
+            }
+            StartCoroutine(LoadLevelAdditive(_currentLevelName));
+        }
+    }
 
 }

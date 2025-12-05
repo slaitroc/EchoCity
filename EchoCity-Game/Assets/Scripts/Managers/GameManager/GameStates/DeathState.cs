@@ -9,10 +9,11 @@ public class DeathState : GameState
     [Header("UI Action Map")]
     private const string UI_ACTION_MAP = "UI";
 
+
     public DeathState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
     public override void Enter()
     {
-        Time.timeScale = 0;
+        _gameManager.RaiseReloadLevelEvent();
     }
 
     public override void Update()
@@ -21,7 +22,6 @@ public class DeathState : GameState
 
     public override void Exit()
     {
-        Time.timeScale = 1;
     }
 
 
