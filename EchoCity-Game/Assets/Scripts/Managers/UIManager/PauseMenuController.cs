@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(MethodsUI))]
 [RequireComponent(typeof(UIDocument))]
 public class PauseMenuController : MonoBehaviour
 {
@@ -16,6 +15,8 @@ public class PauseMenuController : MonoBehaviour
     [Header("Invoking events")]
     [SerializeField] private SOEventVoid pauseGameEvent;
     [SerializeField] private SOEventVoid pauseMenuEvent;
+    [SerializeField] private SOEventVoid openSettingsMenuEvent;
+    [SerializeField] private SOEventVoid quitToTitleEvent;
 
     #region Private Fields
     private VisualElement _root;
@@ -25,7 +26,6 @@ public class PauseMenuController : MonoBehaviour
     private Button[] buttons;
     private bool _isNavMode = false;
     private bool _showCursor;
-
     #endregion
 
     private void OnEnable()
@@ -38,6 +38,7 @@ public class PauseMenuController : MonoBehaviour
         uiManager.EnableUIActionMap();
         _showCursor = true;
     }
+    
     IEnumerator InitCallbacksNextFrame()
     {
 
@@ -98,6 +99,7 @@ public class PauseMenuController : MonoBehaviour
     {
         MethodsUI.SetCursorState(_showCursor);
     }
+
     private void DisableFocusHandler()
     {
         foreach (var button in buttons)
@@ -109,8 +111,13 @@ public class PauseMenuController : MonoBehaviour
         pauseMenuEvent?.RaiseEvent();
         pauseGameEvent?.RaiseEvent();
     }
-    private void SettingsClickHandler() => Log.D("Settings button clicked", _LOG_COLOR, _LOG_TAG);
-    private void QuitClickHandler() => Log.D("Quit To Title button clicked", _LOG_COLOR, _LOG_TAG);
 
+    private void SettingsClickHandler()
+    {
+        uiManager.OpenSettingsMenuHandler();
+        openSettingsMenuEvent?.RaiseEvent();
+    }
+
+    private void QuitClickHandler() => quitToTitleEvent?.RaiseEvent();
 
 }

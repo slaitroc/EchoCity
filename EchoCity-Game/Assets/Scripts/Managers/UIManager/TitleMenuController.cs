@@ -14,6 +14,7 @@ public class TitleMenuController : MonoBehaviour
 
     [Header("Invoking events")]
     [SerializeField] private SOEventVoid startGameEvent;
+    [SerializeField] private SOEventVoid openSettingsMenuEvent;
 
     [Header("Delays")]
     [SerializeField] private float startGameDelay = 1f;
@@ -41,7 +42,6 @@ public class TitleMenuController : MonoBehaviour
         StartCoroutine(RedBlinkLoop());
         StartCoroutine(BlueBlinkLoop());
 
-        uiManager.EnableUIActionMap();
         _showCursor = true;
     }
     
@@ -91,6 +91,8 @@ public class TitleMenuController : MonoBehaviour
         if (startGameButton != null) startGameButton.clicked += StartGameClickHandler;
         if (settingsButton != null) settingsButton.clicked += SettingsClickHandler;
         if (quitButton != null) quitButton.clicked += QuitClickHandler;
+
+        uiManager.EnableUIActionMap();
     }
 
     IEnumerator RedBlinkLoop()
@@ -147,7 +149,12 @@ public class TitleMenuController : MonoBehaviour
         startGameEvent?.RaiseEvent();
     }
 
-    private void SettingsClickHandler() => Log.D("Settings button clicked", _LOG_COLOR, _LOG_TAG);
+    private void SettingsClickHandler()
+    {
+        uiManager.OpenSettingsMenuHandler();
+        openSettingsMenuEvent?.RaiseEvent();
+    }
+
     private void QuitClickHandler() => Log.D("Quit button clicked", _LOG_COLOR, _LOG_TAG);
 
     private void OnDisable()
