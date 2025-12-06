@@ -336,7 +336,7 @@ namespace StarterAssets
                     if ((footstepSounds[i].layer.value & (1 << hitLayer)) != 0)
                     {
                         SOSoundSource soundSource = footstepSounds[i].SoundSource;
-                        ECSound.PlayRandomClipAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                        ECSound.PlayRandomAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
                         return;
                     }
                 }
@@ -356,7 +356,7 @@ namespace StarterAssets
                     if ((landingSounds[i].layer.value & (1 << hitLayer)) != 0)
                     {
                         SOSoundSource soundSource = landingSounds[i].SoundSource;
-                        ECSound.PlaySoundAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                        ECSound.PlayAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
                         return;
                     }
                 }

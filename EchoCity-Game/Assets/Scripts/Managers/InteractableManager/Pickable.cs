@@ -30,7 +30,7 @@ namespace EchoCity.Interactables
         {
             if (canPickUp && _canBePicked)
             {
-                ECSound.PlaySoundAtPosition(pickableData.PickUpSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(pickableData.PickUpSound, transform.position, newAudioSphereEvent, "SFX");
                 Destroy(gameObject);
             }
             _canBePicked = false;

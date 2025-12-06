@@ -390,14 +390,14 @@ namespace StarterAssets
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
-                ECSound.PlayRandomClipAtPosition(FootstepSoundSource, transform.TransformPoint(_controller.center), newAudioSphereEvent, "SFX");
+                ECSound.PlayRandomAtPosition(FootstepSoundSource, transform.TransformPoint(_controller.center), newAudioSphereEvent, "SFX");
 
         }
 
         private void OnLand(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
-                ECSound.PlaySoundAtPosition(LandingSoundSource, transform.TransformPoint(_controller.center), newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(LandingSoundSource, transform.TransformPoint(_controller.center), newAudioSphereEvent, "SFX");
 
         }
     }
