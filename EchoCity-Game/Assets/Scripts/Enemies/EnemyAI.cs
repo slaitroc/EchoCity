@@ -265,12 +265,12 @@ public class EnemyAI : MonoBehaviour
         if (soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0)
         {
             // Use random clip from array
-            ECSound.PlayRandomClipAtPosition(soundSource, transform.position, null, "SFX");
+            ECSound.PlayRandomAtPosition(soundSource, transform.position, null, "SFX");
         }
         else if (soundSource.AudioClip != null)
         {
             // Use main audio clip
-            ECSound.PlaySoundAtPosition(soundSource, transform.position, null, "SFX");
+            ECSound.PlayAtPosition(soundSource, transform.position, null, "SFX");
         }
         else
         {

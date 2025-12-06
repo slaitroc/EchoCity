@@ -49,6 +49,10 @@ namespace EchoCity
 
         private float _lastTimeDamaged;
 
+        [Header("Audio")]
+        private GameObject _playerToolsAudio;
+        private AudioSource _playerAudioSource;
+
         void OnEnable()
         {
             if (itemEquippedEvent)
@@ -72,7 +76,14 @@ namespace EchoCity
         {
             currentHealth = maxHealth;
             _lastTimeDamaged = float.NegativeInfinity;
+
+            _playerToolsAudio = new GameObject("ToolsAudioSource");
+            _playerToolsAudio.transform.SetParent(transform);
+            _playerToolsAudio.transform.localPosition = Vector3.zero;
+            _playerAudioSource = _playerToolsAudio.AddComponent<AudioSource>();
+            _playerAudioSource.spatialBlend = 1.0f; // 3D sound
         }
+
 
         void Update()
         {
@@ -124,7 +135,7 @@ namespace EchoCity
             {
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
-                    ECSound.PlayAtPosition(equippedItem.Data.ToolSound, transform.position, newAudioSphereEvent, "SFX");
+                    ECSound.PlayRandomInAudioSource(equippedItem.Data.ToolSound, newAudioSphereEvent, "SFX", _playerAudioSource);
                     return;
                 }
                 else if (equippedItem.Data.PickableType == PickableType.Tool)
