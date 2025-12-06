@@ -13,8 +13,7 @@ public class DeathState : GameState
     public DeathState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
     public override void Enter()
     {
-        _gameManager.RaiseReloadLevelEvent();
-        _fsm.SwitchState(_fsm.PlayingState);
+        Time.timeScale = 0;
     }
 
     public override void Update()
@@ -23,6 +22,7 @@ public class DeathState : GameState
 
     public override void Exit()
     {
+        Time.timeScale = 1;
     }
 
 
@@ -40,7 +40,7 @@ public class DeathState : GameState
 
     public override bool DeathHandler()
     {
-        _fsm.SwitchState(_fsm.DeathState);
+        _fsm.SwitchState(_fsm.PlayingState);
         return true;
     }
 }
