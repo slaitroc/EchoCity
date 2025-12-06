@@ -9,6 +9,7 @@ public class DeathState : GameState
     [Header("UI Action Map")]
     private const string UI_ACTION_MAP = "UI";
 
+
     public DeathState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
     public override void Enter()
     {
@@ -39,7 +40,7 @@ public class DeathState : GameState
 
     public override bool DeathHandler()
     {
-        _fsm.SwitchState(_fsm.DeathState);
+        _fsm.SwitchState(_fsm.PlayingState);
         return true;
     }
 }

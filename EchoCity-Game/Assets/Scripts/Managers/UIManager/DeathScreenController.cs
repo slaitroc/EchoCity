@@ -13,6 +13,7 @@ public class DeathScreenController : MonoBehaviour
     [SerializeField] private UIDocument deathScreenDocument;
 
     [Header("Invoking events")]
+    [SerializeField] private SOEventVoid deathEvent;
     [SerializeField] private SOEventVoid restartGameEvent;
     [SerializeField] private SOEventVoid quitToTitleEvent;
 
@@ -31,7 +32,7 @@ public class DeathScreenController : MonoBehaviour
     private bool _showCursor;
     #endregion
 
-     private void OnEnable()
+    private void OnEnable()
     {
         if (deathScreenDocument == null) return;
         _root = deathScreenDocument.rootVisualElement;
@@ -40,9 +41,9 @@ public class DeathScreenController : MonoBehaviour
         _showCursor = true;
         uiManager.EnableUIActionMap();
     }
-    
+
     IEnumerator InitCallbacksNextFrame()
-    {   
+    {
         _deathScreenPanel = _root.Q<VisualElement>("DeathScreenPanel");
         _deathBgAnimated = _root.Q<VisualElement>("DeathBgAnimated");
         _deathBgAnimated.style.translate = new Translate(0, new Length(-100, LengthUnit.Percent));
@@ -106,13 +107,14 @@ public class DeathScreenController : MonoBehaviour
 
     private void QuitClickHandler() => quitToTitleEvent?.RaiseEvent();
 
-    IEnumerator StartGameDelay (float delay)
-    {   
+    IEnumerator StartGameDelay(float delay)
+    {
         uiManager.EnablePlayerActionMap();
         _showCursor = false;
 
+        deathEvent?.RaiseEvent();
         restartGameEvent?.RaiseEvent();
-        
+
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
     }
