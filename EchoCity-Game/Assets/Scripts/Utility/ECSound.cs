@@ -51,6 +51,28 @@ namespace EchoCity
         }
 
 
+        public static void PlayRandomInAudioSource(SOSoundSource soundSource, SOSoundEmissionDataEvent newAudioSphereEvent = null, string mixerGroup = null, AudioSource audioSource = null)
+        {
+            if (soundSource?.RandomAudioClips == null || soundSource.RandomAudioClips.Length == 0)
+            {
+                if (soundSource?.AudioClip != null)
+                {
+                    // Fallback to main audio clip if random clips are not available
+                    PlayInAudioSource(soundSource.AudioClip, soundSource.Volume, mixerGroup, audioSource);
+                    return;
+                }
+                Log.W("SoundSource RandomAudioClips is null or empty. Cannot play random sound.", _LOG_COLOR, _LOG_TAG);
+                return;
+            }
+
+            var index = Random.Range(0, soundSource.RandomAudioClips.Length);
+            AudioClip clip = soundSource.RandomAudioClips[index];
+
+            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(audioSource.transform.position, soundSource, clip));
+            PlayInAudioSource(clip, soundSource.Volume, mixerGroup, audioSource);
+        }
+
+
 
         private static void PlayAtPosition(AudioClip clip, Vector3 position, float volume, string mixerGroup)
         {
@@ -63,6 +85,14 @@ namespace EchoCity
             aSource.outputAudioMixerGroup = mixerGroup == null ? _mixer.FindMatchingGroups("Master")[0] : _mixer.FindMatchingGroups(mixerGroup)[0];
             aSource.Play();
             Object.Destroy(tempGO, clip.length);
+        }
+
+        private static void PlayInAudioSource(AudioClip clip, float volume, string mixerGroup, AudioSource aSource = null)
+        {
+            aSource.outputAudioMixerGroup = mixerGroup == null ? _mixer.FindMatchingGroups("Master")[0] : _mixer.FindMatchingGroups(mixerGroup)[0];
+            aSource.clip = clip;
+            aSource.volume = volume;
+            aSource.Play();
         }
 
 

@@ -30,7 +30,7 @@ public class EnemyFootsteps : MonoBehaviour
                 if ((groundTypes[i].layer.value & (1 << hitLayer)) != 0)
                 {
                     SOSoundSource soundSource = groundTypes[i].SoundSource;
-                    ECSound.PlayRandomClipAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                    ECSound.PlayRandomAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
                     return;
                 }
             }
