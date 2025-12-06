@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: LowGeneratorHumSoundSource
+  m_Name: FloppyDiskInsert
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: d4a43699c88e5f44494578a69af37aff, type: 2}
-  audioClip: {fileID: 8300000, guid: 360280740f9b070408fbaf7dafb202f5, type: 3}
-  intensity: 0.754
-  radius: 4
-  gapBetweenSounds: 2
-  minimumDuration: 2
-  emitOnStart: 1
+  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  audioClip: {fileID: 8300000, guid: 453742c408aa7884685b44f818a02f99, type: 3}
+  intensity: 0.416
+  volume: 0.356
+  radius: 5.4
+  gapBetweenSounds: 0
+  minimumDuration: 0.1
+  emitOnStart: 0
   randomAudioClips: []
