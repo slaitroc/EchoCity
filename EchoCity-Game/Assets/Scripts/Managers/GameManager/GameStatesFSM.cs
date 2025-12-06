@@ -95,7 +95,7 @@ namespace EchoCity
             NarrationState.EnterNarration(data);
         }
 
-        public void SwitchToHud(HUDEnum hud)
+        public void SwitchToHud(HudEnum hud)
         {
             CurrentState.Exit();
             PreviousState = CurrentState;
