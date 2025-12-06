@@ -36,6 +36,12 @@ public class MandatoryChaseState : EnemyState
         _agent.isStopped = false;
         _agent.stoppingDistance = _enemyData.AttackRange;
         
+        // Play state entry phrase
+        if (_enemyData.MandatoryChaseState_Phrases != null)
+        {
+            _enemyAI.PlayRandomPhrase(_enemyData.MandatoryChaseState_Phrases);
+        }
+        
         _animator.SetFloat(_animSpeedParameter, 1f, 0.2f, Time.deltaTime);
     }
 

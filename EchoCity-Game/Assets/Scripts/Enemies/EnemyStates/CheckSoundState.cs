@@ -53,6 +53,12 @@ public class CheckSoundState : EnemyState
         _agent.stoppingDistance = 0f; // No stopping distance, we want to reach the exact position
         _agent.SetDestination(_targetSoundPosition);
         
+        // Play state entry phrase
+        if (_enemyData.CheckSoundState_Phrases != null)
+        {
+            _enemyAI.PlayRandomPhrase(_enemyData.CheckSoundState_Phrases);
+        }
+
         _hasArrived = false;
         _arrivalTime = 0f;
         

@@ -1,0 +1,187 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "EnemyDataSO", menuName = "ECHO CITY/ENEMY/EnemyDataSO")]
+public class SOEnemyData : ScriptableObject
+{
+    #region Private Serialized Fields (Unity Inspector)
+    
+    // Unity serializza solo i campi, non le proprietà. I valori vengono modificati nell'Inspector usando questi campi privati.
+    
+    [Header("Ranges")]
+    [Tooltip("Distance threshold: within this distance (10m), enemy always chases regardless of attraction")]
+    [SerializeField] private float D_enter = 10f;
+    
+    [Tooltip("Distance threshold: beyond this distance (15m), enemy considers player truly lost")]
+    [SerializeField] private float D_exit = 15f;
+    
+    [Tooltip("Attack range: distance at which enemy can attack player")]
+    [SerializeField] private float AttackRange = 3f;
+
+    [Header("Velocity")]
+    [SerializeField] private float ChaseSpeed = 5.4f;
+    
+    [Range(0f, 1f)]
+    [SerializeField] private float PatrolSpeed = 0.5f;
+
+    [Header("Patrol")]
+    [SerializeField] private float WaypointPauseDuration = 2f;
+    [SerializeField] private float WaypointArrivalThreshold = 0.3f;
+
+    [Header("Noise Detection")]
+    [Tooltip("Noise threshold for chasing: when noise exceeds this value (1.0), enemy starts chasing PLAYER")]
+    [Min(0f)]
+    [SerializeField] private float NoiseThreshold = 1.0f;
+    
+    [Tooltip("Noise threshold for continuing chase: enemy continues chasing PLAYER if attraction > 0.8")]
+    [Min(0f)]
+    [SerializeField] private float NoiseLoseThreshold = 0.8f;
+    
+    [Tooltip("Minimum chase duration: DEPRECATED - not used in new state system. MandatoryChaseState has fixed 3s duration. Kept for backward compatibility.")]
+    [Min(0f)]
+    [SerializeField] private float MinChaseDuration = 5f;
+
+    [Tooltip("Intensity factor for noise calculation")]
+    [Min(0f)]
+    [SerializeField] private float NoiseIntensityFactor = 1f;
+
+    [Tooltip("Range factor for distance calculation")]
+    [Min(0f)]
+    [SerializeField] private float NoiseRangeFactor = 1f;
+
+    [Tooltip("Decay exponent for distance falloff (higher = faster falloff)")]
+    [Range(0.1f, 5f)]
+    [SerializeField] private float NoiseDistanceDecay = 0.05f;
+
+    [Tooltip("Rate at which attraction decays per second when no sound is active")]
+    [Min(0f)]
+    [SerializeField] private float NoiseDecayRate = 0.05f;
+
+    [Header("Voice Lines - State Entry Phrases")]
+    [Tooltip("SoundSource for phrases when entering MandatoryChaseState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    [SerializeField] private SOSoundSource mandatoryChase_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering ChaseEnemyState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    [SerializeField] private SOSoundSource chase_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering ChaseDistanceState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    [SerializeField] private SOSoundSource chaseDistance_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering AttackEnemyState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    [SerializeField] private SOSoundSource attack_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering CheckSoundState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    [SerializeField] private SOSoundSource checkSound_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering StandAndExaminateState: 'Mi sembrava di sentire qualcosa...', 'Strano...'. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    [SerializeField] private SOSoundSource standAndExaminate_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering LostTargetState: 'So che eri qui... ti ritroverò'. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    [SerializeField] private SOSoundSource lostTarget_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering GettingConfusedState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    [SerializeField] private SOSoundSource gettingConfused_Phrases;
+    
+    [Header("Legacy/DEPRECATED")]
+    [Tooltip("DEPRECATED: Use StandAndExaminate_Phrases instead. Kept for backward compatibility.")]
+    [SerializeField] private SOSoundSource investigationPhrases;
+    
+    [Tooltip("Sound emitted by enemy when investigating (for echolocation system)")]
+    [Header("Investigation Sound Emission")]
+    [Min(0f)]
+    [SerializeField] private float InvestigationSoundIntensity = 0.3f;
+    
+    [Tooltip("Duration of investigation sound (seconds)")]
+    [Min(0.1f)]
+    [SerializeField] private float InvestigationSoundDuration = 1.0f;
+    
+    [Tooltip("Frequency of investigation sound: 0=Low, 1=Mid, 2=High")]
+    [Range(0f, 2f)]
+    [SerializeField] private float InvestigationSoundFrequency = 0f;
+    
+    [Tooltip("Radius of investigation sound emission")]
+    [Min(0f)]
+    [SerializeField] private float InvestigationSoundRadius = 5f;
+
+    [Header("Confusing Sound")]
+    [Tooltip("Maximum distance at which enemy can detect confusing sound sources (R_confuse)")]
+    [Min(0f)]
+    [SerializeField] private float ConfusingSoundDetectionRange = 30f;
+    
+    [Tooltip("Duration enemy stays confused when reaching confusing sound source (T_confuse)")]
+    [Min(0.1f)]
+    [SerializeField] private float ConfusingSoundDuration = 6f;
+
+    [Header("Attack")]
+    [SerializeField] private AnimationClip AttackAnimation;
+    [SerializeField] private float AttackDuration;
+    [SerializeField] private float AttackDamageDelay = 0.5f;
+    [SerializeField] private float AttackDamageWindowTime = 0.1f;
+    [SerializeField] private float AttackCoolDown = 0.2f;
+    [SerializeField] private float CoolDownRotationSpeed = 5f;
+
+    #endregion
+
+    #region Public Properties (Code Access)
+
+    // Elenco completo di tutte le proprietà pubbliche disponibili per l'uso nel codice
+    // Usa queste proprietà nel codice: enemyData.D_enter, enemyData.AttackRange, etc.
+
+    public float D_enter => D_enter;
+    public float D_exit => D_exit;
+    public float AttackRange => AttackRange;
+    public float ChaseSpeed => ChaseSpeed;
+    public float PatrolSpeed => PatrolSpeed;
+    public float WaypointPauseDuration => WaypointPauseDuration;
+    public float WaypointArrivalThreshold => WaypointArrivalThreshold;
+    public float NoiseThreshold => NoiseThreshold;
+    public float NoiseLoseThreshold => NoiseLoseThreshold;
+    public float MinChaseDuration => MinChaseDuration;
+    public float NoiseIntensityFactor => NoiseIntensityFactor;
+    public float NoiseRangeFactor => NoiseRangeFactor;
+    public float NoiseDistanceDecay => NoiseDistanceDecay;
+    public float NoiseDecayRate => NoiseDecayRate;
+    public SOSoundSource MandatoryChase_Phrases => mandatoryChase_Phrases;
+    public SOSoundSource Chase_Phrases => chase_Phrases;
+    public SOSoundSource ChaseDistance_Phrases => chaseDistance_Phrases;
+    public SOSoundSource Attack_Phrases => attack_Phrases;
+    public SOSoundSource CheckSound_Phrases => checkSound_Phrases;
+    public SOSoundSource StandAndExaminate_Phrases => standAndExaminate_Phrases;
+    public SOSoundSource LostTarget_Phrases => lostTarget_Phrases;
+    public SOSoundSource GettingConfused_Phrases => gettingConfused_Phrases;
+    public SOSoundSource InvestigationPhrases => investigationPhrases;
+    public float InvestigationSoundIntensity => InvestigationSoundIntensity;
+    public float InvestigationSoundDuration => InvestigationSoundDuration;
+    public float InvestigationSoundFrequency => InvestigationSoundFrequency;
+    public float InvestigationSoundRadius => InvestigationSoundRadius;
+    public float ConfusingSoundDetectionRange => ConfusingSoundDetectionRange;
+    public float ConfusingSoundDuration => ConfusingSoundDuration;
+    public AnimationClip AttackAnimation => AttackAnimation;
+    public float AttackDuration => AttackDuration;
+    public float AttackDamageDelay => AttackDamageDelay;
+    public float AttackDamageWindowTime => AttackDamageWindowTime;
+    public float AttackCoolDown => AttackCoolDown;
+    public float CoolDownRotationSpeed => CoolDownRotationSpeed;
+
+    #endregion
+
+    #region Unity Callbacks
+
+    void OnValidate()
+    {
+        AttackDuration = AttackAnimation != null ? AttackAnimation.length : AttackDuration;
+        AttackDamageDelay = Mathf.Clamp(AttackDamageDelay, 0f, AttackDuration);
+        AttackDamageWindowTime = Mathf.Clamp(AttackDamageWindowTime, 0f, AttackDuration - AttackDamageDelay);
+        AttackCoolDown = Mathf.Max(AttackCoolDown, 0f);
+
+        // Ensure AttackRange is valid (must be less than D_exit)
+        AttackRange = Mathf.Clamp(AttackRange, 0f, D_exit);
+
+        PatrolSpeed = Mathf.Clamp01(PatrolSpeed);
+
+        // Ensure thresholds are in correct order: Lose < Chase
+        NoiseLoseThreshold = Mathf.Max(0f, NoiseLoseThreshold);
+        NoiseThreshold = Mathf.Max(NoiseLoseThreshold, NoiseThreshold);
+    }
+
+    #endregion
+}

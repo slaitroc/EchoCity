@@ -139,6 +139,19 @@ public class EnemyAI : MonoBehaviour
     }
 
     /// <summary>
+    /// Sync vertical position between NavMeshAgent and model
+    /// </summary>
+    void LateUpdate()
+    {
+        if (agent == null) return;
+
+        // Sync verticale tra NavMeshAgent e modello
+        Vector3 pos = transform.position;
+        pos.y = agent.nextPosition.y;
+        transform.position = pos;
+    }
+
+    /// <summary>
     /// Updates active player action duration and removes it if expired
     /// </summary>
     void UpdateActiveAction()
@@ -246,7 +259,7 @@ public class EnemyAI : MonoBehaviour
     /// Helper method to play a random phrase from a SOSoundSource using ECSound utility.
     /// Uses RandomAudioClips array if available, otherwise uses main AudioClip.
     /// </summary>
-    private void PlayRandomPhrase(SOSoundSource soundSource)
+    public void PlayRandomPhrase(SOSoundSource soundSource)
     {
         if (enemyData == null || soundSource == null)
             return;
@@ -283,33 +296,6 @@ public class EnemyAI : MonoBehaviour
                 investigationEvent.RaiseEvent(investigationData);
             }
         }
-    }
-
-    /// <summary>
-    /// Play a random investigation phrase audio clip (generic/legacy)
-    /// </summary>
-    public void PlayInvestigationPhrase()
-    {
-        // If you want to keep it as "generic", continue using InvestigationPhrases
-        PlayRandomPhrase(enemyData != null ? enemyData.InvestigationPhrases : null);
-    }
-
-    /// <summary>
-    /// Play a random suspicion phrase (used in StandAndExaminateState)
-    /// Phrases like: "Mi sembrava di sentire qualcosa...", "Strano..."
-    /// </summary>
-    public void PlaySuspicionPhrase()
-    {
-        PlayRandomPhrase(enemyData != null ? enemyData.SuspicionPhrases : null);
-    }
-
-    /// <summary>
-    /// Play a random lost target phrase (used in LostTargetState)
-    /// Phrases like: "So che eri qui... ti ritroverò"
-    /// </summary>
-    public void PlayLostTargetPhrase()
-    {
-        PlayRandomPhrase(enemyData != null ? enemyData.LostTargetPhrases : null);
     }
 
     #region Public Getters for States

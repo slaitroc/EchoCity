@@ -49,6 +49,12 @@ public class GettingConfusedState : EnemyState
         _hasArrived = false;
         _isConfused = false;
         
+        // Play state entry phrase
+        if (_enemyData.GettingConfusedState_Phrases != null)
+        {
+            _enemyAI.PlayRandomPhrase(_enemyData.GettingConfusedState_Phrases);
+        }
+
         _agent.speed = _enemyData.ChaseSpeed;
         _agent.isStopped = false;
         _agent.stoppingDistance = 0f; // No stopping distance, we want to reach the exact position
