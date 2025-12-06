@@ -33,11 +33,11 @@ namespace EchoCity
                 if (wallPanelSwitchAnimator.IsInTransition(0)) return;
                 if (_isSwitchedOn)
                 {
-                    ECSound.PlaySoundAtPosition(switchOnSound, transform.position, newAudioSphereEvent, "SFX");
+                    ECSound.PlayAtPosition(switchOnSound, transform.position, newAudioSphereEvent, "SFX");
                 }
                 else
                 {
-                    ECSound.PlaySoundAtPosition(switchOffSound, transform.position, newAudioSphereEvent, "SFX");
+                    ECSound.PlayAtPosition(switchOffSound, transform.position, newAudioSphereEvent, "SFX");
                 }
                 if (switchLinkedObject)
                 {

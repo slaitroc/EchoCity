@@ -94,7 +94,7 @@ namespace EchoCity
 
         public void EmitFullInventorySound()
         {
-            ECSound.PlaySoundAtPosition(fullInventorySound, transform.position, newAudioSphereEvent, "SFX");
+            ECSound.PlayAtPosition(fullInventorySound, transform.position, newAudioSphereEvent, "SFX");
         }
 
         public void EquipItem(int index, PickableData data, GameObject prefab)
@@ -124,7 +124,7 @@ namespace EchoCity
             {
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
-                    ECSound.PlaySoundAtPosition(equippedItem.Data.ToolSound, transform.position, newAudioSphereEvent, "SFX");
+                    ECSound.PlayAtPosition(equippedItem.Data.ToolSound, transform.position, newAudioSphereEvent, "SFX");
                     return;
                 }
                 else if (equippedItem.Data.PickableType == PickableType.Tool)
