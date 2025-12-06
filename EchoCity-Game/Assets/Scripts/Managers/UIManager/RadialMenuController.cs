@@ -38,8 +38,10 @@ public class RadialMenuController : MonoBehaviour
     private GameObject _selectedPrefab;
     #endregion
     #region Private Fields Other
+#pragma warning disable CS0414
     private Camera _camera;
     private bool _isOpen;
+#pragma warning restore CS0414
 
     #endregion
 

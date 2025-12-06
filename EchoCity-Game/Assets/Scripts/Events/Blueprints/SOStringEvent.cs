@@ -1,3 +1,7 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "StringEventSO", menuName = "ECHO CITY/Events/StringEventSO")]
-public class SOStringEvent : SOEvent<string> { }
+
+namespace EchoCity
+{
+    [CreateAssetMenu(fileName = "StringEventSO", menuName = "ECHO CITY/Events/StringEventSO")]
+    public class SOStringEvent : SOEvent<string> { }
+}

@@ -1,29 +1,32 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace EchoCity
 {
+    public class GameManager : MonoBehaviour
+    {
 #pragma warning disable CS0414
-    private string _LOG_TAG = "GAME MANAGER";
-    private string _LOG_COLOR = "#00ff00ff";
+        private string _LOG_TAG = "GAME MANAGER";
+        private string _LOG_COLOR = "#00ff00ff";
 #pragma warning restore CS0414
 
-    [Header("Invoking Events")]
-    [SerializeField] private SOEventDoubleParam<GameStatesEnum, GameStatesEnum> switchGameStateEvent;
-    [SerializeField] private SOEventVoid reloadLevelEvent;
+        [Header("Invoking Events")]
+        [SerializeField] private SOEventDoubleParam<GameStatesEnum, GameStatesEnum> switchGameStateEvent;
+        [SerializeField] private SOEventVoid reloadLevelEvent;
 
-    private GameStatesFSM _fsm;
-    public GameStatesEnum CurrentState;
+        private GameStatesFSM _fsm;
+        public GameStatesEnum CurrentState;
 
-    void Awake()
-    {
-        _fsm = new GameStatesFSM(this);
-        _fsm.Initialize();
+        void Awake()
+        {
+            _fsm = new GameStatesFSM(this);
+            _fsm.Initialize();
+        }
+
+        void Update() => _fsm.Update();
+        public void RaiseSwitchStateEvent(GameStatesEnum from, GameStatesEnum to) => switchGameStateEvent.RaiseEvent(from, to);
+        public void RaiseReloadLevelEvent() => reloadLevelEvent.RaiseEvent();
+        public void PauseGameHandler() => _fsm.CurrentState.PauseGameHandler();
+        public void DeathHandler() => _fsm.CurrentState.DeathHandler();
+
     }
-
-    void Update() => _fsm.Update();
-    public void RaiseSwitchStateEvent(GameStatesEnum from, GameStatesEnum to) => switchGameStateEvent.RaiseEvent(from, to);
-    public void RaiseReloadLevelEvent() => reloadLevelEvent.RaiseEvent();
-    public void PauseGameHandler() => _fsm.CurrentState.PauseGameHandler();
-    public void DeathHandler() => _fsm.CurrentState.DeathHandler();
-
 }
