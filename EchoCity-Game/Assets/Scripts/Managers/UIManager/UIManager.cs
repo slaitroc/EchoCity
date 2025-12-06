@@ -22,6 +22,9 @@ public class UIManager : MonoBehaviour
     [Header("Pause Menu")]
     [SerializeField] private PauseMenuController pauseMenuController;
 
+    [Header("Settings Menu")]
+    [SerializeField] private SettingsMenuController settingsMenuController;
+
     [Header("Dialogs")]
     [SerializeField] private DialogController dialogController;
 
@@ -36,6 +39,7 @@ public class UIManager : MonoBehaviour
     private GameObject _titleMenu;
     private GameObject _hud;
     private GameObject _pauseMenu;
+    private GameObject _settingsMenu;
     private GameObject _dialog;
     private GameObject _deathScreen;
 
@@ -46,6 +50,7 @@ public class UIManager : MonoBehaviour
         _titleMenu = titleMenuController.gameObject;
         _hud = crosshairController.gameObject;
         _pauseMenu = pauseMenuController.gameObject;
+        _settingsMenu = settingsMenuController.gameObject;
         _dialog = dialogController.gameObject;
         _deathScreen = deathScreenController.gameObject;
 
@@ -56,6 +61,8 @@ public class UIManager : MonoBehaviour
     }
 
     public void PauseMenuHandler() => _pauseMenu.SetActive(!_pauseMenu.activeSelf);
+    public void OpenSettingsMenuHandler() => _settingsMenu.SetActive(true);
+    public void CloseSettingsMenuHandler() => _settingsMenu.SetActive(false);
     public void HUDInteractableHandler() => crosshairController.IsInteractable(!crosshairController.isInteractable);
     public void OpenRadialMenuHandler() => radialMenuController.enabled = true;
     public void CloseRadialMenuHandler() => radialMenuController.enabled = false;
