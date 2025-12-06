@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: Drop1
+  m_Name: EnemyGrunts 0
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
-  audioClip: {fileID: 8300000, guid: 1e2ae46e7ffec7341b86c03ee2e73fcc, type: 3}
+  soundClass: {fileID: 11400000, guid: 49281afd3aa455741af4c174c271f1b2, type: 2}
+  audioClip: {fileID: 0}
   intensity: 1
-  radius: 2.08
+  volume: 0.51
+  radius: 12.1
   gapBetweenSounds: 0
   minimumDuration: 0.1
   emitOnStart: 0
-  randomAudioClips: []
+  randomAudioClips:
+  - {fileID: 8300000, guid: 9fcae54f07c78264a8f308de6a53c39a, type: 3}
+  - {fileID: 8300000, guid: c8f97120c76952e4ab9677c735f0cc41, type: 3}
+  - {fileID: 8300000, guid: 3d69b9df69f317446ae1676503ba367f, type: 3}

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
+  m_Name: PlugInPlug
+  m_EditorClassIdentifier: 
+  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  audioClip: {fileID: 0}
+  intensity: 0.43
+  volume: 0.409
+  radius: 12.8
+  gapBetweenSounds: 0
+  minimumDuration: 0.1
+  emitOnStart: 0
+  randomAudioClips:
+  - {fileID: 8300000, guid: b854bc669c07b734aa497e5fc4b50e25, type: 3}
+  - {fileID: 8300000, guid: 2f2b32b011ee3b346b448b7490b913d8, type: 3}
+  - {fileID: 8300000, guid: 6875a8e9fc801fe43be9e45908a98890, type: 3}
+  - {fileID: 8300000, guid: b555233f088af8147ae9121ea8516178, type: 3}

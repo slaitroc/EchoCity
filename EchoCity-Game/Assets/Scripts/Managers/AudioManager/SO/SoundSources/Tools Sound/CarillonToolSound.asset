@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: PickUp1
+  m_Name: CarillonToolSound
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
-  audioClip: {fileID: 8300000, guid: 1e2ae46e7ffec7341b86c03ee2e73fcc, type: 3}
+  audioClip: {fileID: 0}
   intensity: 1
-  volume: 0.385
-  radius: 2.08
-  gapBetweenSounds: 0
+  volume: 0.752
+  radius: 18.8
+  gapBetweenSounds: 0.58
   minimumDuration: 0.1
-  emitOnStart: 0
-  randomAudioClips: []
+  emitOnStart: 1
+  randomAudioClips:
+  - {fileID: 8300000, guid: 974b66a1e38528943a9288b917aebb24, type: 3}
+  - {fileID: 8300000, guid: c8a4fbf3d90697347bead77e0683b90b, type: 3}
+  - {fileID: 8300000, guid: 9bba09539b826414db0fcc55021d22b3, type: 3}
+  - {fileID: 8300000, guid: c70a62164a967c9408e4226c49dee6c8, type: 3}

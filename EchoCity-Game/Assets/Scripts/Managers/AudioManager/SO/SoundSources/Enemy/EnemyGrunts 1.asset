@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: PlayerLandsSoundSource
+  m_Name: EnemyGrunts 1
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 49281afd3aa455741af4c174c271f1b2, type: 2}
-  audioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
-  intensity: 0.5
-  volume: 0.4
-  radius: 6.5
+  audioClip: {fileID: 0}
+  intensity: 1
+  volume: 0.51
+  radius: 12.1
   gapBetweenSounds: 0
-  minimumDuration: 0.2
+  minimumDuration: 0.1
   emitOnStart: 0
-  randomAudioClips: []
+  randomAudioClips:
+  - {fileID: 8300000, guid: 2a949a3d8b9c1be4789943423743ee54, type: 3}
+  - {fileID: 8300000, guid: 1ff88e94ad1e7ce418204c82784e61fa, type: 3}
+  - {fileID: 8300000, guid: ea17aace55c94e543a1f082889afdf38, type: 3}
+  - {fileID: 8300000, guid: beefd3db38e62784e992c8eecb8be6f6, type: 3}
