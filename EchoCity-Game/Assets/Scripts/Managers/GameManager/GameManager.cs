@@ -92,7 +92,7 @@ namespace EchoCity
         public void SwitchToPauseStateHandler() => _fsm.CurrentState.SwitchToPauseHandler();
         public void SwitchToDeathStateHandler() => _fsm.CurrentState.SwitchToDeathHandler();
         public void SwitchToNarrationStateHandler(DialogData data) => _fsm.CurrentState.SwitchToNarrationHandler(data);
-        public void SwitchToHudStateHandler(HUDEnum hud) => _fsm.CurrentState.SwitchToHudHandler(hud);
+        public void SwitchToHudStateHandler(HudEnum hud) => _fsm.CurrentState.SwitchToHudHandler(hud);
 
         public void LoadingHandler() => _fsm.EnterLoading();
         public void DoneLoadingHandler() => _fsm.ExitLoading();

@@ -22,14 +22,13 @@ namespace EchoCity
         [SerializeField] private PlayerController playerController;
 
         [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid areaInteractionEvent;
-        [SerializeField] private SOEventVoid pauseMenuEvent;
-        [SerializeField] private SOEventVoid pauseGameEvent;
+        [SerializeField] private SOEventVoid switchToPauseStateEvent;
+        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
+        [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
         [SerializeField] private SOEventVoid canInteractStartEvent;
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOEventVoid openRadialMenuEvent;
-        [SerializeField] private SOEventVoid closeRadialMenuEvent;
+        [SerializeField] private SOEventVoid areaInteractionEvent;
 
         [Header("Observed Events")]
         [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
@@ -48,10 +47,10 @@ namespace EchoCity
         [SerializeField] private SOPickable examplePickable;
         [SerializeField] private SOEnemyAIEvent playerHitEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
-        [SerializeField] private SOEventVoid deathEvent;
+        [SerializeField] private SOEventVoid switchToDeathStateEvent;
 
         [Header("Dialog")]
-        [SerializeField] private SODialogDataEvent spawnDialogEvent;
+        [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
         [SerializeField] private SODialogContainer exampleDialogData;
 
 
@@ -81,8 +80,8 @@ namespace EchoCity
                 _playerActionMap["Sprint"].performed += OnSprint;
                 _playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
                 _playerActionMap["Interact"].performed += OnInteract;
-                _playerActionMap["UIRadialMenu"].started += OnOpenUIRadialMenu;
-                _playerActionMap["UIRadialMenu"].performed += OnCloseUIRadialMenu;
+                _playerActionMap["OpenInventory"].started += OnOpenInventory;
+                _playerActionMap["OpenInventory"].performed += OnCloseInventory;
                 _playerActionMap["EnterPause"].performed += OnEnterPause;
                 _playerActionMap["DropItem"].performed += OnDropItem;
                 _playerActionMap["UseTool"].performed += OnUseTool;
@@ -92,9 +91,6 @@ namespace EchoCity
                 _playerActionMap["Test4"].performed += OnTest4;
 
             }
-
-            // _playerActionMap.Enable();
-            // MethodsUI.HideCursor();
 
             //Error Logs
             if (inputActionAsset == null)
@@ -208,29 +204,23 @@ namespace EchoCity
         private void OnEnterPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            DisablePlayerActionMap();
-            pauseMenuEvent?.RaiseEvent();
-            pauseGameEvent?.RaiseEvent();
-
+            switchToPauseStateEvent.RaiseEvent();
         }
 
 
-        private void OnOpenUIRadialMenu(InputAction.CallbackContext context)
+        private void OnOpenInventory(InputAction.CallbackContext context)
         {
-            if (context.started)
-            {
-                openRadialMenuEvent?.RaiseEvent();
-                pauseGameEvent?.RaiseEvent();
-            }
+            if (!context.started) return;
+            _playerActionMap["Look"].performed -= OnLook;
+            switchToHudStateEvent.RaiseEvent(HudEnum.Inventory);
+
         }
 
-        private void OnCloseUIRadialMenu(InputAction.CallbackContext context)
+        private void OnCloseInventory(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                closeRadialMenuEvent?.RaiseEvent();
-                pauseGameEvent?.RaiseEvent();
-            }
+            if (!context.performed) return;
+            switchToPlayingStateEvent.RaiseEvent();
+            _playerActionMap["Look"].performed += OnLook;
         }
 
         private void OnTest1(InputAction.CallbackContext context)
@@ -238,7 +228,7 @@ namespace EchoCity
             //TESTS HERE
             if (context.performed)
             {
-                deathEvent.RaiseEvent();
+                switchToDeathStateEvent?.RaiseEvent();
             }
         }
 
@@ -273,8 +263,7 @@ namespace EchoCity
             // SPAWN DIALOG TEST
             if (context.performed)
             {
-                spawnDialogEvent.RaiseEvent(new DialogData(exampleDialogData.DialogLines));
-                _playerActionMap.Disable();
+                switchToNarrationStateEvent.RaiseEvent(new DialogData(exampleDialogData.DialogLines));
             }
         }
 
