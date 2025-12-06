@@ -1,23 +1,21 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 
 namespace EchoCity
 {
-    public class DeathState : GameState
+    public class WinGameState : GameState
     {
         private bool _toTitle = false;
         private bool _restart = false;
-        public DeathState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
-        public override GameStatesEnum GetEnum() => GameStatesEnum.Death;
+
+        public WinGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
         public override void Enter()
         {
             Time.timeScale = 0;
             _gameManager.DisablePlayerInputEvent.RaiseEvent();
             _gameManager.EnableUIInputEvent.RaiseEvent();
-            _gameManager.DeathMenuEvent.RaiseEvent();
+            _gameManager.WinMenuEvent.RaiseEvent();
         }
+        public override void Update() { }
         public override void Exit()
         {
             _toTitle = false;
@@ -30,6 +28,7 @@ namespace EchoCity
             if (_restart)
                 _fsm.SwitchState(_fsm.PlayingState);
         }
+        public override GameStatesEnum GetEnum() => GameStatesEnum.Win;
         public override void SwitchToTitleHandler()
         {
             _toTitle = true;
