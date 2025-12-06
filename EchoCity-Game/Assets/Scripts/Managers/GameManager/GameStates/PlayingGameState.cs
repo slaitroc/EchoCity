@@ -5,37 +5,22 @@ namespace EchoCity
 {
     public class PlayingGameState : GameState
     {
-        public PlayingGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm)
-        {
-        }
-
+        public PlayingGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
         public override void Enter()
         {
+            Time.timeScale = 1;
+            _gameManager.DisableUIInputEvent.RaiseEvent();
+            _gameManager.EnablePlayerInputEvent.RaiseEvent();
         }
+        public override void Update() { }
+        public override void Exit() { }
+        public override GameStatesEnum GetEnum() => GameStatesEnum.Playing;
+        public override void SwitchToPauseHandler() => _fsm.SwitchState(_fsm.PauseState);
+        public override void SwitchToDeathHandler() => _fsm.SwitchState(_fsm.DeathState);
+        public override void SwitchToNarrationHandler(DialogData data) => _fsm.SwitchToNarration(data);
+        //TODO HUD
 
-        public override void Update()
-        {
-        }
-
-        public override void Exit()
-        {
-        }
-
-        public override GameStatesEnum GetEnum()
-        {
-            return GameStatesEnum.Playing;
-        }
-
-        public override bool PauseGameHandler()
-        {
-            _fsm.SwitchState(_fsm.PauseState);
-            return true;
-        }
-
-        public override bool DeathHandler()
-        {
-            _fsm.SwitchState(_fsm.DeathState);
-            return true;
-        }
+        public override void EnterLoading() { }
+        public override void ExitLoading() { }
     }
 }

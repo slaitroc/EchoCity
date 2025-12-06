@@ -182,7 +182,6 @@ GameObject:
   m_Component:
   - component: {fileID: 460323341}
   - component: {fileID: 460323340}
-  - component: {fileID: 460323339}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -190,23 +189,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &460323339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460323338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0e50b241958ca84caa97b8276c2f02a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseGameEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
-  openRadialMenuEvent: {fileID: 11400000, guid: e584cfa22e1c34caa84982dfcbcb464b, type: 2}
-  closeRadialMenuEvent: {fileID: 11400000, guid: a2f0d36f1d42c420e81fd7516009ce1f, type: 2}
-  deathEvent: {fileID: 11400000, guid: 5443b9fde1571418fbe02e900f690105, type: 2}
-  gameManager: {fileID: 460323340}
 --- !u!114 &460323340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,7 +202,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchGameStateEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
-  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
+  EnablePlayerInputEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
+  DisablePlayerInputEvent: {fileID: 11400000, guid: 724e4739b1e766149aa1e28897dc63c7, type: 2}
+  EnableUIInputEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
+  DisableUIInputEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
+  TitleMenuEvent: {fileID: 11400000, guid: adc0531a0eb174fc3bc0336a6a52e416, type: 2}
+  PauseMenuEvent: {fileID: 11400000, guid: b7be2bb134d5f4b2180d91019f0ef242, type: 2}
+  HudMenuEvent: {fileID: 11400000, guid: f44a8af08b5f17948911ec5e427f8305, type: 2}
+  DialogDataEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
+  DeathMenuEvent: {fileID: 11400000, guid: d8fb698d1148db14db2509f2e2f35c51, type: 2}
+  WinMenuEvent: {fileID: 11400000, guid: e0ab9e27c717da84b861c44af9340683, type: 2}
+  EnterLoadingScreenEvent: {fileID: 11400000, guid: 30485bc99ecc35141a1507d360e95ce8, type: 2}
+  ExitLoadingScreenEvent: {fileID: 11400000, guid: dc0c9f4f1ce5ffa46903455d79b0442a, type: 2}
+  LoadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
+  UnloadCurrentLevelEvent: {fileID: 11400000, guid: 14e96d97e8c839d4994736cfd8f9c09f, type: 2}
+  ReloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
+  switchToTitleStateEvent: {fileID: 11400000, guid: f44d028295cfcdd43b734edcd9fea362, type: 2}
+  switchToInitLevelStateEvent: {fileID: 11400000, guid: aa9ebbb1f63295843af7c950c50a2a7a, type: 2}
+  switchTotPlayingStateEvent: {fileID: 11400000, guid: 604eac6c025fec54498946183528062b, type: 2}
+  switchToPauseStateEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
+  switchToDeathStateEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
+  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
+  switchToHudStateEvent: {fileID: 11400000, guid: 88306289db0a4814c9bd2906037a8d25, type: 2}
+  loading: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
+  loadDoneEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
   CurrentState: 0
 --- !u!4 &460323341
 Transform:
@@ -247,7 +252,6 @@ GameObject:
   m_Component:
   - component: {fileID: 511452572}
   - component: {fileID: 511452571}
-  - component: {fileID: 511452573}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -267,8 +271,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052e1c07648e9c5478b87e3324f11f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstLevelName: Noah's Lab
-  debugSceneName: none
+  loading: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
+  loadDoneEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
+  loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
+  unloadCurrentLevelEvent: {fileID: 11400000, guid: 14e96d97e8c839d4994736cfd8f9c09f, type: 2}
+  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
+  scenesNames:
+  - None
+  - Persistent
+  - First-Level
+  - Second-Level
+  - Third-Level
 --- !u!4 &511452572
 Transform:
   m_ObjectHideFlags: 0
@@ -284,22 +297,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &511452573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511452570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd5045af3f3603be39da75d223f7f067, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadLevelEvent: {fileID: 11400000, guid: 3a0bc9b40debd8a88900a4227a73277e, type: 2}
-  loadSceneNoActiveEvent: {fileID: 11400000, guid: 4aaf3d32d4786e83ca63a9174b65a47a, type: 2}
-  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
-  sceneLoader: {fileID: 511452571}
 --- !u!1 &814197898
 GameObject:
   m_ObjectHideFlags: 0

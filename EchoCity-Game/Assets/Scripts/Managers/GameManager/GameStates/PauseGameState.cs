@@ -7,42 +7,41 @@ namespace EchoCity
 {
     public class PauseGameState : GameState
     {
-        [Header("UI Action Map")]
-        private const string UI_ACTION_MAP = "UI";
-
+        private bool _toTitle = false;
+        private bool _restart = false;
         public PauseGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
         public override void Enter()
         {
-            Log.D("Game Paused");
             Time.timeScale = 0;
+            _gameManager.DisablePlayerInputEvent.RaiseEvent();
+            _gameManager.EnableUIInputEvent.RaiseEvent();
+            _gameManager.PauseMenuEvent.RaiseEvent();
         }
-
-        public override void Update()
-        {
-        }
-
+        public override void Update(){}
         public override void Exit()
         {
-            Time.timeScale = 1;
+            _toTitle = false;
+            _restart = false;
         }
-
-
-
-        public override GameStatesEnum GetEnum()
+        public override void ExitLoading()
         {
-            return GameStatesEnum.Pause;
+            if (_toTitle)
+                _fsm.SwitchState(_fsm.TitleState);
+            if (_restart)
+                _fsm.SwitchState(_fsm.PlayingState);
         }
+        public override GameStatesEnum GetEnum() => GameStatesEnum.Pause;
 
-        public override bool PauseGameHandler()
+        public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
+        public override void SwitchToTitleHandler()
         {
-            _fsm.SwitchState(_fsm.PreviousState);
-            return true;
+            _toTitle = true;
+            _gameManager.UnloadCurrentLevelEvent.RaiseEvent();
         }
-
-        public override bool DeathHandler()
+        public override void SwitchToInitLevelHandler(SceneEnum scene)
         {
-            _fsm.SwitchState(_fsm.DeathState);
-            return true;
+            _restart = true;
+            _gameManager.ReloadLevelEvent.RaiseEvent();
         }
     }
 }
