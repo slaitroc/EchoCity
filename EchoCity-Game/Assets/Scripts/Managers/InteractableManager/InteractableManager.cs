@@ -1,34 +1,37 @@
 using System.Data;
 using UnityEngine;
 
-public class InteractableManager : MonoBehaviour
+namespace EchoCity
 {
-    #region Constants
-    private string _LOG_TAG = "INTERACTABLE MANAGER";
-    #endregion
-
-    #region Serialized Fields
-    [SerializeField] private AreaInteractable activeAreaInteractable;
-    #endregion
-
-    #region Private Fields
-    #endregion
-
-    public void TriggerInteraction()
+    public class InteractableManager : MonoBehaviour
     {
-        Log.D($"Triggered interaction on {activeAreaInteractable.name}", "#33ff57ff", _LOG_TAG);
-        activeAreaInteractable?.Interact();
-    }
+        #region Constants
+        private string _LOG_TAG = "INTERACTABLE MANAGER";
+        #endregion
 
-    public void SetActiveInteractable(AreaInteractable interactable)
-    {
-        if (interactable == null)
+        #region Serialized Fields
+        [SerializeField] private AreaInteractable activeAreaInteractable;
+        #endregion
+
+        #region Private Fields
+        #endregion
+
+        public void TriggerInteraction()
         {
-            activeAreaInteractable = null;
-            //Log.D($"Cleared active interactable", "#33ff57ff", _LOG_TAG);
-            return;
+            Log.D($"Triggered interaction on {activeAreaInteractable.name}", "#33ff57ff", _LOG_TAG);
+            activeAreaInteractable?.Interact();
         }
-        activeAreaInteractable = interactable;
-        //Log.D($"Set active interactable to {activeInteractable.name}", "#33ff57ff", _LOG_TAG);
+
+        public void SetActiveInteractable(AreaInteractable interactable)
+        {
+            if (interactable == null)
+            {
+                activeAreaInteractable = null;
+                //Log.D($"Cleared active interactable", "#33ff57ff", _LOG_TAG);
+                return;
+            }
+            activeAreaInteractable = interactable;
+            //Log.D($"Set active interactable to {activeInteractable.name}", "#33ff57ff", _LOG_TAG);
+        }
     }
 }

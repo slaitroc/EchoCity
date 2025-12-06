@@ -1,57 +1,60 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioEmitter))]
-public class EchoTrigger : MonoBehaviour
+namespace EchoCity
 {
-    [SerializeField] private TriggerType triggerType = TriggerType.OnClick;
-
-    private AudioEmitter _audioEmitter;
-
-    public enum TriggerType
+    [RequireComponent(typeof(AudioEmitter))]
+    public class EchoTrigger : MonoBehaviour
     {
-        OnCollision,  // Triggered by collision
-        OnClick,      // Triggered by mouse click
-    }
+        [SerializeField] private TriggerType triggerType = TriggerType.OnClick;
 
-    void Awake() => TryGetComponent(out _audioEmitter);
+        private AudioEmitter _audioEmitter;
 
-    void Start()
-    {
-        if (triggerType == TriggerType.OnClick || triggerType == TriggerType.OnCollision)
+        public enum TriggerType
         {
-            Collider col = GetComponent<Collider>();
-            if (col == null) Log.W($"EchoInteractable '{gameObject.name}' requires a Collider!", "purple", "ECHOLOCATION");
-            if (triggerType == TriggerType.OnCollision) col.isTrigger = true;
+            OnCollision,  // Triggered by collision
+            OnClick,      // Triggered by mouse click
         }
-    }
-    void Update()
-    {
-        if (triggerType == TriggerType.OnClick)
+
+        void Awake() => TryGetComponent(out _audioEmitter);
+
+        void Start()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (triggerType == TriggerType.OnClick || triggerType == TriggerType.OnCollision)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject == gameObject)
+                Collider col = GetComponent<Collider>();
+                if (col == null) Log.W($"EchoInteractable '{gameObject.name}' requires a Collider!", "purple", "ECHOLOCATION");
+                if (triggerType == TriggerType.OnCollision) col.isTrigger = true;
+            }
+        }
+        void Update()
+        {
+            if (triggerType == TriggerType.OnClick)
+            {
+                if (Input.GetMouseButtonDown(0))
                 {
-                    if (_audioEmitter != null) _audioEmitter.EmitSound();
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject == gameObject)
+                    {
+                        if (_audioEmitter != null) _audioEmitter.EmitSound();
+                    }
                 }
             }
         }
-    }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (triggerType == TriggerType.OnCollision)
+        void OnTriggerEnter(Collider other)
         {
-            if (_audioEmitter != null) _audioEmitter.EmitSound();
+            if (triggerType == TriggerType.OnCollision)
+            {
+                if (_audioEmitter != null) _audioEmitter.EmitSound();
+            }
         }
-    }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (triggerType == TriggerType.OnCollision)
+        void OnCollisionEnter(Collision collision)
         {
-            if (_audioEmitter != null) _audioEmitter.EmitSound();
+            if (triggerType == TriggerType.OnCollision)
+            {
+                if (_audioEmitter != null) _audioEmitter.EmitSound();
+            }
         }
     }
 }
