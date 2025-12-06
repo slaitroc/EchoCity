@@ -40,7 +40,15 @@ namespace EchoCity
 
         private void StateTransitionHandler(GameStatesEnum currentState, GameStatesEnum newState)
         {
-
+            if (newState == GameStatesEnum.Playing)
+            {
+                StopAllCoroutines();
+                _audioSource1.Stop();
+                _audioSource2.Stop();
+                _audioSource1.clip = playingMusicClip;
+                _audioSource1.loop = true;
+                _audioSource1.Play();
+            }
         }
 
 
