@@ -52607,6 +52607,7 @@ GameObject:
   - component: {fileID: 1692055766}
   - component: {fileID: 1692055765}
   - component: {fileID: 1692055764}
+  - component: {fileID: 1692055770}
   m_Layer: 0
   m_Name: Interactable Door (0)
   m_TagString: Untagged
@@ -52744,6 +52745,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 549220298}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!208 &1692055770
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692055763}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.9850001, y: 1.4770001, z: 0.9850001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.9850001, y: 1.4770001, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1692222332 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 109802, guid: a360658b6d8e87144bf2b2918be41344, type: 3}
