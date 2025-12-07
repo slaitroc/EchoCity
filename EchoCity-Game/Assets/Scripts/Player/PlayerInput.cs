@@ -77,6 +77,7 @@ namespace EchoCity
                 _playerActionMap["PlayerHit"].performed += OnPlayerHit;
 
                 _playerActionMap["Test1"].performed += OnTest1;
+                _playerActionMap["Test2"].performed += OnTest2;
                 _playerActionMap["Test4"].performed += OnTest4;
 
             }
@@ -218,6 +219,15 @@ namespace EchoCity
             if (context.performed)
             {
                 switchToDeathStateEvent?.RaiseEvent();
+            }
+        }
+
+        private void OnTest2(InputAction.CallbackContext context)
+        {
+            //EQUIP ITEM TEST
+            if (context.performed)
+            {
+                spawnWarningEvent?.RaiseEvent("Warning: Enemy Approaching!", Color.red);
             }
         }
 
