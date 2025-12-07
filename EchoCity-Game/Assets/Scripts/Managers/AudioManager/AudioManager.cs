@@ -13,6 +13,8 @@ namespace EchoCity
         private GameObject _audioSourceGO;
         private AudioSource _audioSource1;
         private AudioSource _audioSource2;
+        private bool _isPlayingTitleMusic = false;
+        private bool _isPlayingPlayingMusic = false;
 
         [Header("Observing Events")]
         [SerializeField] private SOGameManagerStateTransitionEvent gameManagerStateTransitionEvent;
@@ -41,17 +43,21 @@ namespace EchoCity
 
         private void StateTransitionHandler(GameStatesEnum currentState, GameStatesEnum newState)
         {
-            if (newState == GameStatesEnum.Playing)
+            if (newState == GameStatesEnum.Playing && !_isPlayingPlayingMusic)
             {
                 _audioSource1.Stop();
                 _audioSource2.Stop();
                 PlayPlayingMusic();
+                _isPlayingPlayingMusic = true;
+                _isPlayingTitleMusic = false;
             }
-            if (newState == GameStatesEnum.Title)
+            if (newState == GameStatesEnum.Title && !_isPlayingTitleMusic)
             {
                 _audioSource1.Stop();
                 _audioSource2.Stop();
                 PlayTitleMusic();
+                _isPlayingTitleMusic = true;
+                _isPlayingPlayingMusic = false;
             }
         }
 
