@@ -6,6 +6,8 @@ public class EchoTrigger : MonoBehaviour
     [SerializeField] private TriggerType triggerType = TriggerType.OnClick;
 
     private AudioEmitter _audioEmitter;
+    // Delay, not trigger collision at the beginning
+    private bool _isGameStarted = false;
 
     public enum TriggerType
     {
@@ -23,6 +25,7 @@ public class EchoTrigger : MonoBehaviour
             if (col == null) Log.W($"EchoInteractable '{gameObject.name}' requires a Collider!", "purple", "ECHOLOCATION");
             if (triggerType == TriggerType.OnCollision) col.isTrigger = true;
         }
+        Invoke(nameof(SetGameStarted), 0.1f);
     }
     void Update()
     {
@@ -38,9 +41,15 @@ public class EchoTrigger : MonoBehaviour
             }
         }
     }
+    
+    private void SetGameStarted()
+    {
+        _isGameStarted = true;
+    }
 
     void OnTriggerEnter(Collider other)
     {
+        if (!_isGameStarted) return;
         if (triggerType == TriggerType.OnCollision)
         {
             if (_audioEmitter != null) _audioEmitter.EmitSound();
@@ -49,6 +58,7 @@ public class EchoTrigger : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (!_isGameStarted) return;
         if (triggerType == TriggerType.OnCollision)
         {
             if (_audioEmitter != null) _audioEmitter.EmitSound();
