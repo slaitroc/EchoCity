@@ -15,6 +15,7 @@ namespace EchoCity
             {
                 case HudEnum.Inventory:
                     _gameManager.HudMenuEvent.RaiseEvent(HudEnum.Inventory);
+                    _currentHud = HudEnum.Inventory;
                     break;
                 //TODO other HUDs
                 default:
@@ -34,6 +35,7 @@ namespace EchoCity
                 default:
                     break;
             }
+            _currentHud = HudEnum.None;
         }
         public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
         public override void SwitchToPauseHandler() => _fsm.SwitchState(_fsm.PauseState);
