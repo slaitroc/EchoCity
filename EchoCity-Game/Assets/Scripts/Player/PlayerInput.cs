@@ -14,7 +14,6 @@ namespace EchoCity
         #endregion
 #pragma warning restore CS0414
 
-        #region Serialized Fields
         [Header("Input")]
         [SerializeField] private InputActionAsset inputActionAsset;
         private InputActionMap _playerActionMap;
@@ -53,18 +52,8 @@ namespace EchoCity
         [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
         [SerializeField] private SODialogContainer exampleDialogData;
 
-
-
-        #endregion
-        #region Private Fields
-        private const string UI_ACTION_MAP = "UI";
-        private const string PLAYER_ACTION_MAP = "Player";
         private bool _canInteract;
-        private bool _activeRenderer = true; // 0/false = PC Renderer, 1/true = Audio Visual
-        private bool _isLookLocked;
 
-
-        #endregion
 
         void Awake()
         {
@@ -145,7 +134,7 @@ namespace EchoCity
             // may not deliver a Performed phase the way we expect; reading the value
             // directly is more consistent across bindings.
             var look = context.ReadValue<Vector2>();
-            starterAssetsInputs.LookInput(_isLookLocked ? Vector2.zero : look);
+            starterAssetsInputs.LookInput(look);
         }
 
         private void OnJump(InputAction.CallbackContext context)
