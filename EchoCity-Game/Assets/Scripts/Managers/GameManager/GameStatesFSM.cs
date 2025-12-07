@@ -73,16 +73,16 @@ namespace EchoCity
             CurrentState.EnterLoading();
             _inLoadingState = CurrentState;
             CurrentState = LoadingState;
-            CurrentState.Enter();
+            LoadingState.Enter();
             _gameManager.RaiseSwitchStateEvent(_inLoadingState.GetEnum(), LoadingState.GetEnum());
         }
 
         public void ExitLoading()
         {
             if (CurrentState != LoadingState) return;
-            CurrentState.Exit();
-            _inLoadingState.ExitLoading();
+            LoadingState.Exit();
             CurrentState = _inLoadingState;
+            _inLoadingState.ExitLoading();
             _inLoadingState = null;
             _gameManager.RaiseSwitchStateEvent(GameStatesEnum.Loading, CurrentState.GetEnum());
         }
