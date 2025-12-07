@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &1903561547
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -22.963
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.719
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.586897
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.586897
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.39440072
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.39440072
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 67.803
+      objectReference: {fileID: 0}
+    - target: {fileID: 3137640273346770601, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6911683528640946268, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
+      propertyPath: m_Name
+      value: SM_Item_WalkieTalkie_01_Mid
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a4afb536bbd67134eafc8bc725db0340, type: 3}
 --- !u!1 &80608313607341585
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +939,7 @@ MonoBehaviour:
   scenesNames:
   - None
   - Persistent
-  - Noah's Lab
+  - First-Level
   - Second-Level
   - Third-Level
 --- !u!4 &3109235864234277356
@@ -2195,3 +2252,4 @@ SceneRoots:
   - {fileID: 2131805283015568065}
   - {fileID: 8452619760397736815}
   - {fileID: 1210880423899264782}
+  - {fileID: 1903561547}

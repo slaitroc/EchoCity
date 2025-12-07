@@ -22,7 +22,17 @@ public struct DialogData
     public DialogData(SODialogLine[] dialogLines)
     {
         _dialogLines = new DialogLines[dialogLines.Length];
-        for (int i=0; i<_dialogLines.Length; i++)
+        for (int i = 0; i < _dialogLines.Length; i++)
+        {
+            _dialogLines[i] = new DialogLines(dialogLines[i].SpeakerName, dialogLines[i].DialogText);
+        }
+    }
+
+    public DialogData(SODialogContainer dialogContainer)
+    {
+        SODialogLine[] dialogLines = dialogContainer.DialogLines;
+        _dialogLines = new DialogLines[dialogLines.Length];
+        for (int i = 0; i < _dialogLines.Length; i++)
         {
             _dialogLines[i] = new DialogLines(dialogLines[i].SpeakerName, dialogLines[i].DialogText);
         }

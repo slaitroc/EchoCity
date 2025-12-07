@@ -19,11 +19,13 @@ namespace EchoCity.Interactables
 
         protected bool _canBePicked = false;
 
-
-        public override void Interact()
+        public override void InteractionOutcomeHandler(bool outcome)
         {
-            _canBePicked = true;
-            itemPickedEvent?.RaiseEvent(new PickableData(pickableData), pickableData.PickablePrefab);
+            if (outcome)
+            {
+                _canBePicked = true;
+                itemPickedEvent?.RaiseEvent(new PickableData(pickableData), pickableData.PickablePrefab);
+            }
         }
 
         public void InventoryHandler(bool canPickUp)
@@ -35,8 +37,6 @@ namespace EchoCity.Interactables
             }
             _canBePicked = false;
         }
-
-
 
         protected override void OnEnable()
         {
