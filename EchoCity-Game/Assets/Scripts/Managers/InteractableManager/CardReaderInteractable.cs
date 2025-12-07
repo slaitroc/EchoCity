@@ -9,6 +9,10 @@ namespace EchoCity
         protected override string _TYPE_LOG_TAG => "GENERAL";
         #endregion
 
+        [Header("Sound")]
+        [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
+        [SerializeField] SOSoundSource useSoundSource;
+
         [Header("Prefabs")]
         [SerializeField] GameObject cardPrefab;
         [SerializeField] Transform cardSpawnPoint;
@@ -26,7 +30,10 @@ namespace EchoCity
                 if (outcome)
                 {
                     spawnMessageEvent?.RaiseEvent("CardReader Used!", new Color(1f, 0.5f, 0f, 1f));
+                    ECSound.PlayAtPosition(useSoundSource, transform.position, newAudioSphereEvent, "SFX");
                     Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
+                    materialToggleEvent?.RaiseEvent();
+                    materialToggleEvent?.RaiseEvent();
                     dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
 
                 }

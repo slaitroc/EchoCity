@@ -1,4 +1,3 @@
-using System;
 using EchoCity;
 using UnityEngine;
 
@@ -13,6 +12,7 @@ public abstract class Interactable : MonoBehaviour
     [Header("Invoking Events")]
     [SerializeField] protected SOPuzzleTagEnumArrayEvent checkTagsEvent;
     [SerializeField] protected SOPuzzleTagEnumArrayEvent setPuzzleTagsEvent;
+    [SerializeField] protected SOEventVoid materialToggleEvent;
     [Header("Observing Events")]
     [SerializeField] protected SOBoolEvent interactionOutcomeEvent;
     [Header("Interactable Settings")]
