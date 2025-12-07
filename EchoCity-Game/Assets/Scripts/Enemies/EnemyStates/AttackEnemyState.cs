@@ -23,6 +23,9 @@ public class AttackEnemyState : EnemyState
         {
             _enemyAI.PlayRandomPhrase(_enemyData.AttackEnemyState_Phrases);
         }
+        
+        // Emit investigation sound (for echolocation system)
+        EmitInvestigationSound();
 
         _enemyAI.StartCoroutine(AttackRoutine());
     }
@@ -141,5 +144,23 @@ public class AttackEnemyState : EnemyState
     {
         Log.D($"{_enemyAI.name} hit the player!", _LOG_COLOR, _LOG_TAG);
         return true;
+    }
+
+    private void EmitInvestigationSound()
+    {
+        // Get event from EnemyAI (just a reference, no logic)
+        if (_enemyAI.enemySoundEmissionEvent == null || _enemyData == null) return;
+        
+        // Create sound emission data with investigation parameters
+        SoundEmissionData soundData = new SoundEmissionData(
+            _enemyAI.transform.position,                            // pos: enemy position
+            _enemyData.InvestigationSoundRadius,                     // rad: radius
+            _enemyData.InvestigationSoundIntensity,                  // intens: intensity
+            _enemyData.InvestigationSoundDuration,                   // dur: duration
+            _enemyData.InvestigationSoundFrequency                   // objFreq: frequency (0=Low, 1=Mid, 2=High)
+        );
+        
+        // Raise event (logic is in the state, EnemyAI is just a reference holder)
+        _enemyAI.enemySoundEmissionEvent.RaiseEvent(soundData);
     }
 }
