@@ -46,6 +46,7 @@ namespace EchoCity
         [SerializeField] private SOEnemyAIEvent playerHitEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
         [SerializeField] private SOEventVoid switchToDeathStateEvent;
+        [SerializeField] private SOEventVoid switchToWinStateEvent;
 
         [Header("Dialog")]
         [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
@@ -77,6 +78,7 @@ namespace EchoCity
 
                 _playerActionMap["Test1"].performed += OnTest1;
                 _playerActionMap["Test2"].performed += OnTest2;
+                _playerActionMap["Test3"].performed += OnTest3;
                 _playerActionMap["Test4"].performed += OnTest4;
 
             }
@@ -227,6 +229,15 @@ namespace EchoCity
             if (context.performed)
             {
                 spawnWarningEvent?.RaiseEvent("Warning: Enemy Approaching!", Color.red);
+            }
+        }
+
+        private void OnTest3(InputAction.CallbackContext context)
+        {
+            //EQUIP ITEM TEST
+            if (context.performed)
+            {
+                switchToWinStateEvent?.RaiseEvent();
             }
         }
 
