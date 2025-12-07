@@ -1,0 +1,47 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/FeedbackMenu/FeedbackMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=29ff2abf022dc46eb82f36bd549ada32&amp;type=3#FeedbackMenuStyleSheet" />
+
+   <ui:VisualElement name="FeedbackRoot" class="feedback-root">
+        <ui:VisualElement name="FeedbackDimmer" class="feedback-dimmer" />
+        <ui:VisualElement name="FeedbackPanel" class="feedback-panel">
+
+            <ui:Label name="FeedbackTitle" class="feedback-title" text="Feedback" />
+
+            <ui:VisualElement name="RatingSection" class="feedback-section">
+                <ui:Label name="RatingLabel" class="feedback-label" text="How would you rate this experience?" />
+                <ui:VisualElement name="RatingStars" class="rating-stars">
+                    <ui:Button name="Star1" class="rating-star" text="☆" />
+                    <ui:Button name="Star2" class="rating-star" text="☆" />
+                    <ui:Button name="Star3" class="rating-star" text="☆" />
+                    <ui:Button name="Star4" class="rating-star" text="☆" />
+                    <ui:Button name="Star5" class="rating-star" text="☆" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="FeedbackContent" class="feedback-content">
+                <ui:TextField name="FeedbackText"
+                            class="feedback-textfield"
+                            multiline="true"
+                            placeholder-text="Tell us more about your experience..." />
+            </ui:VisualElement>
+
+            <ui:Button name="SubmitFeedbackButton"
+                    class="feedback-submit-button"
+                    text="Submit" />
+
+        </ui:VisualElement>
+
+        <ui:VisualElement name="ThankYouPanel" class="thankyou-panel">
+            <ui:Label name="ThankYouTitle" class="thankyou-title" text="Thank you!" />
+
+            <ui:Label name="ThankYouMessage" class="thankyou-message"
+                    text="Your feedback helps us improve the experience." />
+
+            <ui:Button name="ThankYouContinueButton"
+                    class="thankyou-button"
+                    text="Continue" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+
+</ui:UXML>

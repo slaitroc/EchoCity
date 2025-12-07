@@ -56,6 +56,9 @@ namespace EchoCity
         [SerializeField] private SOEventVoid deathMenuEvent;
         [SerializeField] private SOEventVoid enterLoadingScreenEvent;
         [SerializeField] private SOEventVoid exitLoadingScreenEvent;
+
+        [Header("Misc")]
+        [SerializeField] private SOIntStringEvent feedbackSubmittedEvent;
         #endregion
 
         void OnEnable()
@@ -85,6 +88,8 @@ namespace EchoCity
             if (deathMenuEvent != null) deathMenuEvent.OnEventRaised += OnDeathMenuEvent;
             if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised += OnEnterLoadingScreenEvent;
             if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised += OnExitLoadingScreenEvent;
+
+            if (feedbackSubmittedEvent != null) feedbackSubmittedEvent.OnEventRaised += OnFeedbackSubmittedEvent;
         }
 
 
@@ -115,6 +120,8 @@ namespace EchoCity
             if (deathMenuEvent != null) deathMenuEvent.OnEventRaised -= OnDeathMenuEvent;
             if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised -= OnEnterLoadingScreenEvent;
             if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised -= OnExitLoadingScreenEvent;
+
+            if (feedbackSubmittedEvent != null) feedbackSubmittedEvent.OnEventRaised -= OnFeedbackSubmittedEvent;
         }
 
         #region Game Manager Events
@@ -160,6 +167,10 @@ namespace EchoCity
         private void OnEnterLoadingScreenEvent() => Log.D("Enter Loading Screen Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnExitLoadingScreenEvent() => Log.D("Exit Loading Screen Event Raised", _LOG_COLOR, _LOG_TAG);
 
+        #endregion
+
+        #region Misc
+        private void OnFeedbackSubmittedEvent((int, string) feedbackData) => Log.D($"Feedback Submitted Event Raised with Rating: {feedbackData.Item1}, Feedback: {feedbackData.Item2}", _LOG_COLOR, _LOG_TAG);
         #endregion
     }
 }
