@@ -65,6 +65,7 @@ namespace EchoCity
             if (switchToPlayingStateEvent) switchToPlayingStateEvent.OnEventRaised += SwitchToPlayingStateHandler;
             if (switchToPauseStateEvent) switchToPauseStateEvent.OnEventRaised += SwitchToPauseStateHandler;
             if (switchToDeathStateEvent) switchToDeathStateEvent.OnEventRaised += SwitchToDeathStateHandler;
+            if (switchToWinStateEvent) switchToWinStateEvent.OnEventRaised += SwitchToWinStateHandler;
             if (switchToNarrationStateEvent) switchToNarrationStateEvent.OnEventRaised += SwitchToNarrationStateHandler;
             if (switchToHudStateEvent) switchToHudStateEvent.OnEventRaised += SwitchToHudStateHandler;
             if (enterLoadingEvent) enterLoadingEvent.OnEventRaised += LoadingHandler;
@@ -78,6 +79,7 @@ namespace EchoCity
             if (switchToPlayingStateEvent) switchToPlayingStateEvent.OnEventRaised -= SwitchToPlayingStateHandler;
             if (switchToPauseStateEvent) switchToPauseStateEvent.OnEventRaised -= SwitchToPauseStateHandler;
             if (switchToDeathStateEvent) switchToDeathStateEvent.OnEventRaised -= SwitchToDeathStateHandler;
+            if (switchToWinStateEvent) switchToWinStateEvent.OnEventRaised -= SwitchToWinStateHandler;
             if (switchToNarrationStateEvent) switchToNarrationStateEvent.OnEventRaised -= SwitchToNarrationStateHandler;
             if (switchToHudStateEvent) switchToHudStateEvent.OnEventRaised -= SwitchToHudStateHandler;
             if (enterLoadingEvent) enterLoadingEvent.OnEventRaised -= LoadingHandler;
