@@ -16,11 +16,5 @@ namespace EchoCity
         public override void Exit() => _gameManager.ExitLoadingScreenEvent.RaiseEvent();
 
         public override GameStatesEnum GetEnum() => GameStatesEnum.Loading;
-
-        public override void EnterLoading() { }
-
-        public override void ExitLoading() { }
-
-
     }
 }
