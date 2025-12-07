@@ -128,11 +128,11 @@ namespace EchoCity
         public void SwitchToInitLevel(SceneEnum scene)
         {
             _titleMenu.SetActive(false);
-            _hud.SetActive(false);
             _pauseMenu.SetActive(false);
             _dialog.SetActive(false);
             _deathScreen.SetActive(false);
 
+            _hud.SetActive(true);
             switchToInitLevelEvent?.RaiseEvent(scene);
         }
 
