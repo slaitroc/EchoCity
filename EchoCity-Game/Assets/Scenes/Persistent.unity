@@ -1140,6 +1140,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!4 &3645961739192399002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210705502689728171}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3701613254484343400
 Transform:
   m_ObjectHideFlags: 0
@@ -1346,6 +1361,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 8225272055854214584}
   uiDocument: {fileID: 4192581393678700544}
+--- !u!1 &5210705502689728171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3645961739192399002}
+  - component: {fileID: 5679159333436251090}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!81 &5241972989766720214
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1396,6 +1428,23 @@ RectTransform:
   m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5679159333436251090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210705502689728171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7328a1892087a44a64b5ea2c40bfb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleMusicClips:
+  - {fileID: 8300000, guid: 3fa807c0f4509d04286a03f138001ebb, type: 3}
+  - {fileID: 8300000, guid: e7cfe3fe97765354da22a94151616fab, type: 3}
+  playingMusicClip: {fileID: 8300000, guid: bdb18f9ac8f0e1d4cabbb5927438cba3, type: 3}
+  gameManagerStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
 --- !u!114 &5779149277346086344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1933,9 +1982,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 930569731898033155}
   - {fileID: 2054989320}
-  - {fileID: 4309261110078792227}
-  - {fileID: 511452572}
   - {fileID: 460323341}
+  - {fileID: 511452572}
+  - {fileID: 4309261110078792227}
+  - {fileID: 3645961739192399002}
   - {fileID: 814197900}
   - {fileID: 9046182333041855954}
   - {fileID: 3701613254484343400}

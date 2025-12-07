@@ -15,6 +15,7 @@ namespace EchoCity
             Index = index;
             Data = data;
             Prefab = prefab;
+            
         }
     }
     public class PlayerController : MonoBehaviour
