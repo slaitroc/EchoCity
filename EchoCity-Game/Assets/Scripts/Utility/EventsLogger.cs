@@ -35,6 +35,8 @@ namespace EchoCity
         [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
         [SerializeField] private SOEventVoid enableUIActionMapEvent;
         [SerializeField] private SOEventVoid disableUIActionMapEvent;
+        [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
+
 
 
 
@@ -68,6 +70,8 @@ namespace EchoCity
             if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised += OnDisablePlayerActionMapEvent;
             if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised += OnEnableUIActionMapEvent;
             if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised += OnDisableUIActionMapEvent;
+            if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised += OnSwitchToHudStateEvent;
+
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised += OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised += OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised += OnPickedPickableEvent;
@@ -96,6 +100,8 @@ namespace EchoCity
             if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised -= OnDisablePlayerActionMapEvent;
             if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised -= OnEnableUIActionMapEvent;
             if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised -= OnDisableUIActionMapEvent;
+            if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised -= OnSwitchToHudStateEvent;
+
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised -= OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised -= OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised -= OnPickedPickableEvent;
@@ -131,6 +137,7 @@ namespace EchoCity
         private void OnDisablePlayerActionMapEvent() => Log.D("Disable Player Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnEnableUIActionMapEvent() => Log.D("Enable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnDisableUIActionMapEvent() => Log.D("Disable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnSwitchToHudStateEvent(HudEnum hud) => Log.D($"Switch to HUD Menu Event Raised for HUD: {hud}", _LOG_COLOR, _LOG_TAG);
 
         #endregion
 
