@@ -1312,7 +1312,7 @@ MonoBehaviour:
   playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
   noiseUIEvent: {fileID: 0}
   investigationEvent: {fileID: 0}
-  enemySoundEmissionEvent: {fileID: 0}
+  enemySoundEmissionEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   playerActionEvent: {fileID: 11400000, guid: e646675eafdc44eb29d4a73e04f1fb59, type: 2}
   agent: {fileID: 4078091062578297317}
   animator: {fileID: 5033251669108520399}
@@ -5612,7 +5612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad07c6b1b37f1ed4f8669cb80335127f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  newAudioSphereEvent: {fileID: 0}
   groundTypes:
   - layer:
       serializedVersion: 2

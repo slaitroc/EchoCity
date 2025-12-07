@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private SOEnemyNoiseUIEvent noiseUIEvent;
     public SOEnemyInvestigationEvent investigationEvent;
     [Tooltip("Event for emitting sounds from enemy (for echolocation system). Used by states.")]
-    public SONewAudioSphereEvent enemySoundEmissionEvent;
+    public SOSoundEmissionDataEvent enemySoundEmissionEvent;
 
     [Header("Observed Events")]
     [Tooltip("Event raised by InputManager when player performs an action (e.g., hitting object with item)")]
@@ -273,9 +273,9 @@ public class EnemyAI : MonoBehaviour
     public void PlayRandomPhrase(SOSoundSource soundSource)
     {
         if (enemyData == null || soundSource == null)
-        if (enemyData == null || soundSource == null)
-            return;
-        
+            if (enemyData == null || soundSource == null)
+                return;
+
         // Use ECSound utility to play sound at enemy position
         // Pass null for echolocation event since voice lines don't need to emit sounds for echolocation
         // Use "SFX" mixer group (or null for Master)
@@ -301,7 +301,7 @@ public class EnemyAI : MonoBehaviour
             AudioClip selectedClip = soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0
                 ? soundSource.RandomAudioClips[Random.Range(0, soundSource.RandomAudioClips.Length)]
                 : soundSource.AudioClip;
-            
+
             if (selectedClip != null)
             {
                 var investigationData = new EnemyInvestigationData(this, selectedClip);
