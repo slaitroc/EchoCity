@@ -1,0 +1,136 @@
+.title-menu-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-menu-container.hide {
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: 1s;
+}
+
+.title-menu-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    picking-mode: Ignore;
+}
+
+.title-menu-content {
+    position: relative;
+    width: 100%;
+    max-width: 1600px;
+    padding: 80px 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.title-menu-logo {
+    width: 500px;
+    height: 500px;
+    -unity-background-scale-mode: scale-to-fit;
+    align-self: center;
+    margin-bottom: -100px;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.95);
+}
+
+.title-menu-title {
+    align-self: center;
+    margin-bottom: 80px;
+    font-size: 150px;
+    -unity-font-style: bold;
+    color: rgb(255, 240, 240);
+    letter-spacing: 4px;
+    text-shadow: 0 0 18px rgba(120, 0, 0, 0.9), 0 0 10px rgba(60, 0, 0, 0.8);
+    border-bottom-width: 3px;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.title-menu-button {
+    height: 15%;
+    width: 80%;
+    align-self: center;
+    font-size: 500%;
+    margin: 20px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border-radius: 15px;
+    align-content: center;
+    align-items: center;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    transition-duration: 0.5s;
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+}
+
+.title-menu-button:hover {
+    border-color: rgb(255, 0, 0);
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    scale: 1.2 1.2;
+    -unity-background-image-tint-color: rgb(106, 0, 0);
+}
+
+.title-menu-button:focus {
+    border-color: rgb(255, 0, 0);
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    scale: 1.2 1.2;
+    -unity-background-image-tint-color: rgb(106, 0, 0);
+}
+
+.title-menu-button:disabled {
+    opacity: 0.3;
+}
+
+.screen-blink-overlay-red {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -unity-background-scale-mode: scale-and-crop;
+    opacity: 0;
+    picking-mode: Ignore;
+    background-image: resource('Images/EchoCity-BackgroundRed');
+    transition-property: opacity, background-image;
+    transition-duration: 160ms;
+    transition-timing-function: ease-in-out;
+}
+
+.screen-blink-overlay-blue {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -unity-background-scale-mode: scale-and-crop;
+    opacity: 0;
+    picking-mode: Ignore;
+    background-image: resource('Images/EchoCity-BackgroundBlue');
+    transition-property: opacity, background-image;
+    transition-duration: 500ms;
+    transition-timing-function: ease-in-out;
+}
+
+.screen-blink-overlay-red.active {
+    opacity: 1;
+    background-image: resource('Images/EchoCity-BackgroundRed');
+}
+
+.screen-blink-overlay-blue.active {
+    opacity: 1;
+    background-image: resource('Images/EchoCity-BackgroundBlue');
+}

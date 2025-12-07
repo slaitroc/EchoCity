@@ -1,4 +1,8 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerActionEventSO", menuName = "ECHO CITY/Events/PlayerActionEventSO")]
-public class SOPlayerActionEvent : SOEvent<PlayerActionData> { }
+namespace EchoCity
+{
+    [CreateAssetMenu(fileName = "PlayerActionEventSO", menuName = "ECHO CITY/Events/PlayerActionEventSO")]
+    public class SOPlayerActionEvent : SOEvent<PlayerActionData> { }
+}

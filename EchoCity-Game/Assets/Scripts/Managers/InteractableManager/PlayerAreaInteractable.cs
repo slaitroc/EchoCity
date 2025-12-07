@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public abstract class PlayerAreaInteractable : AreaInteractable
+namespace EchoCity
 {
-    protected override string _TYPE_LOG_TAG => "PLAYER";
-
-    public override void OnEnteringRangeArea(Collider other)
+    public abstract class PlayerAreaInteractable : AreaInteractable
     {
-        if (other.CompareTag("Player")) _playerInRange = other;
-    }
+        protected override string _TYPE_LOG_TAG => "PLAYER";
 
-    public override void OnExitingRangeArea(Collider other)
-    {
-        if (other.CompareTag("Player")) _playerInRange = null;
+        public override void OnEnteringRangeArea(Collider other)
+        {
+            if (other.CompareTag("Player")) _playerInRange = other;
+        }
+
+        public override void OnExitingRangeArea(Collider other)
+        {
+            if (other.CompareTag("Player")) _playerInRange = null;
+        }
     }
 }

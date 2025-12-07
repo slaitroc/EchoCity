@@ -1,4 +1,5 @@
 using System;
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -35,6 +36,8 @@ namespace EchoCity
         [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
         [SerializeField] private SOEventVoid enableUIActionMapEvent;
         [SerializeField] private SOEventVoid disableUIActionMapEvent;
+        [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
+        [SerializeField] private SOStringColorEvent spawnWarningEvent;
 
 
 
@@ -44,8 +47,18 @@ namespace EchoCity
         [SerializeField] private SOPickableDataGameObjectEvent pickedPickableEvent;
 
         [Header("UI")]
-        [SerializeField] private SOEventVoid quitToTitleEvent;
-        [SerializeField] private SOEventVoid settingsEvent;
+
+        [Header("Observed Events From GM")]
+        [SerializeField] private SOEventVoid titleMenuEvent;
+        [SerializeField] private SOHudEnumEvent hudMenuEvent;
+        [SerializeField] private SOEventVoid pauseMenuEvent;
+        [SerializeField] private SODialogDataEvent dialogMenuEvent;
+        [SerializeField] private SOEventVoid deathMenuEvent;
+        [SerializeField] private SOEventVoid enterLoadingScreenEvent;
+        [SerializeField] private SOEventVoid exitLoadingScreenEvent;
+
+        [Header("Misc")]
+        [SerializeField] private SOIntStringEvent feedbackSubmittedEvent;
         #endregion
 
         void OnEnable()
@@ -61,12 +74,22 @@ namespace EchoCity
             if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised += OnDisablePlayerActionMapEvent;
             if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised += OnEnableUIActionMapEvent;
             if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised += OnDisableUIActionMapEvent;
+            if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised += OnSwitchToHudStateEvent;
+            if (spawnWarningEvent != null) spawnWarningEvent.OnEventRaised += OnSpawnWarningEvent;
+
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised += OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised += OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised += OnPickedPickableEvent;
             if (pauseGameEvent != null) pauseGameEvent.OnEventRaised += OnPauseEvent;
-            if (quitToTitleEvent != null) quitToTitleEvent.OnEventRaised += OnQuitToTitleEvent;
-            if (settingsEvent != null) settingsEvent.OnEventRaised += OnSettingsEvent;
+            if (titleMenuEvent != null) titleMenuEvent.OnEventRaised += OnTitleMenuEvent;
+            if (hudMenuEvent != null) hudMenuEvent.OnEventRaised += OnHudMenuEvent;
+            if (pauseMenuEvent != null) pauseMenuEvent.OnEventRaised += OnPauseMenuEvent;
+            if (dialogMenuEvent != null) dialogMenuEvent.OnEventRaised += OnDialogMenuEvent;
+            if (deathMenuEvent != null) deathMenuEvent.OnEventRaised += OnDeathMenuEvent;
+            if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised += OnEnterLoadingScreenEvent;
+            if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised += OnExitLoadingScreenEvent;
+
+            if (feedbackSubmittedEvent != null) feedbackSubmittedEvent.OnEventRaised += OnFeedbackSubmittedEvent;
         }
 
 
@@ -84,11 +107,21 @@ namespace EchoCity
             if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised -= OnDisablePlayerActionMapEvent;
             if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised -= OnEnableUIActionMapEvent;
             if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised -= OnDisableUIActionMapEvent;
+            if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised -= OnSwitchToHudStateEvent;
+            if (spawnWarningEvent != null) spawnWarningEvent.OnEventRaised -= OnSpawnWarningEvent;
+
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised -= OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised -= OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised -= OnPickedPickableEvent;
-            if (quitToTitleEvent != null) quitToTitleEvent.OnEventRaised -= OnQuitToTitleEvent;
-            if (settingsEvent != null) settingsEvent.OnEventRaised -= OnSettingsEvent;
+            if (titleMenuEvent != null) titleMenuEvent.OnEventRaised -= OnTitleMenuEvent;
+            if (hudMenuEvent != null) hudMenuEvent.OnEventRaised -= OnHudMenuEvent;
+            if (pauseMenuEvent != null) pauseMenuEvent.OnEventRaised -= OnPauseMenuEvent;
+            if (dialogMenuEvent != null) dialogMenuEvent.OnEventRaised -= OnDialogMenuEvent;
+            if (deathMenuEvent != null) deathMenuEvent.OnEventRaised -= OnDeathMenuEvent;
+            if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised -= OnEnterLoadingScreenEvent;
+            if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised -= OnExitLoadingScreenEvent;
+
+            if (feedbackSubmittedEvent != null) feedbackSubmittedEvent.OnEventRaised -= OnFeedbackSubmittedEvent;
         }
 
         #region Game Manager Events
@@ -114,6 +147,8 @@ namespace EchoCity
         private void OnDisablePlayerActionMapEvent() => Log.D("Disable Player Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnEnableUIActionMapEvent() => Log.D("Enable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnDisableUIActionMapEvent() => Log.D("Disable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnSwitchToHudStateEvent(HudEnum hud) => Log.D($"Switch to HUD Menu Event Raised for HUD: {hud}", _LOG_COLOR, _LOG_TAG);
+        private void OnSpawnWarningEvent(string message, Color color) => Log.D($"Spawn Warning Event Raised with Message: {message}, Color: {color}", _LOG_COLOR, _LOG_TAG);
 
         #endregion
 
@@ -124,8 +159,18 @@ namespace EchoCity
         #endregion
 
         #region UI
-        private void OnQuitToTitleEvent() => Log.D("Quit To Title Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnSettingsEvent() => Log.D("Settings Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnTitleMenuEvent() => Log.D("Title Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnHudMenuEvent(HudEnum hud) => Log.D($"HUD Menu Event Raised for HUD: {hud}", _LOG_COLOR, _LOG_TAG);
+        private void OnPauseMenuEvent() => Log.D("Pause Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnDialogMenuEvent(DialogData dialogData) => Log.D($"Dialog Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnDeathMenuEvent() => Log.D("Death Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnEnterLoadingScreenEvent() => Log.D("Enter Loading Screen Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnExitLoadingScreenEvent() => Log.D("Exit Loading Screen Event Raised", _LOG_COLOR, _LOG_TAG);
+
+        #endregion
+
+        #region Misc
+        private void OnFeedbackSubmittedEvent(int rating, string feedback) => Log.D($"Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", _LOG_COLOR, _LOG_TAG);
         #endregion
     }
 }

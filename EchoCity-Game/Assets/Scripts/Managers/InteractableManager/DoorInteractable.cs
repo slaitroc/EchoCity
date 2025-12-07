@@ -21,11 +21,11 @@ public class DoorInteractable : LinkableInteractable
             if (doorAnimator.IsInTransition(0)) return;
             if (_isOpen)
             {
-                ECSound.PlaySoundAtPosition(closeSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(closeSound, transform.position, newAudioSphereEvent, "SFX");
             }
             else
             {
-                ECSound.PlaySoundAtPosition(openSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(openSound, transform.position, newAudioSphereEvent, "SFX");
             }
 
             _isOpen = value;

@@ -48,7 +48,7 @@ namespace EchoCity
         protected override void Awake()
         {
             base.Awake();
-            
+
             if (puzzleController == null)
             {
                 puzzleController = FindFirstObjectByType<BunkerPuzzleController>();
@@ -159,7 +159,7 @@ namespace EchoCity
             // Play sound
             if (plugInSound != null)
             {
-                ECSound.PlaySoundAtPosition(plugInSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(plugInSound, transform.position, newAudioSphereEvent, "SFX");
             }
 
             // Notify puzzle controller
@@ -178,7 +178,7 @@ namespace EchoCity
         {
             if (incorrectFeedbackSound != null)
             {
-                ECSound.PlaySoundAtPosition(incorrectFeedbackSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(incorrectFeedbackSound, transform.position, newAudioSphereEvent, "SFX");
             }
             Log.D("Incorrect socket - this one doesn't work", _LOG_COLOR, _LOG_TAG_FULL);
         }
@@ -190,7 +190,7 @@ namespace EchoCity
         {
             if (needCableSound != null)
             {
-                ECSound.PlaySoundAtPosition(needCableSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(needCableSound, transform.position, newAudioSphereEvent, "SFX");
             }
             Log.D("Player needs cable to plug in", _LOG_COLOR, _LOG_TAG_FULL);
         }

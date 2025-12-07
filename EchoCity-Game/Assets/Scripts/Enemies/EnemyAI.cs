@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using EchoCity;
+using EchoCity;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Animator))]
@@ -17,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     #region  Serialized Fields
 
     [Header("Invoking Events")]
-    [SerializeField] public SOEnemyIAEvent playerHitEvent;
+    [SerializeField] public SOEnemyAIEvent playerHitEvent;
     [SerializeField] private SOEnemyNoiseUIEvent noiseUIEvent;
     public SOEnemyInvestigationEvent investigationEvent;
     [Tooltip("Event for emitting sounds from enemy (for echolocation system). Used by states.")]
@@ -39,7 +40,7 @@ public class EnemyAI : MonoBehaviour
     [Header("FSM")]
     private EnemyFSM _fsm;
     public EnemyStatesEnum CurrentState;
-    
+
     [HideInInspector]
     /// <summary>
     /// Flag indicating if the enemy has confirmed the player's existence (has chased the player).
@@ -47,7 +48,7 @@ public class EnemyAI : MonoBehaviour
     /// and LostTargetState (loss after a real chase).
     /// </summary>
     public bool HasConfirmedPlayer = false;
-    
+
     /// <summary>
     /// True se il nemico sta inseguendo il player perché ha superato la soglia di rumore
     /// (NoiseThreshold) o è arrivato da un suono investigato. False se sta inseguendo solo
@@ -61,14 +62,14 @@ public class EnemyAI : MonoBehaviour
     // Actions come from InputManager when player performs actions (e.g., hitting object with item)
     private PlayerActionData? _activePlayerAction = null;
     private float _actionTimeRemaining = 0f;
-    
+
     // Attraction value (calculated and ready for states)
     private float _attraction = 0f;
-    
+
     // Action position (for states to use - where the action occurred)
     private Vector3 _actionPosition = Vector3.zero;
     private bool _hasActiveAction = false;
-    
+
     // Last action position that triggered chase (saved even after action expires)
     // Used by CheckSoundState to investigate the source
     private Vector3 _lastChaseActionPosition = Vector3.zero;
@@ -80,9 +81,10 @@ public class EnemyAI : MonoBehaviour
         TryGetComponent(out agent);
         TryGetComponent(out animator);
         TryGetComponent(out audioSource);
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (!p) Log.D("No player found for EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
-        else player = p.transform;
+        if (!TryAssignPlayer())
+        {
+            Log.D("No player found for EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
+        }
 
         if (enemyData == null)
         {
@@ -96,7 +98,7 @@ public class EnemyAI : MonoBehaviour
         {
             Log.E("No AttackRangeDetector assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
         }
-        
+
         _fsm = new EnemyFSM(this);
         _fsm.Initialize();
     }
@@ -107,6 +109,8 @@ public class EnemyAI : MonoBehaviour
         {
             playerActionEvent.OnEventRaised += OnPlayerAction;
         }
+
+        TryAssignPlayer();
     }
 
     void OnDisable()
@@ -119,6 +123,11 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (!TryAssignPlayer())
+        {
+            return;
+        }
+
         if (enemyData == null)
         {
             _fsm.Update(_attraction);
@@ -127,13 +136,13 @@ public class EnemyAI : MonoBehaviour
 
         // Update player action duration and remove if expired
         UpdateActiveAction();
-        
+
         // Calculate attraction (centralized logic)
         CalculateAttraction();
-        
+
         // Notify UI with current attraction value (UI developer handles thresholds)
         NotifyUI();
-        
+
         // Update FSM with calculated attraction (states receive ready value)
         _fsm.Update(_attraction);
     }
@@ -159,7 +168,7 @@ public class EnemyAI : MonoBehaviour
         if (_hasActiveAction && _activePlayerAction.HasValue)
         {
             _actionTimeRemaining -= Time.deltaTime;
-            
+
             if (_actionTimeRemaining <= 0f)
             {
                 // Action expired - clear it
@@ -182,28 +191,28 @@ public class EnemyAI : MonoBehaviour
         if (_hasActiveAction && _activePlayerAction.HasValue)
         {
             var action = _activePlayerAction.Value;
-            
+
             // Update action position (where the action occurred)
             _actionPosition = action.position;
-            
+
             // Calculate distance to action position 
-            float distance = Vector3.Distance(transform.position, action.position);    
-            
+            float distance = Vector3.Distance(transform.position, action.position);
+
             // Calculate frequency multiplier
             float frequencyMultiplier = GetFrequencyMultiplier(action.frequency);
-            
+
             // Calculate distance multiplier using Attraction.cs formula
             // Formula: intensity * intensityFactor / Pow((distance + 0.01) * rangeFactor, decay)
             float distanceMultiplier = 1f / Mathf.Pow((distance + 0.01f) * enemyData.NoiseRangeFactor, enemyData.NoiseDistanceDecay);
-            
+
             // Accumulate attraction per frame (continuous accumulation)
             // Uses action intensity (from object/item used by player)
-            float contribution = action.intensity 
-                                * enemyData.NoiseIntensityFactor 
-                                * frequencyMultiplier 
-                                * distanceMultiplier 
+            float contribution = action.intensity
+                                * enemyData.NoiseIntensityFactor
+                                * frequencyMultiplier
+                                * distanceMultiplier
                                 * Time.deltaTime;
-            
+
             _attraction += contribution;
         }
         else
@@ -211,7 +220,7 @@ public class EnemyAI : MonoBehaviour
             // No active action - apply decay
             ApplyDecay();
         }
-        
+
         // Clamp attraction to 0 (never negative)
         _attraction = Mathf.Max(0f, _attraction);
     }
@@ -239,7 +248,7 @@ public class EnemyAI : MonoBehaviour
         _actionTimeRemaining = actionData.duration;
         _hasActiveAction = true;
         _actionPosition = actionData.position;
-        
+
         // Save position for chase investigation (even if action expires later)
         _lastChaseActionPosition = actionData.position;
         _hasLastChaseActionPosition = true;
@@ -252,15 +261,18 @@ public class EnemyAI : MonoBehaviour
     public void OnPlayerHit()
     {
         if (_fsm.CurrentState.OnPlayerHit())
-        playerHitEvent?.RaiseEvent(this);
+            playerHitEvent?.RaiseEvent(this);
     }
 
     /// <summary>
     /// Helper method to play a random phrase from a SOSoundSource using ECSound utility.
     /// Uses RandomAudioClips array if available, otherwise uses main AudioClip.
+    /// Helper method to play a random phrase from a SOSoundSource using ECSound utility.
+    /// Uses RandomAudioClips array if available, otherwise uses main AudioClip.
     /// </summary>
     public void PlayRandomPhrase(SOSoundSource soundSource)
     {
+        if (enemyData == null || soundSource == null)
         if (enemyData == null || soundSource == null)
             return;
         
@@ -270,12 +282,12 @@ public class EnemyAI : MonoBehaviour
         if (soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0)
         {
             // Use random clip from array
-            ECSound.PlayRandomClipAtPosition(soundSource, transform.position, null, "SFX");
+            ECSound.PlayRandomAtPosition(soundSource, transform.position, null, "SFX");
         }
         else if (soundSource.AudioClip != null)
         {
             // Use main audio clip
-            ECSound.PlaySoundAtPosition(soundSource, transform.position, null, "SFX");
+            ECSound.PlayAtPosition(soundSource, transform.position, null, "SFX");
         }
         else
         {
@@ -306,7 +318,7 @@ public class EnemyAI : MonoBehaviour
     {
         return _attraction;
     }
-    
+
     /// <summary>
     /// Finds the nearest active confusing sound source within detection range.
     /// Returns null if no active confusing sound source is found.
@@ -314,30 +326,30 @@ public class EnemyAI : MonoBehaviour
     public IConfusingSoundSource FindNearestConfusingSoundSource()
     {
         if (enemyData == null) return null;
-        
+
         IConfusingSoundSource nearest = null;
         float nearestDistance = float.MaxValue;
         float detectionRange = enemyData.ConfusingSoundDetectionRange;
-        
+
         // Find all ConfusingSoundSource components in the scene
         ConfusingSoundSource[] allSources = FindObjectsOfType<ConfusingSoundSource>();
-        
+
         foreach (var source in allSources)
         {
             if (!source.IsActive) continue;
-            
+
             float distance = Vector3.Distance(transform.position, source.Position);
-            
+
             if (distance <= detectionRange && distance < nearestDistance)
             {
                 nearest = source;
                 nearestDistance = distance;
             }
         }
-        
+
         return nearest;
     }
-    
+
     /// <summary>
     /// Checks if there's an active confusing sound source that should distract the enemy.
     /// Returns true if conditions are met (active source, in range, attraction not too high).
@@ -346,14 +358,14 @@ public class EnemyAI : MonoBehaviour
     public bool ShouldBeDistractedByConfusingSound()
     {
         if (enemyData == null) return false;
-        
+
         IConfusingSoundSource source = FindNearestConfusingSoundSource();
         if (source == null) return false;
-        
+
         // Check if attraction is too high (already in MandatoryChase territory)
         // If attraction >= 1.0, global trigger will switch to MandatoryChase anyway
         if (_attraction >= enemyData.NoiseThreshold) return false;
-        
+
         return true;
     }
 
@@ -369,13 +381,13 @@ public class EnemyAI : MonoBehaviour
         {
             return _actionPosition;
         }
-        
+
         // Otherwise, return the last known action position that triggered chase
         if (_hasLastChaseActionPosition)
         {
             return _lastChaseActionPosition;
         }
-        
+
         // Fallback: return current action position (might be zero)
         return _actionPosition;
     }
@@ -387,7 +399,7 @@ public class EnemyAI : MonoBehaviour
     {
         return _hasActiveAction;
     }
-    
+
     /// <summary>
     /// Clears the last chase action position (called when investigation is complete)
     /// </summary>
@@ -407,6 +419,17 @@ public class EnemyAI : MonoBehaviour
     #endregion
 
     #region Helper Methods (used internally)
+    bool TryAssignPlayer()
+    {
+        if (player != null) return true;
+
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if (p == null) return false;
+
+        player = p.transform;
+        return true;
+    }
+
     /// <summary>
     /// Calculates frequency multiplier: Low=1x, Mid=1.5x, High=2x
     /// </summary>
@@ -439,7 +462,7 @@ public class EnemyAI : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         if (enemyData == null) return;
-        
+
         // D_enter: distance threshold for proximity chase (yellow)
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, enemyData.D_enter);

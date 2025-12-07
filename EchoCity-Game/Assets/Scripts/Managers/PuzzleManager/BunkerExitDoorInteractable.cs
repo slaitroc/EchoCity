@@ -118,7 +118,7 @@ namespace EchoCity
             // Play sound
             if (forceOpenSound != null)
             {
-                ECSound.PlaySoundAtPosition(forceOpenSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(forceOpenSound, transform.position, newAudioSphereEvent, "SFX");
             }
 
             // Wait for animation, then transition
@@ -138,7 +138,7 @@ namespace EchoCity
             // Load next scene
             if (sceneLoader != null)
             {
-                StartCoroutine(sceneLoader.LoadLevelAdditive(nextSceneName));
+                //StartCoroutine(sceneLoader.LoadLevelAdditive(nextSceneName));
             }
             else
             {
@@ -155,7 +155,7 @@ namespace EchoCity
         {
             if (lockedFeedbackSound != null)
             {
-                ECSound.PlaySoundAtPosition(lockedFeedbackSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(lockedFeedbackSound, transform.position, newAudioSphereEvent, "SFX");
             }
             Log.D("Door is locked - puzzle not completed", _LOG_COLOR, _LOG_TAG_FULL);
         }

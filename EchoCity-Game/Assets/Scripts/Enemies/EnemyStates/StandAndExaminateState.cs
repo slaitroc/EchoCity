@@ -11,14 +11,16 @@ public class StandAndExaminateState : EnemyState
     #region Constants
     protected new string _LOG_TAG = "STAND AND EXAMINATE STATE";
     #endregion
-    
+
     private Vector3 _examinationPosition;
     private float _examinationStartTime;
+#pragma warning disable CS0414
     private bool _hasPlayedPhrase = false;
+#pragma warning restore CS0414
     private float _lastPhrasePlayTime = 0f;
     private const float EXAMINATION_DURATION = 5f; // How long to examine before checking conditions
     private const float PHRASE_COOLDOWN = 3f; // Minimum time between playing phrases (prevents spam)
-    
+
     public StandAndExaminateState(EnemyAI enemyAI, EnemyFSM fsm) : base(enemyAI, fsm) { }
 
     public override void Enter()
@@ -49,7 +51,7 @@ public class StandAndExaminateState : EnemyState
         }
 
         _examinationStartTime = Time.time;
-        
+
         // Stop agent and look around
         _agent.isStopped = true;
         _agent.ResetPath();
@@ -60,7 +62,7 @@ public class StandAndExaminateState : EnemyState
             _enemyAI.PlayRandomPhrase(_enemyData.StandAndExaminateState_Phrases);
             _lastPhrasePlayTime = Time.time;
         }
-        
+
         // Emit investigation sound (for echolocation system)
         EmitInvestigationSound();
     }
@@ -107,11 +109,11 @@ public class StandAndExaminateState : EnemyState
         {
             _enemyAI.audioSource.Stop();
         }
-        
+
         // Restore agent movement
         _agent.isStopped = false;
         _agent.speed = _enemyData.ChaseSpeed; // Restore speed for chase states
-        
+
         // Reset flags
         _hasPlayedPhrase = false;
     }
@@ -120,7 +122,7 @@ public class StandAndExaminateState : EnemyState
     {
         return false;
     }
-    
+
     /// <summary>
     /// Emits investigation sound using parameters from SOEnemyData.
     /// Called when entering StandAndExaminateState.
@@ -130,7 +132,7 @@ public class StandAndExaminateState : EnemyState
     {
         // Get event from EnemyAI (just a reference, no logic)
         if (_enemyAI.enemySoundEmissionEvent == null || _enemyData == null) return;
-        
+
         // Create sound emission data with investigation parameters
         SoundEmissionData soundData = new SoundEmissionData(
             _enemyAI.transform.position,                            // pos: enemy position
@@ -139,7 +141,7 @@ public class StandAndExaminateState : EnemyState
             _enemyData.InvestigationSoundDuration,                   // dur: duration
             _enemyData.InvestigationSoundFrequency                   // objFreq: frequency (0=Low, 1=Mid, 2=High)
         );
-        
+
         // Raise event (logic is in the state, EnemyAI is just a reference holder)
         _enemyAI.enemySoundEmissionEvent.RaiseEvent(soundData);
     }

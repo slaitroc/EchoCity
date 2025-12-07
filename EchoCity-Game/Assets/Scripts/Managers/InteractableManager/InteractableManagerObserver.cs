@@ -1,45 +1,46 @@
 using UnityEngine;
 
-public class InteractableManagerObserver : MonoBehaviour
+namespace EchoCity
 {
-    [Header("Observed Events")]
-    [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
-    [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
-    [SerializeField] private SOEventVoid interactEvent;
-
-    [Header("GO with Handlers")]
-    [SerializeField] private InteractableManager interactableManager;
-
-    void Awake()
+    public class InteractableManagerObserver : MonoBehaviour
     {
-        TryGetComponent(out interactableManager);
-    }
+        [Header("Observed Events")]
+        [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
+        [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
+        [SerializeField] private SOEventVoid interactEvent;
 
-    void OnEnable()
-    {
-        if (interactEvent)
+        [Header("GO with Handlers")]
+        [SerializeField] private InteractableManager interactableManager;
+
+        void Awake()
         {
-            interactEvent.OnEventRaised -= interactableManager.TriggerInteraction;
-            interactEvent.OnEventRaised += interactableManager.TriggerInteraction;
+            TryGetComponent(out interactableManager);
         }
-        if (enterInteractableAreaEvent)
+
+        void OnEnable()
         {
-            enterInteractableAreaEvent.OnEventRaised -= interactableManager.SetActiveInteractable;
-            enterInteractableAreaEvent.OnEventRaised += interactableManager.SetActiveInteractable;
+            if (interactEvent)
+            {
+                interactEvent.OnEventRaised -= interactableManager.TriggerInteraction;
+                interactEvent.OnEventRaised += interactableManager.TriggerInteraction;
+            }
+            if (enterInteractableAreaEvent)
+            {
+                enterInteractableAreaEvent.OnEventRaised -= interactableManager.SetActiveInteractable;
+                enterInteractableAreaEvent.OnEventRaised += interactableManager.SetActiveInteractable;
+            }
+            if (exitInteractableAreaEvent)
+            {
+                exitInteractableAreaEvent.OnEventRaised -= interactableManager.SetActiveInteractable;
+                exitInteractableAreaEvent.OnEventRaised += interactableManager.SetActiveInteractable;
+            }
         }
-        if (exitInteractableAreaEvent)
+
+        void OnDisable()
         {
-            exitInteractableAreaEvent.OnEventRaised -= interactableManager.SetActiveInteractable;
-            exitInteractableAreaEvent.OnEventRaised += interactableManager.SetActiveInteractable;
+            if (interactEvent) interactEvent.OnEventRaised -= interactableManager.TriggerInteraction;
+            if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised -= interactableManager.SetActiveInteractable;
+            if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= interactableManager.SetActiveInteractable;
         }
     }
-
-    void OnDisable()
-    {
-        if (interactEvent) interactEvent.OnEventRaised -= interactableManager.TriggerInteraction;
-        if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised -= interactableManager.SetActiveInteractable;
-        if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= interactableManager.SetActiveInteractable;
-    }
-
-
 }

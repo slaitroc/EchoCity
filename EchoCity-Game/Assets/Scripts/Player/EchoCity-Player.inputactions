@@ -70,7 +70,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UIRadialMenu",
+                    "name": "OpenInventory",
                     "type": "Button",
                     "id": "e524179f-e5aa-4b8c-bd59-4f2c65b2b2a3",
                     "expectedControlType": "",
@@ -97,7 +97,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Test2",
+                    "name": "PlayerHit",
+                    "type": "Button",
+                    "id": "80360ffb-f1e9-41a9-911c-9fe42a45364b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DropItem",
                     "type": "Button",
                     "id": "16b84c6d-7149-4f9a-91e4-6e11f7c92ac7",
                     "expectedControlType": "",
@@ -106,9 +115,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Test3",
+                    "name": "UseTool",
                     "type": "Button",
                     "id": "4f8f9cb7-916f-42ab-bfa5-af41bb0a5324",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Test4",
+                    "type": "Button",
+                    "id": "da7152de-bbb0-4647-aadc-80558cc9928d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Test2",
+                    "type": "Button",
+                    "id": "4c85fe3a-4c57-44b9-bd0b-223551997b6e",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -305,17 +332,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a01b5db8-db4a-4c86-9c81-4c7aad7ef479",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "RangeInteract",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "e1149b4b-4f55-4fed-85b7-843acbbc8ba8",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -343,7 +359,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "UIRadialMenu",
+                    "action": "OpenInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -365,7 +381,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "Test2",
+                    "action": "DropItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -376,7 +392,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "Test3",
+                    "action": "UseTool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ab2a089-cb96-4921-b054-bc8348b8947f",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "UseTool",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3d36b9f-9bd5-4b6e-a857-9ad715f8eb28",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Test4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5cc21fd9-c45c-4a93-b91e-9194b4383a8a",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "PlayerHit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81834f8b-e13a-472b-98c3-8c7e15fbea0d",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Test2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

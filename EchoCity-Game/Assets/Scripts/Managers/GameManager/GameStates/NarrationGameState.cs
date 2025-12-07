@@ -1,32 +1,27 @@
 using UnityEngine;
 using System;
 
-public class NarrationGameState : GameState
+namespace EchoCity
 {
-    public NarrationGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm)
+    public class NarrationGameState : GameState
     {
-    }
+        public NarrationGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
 
-    public override void Enter()
-    {
-    }
+        public override GameStatesEnum GetEnum() => GameStatesEnum.Narration;
+        public override void Enter()
+        {
+            _gameManager.DisablePlayerInputEvent.RaiseEvent();
+            _gameManager.EnableUIInputEvent.RaiseEvent();
+            Time.timeScale = 0;
+        }
+        public void EnterNarration(DialogData data)
+        {
+            Enter();
+            _gameManager.DialogDataEvent.RaiseEvent(data);
+        }
+        public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
+        public override void Update() { }
+        public override void Exit() { }
 
-    public override void Update()
-    {
-    }
-
-    public override void Exit()
-    {
-    }
-
-    public override GameStatesEnum GetEnum()
-    {
-        return GameStatesEnum.Narration;
-    }
-
-    public override bool PauseGameHandler()
-    {
-        _fsm.SwitchState(_fsm.PauseState);
-        return true;
     }
 }

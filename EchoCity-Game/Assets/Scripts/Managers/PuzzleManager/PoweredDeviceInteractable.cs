@@ -161,11 +161,11 @@ namespace EchoCity
             {
                 if (isOn && deviceOnSound != null)
                 {
-                    ECSound.PlaySoundAtPosition(deviceOnSound, transform.position, newAudioSphereEvent, "SFX");
+                    ECSound.PlayAtPosition(deviceOnSound, transform.position, newAudioSphereEvent, "SFX");
                 }
                 else if (!isOn && deviceOffSound != null)
                 {
-                    ECSound.PlaySoundAtPosition(deviceOffSound, transform.position, newAudioSphereEvent, "SFX");
+                    ECSound.PlayAtPosition(deviceOffSound, transform.position, newAudioSphereEvent, "SFX");
                 }
             }
 

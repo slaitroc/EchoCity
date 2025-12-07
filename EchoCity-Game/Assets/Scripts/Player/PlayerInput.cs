@@ -1,4 +1,5 @@
 using StarterAssets;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,7 +14,6 @@ namespace EchoCity
         #endregion
 #pragma warning restore CS0414
 
-        #region Serialized Fields
         [Header("Input")]
         [SerializeField] private InputActionAsset inputActionAsset;
         private InputActionMap _playerActionMap;
@@ -21,14 +21,13 @@ namespace EchoCity
         [SerializeField] private PlayerController playerController;
 
         [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid areaInteractionEvent;
-        [SerializeField] private SOEventVoid pauseMenuEvent;
-        [SerializeField] private SOEventVoid pauseGameEvent;
+        [SerializeField] private SOEventVoid switchToPauseStateEvent;
+        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
+        [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
         [SerializeField] private SOEventVoid canInteractStartEvent;
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOEventVoid openRadialMenuEvent;
-        [SerializeField] private SOEventVoid closeRadialMenuEvent;
+        [SerializeField] private SOEventVoid areaInteractionEvent;
 
         [Header("Observed Events")]
         [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
@@ -45,19 +44,16 @@ namespace EchoCity
         [Header("Invoking")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
         [SerializeField] private SOPickable examplePickable;
+        [SerializeField] private SOEnemyAIEvent playerHitEvent;
+        [SerializeField] private SOStringColorEvent spawnWarningEvent;
+        [SerializeField] private SOEventVoid switchToDeathStateEvent;
 
+        [Header("Dialog")]
+        [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
+        [SerializeField] private SODialogContainer exampleDialogData;
 
-
-        #endregion
-        #region Private Fields
-        private const string UI_ACTION_MAP = "UI";
-        private const string PLAYER_ACTION_MAP = "Player";
         private bool _canInteract;
-        private bool _activeRenderer = true; // 0/false = PC Renderer, 1/true = Audio Visual
-        private bool _isLookLocked;
 
-
-        #endregion
 
         void Awake()
         {
@@ -73,18 +69,18 @@ namespace EchoCity
                 _playerActionMap["Sprint"].performed += OnSprint;
                 _playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
                 _playerActionMap["Interact"].performed += OnInteract;
-                _playerActionMap["UIRadialMenu"].performed += OnUIRadialMenu;
-                _playerActionMap["UIRadialMenu"].canceled += OnUIRadialMenu;
+                _playerActionMap["OpenInventory"].started += OnOpenInventory;
+                _playerActionMap["OpenInventory"].performed += OnCloseInventory;
                 _playerActionMap["EnterPause"].performed += OnEnterPause;
+                _playerActionMap["DropItem"].performed += OnDropItem;
+                _playerActionMap["UseTool"].performed += OnUseTool;
+                _playerActionMap["PlayerHit"].performed += OnPlayerHit;
 
                 _playerActionMap["Test1"].performed += OnTest1;
                 _playerActionMap["Test2"].performed += OnTest2;
-                _playerActionMap["Test3"].performed += OnTest3;
+                _playerActionMap["Test4"].performed += OnTest4;
 
             }
-
-            _playerActionMap.Enable();
-            MethodsUI.HideCursor();
 
             //Error Logs
             if (inputActionAsset == null)
@@ -139,7 +135,7 @@ namespace EchoCity
             // may not deliver a Performed phase the way we expect; reading the value
             // directly is more consistent across bindings.
             var look = context.ReadValue<Vector2>();
-            starterAssetsInputs.LookInput(_isLookLocked ? Vector2.zero : look);
+            starterAssetsInputs.LookInput(look);
         }
 
         private void OnJump(InputAction.CallbackContext context)
@@ -198,52 +194,77 @@ namespace EchoCity
         private void OnEnterPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            DisablePlayerActionMap();
-            pauseMenuEvent?.RaiseEvent();
-            pauseGameEvent?.RaiseEvent();
+            switchToPauseStateEvent.RaiseEvent();
+        }
+
+
+        private void OnOpenInventory(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+            _playerActionMap["Look"].performed -= OnLook;
+            switchToHudStateEvent.RaiseEvent(HudEnum.Inventory);
 
         }
 
-        private void OnUIRadialMenu(InputAction.CallbackContext context)
+        private void OnCloseInventory(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                openRadialMenuEvent?.RaiseEvent();
-                pauseGameEvent?.RaiseEvent();
-            }
-
-            if (context.canceled)
-            {
-                closeRadialMenuEvent?.RaiseEvent();
-                pauseGameEvent?.RaiseEvent();
-            }
+            if (!context.performed) return;
+            switchToPlayingStateEvent.RaiseEvent();
+            _playerActionMap["Look"].performed += OnLook;
         }
 
         private void OnTest1(InputAction.CallbackContext context)
         {
-            //EQUIP ITEM TEST
+            //TESTS HERE
             if (context.performed)
             {
-                itemEquippedEvent.RaiseEvent(0, new PickableData(examplePickable), examplePickable.PickablePrefab);
+                switchToDeathStateEvent?.RaiseEvent();
             }
         }
 
         private void OnTest2(InputAction.CallbackContext context)
+        {
+            //EQUIP ITEM TEST
+            if (context.performed)
+            {
+                spawnWarningEvent?.RaiseEvent("Warning: Enemy Approaching!", Color.red);
+            }
+        }
+
+        private void OnPlayerHit(InputAction.CallbackContext context)
+        {
+            //PLAYER HIT TEST
+            if (context.performed)
+            {
+                playerHitEvent?.RaiseEvent(null);
+            }
+        }
+
+
+        private void OnDropItem(InputAction.CallbackContext context)
         {
             //DROP ITEM TEST
             if (context.performed)
                 playerController.DropItem();
         }
 
-        private void OnTest3(InputAction.CallbackContext context)
+        private void OnUseTool(InputAction.CallbackContext context)
         {
             //USE TOOL TEST
             if (context.performed)
             {
-                playerController.UseTool(0);
+                playerController.UseTool();
             }
         }
 
+        private void OnTest4(InputAction.CallbackContext context)
+        {
+            // SPAWN DIALOG TEST
+            if (context.performed)
+            {
+                switchToNarrationStateEvent.RaiseEvent(new DialogData(exampleDialogData.DialogLines));
+            }
+        }
 
         private void EnablePlayerActionMap()
         {

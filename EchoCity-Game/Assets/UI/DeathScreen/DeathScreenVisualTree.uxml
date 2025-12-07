@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/DeathScreen/DeathScreenStyleSheet.uss?fileID=7433441132597879392&amp;guid=52dd9d205c1ee4b7c94e35d0f675b9af&amp;type=3#DeathScreenStyleSheet" />\
+    <ui:VisualElement name="DeathScreenRoot" class="death-screen-root">
+    <ui:VisualElement name="DeathBgStatic" class="death-bg-static" />
+    <ui:VisualElement name="DeathBgAnimated" class="death-bg-animated" />
+        <ui:VisualElement name="DeathScreenPanel" class="panel">
+            <ui:Label name="title" text="YOU DIED" class="title" />
+            <ui:Button name="RestartButton" text="Restart" class="button" />
+            <ui:Button name="FeedbackButton" text="Feedback" class="button" />
+            <ui:Button name="QuitButton" text="Quit to Title" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

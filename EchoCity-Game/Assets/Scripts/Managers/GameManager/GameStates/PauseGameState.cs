@@ -3,37 +3,45 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-
-public class PauseGameState : GameState
+namespace EchoCity
 {
-    [Header("UI Action Map")]
-    private const string UI_ACTION_MAP = "UI";
-
-    public PauseGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
-    public override void Enter()
+    public class PauseGameState : GameState
     {
-        Time.timeScale = 0;
-    }
+        private bool _toTitle = false;
+        private bool _restart = false;
+        public PauseGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public override void Enter()
+        {
+            Time.timeScale = 0;
+            _gameManager.DisablePlayerInputEvent.RaiseEvent();
+            _gameManager.EnableUIInputEvent.RaiseEvent();
+            _gameManager.PauseMenuEvent.RaiseEvent();
+        }
+        public override void Update(){}
+        public override void Exit()
+        {
+            _toTitle = false;
+            _restart = false;
+        }
+        public override void ExitLoading()
+        {
+            if (_toTitle)
+                _fsm.SwitchState(_fsm.TitleState);
+            if (_restart)
+                _fsm.SwitchState(_fsm.PlayingState);
+        }
+        public override GameStatesEnum GetEnum() => GameStatesEnum.Pause;
 
-    public override void Update()
-    {
-    }
-
-    public override void Exit()
-    {
-        Time.timeScale = 1;
-    }
-
-
-
-    public override GameStatesEnum GetEnum()
-    {
-        return GameStatesEnum.Pause;
-    }
-
-    public override bool PauseGameHandler()
-    {
-        _fsm.SwitchState(_fsm.PreviousState);
-        return true;
+        public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
+        public override void SwitchToTitleHandler()
+        {
+            _toTitle = true;
+            _gameManager.UnloadCurrentLevelEvent.RaiseEvent();
+        }
+        public override void SwitchToInitLevelHandler(SceneEnum scene)
+        {
+            _restart = true;
+            _gameManager.ReloadLevelEvent.RaiseEvent();
+        }
     }
 }

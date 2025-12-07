@@ -134,7 +134,7 @@ namespace EchoCity
             // Play sound
             if (ejectSound != null)
             {
-                ECSound.PlaySoundAtPosition(ejectSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(ejectSound, transform.position, newAudioSphereEvent, "SFX");
             }
 
             // Notify puzzle controller
@@ -153,7 +153,7 @@ namespace EchoCity
         {
             if (noPowerSound != null)
             {
-                ECSound.PlaySoundAtPosition(noPowerSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(noPowerSound, transform.position, newAudioSphereEvent, "SFX");
             }
             Log.D("No power - device cannot work", _LOG_COLOR, _LOG_TAG_FULL);
         }
@@ -165,7 +165,7 @@ namespace EchoCity
         {
             if (notWorkingSound != null)
             {
-                ECSound.PlaySoundAtPosition(notWorkingSound, transform.position, newAudioSphereEvent, "SFX");
+                ECSound.PlayAtPosition(notWorkingSound, transform.position, newAudioSphereEvent, "SFX");
             }
             Log.D("Device not working", _LOG_COLOR, _LOG_TAG_FULL);
         }

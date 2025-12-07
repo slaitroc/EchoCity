@@ -10,16 +10,17 @@ namespace EchoCity
         private const string _LOG_COLOR = "#39e8d1ff";
 #pragma warning restore CS0414
 
+        [Header("UI")]
+        [SerializeField] private UIManager uiManager;
         [SerializeField] private InputActionAsset inputActionAsset;
 
         [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid pauseGameEvent;
-        [SerializeField] private SOEventVoid pauseMenuEvent;
-        [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
+        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
 
 
         [Header("Observing Events")]
         [SerializeField] private SOEventVoid enableUIActionMapEvent;
+        [SerializeField] private SOEventVoid disableUIActionMapEvent;
 
         private InputActionMap _uiActionMap;
 
@@ -46,12 +47,19 @@ namespace EchoCity
         private void OnExitPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            pauseMenuEvent?.RaiseEvent();
-            pauseGameEvent?.RaiseEvent();
-
+            uiManager.SwitchToPlayState();
         }
 
-        public void EnableUIActionMap() => _uiActionMap.Enable();
-        public void DisableUIActionMap() => _uiActionMap.Disable();
+        private void OnEnable()
+        {
+            enableUIActionMapEvent.OnEventRaised -= EnableUIActionMap;
+            enableUIActionMapEvent.OnEventRaised += EnableUIActionMap;
+
+            disableUIActionMapEvent.OnEventRaised -= DisableUIActionMap;
+            disableUIActionMapEvent.OnEventRaised += DisableUIActionMap;
+        }
+
+        private void EnableUIActionMap() => _uiActionMap.Enable();
+        private void DisableUIActionMap() => _uiActionMap.Disable();
     }
 }

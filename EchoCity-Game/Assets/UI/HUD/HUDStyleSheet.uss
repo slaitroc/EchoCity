@@ -83,7 +83,7 @@
     background-color: rgba(255, 255, 255, 0.05);
     min-width: 50px;
     min-height: 50px;
-    background-image: url("project://database/Assets/UI/GameInputControllerIcons/mouse/mouse-outlined/mouse-left.png?fileID=2800000&guid=fd1a0dff4c167f04898c69eedd2b810c&type=3#mouse-left");
+    background-image: resource('Icons/EchoCity-mouse-left');
 }
 
 .interaction-text {
@@ -93,20 +93,24 @@
     opacity: 0.9;
 }
 
-/* radial menu */
 .radial-menu-root {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    /* display: none;           */
+    opacity: 0;
     justify-content: center;
     align-items: center;
     pointer-events: none;
+    display: none;
+    transition-property: opacity, scale;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
 }
 
 .radial-menu-root.active {
+    opacity: 1;
     display: flex;
     pointer-events: auto;
 }
@@ -117,75 +121,268 @@
     border-radius: 50%;
     border-width: 2px;
     border-style: solid;
-    /* border-color: rgba(255, 255, 255, 0.13); */
+    border-color: rgba(255, 255, 255, 0.13);
     justify-content: center;
     align-items: center;
     position: relative;
 }
 
 .radial-item {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    border-radius: 60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
     justify-content: center;
     align-items: center;
-    background-color: rgba(19, 157, 226, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     border-width: 2px;
     border-style: solid;
-    border-color: rgba(255, 255, 255, 0.27);
+    border-color: rgba(255, 255, 255, 0.5);
     -unity-font-style: bold;
+    position: absolute;
+    transform-origin: 50% 200%;
+    color: rgb(255, 255, 255);
+    translate: 0 -300px;
 }
 
-/* 
-#Item_1 {
-    top: 0;
-    left: 50%;
-    translate: -50% -50%;
+.radial-item:hover {
+    cursor: pointer;
+    background-color: rgba(154, 104, 255, 0.6);
+    border-color: rgb(255, 127, 80);
 }
-#Item_2 {
-    top: 50%;
-    right: 0;
-    translate: 50% -50%;
-}
-#Item_3 {
-    bottom: 0;
-    left: 50%;
-    translate: -50% 50%;
-}
-#Item_4 {
-    top: 50%;
-    left: 0;
-    translate: -50% -50%;
-} */
 
+.item-0 {
+    rotate: 0;
+}
+
+.item-0 .radial-item-content {
+    rotate: 0;
+}
+
+.item-1 {
+    rotate: 45deg;
+}
+
+.item-1 .radial-item-content {
+    rotate: -45deg;
+}
+
+.item-2 {
+    rotate: 90deg;
+}
+
+.item-2 .radial-item-content {
+    rotate: -90deg;
+}
+
+.item-3 {
+    rotate: 135deg;
+}
+
+.item-3 .radial-item-content {
+    rotate: -135deg;
+}
+
+.item-4 {
+    rotate: 180deg;
+}
+
+.item-4 .radial-item-content {
+    rotate: -180deg;
+}
+
+.item-5 {
+    rotate: 225deg;
+}
+
+.item-5 .radial-item-content {
+    rotate: -225deg;
+}
+
+.item-6 {
+    rotate: 270deg;
+}
+
+.item-6 .radial-item-content {
+    rotate: -270deg;
+}
+
+.item-7 {
+    rotate: 315deg;
+}
+
+.item-7 .radial-item-content {
+    rotate: -315deg;
+}
+
+.radial-item-content {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 32px;
+}
 
 .radial-item.hovered {
-    background-color: rgba(154, 104, 255, 0.80);
-    border-color: rgba(255, 127, 80, 1.0);
+    background-color: rgba(154, 104, 255, 0.8);
+    border-color: rgb(255, 127, 80);
 }
-
 
 .radial-info-panel {
     position: absolute;
-    width: 220px;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.85);
-    border-width: 2px;
-    border-style: solid;
-    border-color: rgba(255, 255, 255, 0.25);
-    color: white;
-    display: none;
-    flex-direction: column;
+    width: 380px;
+    min-height: 100px;
+    max-height: 230px;
     justify-content: center;
-    align-items: flex-start;
-    pointer-events: none;
-    z-index: 999;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.4);
+    border-style: solid;
 }
 
-#RadialInfoText {
-    font-size: 14px;
+.radial-info-title {
+    font-size: 24px;
     -unity-font-style: bold;
     white-space: normal;
+    color: rgb(255, 255, 255);
+}
+
+.radial-info-text {
+    font-size: 18px;
+    margin-top: 4px;
+    white-space: normal;
+    opacity: 0.9;
+    color: rgb(200, 200, 200);
+}
+
+.warning-panel {
+    opacity: 1;
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    min-height: 60px;
+    display: none;
+    justify-content: center;
+    pointer-events: none;
+    transition-property: opacity;
+    transition-duration: 0ms;
+}
+
+.warning-panel.hide {
+    opacity: 0;
+    transition-duration: 500ms;
+    transition-timing-function: ease-in;
+}
+
+.warning-box {
+    position: absolute;
+    width: 50%;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(255, 0, 0);
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.warning-text {
+    font-size: 18px;
+    color: rgb(255, 0, 0);
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+
+.tutorial-panel {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    padding: 18px 22px;
+    background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tutorial-title {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgba(238, 238, 238, 1);
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.tutorial-lines {
+    display: flex;
+    flex-direction: column;
+}
+
+.tutorial-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 72px;
+    margin-bottom: 24px;
+}
+
+.tutorial-line:last-child {
+    margin-bottom: 0;
+}
+
+.tutorial-text {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 1);
+    -unity-font-style: normal;
+    margin-right: 16px;
+}
+
+.tutorial-key-icon {
+    width: 56px;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 16px;
+}
+
+
+
+
+/* EQUIPPED PANEL */
+.equipped-panel {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    padding: 18px 22px;
+    background-color: rgba(0,0,0,0.55);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.equipped-icon {
+    width: 56px;
+    height: 56px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.equipped-name {
+    font-size: 20px;
+    color: white;
+    -unity-font-style: bold;
+    margin-left: 8px;
 }

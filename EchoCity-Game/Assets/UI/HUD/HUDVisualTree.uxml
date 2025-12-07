@@ -1,60 +1,106 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/HUD/HUDStyleSheet.uss?fileID=7433441132597879392&amp;guid=d83f1d3204d7e494baca4adaac9ecc97&amp;type=3#HUDStyleSheet" />
+
     <ui:VisualElement name="hud-root" class="hud-root">
+
+        <!-- CROSSHAIR -->
         <ui:VisualElement name="crosshair-layer" class="crosshair-layer" style="top: 0; bottom: 0; right: 0; left: 0;">
             <ui:VisualElement name="crosshair" class="crosshair" />
         </ui:VisualElement>
+
+        <!-- INTERACTION PANEL -->
         <ui:VisualElement name="interaction-panel" class="interaction-panel">
             <ui:Label name="interaction-key" class="interaction-key" />
             <ui:Label name="interaction-text" text="Interact" class="interaction-text" />
         </ui:VisualElement>
 
-        <!-- Radial Menu Overlay -->
+        <!-- RADIAL MENU -->
         <ui:VisualElement name="RadialMenuRoot" class="radial-menu-root">
             <ui:VisualElement name="RadialCenter" class="radial-center">
                 <!-- menu items -->
-                <ui:VisualElement name="Item_1" class="radial-item">
-                    <ui:Label text="Clap Hands"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_2" class="radial-item">
-                    <ui:Label text="Whistle"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_3" class="radial-item">
-                    <ui:Label text="Maracas"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_4" class="radial-item">
-                    <ui:Label text="Drums"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_5" class="radial-item">
-                    <ui:Label text="Scream"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_6" class="radial-item">
-                    <ui:Label text="Clap Hands"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_7" class="radial-item">
-                    <ui:Label text="Whistle"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_8" class="radial-item">
-                    <ui:Label text="Maracas"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_9" class="radial-item">
-                    <ui:Label text="Drums"/>
-                </ui:VisualElement>
-                <ui:VisualElement name="Item_10" class="radial-item">
-                    <ui:Label text="Scream"/>
-                </ui:VisualElement>
-            </ui:VisualElement>
+                <ui:Button name="Item0" class="radial-item item-0" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 0"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item1" class="radial-item item-1" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 1"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item2" class="radial-item item-2" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 2"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item3" class="radial-item item-3" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 3"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item4" class="radial-item item-4" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 4"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item5" class="radial-item item-5" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 5"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item6" class="radial-item item-6" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 6"/>
+                    </ui:VisualElement>
+                </ui:Button>
+                <ui:Button name="Item7" class="radial-item item-7" >
+                    <ui:VisualElement class="radial-item-content">
+                        <ui:Label text="Item 7"/>
+                    </ui:VisualElement>
+                </ui:Button>
 
-            <ui:VisualElement name="RadialInfoPanel" class="radial-info-panel">
-                <ui:Label name="RadialInfoText" text="" />
+                <!-- INFO PANEL -->
+                <ui:VisualElement name="RadialInfoPanel" class="radial-info-panel">
+                    <ui:Label name="RadialInfoTitle" text="No Item Selected" class="radial-info-title" />
+                    <ui:Label name="RadialInfoText" text="Select an Item and release the button to equip" class="radial-info-text" />
+                </ui:VisualElement>
+
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <!-- WARNING PANEL -->
+        <ui:VisualElement name="WarningPanel" class="warning-panel">
+            <ui:VisualElement name="WarningBox" class="warning-box">
+                <ui:Label name="WarningText" class="warning-text" text="Warning text placeholder"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
 
-        <!-- Placeholder for additional HUD panels -->
-        <ui:VisualElement name="top-left-panel" class="hud-panel top-left" />
-        <ui:VisualElement name="top-right-panel" class="hud-panel top-right" />
-        <ui:VisualElement name="bottom-center-panel" class="hud-panel bottom-center" />
-        <ui:VisualElement name="status-messages" class="status-messages" />
+        <!-- TUTORIAL PANEL -->
+        <ui:VisualElement name="TutorialPanel" class="tutorial-panel">
+            <ui:Label name="TutorialTitle" class="tutorial-title" text="Tutorial" />
+
+            <ui:VisualElement name="TutorialLines" class="tutorial-lines">
+
+                <ui:VisualElement class="tutorial-line">
+                    <ui:Label text="Press" class="tutorial-text" />
+                    <ui:VisualElement name="KeyIcon_E" class="tutorial-key-icon" />
+                    <ui:Label text="to interact" class="tutorial-text" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="tutorial-line">
+                    <ui:Label text="Hold" class="tutorial-text" />
+                    <ui:VisualElement name="KeyIcon_Q" class="tutorial-key-icon" />
+                    <ui:Label text="to open the menu" class="tutorial-text" />
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- EQUIPPED ITEM PANEL -->
+        <ui:VisualElement name="EquippedPanel" class="equipped-panel">
+            <ui:VisualElement name="EquippedIcon" class="equipped-icon" />
+            <ui:Label name="EquippedName" class="equipped-name" text="No Item Equipped" />
+        </ui:VisualElement>
+        
     </ui:VisualElement>
 </ui:UXML>

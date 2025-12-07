@@ -15,7 +15,7 @@ public class PlayerInventory : MonoBehaviour
 
 
     [Header("Observing Events")]
-    [SerializeField] private SOIntegerGameObjectEvent dropItemEvent;
+    [SerializeField] private SOIntEvent dropItemEvent;
     [SerializeField] private SOPickableDataGameObjectEvent pickItemEvent;
 
     [Header("Inventory")]
@@ -39,11 +39,13 @@ public class PlayerInventory : MonoBehaviour
     void OnEnable()
     {
         if (pickItemEvent) pickItemEvent.OnEventRaised += AddItemHandler;
+        if (dropItemEvent) dropItemEvent.OnEventRaised += RemoveItemHandler;
     }
 
     void OnDisable()
     {
         if (pickItemEvent) pickItemEvent.OnEventRaised -= AddItemHandler;
+        if (dropItemEvent) dropItemEvent.OnEventRaised -= RemoveItemHandler;
     }
 
 
@@ -71,9 +73,6 @@ public class PlayerInventory : MonoBehaviour
     {
         prefabsArray[itemIndex] = null;
         itemsArray[itemIndex] = null;
-        inventoryChangedEvent?.RaiseEvent();
-        //playerController.DropItem(index, prefabsArray[index]);
-
     }
 
     public void Clear()

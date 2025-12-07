@@ -1,0 +1,27 @@
+using UnityEngine;
+
+namespace EchoCity
+{
+    public class TitleGameState : GameState
+    {
+        public TitleGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public override void Enter()
+        {//TODO audio
+            Time.timeScale = 0;
+            _gameManager.DisablePlayerInputEvent.RaiseEvent();
+            _gameManager.EnableUIInputEvent.RaiseEvent();
+            _gameManager.TitleMenuEvent.RaiseEvent();
+        }
+        public override void Update() { }
+        public override void Exit() => _gameManager.SetPlayerOnSpawnEvent.RaiseEvent();
+        public override GameStatesEnum GetEnum() => GameStatesEnum.Title;
+        public override void SwitchToInitLevelHandler(SceneEnum scene) => _gameManager.LoadLevelEvent.RaiseEvent(scene);
+        public override void EnterLoading() { }
+        public override void ExitLoading()
+        {
+            _gameManager.DisablePlayerInputEvent.RaiseEvent();
+            _gameManager.EnableUIInputEvent.RaiseEvent();
+            _fsm.SwitchState(_fsm.PlayingState);
+        }
+    }
+}
