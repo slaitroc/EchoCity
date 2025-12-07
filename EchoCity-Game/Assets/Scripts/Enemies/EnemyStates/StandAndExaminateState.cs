@@ -94,6 +94,8 @@ public class StandAndExaminateState : EnemyState
             if (attraction < _enemyData.NoiseLoseThreshold && distToPlayer > _enemyData.D_enter)
             {
                 // Lost interest and player is far → return to patrol
+                // Select the closest patrol area before returning to patrol
+                _enemyAI.SelectClosestPatrolArea();
                 _enemyAI.ResetAttraction();
                 _enemyAI.ClearLastChaseActionPosition();
                 _fsm.SwitchState(_fsm.patrolState);

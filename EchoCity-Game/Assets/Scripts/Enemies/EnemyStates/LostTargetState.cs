@@ -68,6 +68,8 @@ public class LostTargetState : EnemyState
             else
             {
                 // Return to patrol after phrase
+                // Select the closest patrol area before returning to patrol
+                _enemyAI.SelectClosestPatrolArea();
                 _fsm.SwitchState(_fsm.patrolState);
             }
         }
