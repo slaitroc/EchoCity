@@ -101,7 +101,7 @@ namespace EchoCity
         {
             while (true)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSecondsRealtime(1f);
                 float blinkDuration = Random.Range(1.5f, 2f);
                 yield return StartCoroutine(RedBlinkEffectCoroutine(blinkDuration));
             }
@@ -110,7 +110,7 @@ namespace EchoCity
         {
             while (true)
             {
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSecondsRealtime(1.5f);
                 float blinkDuration = Random.Range(2f, 2.5f);
                 yield return StartCoroutine(BlueBlinkEffectCoroutine(blinkDuration));
             }
@@ -119,14 +119,14 @@ namespace EchoCity
         IEnumerator RedBlinkEffectCoroutine(float duration)
         {
             _redBlinkOverlay.AddToClassList("active");
-            yield return new WaitForSeconds(duration);
+            yield return new WaitForSecondsRealtime(duration);
             _redBlinkOverlay.RemoveFromClassList("active");
         }
 
         IEnumerator BlueBlinkEffectCoroutine(float duration)
         {
             _blueBlinkOverlay.AddToClassList("active");
-            yield return new WaitForSeconds(duration);
+            yield return new WaitForSecondsRealtime(duration);
             _blueBlinkOverlay.RemoveFromClassList("active");
         }
 
