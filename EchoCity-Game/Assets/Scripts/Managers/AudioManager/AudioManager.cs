@@ -28,8 +28,9 @@ namespace EchoCity
             _audioSource2.volume = 0.5f;
             _audioSource1.outputAudioMixerGroup = ECSound.Mixer.FindMatchingGroups("BackgroundMusic")[0];
             _audioSource2.outputAudioMixerGroup = ECSound.Mixer.FindMatchingGroups("BackgroundMusic")[0];
+
             gameManagerStateTransitionEvent.OnEventRaised += StateTransitionHandler;
-            PlayTitleMusicCoroutine();
+            PlayTitleMusic();
         }
 
         void OnDisable()
@@ -42,17 +43,20 @@ namespace EchoCity
         {
             if (newState == GameStatesEnum.Playing)
             {
-                StopAllCoroutines();
                 _audioSource1.Stop();
                 _audioSource2.Stop();
-                _audioSource1.clip = playingMusicClip;
-                _audioSource1.loop = true;
-                _audioSource1.Play();
+                PlayPlayingMusic();
+            }
+            if (newState == GameStatesEnum.Title)
+            {
+                _audioSource1.Stop();
+                _audioSource2.Stop();
+                PlayTitleMusic();
             }
         }
 
 
-        private void PlayTitleMusicCoroutine()
+        private void PlayTitleMusic()
         {
             _audioSource1.clip = titleMusicClips[0];
             _audioSource2.clip = titleMusicClips[1];
@@ -61,8 +65,13 @@ namespace EchoCity
             var startTime = AudioSettings.dspTime + 0.1f;
             _audioSource1.PlayScheduled(startTime);
             _audioSource2.PlayScheduled(startTime + _audioSource1.clip.length + 0.3f);
+        }
 
-
+        private void PlayPlayingMusic()
+        {
+            _audioSource1.clip = playingMusicClip;
+            _audioSource1.loop = true;
+            _audioSource1.Play();
         }
 
     }
