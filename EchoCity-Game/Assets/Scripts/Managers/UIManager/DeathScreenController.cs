@@ -110,7 +110,7 @@ namespace EchoCity
             uiManager.SwitchToInitLevel(SceneEnum.Level1);
         }
 
-        private void QuitClickHandler() => quitToTitleEvent?.RaiseEvent();
+        private void QuitClickHandler() => uiManager.SwitchToTitleState();
 
         private void OnDisable()
         {

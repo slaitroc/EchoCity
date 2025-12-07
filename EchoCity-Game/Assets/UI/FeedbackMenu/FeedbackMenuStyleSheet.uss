@@ -1,0 +1,207 @@
+.feedback-root:disabled {
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+.feedback-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition-property: opacity;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
+}
+
+.feedback-dimmer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    opacity: 1;
+}
+
+.feedback-panel {
+    width: 90%;
+    height: 90%;
+    background-color: rgba(29, 29, 29, 0.95);
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    padding: 24px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    flex-direction: column;
+    display: flex;
+    row-gap: 12px;
+}
+
+.feedback-title {
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    font-size: 90px;
+    -unity-text-align: middle-center;
+    color: rgba(255, 255, 255, 1);
+    margin-top: 0;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+}
+
+.feedback-section {
+    flex-direction: column;
+    display: flex;
+    row-gap: 8px;
+    width: 100%;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.feedback-label {
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    font-size: 32px;
+    color: rgba(255, 255, 255, 1);
+    -unity-text-align: middle-center;
+}
+
+.rating-stars {
+    display: flex;
+    flex-direction: row;
+    column-gap: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 4px;
+}
+
+.rating-star {
+    width: 70px;
+    height: 70px;
+    font-size: 90px;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    color: rgba(255, 255, 255, 1);
+    transition-duration: 0.3s;
+}
+
+.rating-star:hover,
+.rating-star:focus {
+    color: rgba(255, 0, 0, 1);
+    scale: 1.15 1.15;
+}
+
+.feedback-content {
+    flex-grow: 1;
+    width: 80%;
+    display: flex;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 1);
+    justify-content: center;
+    align-items: stretch;
+    align-self: center;
+    min-height: 0;
+}
+
+.feedback-textfield {
+    width: 90%;
+    height: 90%;
+    align-self: center;
+    font-size: 28px;
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 15px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    -unity-text-input: multiline;
+    -unity-text-max-length: 50;
+    white-space: normal;
+}
+
+.feedback-submit-button {
+    width: 70%;
+    height: 80px;
+    align-self: center;
+    font-size: 400%;
+    margin-top: 8px;
+    background-color: rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+    border-radius: 15px;
+    align-items: center;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    transition-duration: 0.5s;
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-background-image-tint-color: rgba(0, 0, 0, 1);
+    flex-shrink: 0;
+}
+
+.feedback-submit-button:hover,
+.feedback-submit-button:focus {
+    border-color: rgba(255, 0, 0, 1);
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    scale: 1.2 1.2;
+    -unity-background-image-tint-color: rgba(106, 0, 0, 1);
+}
+
+
+.thankyou-panel {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    background-color: rgba(29, 29, 29, 0.95);
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    padding: 24px;
+    flex-direction: column;
+    display: none;
+    row-gap: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.thankyou-title {
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    font-size: 100px;
+    color: rgba(255, 255, 255, 1);
+    -unity-text-align: middle-center;
+}
+
+.thankyou-message {
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    font-size: 40px;
+    color: rgba(200, 200, 200, 1);
+    -unity-text-align: middle-center;
+    width: 80%;
+}
+
+.thankyou-button {
+    width: 60%;
+    height: 100px;
+    font-size: 400%;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(0, 0, 0, 1);
+    border-radius: 15px;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-background-image-tint-color: rgba(0, 0, 0, 1);
+    transition-duration: 0.5s;
+    align-items: center;
+}
+
+.thankyou-button:hover,
+.thankyou-button:focus {
+    border-color: rgba(255, 0, 0, 1);
+    scale: 1.2 1.2;
+    -unity-background-image-tint-color: rgba(100, 0, 0, 1);
+}
