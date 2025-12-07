@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: HighClockTickingSoundSource
+  m_Name: HandsClap
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
-  audioClip: {fileID: 8300000, guid: e7344aba15ec39b4898b8cfcbb26a092, type: 3}
-  intensity: 0.454
-  volume: 0.054
-  radius: 2
-  gapBetweenSounds: 0.01
-  minimumDuration: 0.1
+  audioClip: {fileID: 0}
+  intensity: 0.566
+  volume: 0.712
+  radius: 7.8
+  gapBetweenSounds: 0
+  minimumDuration: 0.2
   emitOnStart: 0
-  randomAudioClips: []
+  randomAudioClips:
+  - {fileID: 8300000, guid: c9fd15e2707c4a84d93c41518c387f50, type: 3}
+  - {fileID: 8300000, guid: e5b188b5499e08846802e42a5263193e, type: 3}
+  - {fileID: 8300000, guid: 00c71f490c7036747b633acf82005644, type: 3}
+  - {fileID: 8300000, guid: 292b0250e7598be4ca28d602fcf5714a, type: 3}

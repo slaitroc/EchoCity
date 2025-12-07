@@ -19,8 +19,9 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private SOPickableDataGameObjectEvent pickItemEvent;
 
     [Header("Inventory")]
-    private InventoryItem[] itemsArray = new InventoryItem[8];
-    private GameObject[] prefabsArray = new GameObject[8];
+    [SerializeField] private InventoryItem[] itemsArray;
+    [SerializeField] private SOPickable handsSoundTool;
+    private GameObject[] prefabsArray;
     public IReadOnlyList<InventoryItem> Items => itemsArray;
     public IReadOnlyList<GameObject> Prefabs => prefabsArray;
 
@@ -33,6 +34,14 @@ public class PlayerInventory : MonoBehaviour
         if (playerController == null)
         {
             Log.E("PlayerController not found in PlayerInventory", LOG_COLOR, LOG_TAG);
+        }
+
+        itemsArray = new InventoryItem[8];
+        prefabsArray = new GameObject[itemsArray.Length];
+        if (handsSoundTool != null)
+        {
+            InventoryItem handsItem = new InventoryItem(new PickableData(handsSoundTool));
+            itemsArray[0] = handsItem;
         }
     }
 

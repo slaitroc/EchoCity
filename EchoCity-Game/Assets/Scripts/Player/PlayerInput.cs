@@ -33,6 +33,7 @@ namespace EchoCity
         [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
         [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
         [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
+        [SerializeField] private SOEventVoid wearEcholocatorEvent;
 
         [Header("Interaction Range Colliders")]
         [SerializeField] private bool inInteractionRange = false;
@@ -67,7 +68,7 @@ namespace EchoCity
                 _playerActionMap["Look"].canceled += OnLook;
                 _playerActionMap["Jump"].performed += OnJump;
                 _playerActionMap["Sprint"].performed += OnSprint;
-                _playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
+                //_playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
                 _playerActionMap["Interact"].performed += OnInteract;
                 _playerActionMap["OpenInventory"].started += OnOpenInventory;
                 _playerActionMap["OpenInventory"].performed += OnCloseInventory;
@@ -160,7 +161,7 @@ namespace EchoCity
         {
             if (context.performed)
             {
-                materialToggleEvent?.RaiseEvent();
+                // materialToggleEvent?.RaiseEvent();
             }
         }
 
@@ -300,6 +301,11 @@ namespace EchoCity
             inRangeInteractable = null;
         }
 
+        private void WearEcholocatorHandler()
+        {
+            materialToggleEvent?.RaiseEvent();
+        }
+
         private void SubscribeToEvents()
         {
             if (enterInteractableAreaEvent)
@@ -322,6 +328,11 @@ namespace EchoCity
                 disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMap;
                 disablePlayerActionMapEvent.OnEventRaised += DisablePlayerActionMap;
             }
+            if (wearEcholocatorEvent)
+            {
+                wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
+                wearEcholocatorEvent.OnEventRaised += WearEcholocatorHandler;
+            }
         }
         private void UnsubscribeFromEvents()
         {
@@ -329,6 +340,7 @@ namespace EchoCity
             if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
             if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMap;
             if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMap;
+            if (wearEcholocatorEvent) wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
         }
     }
 }

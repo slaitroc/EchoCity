@@ -6,13 +6,13 @@ namespace EchoCity
     [RequireComponent(typeof(Collider))]
     public class TutorialTrigger : MonoBehaviour
     {
-        [SerializeField] SODialogContainer tutorialDialogContainer;
-        [SerializeField] SODialogDataEvent switchToNarrationStateEvent;
+        [SerializeField] protected SODialogContainer tutorialDialogContainer;
+        [SerializeField] protected SODialogDataEvent switchToNarrationStateEvent;
         [Header("Invoking Events")]
-        [SerializeField] SOPuzzleTagEnumArrayEvent checkTagsEvent;
-        [SerializeField] SOPuzzleTagEnumArrayEvent setTagsEvent;
+        [SerializeField] protected SOPuzzleTagEnumArrayEvent checkTagsEvent;
+        [SerializeField] protected SOPuzzleTagEnumArrayEvent setTagsEvent;
         [Header("Observing Events")]
-        [SerializeField] SOBoolEvent interactionOutcomeEvent;
+        [SerializeField] protected SOBoolEvent interactionOutcomeEvent;
         [Header("Puzzle Tags")]
         [SerializeField] protected PuzzleTagEnum[] checkTags;
         [SerializeField] protected PuzzleTagEnum[] setTags;
@@ -34,7 +34,7 @@ namespace EchoCity
                 setTagsEvent?.RaiseEvent(setTags);
         }
 
-        void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag("Player")) return;
             checkTagsEvent?.RaiseEvent(checkTags);
