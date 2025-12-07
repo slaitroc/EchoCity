@@ -66,13 +66,13 @@ namespace EchoCity
 
         public override void InteractionOutcomeHandler(bool outcome)
         {
-            base.InteractionOutcomeHandler(outcome);
             if (_waitForInteractionOutcome)
             {
-                if (outcome)
+                if (!outcome)
                 {
                     isSwitchedOn = !isSwitchedOn;
                 }
+
             }
             _waitForInteractionOutcome = false;
         }

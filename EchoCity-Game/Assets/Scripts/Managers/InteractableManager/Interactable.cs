@@ -37,11 +37,6 @@ public abstract class Interactable : MonoBehaviour
         _waitForInteractionOutcome = true;
         checkTagsEvent?.RaiseEvent(tagsToCheck);
     }
-    public virtual void InteractionOutcomeHandler(bool outcome)
-    {
-        if (!_waitForInteractionOutcome) return;
-        if (outcome)
-            SetTags(setTags);
-    }
+    public abstract void InteractionOutcomeHandler(bool outcome);
     public void SetTags(PuzzleTagEnum[] tagsToSet) => setPuzzleTagsEvent?.RaiseEvent(tagsToSet);
 }

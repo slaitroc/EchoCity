@@ -19,7 +19,7 @@ namespace EchoCity
 
         public override void InteractionOutcomeHandler(bool outcome)
         {
-            base.InteractionOutcomeHandler(outcome);
+            _waitForInteractionOutcome = false;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace EchoCity
         CablePicked = 4,
         FloppyDiskPicked = 5,
         CardReaderIsOn = 6,
-        LightsOn = 7
+        LightsOff = 7
     }
 
     [System.Serializable]
@@ -49,18 +49,15 @@ namespace EchoCity
 
         void Awake()
         {
-            if (activePuzzleTags == null || activePuzzleTags.Length == 0)
-            {
-                activePuzzleTags = new PuzzleTagState[]{
+            activePuzzleTags = new PuzzleTagState[]{
                 new PuzzleTagState(PuzzleTagEnum.PhonePicked, false),
                 new PuzzleTagState(PuzzleTagEnum.WalkieTalkiePicked, false),
                 new PuzzleTagState(PuzzleTagEnum.BunkerDoorKeyPicked, false),
                 new PuzzleTagState(PuzzleTagEnum.CablePicked, false),
                 new PuzzleTagState(PuzzleTagEnum.FloppyDiskPicked, false),
                 new PuzzleTagState(PuzzleTagEnum.CardReaderIsOn, false),
-                new PuzzleTagState(PuzzleTagEnum.LightsOn, true)
+                new PuzzleTagState(PuzzleTagEnum.LightsOff, false)
             };
-            }
         }
         void OnEnable()
         {

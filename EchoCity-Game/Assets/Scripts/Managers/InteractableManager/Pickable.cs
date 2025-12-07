@@ -21,7 +21,6 @@ namespace EchoCity
 
         public override void InteractionOutcomeHandler(bool outcome)
         {
-            base.InteractionOutcomeHandler(outcome);
             if (!_waitForInteractionOutcome) return;
             if (outcome)
             {

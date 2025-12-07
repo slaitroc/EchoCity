@@ -20,6 +20,7 @@ namespace EchoCity
                 {
                     spawnMessageEvent?.RaiseEvent("Cable Picked Up!", new Color(1f, 0.5f, 0f, 1f));
                     dialogDataEvent?.RaiseEvent(new DialogData(dialogContainer));
+                    SetTags(setTags);
                 }
             }
             _waitForInteractionOutcome = false;
