@@ -170,7 +170,7 @@ namespace EchoCity
         #endregion
 
         #region Misc
-        private void OnFeedbackSubmittedEvent((int, string) feedbackData) => Log.D($"Feedback Submitted Event Raised with Rating: {feedbackData.Item1}, Feedback: {feedbackData.Item2}", _LOG_COLOR, _LOG_TAG);
+        private void OnFeedbackSubmittedEvent(int rating, string feedback) => Log.D($"Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", _LOG_COLOR, _LOG_TAG);
         #endregion
     }
 }

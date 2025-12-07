@@ -1182,6 +1182,7 @@ GameObject:
   - component: {fileID: 7775350643467030977}
   - component: {fileID: 8766107341516558899}
   - component: {fileID: 7634318382425059713}
+  - component: {fileID: 8766107341516558900}
   m_Layer: 0
   m_Name: FeedbackMenu
   m_TagString: Untagged
@@ -2011,6 +2012,20 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &8766107341516558900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3217342648355619522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b60604b9ba970704b91e23f3303b265b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: ac6a80f374d00c845998a05aaaf4f9fa, type: 2}
+  feedbackSubmittedEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
 --- !u!114 &8884336995387851560
 MonoBehaviour:
   m_ObjectHideFlags: 0

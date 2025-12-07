@@ -109,7 +109,7 @@ namespace EchoCity
         private void SubmitFeedbackClickHandler()
         {
             string feedbackText = _feedbackTextField != null ? _feedbackTextField.value : string.Empty;
-            feedbackSubmittedEvent?.RaiseEvent((_currentRating, feedbackText));
+            feedbackSubmittedEvent?.RaiseEvent(_currentRating, feedbackText);
 
             if (_feedbackPanel != null)
                 _feedbackPanel.style.display = DisplayStyle.None;
