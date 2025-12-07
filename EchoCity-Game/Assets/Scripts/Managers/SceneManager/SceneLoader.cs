@@ -181,9 +181,7 @@ namespace EchoCity
         private IEnumerator LoadLevelAdditiveWithLoading(SceneEnum scene)
         {
             yield return StartCoroutine(StartLoading());
-            Log.D("Started loading level with loading screen.", $"{_LOG_COLOR}", $"{_LOG_TAG}");
             yield return StartCoroutine(LoadLevelAdditive(scene));
-            Log.D("Finished loading level with loading screen.", $"{_LOG_COLOR}", $"{_LOG_TAG}");
             yield return StartCoroutine(StopLoading());
         }
 
