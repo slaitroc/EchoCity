@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: GeneralDrop1
+  m_Name: GeneralPickUpLow2
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
-  audioClip: {fileID: 8300000, guid: 1e2ae46e7ffec7341b86c03ee2e73fcc, type: 3}
+  soundClass: {fileID: 11400000, guid: d4a43699c88e5f44494578a69af37aff, type: 2}
+  audioClip: {fileID: 8300000, guid: 964d2bf183913bc45a765cbb671b2118, type: 3}
   intensity: 1
-  radius: 2.08
+  volume: 0.606
+  radius: 6.4
   gapBetweenSounds: 0
   minimumDuration: 0.1
   emitOnStart: 0

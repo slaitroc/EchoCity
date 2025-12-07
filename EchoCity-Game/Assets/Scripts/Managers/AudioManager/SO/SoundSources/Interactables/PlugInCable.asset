@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: GeneralPickUp1
+  m_Name: PlugInCable
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
-  audioClip: {fileID: 8300000, guid: 1e2ae46e7ffec7341b86c03ee2e73fcc, type: 3}
-  intensity: 1
-  volume: 0.385
-  radius: 2.08
+  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  audioClip: {fileID: 8300000, guid: 2f2b32b011ee3b346b448b7490b913d8, type: 3}
+  intensity: 0.65
+  volume: 0.667
+  radius: 10.8
   gapBetweenSounds: 0
   minimumDuration: 0.1
   emitOnStart: 0

@@ -16,12 +16,12 @@ public abstract class Interactable : MonoBehaviour
     [Header("Observing Events")]
     [SerializeField] protected SOBoolEvent interactionOutcomeEvent;
     [Header("Interactable Settings")]
-    [SerializeField] protected virtual PuzzleTagEnum[] checkTags { get; set; }
-    [SerializeField] protected virtual PuzzleTagEnum[] setTags { get; set; }
+    [SerializeField] protected PuzzleTagEnum[] checkTags;
+    [SerializeField] protected PuzzleTagEnum[] setTags;
 
     protected virtual void OnEnable()
     {
-        if (setPuzzleTagsEvent != null) setPuzzleTagsEvent.OnEventRaised += SetTags;
+        if (interactionOutcomeEvent != null) interactionOutcomeEvent.OnEventRaised += InteractionOutcomeHandler;
     }
 
     protected virtual void OnDisable()
