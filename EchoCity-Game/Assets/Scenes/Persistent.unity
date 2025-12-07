@@ -1309,7 +1309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0de813f7c7c046219848cad612cfa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHitEvent: {fileID: 0}
+  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
   noiseUIEvent: {fileID: 0}
   investigationEvent: {fileID: 0}
   enemySoundEmissionEvent: {fileID: 0}
@@ -5616,7 +5616,7 @@ MonoBehaviour:
   groundTypes:
   - layer:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 4294967295
     SoundSource: {fileID: 11400000, guid: b334c8d639c6d3f4c918dfc0239fb98c, type: 2}
   rayDistance: 1.5
 --- !u!82 &9029115697583543171
