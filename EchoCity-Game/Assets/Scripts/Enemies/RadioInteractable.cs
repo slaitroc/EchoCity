@@ -152,16 +152,6 @@ public class RadioInteractable : Interactable
         }
     }
 
-    public override void CheckTags(PuzzleTagEnum[] tagsToCheck)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void SetTags(PuzzleTagEnum[] tagsToSet)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void InteractionOutcomeHandler(bool outcome)
     {
         throw new System.NotImplementedException();

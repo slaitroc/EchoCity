@@ -1,4 +1,3 @@
-using EchoCity.Interactables;
 using UnityEngine;
 
 namespace EchoCity
@@ -12,19 +11,8 @@ namespace EchoCity
         protected override void OnEnable()
         {
             base.OnEnable();
-            interactableTags = new PuzzleTagEnum[] { PuzzleTagEnum.CablePicked };
+            checkTags = new PuzzleTagEnum[] { PuzzleTagEnum.CablePicked };
         }
-
-
-        public override void CheckTags(PuzzleTagEnum[] tagsToCheck)
-        {
-        }
-
-        public override void Interact()
-        {
-            
-        }
-
         public override void InteractionOutcomeHandler(bool outcome)
         {
             if (outcome)
@@ -33,10 +21,6 @@ namespace EchoCity
                 dialogDataEvent?.RaiseEvent(new DialogData(dialogContainer));
                 Destroy(gameObject);
             }
-        }
-
-        public override void SetTags(PuzzleTagEnum[] tagsToSet)
-        {
         }
     }
 }

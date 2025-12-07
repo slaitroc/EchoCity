@@ -170,16 +170,6 @@ namespace EchoCity
             Log.D("Device not working", _LOG_COLOR, _LOG_TAG_FULL);
         }
 
-        public override void CheckTags(PuzzleTagEnum[] tagsToCheck)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void SetTags(PuzzleTagEnum[] tagsToSet)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override void InteractionOutcomeHandler(bool outcome)
         {
             throw new System.NotImplementedException();

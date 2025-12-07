@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace EchoCity.Interactables
+namespace EchoCity
 {
     [RequireComponent(typeof(Collider))]
     public abstract class Pickable : Interactable

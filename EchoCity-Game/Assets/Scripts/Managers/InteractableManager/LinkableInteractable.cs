@@ -1,27 +1,29 @@
 using UnityEngine;
 
-public abstract class LinkableInteractable : Interactable
+namespace EchoCity
 {
-    protected override string _TYPE_LOG_TAG => "LINKABLE";
-    [SerializeField] protected bool hasFixDetector = false;
-    [SerializeField] protected InteractableFixDetector detector;
-    protected override void Awake()
+    public abstract class LinkableInteractable : Interactable
     {
-        base.Awake();
-        if (hasFixDetector)
+        protected override string _TYPE_LOG_TAG => "LINKABLE";
+        [SerializeField] protected bool hasFixDetector = false;
+        [SerializeField] protected InteractableFixDetector detector;
+        protected override void Awake()
         {
-            gameObject.layer = 1; // Set to Default layer
-            if (detector == null)
+            base.Awake();
+            if (hasFixDetector)
             {
-                Log.E($"LinkableInteractable on {gameObject.name} is set to have a Fix Detector but none is assigned!", _LOG_COLOR, _LOG_TAG);
+                gameObject.layer = 1; // Set to Default layer
+                if (detector == null)
+                {
+                    Log.E($"LinkableInteractable on {gameObject.name} is set to have a Fix Detector but none is assigned!", _LOG_COLOR, _LOG_TAG);
+                }
+            }
+            else
+            {
+                gameObject.layer = 6; // Set to Interactable layer
             }
         }
-        else
-        {
-            gameObject.layer = 6; // Set to Interactable layer
-        }
     }
-
 
 
 }

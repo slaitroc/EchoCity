@@ -1,9 +1,7 @@
-using EchoCity.Interactables;
 using UnityEngine;
 
 namespace EchoCity
 {
-
     public abstract class SOPickable : ScriptableObject
     {
         protected virtual PickableType _pickableType { get; }

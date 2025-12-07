@@ -1,31 +1,25 @@
 using EchoCity;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public class InteractableFixDetector : Interactable
+namespace EchoCity
 {
-    protected override string _TYPE_LOG_TAG => "";
 
-    protected override string _LOG_TAG => "FIX DETECTOR";
-    [SerializeField] private Interactable linkedInteractable;
-
-    public override void Interact()
+    [RequireComponent(typeof(Collider))]
+    public class InteractableFixDetector : Interactable
     {
-        linkedInteractable?.Interact();
-    }
+        protected override string _TYPE_LOG_TAG => "";
+        protected override string _LOG_TAG => "FIX DETECTOR";
+        [SerializeField] private Interactable linkedInteractable;
 
-    public override void CheckTags(PuzzleTagEnum[] tagsToCheck)
-    {
-        throw new System.NotImplementedException();
-    }
+        public override void Interact()
+        {
+            base.Interact();
+            linkedInteractable?.Interact();
+        }
 
-    public override void SetTags(PuzzleTagEnum[] tagsToSet)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void InteractionOutcomeHandler(bool outcome)
-    {
-        throw new System.NotImplementedException();
+        public override void InteractionOutcomeHandler(bool outcome)
+        {
+            base.InteractionOutcomeHandler(outcome);
+        }
     }
 }
