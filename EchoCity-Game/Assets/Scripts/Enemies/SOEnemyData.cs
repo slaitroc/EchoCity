@@ -53,16 +53,30 @@ public class SOEnemyData : ScriptableObject
     [Min(0f)]
     public float NoiseDecayRate = 0.05f;
 
-    [Header("Investigation")]
-    [Tooltip("SoundSource for investigation phrases when arriving at noise position and finding nothing (generic/legacy). Use RandomAudioClips array in SOSoundSource for multiple variations.")]
-    public SOSoundSource InvestigationPhrases;
+    [Header("Voice Lines - State Entry Phrases")]
+    [Tooltip("SoundSource for phrases when entering MandatoryChaseState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource MandatoryChaseState_Phrases;
     
-    [Header("Voice Lines")]
-    [Tooltip("SoundSource for suspicion phrases: 'Mi sembrava di sentire qualcosa...', 'Strano...' (used in StandAndExaminateState). Use RandomAudioClips array in SOSoundSource for multiple variations.")]
-    public SOSoundSource SuspicionPhrases;
+    [Tooltip("SoundSource for phrases when entering ChaseEnemyState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource ChaseEnemyState_Phrases;
     
-    [Tooltip("SoundSource for lost target phrases: 'So che eri qui... ti ritroverò' (used in LostTargetState). Use RandomAudioClips array in SOSoundSource for multiple variations.")]
-    public SOSoundSource LostTargetPhrases;
+    [Tooltip("SoundSource for phrases when entering ChaseDistanceState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource ChaseDistanceState_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering AttackEnemyState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource AttackEnemyState_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering CheckSoundState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource CheckSoundState_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering StandAndExaminateState: 'Mi sembrava di sentire qualcosa...', 'Strano...'. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource StandAndExaminateState_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering LostTargetState: 'So che eri qui... ti ritroverò'. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource LostTargetState_Phrases;
+    
+    [Tooltip("SoundSource for phrases when entering GettingConfusedState. Use RandomAudioClips array in SOSoundSource for multiple variations.")]
+    public SOSoundSource GettingConfusedState_Phrases;
     
     [Tooltip("Sound emitted by enemy when investigating (for echolocation system)")]
     [Header("Investigation Sound Emission")]

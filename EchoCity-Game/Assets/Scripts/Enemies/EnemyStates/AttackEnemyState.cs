@@ -17,6 +17,13 @@ public class AttackEnemyState : EnemyState
         _coolDownTimer = 0f;
         _attackEnded = false;
         _enemyAI.CurrentState = EnemyStatesEnum.Attack;
+
+        // Play state entry phrase
+        if (_enemyData.AttackEnemyState_Phrases != null)
+        {
+            _enemyAI.PlayRandomPhrase(_enemyData.AttackEnemyState_Phrases);
+        }
+
         _enemyAI.StartCoroutine(AttackRoutine());
     }
     public override void Update(float attraction)

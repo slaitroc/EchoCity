@@ -55,13 +55,11 @@ public class StandAndExaminateState : EnemyState
         // Stop agent and look around
         _agent.isStopped = true;
         _agent.ResetPath();
-
-        // Play suspicion phrase (audio clip) only if cooldown has passed
-        // This prevents audio from playing too frequently if state is re-entered
-        if (Time.time - _lastPhrasePlayTime >= PHRASE_COOLDOWN)
+        
+        // Play state entry phrase (only if cooldown has passed to prevent spam)
+        if (Time.time - _lastPhrasePlayTime >= PHRASE_COOLDOWN && _enemyData.StandAndExaminateState_Phrases != null)
         {
-            _enemyAI.PlaySuspicionPhrase();
-            _hasPlayedPhrase = true;
+            _enemyAI.PlayRandomPhrase(_enemyData.StandAndExaminateState_Phrases);
             _lastPhrasePlayTime = Time.time;
         }
 

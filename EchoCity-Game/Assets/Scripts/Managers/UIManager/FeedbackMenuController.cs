@@ -27,6 +27,7 @@ namespace EchoCity
         private int _currentRating;
 
         private TextField _feedbackTextField;
+        private Button _backButton;
         private Button _submitButton;
         private Button _thankYouContinueButton;
 
@@ -48,6 +49,7 @@ namespace EchoCity
 
             _ratingStarsContainer = _root.Q<VisualElement>("RatingStars");
             _feedbackTextField = _root.Q<TextField>("FeedbackText");
+            _backButton = _root.Q<Button>("BackButton");
             _submitButton = _root.Q<Button>("SubmitFeedbackButton");
             _thankYouContinueButton = _root.Q<Button>("ThankYouContinueButton");
 
@@ -67,11 +69,14 @@ namespace EchoCity
                     _starButtons[i].RegisterCallback<ClickEvent>(_ => SetRating(rating));
             }
 
+            if (_backButton != null)
+                _backButton.clicked += CloseFeedbackMenu;
+
             if (_submitButton != null)
                 _submitButton.clicked += SubmitFeedbackClickHandler;
 
             if (_thankYouContinueButton != null)
-                _thankYouContinueButton.clicked += ThankYouContinueClickHandler;
+                _thankYouContinueButton.clicked += CloseFeedbackMenu;
 
             if (_feedbackPanel != null)
                 _feedbackPanel.style.display = DisplayStyle.Flex;
@@ -118,10 +123,7 @@ namespace EchoCity
                 _thankYouPanel.style.display = DisplayStyle.Flex;
         }
 
-        private void ThankYouContinueClickHandler()
-        {
-            uiManager.CloseFeedbackMenu();
-        }
+        private void CloseFeedbackMenu() => uiManager.CloseFeedbackMenu();
 
         private void OnDisable()
         {
@@ -134,11 +136,11 @@ namespace EchoCity
                 }
             }
 
-            if (_submitButton != null)
-                _submitButton.clicked -= SubmitFeedbackClickHandler;
+            if (_submitButton != null) _submitButton.clicked -= SubmitFeedbackClickHandler;
 
-            if (_thankYouContinueButton != null)
-                _thankYouContinueButton.clicked -= ThankYouContinueClickHandler;
+            if (_thankYouContinueButton != null) _thankYouContinueButton.clicked -= CloseFeedbackMenu;
+
+            if (_backButton != null) _backButton.clicked -= CloseFeedbackMenu;
         }
     }
 }
