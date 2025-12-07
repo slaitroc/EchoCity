@@ -6,6 +6,7 @@
         <ui:VisualElement name="DeathScreenPanel" class="panel">
             <ui:Label name="title" text="YOU DIED" class="title" />
             <ui:Button name="RestartButton" text="Restart" class="button" />
+            <ui:Button name="FeedbackButton" text="Feedback" class="button" />
             <ui:Button name="QuitButton" text="Quit to Title" class="button" />
         </ui:VisualElement>
     </ui:VisualElement>

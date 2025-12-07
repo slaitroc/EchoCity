@@ -79,6 +79,7 @@ namespace EchoCity
             if (_thankYouPanel != null)
                 _thankYouPanel.style.display = DisplayStyle.None;
 
+            _feedbackTextField.Focus();
             SetRating(0);
         }
 
@@ -108,7 +109,7 @@ namespace EchoCity
         private void SubmitFeedbackClickHandler()
         {
             string feedbackText = _feedbackTextField != null ? _feedbackTextField.value : string.Empty;
-            feedbackSubmittedEvent?.RaiseEvent((_currentRating, feedbackText));
+            feedbackSubmittedEvent?.RaiseEvent(_currentRating, feedbackText);
 
             if (_feedbackPanel != null)
                 _feedbackPanel.style.display = DisplayStyle.None;
@@ -119,7 +120,7 @@ namespace EchoCity
 
         private void ThankYouContinueClickHandler()
         {
-            gameObject.SetActive(false);
+            uiManager.CloseFeedbackMenu();
         }
 
         private void OnDisable()

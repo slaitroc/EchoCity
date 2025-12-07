@@ -29,6 +29,7 @@ namespace EchoCity
         private Button startGameButton;
         private Button settingsButton;
         private Button quitButton;
+        private Button feedbackButton;
         private Button[] buttons;
         private bool _isNavMode = false;
         private bool _showCursor;
@@ -51,8 +52,9 @@ namespace EchoCity
             _titleMenuContainer = _root.Q<VisualElement>("TitleMenuContainer");
             startGameButton = _root.Q<Button>("StartGameButton");
             settingsButton = _root.Q<Button>("SettingsButton");
-            quitButton = _root.Q<Button>("QuitButton");
-            buttons = new Button[] { startGameButton, settingsButton, quitButton };
+            // quitButton = _root.Q<Button>("QuitButton");
+            feedbackButton = _root.Q<Button>("FeedbackButton");
+            buttons = new Button[] { startGameButton, settingsButton, feedbackButton };
 
             _redBlinkOverlay = _root.Q<VisualElement>("RedBlinkOverlay");
             _blueBlinkOverlay = _root.Q<VisualElement>("BlueBlinkOverlay");
@@ -92,6 +94,7 @@ namespace EchoCity
             if (startGameButton != null) startGameButton.clicked += StartGameClickHandler;
             if (settingsButton != null) settingsButton.clicked += SettingsClickHandler;
             if (quitButton != null) quitButton.clicked += QuitClickHandler;
+            if (feedbackButton != null) feedbackButton.clicked += FeedbackClickHandler;
         }
 
         IEnumerator RedBlinkLoop()
@@ -155,11 +158,14 @@ namespace EchoCity
 
         private void QuitClickHandler() => Log.D("Quit button clicked", _LOG_COLOR, _LOG_TAG);
 
+        private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
+
         private void OnDisable()
         {
             if (startGameButton != null) startGameButton.clicked -= StartGameClickHandler;
             if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
             if (quitButton != null) quitButton.clicked -= QuitClickHandler;
+            if (feedbackButton != null) feedbackButton.clicked -= FeedbackClickHandler;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace EchoCity
         private VisualElement _root;
         private Button resumeButton;
         private Button settingsButton;
+        private Button feedbackButton;
         private Button quitButton;
         private Button[] buttons;
         private bool _isNavMode = false;
@@ -40,8 +41,9 @@ namespace EchoCity
 
             resumeButton = _root.Q<Button>("ResumeButton");
             settingsButton = _root.Q<Button>("SettingsButton");
+            feedbackButton = _root.Q<Button>("FeedbackButton");
             quitButton = _root.Q<Button>("QuitButton");
-            buttons = new Button[] { resumeButton, settingsButton, quitButton };
+            buttons = new Button[] { resumeButton, settingsButton, feedbackButton, quitButton };
 
             yield return null;
 
@@ -77,6 +79,7 @@ namespace EchoCity
 
             if (resumeButton != null) resumeButton.clicked += ResumeClickHandler;
             if (settingsButton != null) settingsButton.clicked += SettingsClickHandler;
+            if (feedbackButton != null) feedbackButton.clicked += FeedbackClickHandler;
             if (quitButton != null) quitButton.clicked += QuitClickHandler;
         }
 
@@ -84,6 +87,7 @@ namespace EchoCity
         {
             if (resumeButton != null) resumeButton.clicked -= ResumeClickHandler;
             if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
+            if (feedbackButton != null) feedbackButton.clicked -= FeedbackClickHandler;
             if (quitButton != null) quitButton.clicked -= QuitClickHandler;
 
             _showCursor = false;
@@ -101,9 +105,8 @@ namespace EchoCity
         }
 
         private void ResumeClickHandler() => uiManager.SwitchToPlayState();
-
         private void SettingsClickHandler() => uiManager.OpenSettingsMenu();
-
+        private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
         private void QuitClickHandler() => uiManager.SwitchToTitleState();
 
     }
