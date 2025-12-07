@@ -1415,6 +1415,7 @@ MonoBehaviour:
   dialogController: {fileID: 3187827745622323359}
   deathScreenController: {fileID: 6362809712715767137}
   loadingScreenController: {fileID: 2218375178880545974}
+  feedbackMenuController: {fileID: 7634318382425059713}
   switchToTitleStateEvent: {fileID: 11400000, guid: f44d028295cfcdd43b734edcd9fea362, type: 2}
   switchToPlayStateEvent: {fileID: 11400000, guid: 604eac6c025fec54498946183528062b, type: 2}
   switchToInitLevelEvent: {fileID: 11400000, guid: aa9ebbb1f63295843af7c950c50a2a7a, type: 2}
@@ -1502,7 +1503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &5241972989766720214
 AudioListener:
   m_ObjectHideFlags: 0
