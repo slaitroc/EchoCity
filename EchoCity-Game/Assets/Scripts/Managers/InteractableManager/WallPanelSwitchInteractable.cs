@@ -68,6 +68,11 @@ namespace EchoCity
         {
             isSwitchedOn = !isSwitchedOn;
         }
+
+        public override void InteractionOutcomeHandler(bool outcome)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
 
