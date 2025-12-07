@@ -25,9 +25,10 @@
                             placeholder-text="Tell us more about your experience..." />
             </ui:VisualElement>
 
-            <ui:Button name="SubmitFeedbackButton"
-                    class="feedback-submit-button"
-                    text="Submit" />
+            <ui:VisualElement name="ButtonSection" class="button-section" >
+                <ui:Button name="BackButton" class="button" text="Back" />
+                <ui:Button name="SubmitFeedbackButton"  class="button" text="Submit" />
+            </ui:VisualElement>
 
         </ui:VisualElement>
 
