@@ -58,6 +58,7 @@ namespace EchoCity
                 if (soundSource?.AudioClip != null)
                 {
                     // Fallback to main audio clip if random clips are not available
+                    newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(audioSource.transform.position, soundSource));
                     PlayInAudioSource(soundSource.AudioClip, soundSource.Volume, mixerGroup, audioSource);
                     return;
                 }
