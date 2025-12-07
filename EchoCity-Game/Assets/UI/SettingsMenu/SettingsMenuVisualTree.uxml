@@ -9,19 +9,19 @@
             <ui:VisualElement class="settings-slider-row">
                 <ui:Label text="Master" class="settings-slider-label" />
                 <ui:VisualElement class="settings-slider-container">
-                    <ui:Slider name="MasterSlider" lowValue="0" highValue="1" value="5" class="settings-slider" />
+                    <ui:Slider name="MasterSlider" lowValue="0" highValue="10" class="settings-slider" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="settings-slider-row">
                 <ui:Label text="Music" class="settings-slider-label" />
                 <ui:VisualElement class="settings-slider-container">
-                    <ui:Slider name="MusicSlider" lowValue="0" highValue="1" class="settings-slider" />
+                    <ui:Slider name="MusicSlider" lowValue="0" highValue="10" class="settings-slider" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="settings-slider-row">
                 <ui:Label text="SFX" class="settings-slider-label" />
                 <ui:VisualElement class="settings-slider-container">
-                    <ui:Slider name="SfxSlider" lowValue="0" highValue="1" class="settings-slider" />
+                    <ui:Slider name="SfxSlider" lowValue="0" highValue="10" class="settings-slider" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:Button name="BackButton" text="Back" class="button-back" />
