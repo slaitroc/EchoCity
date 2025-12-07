@@ -28,18 +28,22 @@ namespace EchoCity
         [Header("Dialogs")]
         [SerializeField] private DialogController dialogController;
 
-        [Header("Death Screen")]
-        [SerializeField] private DeathScreenController deathScreenController;
+        [Header("Death Menu")]
+        [SerializeField] private DeathMenuController deathMenuController;
 
         [Header("Loading Screen")]
         [SerializeField] private LoadingScreenController loadingScreenController;
         [SerializeField] private FeedbackMenuController feedbackMenuController;
+
+        [Header("Win Menu")]
+        [SerializeField] private WinMenuController winMenuController;
 
         [Header("Events")]
         [Header("Invoking Events for GM")]
         [SerializeField] private SOEventVoid switchToTitleStateEvent;
         [SerializeField] private SOEventVoid switchToPlayStateEvent;
         [SerializeField] private SOSceneEnumEvent switchToInitLevelEvent;
+
 
         [Header("Observed Events From GM")]
         [SerializeField] private SOEventVoid titleMenuEvent;
@@ -49,6 +53,7 @@ namespace EchoCity
         [SerializeField] private SOEventVoid deathMenuEvent;
         [SerializeField] private SOEventVoid enterLoadingScreenEvent;
         [SerializeField] private SOEventVoid exitLoadingScreenEvent;
+        [SerializeField] private SOEventVoid winMenuEvent;
 
         [Header("Observed Events From Others")]
         [SerializeField] private SOEventVoid canInteractStartEvent;
@@ -66,9 +71,10 @@ namespace EchoCity
         private GameObject _pauseMenu;
         private GameObject _settingsMenu;
         private GameObject _dialog;
-        private GameObject _deathScreen;
+        private GameObject _deathMenu;
         private GameObject _loadingScreen;
         private GameObject _feedbackMenu;
+        private GameObject _winMenu;
         #endregion
 
 
@@ -80,9 +86,10 @@ namespace EchoCity
             _pauseMenu = pauseMenuController.gameObject;
             _settingsMenu = settingsMenuController.gameObject;
             _dialog = dialogController.gameObject;
-            _deathScreen = deathScreenController.gameObject;
+            _deathMenu = deathMenuController.gameObject;
             _loadingScreen = loadingScreenController.gameObject;
             _feedbackMenu = feedbackMenuController.gameObject;
+            _winMenu = winMenuController.gameObject;
 
             if (_playerInventory == null)
             {
@@ -99,6 +106,7 @@ namespace EchoCity
             if (deathMenuEvent) deathMenuEvent.OnEventRaised += OpenDeathMenuHandler;
             if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised += OpenLoadingScreenHandler;
             if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised += CloseLoadingScreenHandler;
+            if (winMenuEvent) winMenuEvent.OnEventRaised += OpenWinMenuHandler;
 
             if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableHandler;
             if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableHandler;
@@ -113,7 +121,8 @@ namespace EchoCity
             _titleMenu.SetActive(false);
             _pauseMenu.SetActive(false);
             _dialog.SetActive(false);
-            _deathScreen.SetActive(false);
+            _deathMenu.SetActive(false);
+            _winMenu.SetActive(false);
 
             _hud.SetActive(true);
             switchToPlayStateEvent?.RaiseEvent();
@@ -124,7 +133,8 @@ namespace EchoCity
             _hud.SetActive(false);
             _pauseMenu.SetActive(false);
             _dialog.SetActive(false);
-            _deathScreen.SetActive(false);
+            _deathMenu.SetActive(false);
+            _winMenu.SetActive(false);
 
             _titleMenu.SetActive(true);
             switchToTitleStateEvent?.RaiseEvent();
@@ -135,11 +145,13 @@ namespace EchoCity
             _titleMenu.SetActive(false);
             _pauseMenu.SetActive(false);
             _dialog.SetActive(false);
-            _deathScreen.SetActive(false);
+            _deathMenu.SetActive(false);
+            _winMenu.SetActive(false);
 
             _hud.SetActive(true);
             switchToInitLevelEvent?.RaiseEvent(scene);
         }
+
 
         public void OpenSettingsMenu() => _settingsMenu.SetActive(true);
         public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
@@ -154,7 +166,8 @@ namespace EchoCity
             _hud.SetActive(false);
             _pauseMenu.SetActive(false);
             _dialog.SetActive(false);
-            _deathScreen.SetActive(false);
+            _deathMenu.SetActive(false);
+            _winMenu.SetActive(false);
 
             _titleMenu.SetActive(true);
         }
@@ -169,7 +182,8 @@ namespace EchoCity
             _hud.SetActive(false);
             _titleMenu.SetActive(false);
             _dialog.SetActive(false);
-            _deathScreen.SetActive(false);
+            _deathMenu.SetActive(false);
+            _winMenu.SetActive(false);
 
             _pauseMenu.SetActive(true);
         }
@@ -179,7 +193,8 @@ namespace EchoCity
             _hud.SetActive(false);
             _pauseMenu.SetActive(false);
             _titleMenu.SetActive(false);
-            _deathScreen.SetActive(false);
+            _deathMenu.SetActive(false);
+            _winMenu.SetActive(false);
 
             _dialog.SetActive(true);
             dialogController.SpawnDialogHandler(dialogData);
@@ -191,8 +206,20 @@ namespace EchoCity
             _pauseMenu.SetActive(false);
             _dialog.SetActive(false);
             _titleMenu.SetActive(false);
+            _winMenu.SetActive(false);
 
-            _deathScreen.SetActive(true);
+            _deathMenu.SetActive(true);
+        }
+
+        private void OpenWinMenuHandler()
+        {
+            _hud.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _dialog.SetActive(false);
+            _titleMenu.SetActive(false);
+            _deathMenu.SetActive(false);
+
+            _winMenu.SetActive(true);
         }
 
         private void OpenLoadingScreenHandler() => _loadingScreen.SetActive(true);

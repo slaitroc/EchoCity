@@ -5,28 +5,21 @@ using UnityEngine.UIElements;
 namespace EchoCity
 {
     [RequireComponent(typeof(UIDocument))]
-    public class DeathScreenController : MonoBehaviour
+    public class WinMenuController : MonoBehaviour
     {
-        private const string _LOG_TAG = "UI-DeathScreen";
-        private const string _LOG_COLOR = "#ff0000ff";
+        private const string _LOG_TAG = "UI-WinMenu";
+        private const string _LOG_COLOR = "#16d442ff";
 
         [Header("UI")]
         [SerializeField] private UIManager uiManager;
-        [SerializeField] private UIDocument deathScreenDocument;
+        [SerializeField] private UIDocument winMenuDocument;
 
-        [Header("Invoking events")]
-        [SerializeField] private SOEventVoid deathEvent;
-        [SerializeField] private SOEventVoid restartGameEvent;
-        [SerializeField] private SOEventVoid quitToTitleEvent;
-
-        [Header("Delays")]
-        [SerializeField] private float restartGameDelay = 1f;
 
 
         #region Private Fields
         private VisualElement _root;
-        private VisualElement _deathScreenPanel;
-        private VisualElement _deathBgAnimated;
+        private VisualElement _winMenuPanel;
+        private VisualElement _winBgAnimated;
         private Button _restartButton;
         private Button _feedbackButton;
         private Button _quitButton;
@@ -37,8 +30,8 @@ namespace EchoCity
 
         private void OnEnable()
         {
-            if (deathScreenDocument == null) return;
-            _root = deathScreenDocument.rootVisualElement;
+            if (winMenuDocument == null) return;
+            _root = winMenuDocument.rootVisualElement;
             StartCoroutine(InitCallbacksNextFrame());
 
             _showCursor = true;
@@ -46,9 +39,9 @@ namespace EchoCity
 
         IEnumerator InitCallbacksNextFrame()
         {
-            _deathScreenPanel = _root.Q<VisualElement>("DeathScreenPanel");
-            _deathBgAnimated = _root.Q<VisualElement>("DeathBgAnimated");
-            _deathBgAnimated.style.translate = new Translate(0, new Length(-100, LengthUnit.Percent));
+            _winMenuPanel = _root.Q<VisualElement>("WinMenuPanel");
+            // _winBgAnimated = _root.Q<VisualElement>("WinBgAnimated");
+            // _winBgAnimated.style.translate = new Translate(0, new Length(-100, LengthUnit.Percent));
 
             _restartButton = _root.Q<Button>("RestartButton");
             _feedbackButton = _root.Q<Button>("FeedbackButton");
@@ -57,7 +50,7 @@ namespace EchoCity
 
             yield return null;
 
-            _deathBgAnimated.style.translate = new Translate(0, 0);
+            // _winBgAnimated.style.translate = new Translate(0, 0);
 
             _root.RegisterCallback<MouseMoveEvent>(evt =>
             {
@@ -93,7 +86,7 @@ namespace EchoCity
             if (_feedbackButton != null) _feedbackButton.clicked += FeedbackClickHandler;
             if (_quitButton != null) _quitButton.clicked += QuitClickHandler;
 
-            _deathScreenPanel.AddToClassList("show");
+            _winMenuPanel.AddToClassList("show");
         }
 
         private void Update()
@@ -114,7 +107,6 @@ namespace EchoCity
         }
 
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
-
         private void QuitClickHandler() => uiManager.SwitchToTitleState();
 
         private void OnDisable()
@@ -123,7 +115,8 @@ namespace EchoCity
             if (_feedbackButton != null) _feedbackButton.clicked -= FeedbackClickHandler;
             if (_quitButton != null) _quitButton.clicked -= QuitClickHandler;
 
-            _deathScreenPanel.RemoveFromClassList("show");
+            _winMenuPanel.RemoveFromClassList("show");
         }
     }
+
 }
