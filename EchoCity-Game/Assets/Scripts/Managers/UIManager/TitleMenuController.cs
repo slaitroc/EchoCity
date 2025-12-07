@@ -14,9 +14,6 @@ namespace EchoCity
         [SerializeField] private UIManager uiManager;
         [SerializeField] private UIDocument titleMenuDocument;
 
-        [Header("Invoking events")]
-        [SerializeField] private SOEventVoid startGameEvent;
-        [SerializeField] private SOEventVoid openSettingsMenuEvent;
 
 #pragma warning disable CS0414
         [Header("Delays")]
@@ -95,8 +92,6 @@ namespace EchoCity
             if (startGameButton != null) startGameButton.clicked += StartGameClickHandler;
             if (settingsButton != null) settingsButton.clicked += SettingsClickHandler;
             if (quitButton != null) quitButton.clicked += QuitClickHandler;
-
-            uiManager.EnableUIActionMap();
         }
 
         IEnumerator RedBlinkLoop()
@@ -150,13 +145,12 @@ namespace EchoCity
             _titleMenuContainer.AddToClassList("hide");
             _showCursor = false;
 
-            startGameEvent?.RaiseEvent();
+            uiManager.SwitchToInitLevel(SceneEnum.Level1);
         }
 
         private void SettingsClickHandler()
         {
-            uiManager.OpenSettingsMenuHandler();
-            openSettingsMenuEvent?.RaiseEvent();
+            uiManager.OpenSettingsMenu();
         }
 
         private void QuitClickHandler() => Log.D("Quit button clicked", _LOG_COLOR, _LOG_TAG);
@@ -166,9 +160,6 @@ namespace EchoCity
             if (startGameButton != null) startGameButton.clicked -= StartGameClickHandler;
             if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
             if (quitButton != null) quitButton.clicked -= QuitClickHandler;
-
-            uiManager.DisableUIActionMap();
-            uiManager.EnablePlayerActionMap();
         }
     }
 }

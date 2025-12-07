@@ -44,13 +44,15 @@ namespace EchoCity
         [SerializeField] private SOPickableDataGameObjectEvent pickedPickableEvent;
 
         [Header("UI")]
-        [SerializeField] private SOEventVoid quitToTitleEvent;
-        [SerializeField] private SOEventVoid settingsEvent;
-        [SerializeField] private SOEventVoid openRadialMenuEvent;
-        [SerializeField] private SOEventVoid closeRadialMenuEvent;
-        [SerializeField] private SOEventVoid rebuildRadialMenuEvent;
-        [SerializeField] private SODialogDataEvent dialogDataEvent;
-        [SerializeField] private SOEventVoid startGameEvent;
+
+        [Header("Observed Events From GM")]
+        [SerializeField] private SOEventVoid titleMenuEvent;
+        [SerializeField] private SOHudEnumEvent hudMenuEvent;
+        [SerializeField] private SOEventVoid pauseMenuEvent;
+        [SerializeField] private SODialogDataEvent dialogMenuEvent;
+        [SerializeField] private SOEventVoid deathMenuEvent;
+        [SerializeField] private SOEventVoid enterLoadingScreenEvent;
+        [SerializeField] private SOEventVoid exitLoadingScreenEvent;
         #endregion
 
         void OnEnable()
@@ -70,13 +72,13 @@ namespace EchoCity
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised += OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised += OnPickedPickableEvent;
             if (pauseGameEvent != null) pauseGameEvent.OnEventRaised += OnPauseEvent;
-            if (quitToTitleEvent != null) quitToTitleEvent.OnEventRaised += OnQuitToTitleEvent;
-            if (settingsEvent != null) settingsEvent.OnEventRaised += OnSettingsEvent;
-            if (openRadialMenuEvent != null) openRadialMenuEvent.OnEventRaised += OnOpenRadialMenuEvent;
-            if (closeRadialMenuEvent != null) closeRadialMenuEvent.OnEventRaised += OnCloseRadialMenuEvent;
-            if (rebuildRadialMenuEvent != null) rebuildRadialMenuEvent.OnEventRaised += OnRebuildRadialMenuEvent;
-            if (dialogDataEvent != null) dialogDataEvent.OnEventRaised += OnDialogDataEvent;
-            if (startGameEvent != null) startGameEvent.OnEventRaised += OnStartGameEvent;
+            if (titleMenuEvent != null) titleMenuEvent.OnEventRaised += OnTitleMenuEvent;
+            if (hudMenuEvent != null) hudMenuEvent.OnEventRaised += OnHudMenuEvent;
+            if (pauseMenuEvent != null) pauseMenuEvent.OnEventRaised += OnPauseMenuEvent;
+            if (dialogMenuEvent != null) dialogMenuEvent.OnEventRaised += OnDialogMenuEvent;
+            if (deathMenuEvent != null) deathMenuEvent.OnEventRaised += OnDeathMenuEvent;
+            if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised += OnEnterLoadingScreenEvent;
+            if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised += OnExitLoadingScreenEvent;
         }
 
 
@@ -97,13 +99,13 @@ namespace EchoCity
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised -= OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised -= OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised -= OnPickedPickableEvent;
-            if (quitToTitleEvent != null) quitToTitleEvent.OnEventRaised -= OnQuitToTitleEvent;
-            if (settingsEvent != null) settingsEvent.OnEventRaised -= OnSettingsEvent;
-            if (openRadialMenuEvent != null) openRadialMenuEvent.OnEventRaised -= OnOpenRadialMenuEvent;
-            if (closeRadialMenuEvent != null) closeRadialMenuEvent.OnEventRaised -= OnCloseRadialMenuEvent;
-            if (rebuildRadialMenuEvent != null) rebuildRadialMenuEvent.OnEventRaised -= OnRebuildRadialMenuEvent;
-            if (dialogDataEvent != null) dialogDataEvent.OnEventRaised -= OnDialogDataEvent;
-            if (startGameEvent != null) startGameEvent.OnEventRaised -= OnStartGameEvent;
+            if (titleMenuEvent != null) titleMenuEvent.OnEventRaised -= OnTitleMenuEvent;
+            if (hudMenuEvent != null) hudMenuEvent.OnEventRaised -= OnHudMenuEvent;
+            if (pauseMenuEvent != null) pauseMenuEvent.OnEventRaised -= OnPauseMenuEvent;
+            if (dialogMenuEvent != null) dialogMenuEvent.OnEventRaised -= OnDialogMenuEvent;
+            if (deathMenuEvent != null) deathMenuEvent.OnEventRaised -= OnDeathMenuEvent;
+            if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised -= OnEnterLoadingScreenEvent;
+            if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised -= OnExitLoadingScreenEvent;
         }
 
         #region Game Manager Events
@@ -139,13 +141,14 @@ namespace EchoCity
         #endregion
 
         #region UI
-        private void OnQuitToTitleEvent() => Log.D("Quit To Title Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnSettingsEvent() => Log.D("Settings Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnOpenRadialMenuEvent() => Log.D("Open Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnCloseRadialMenuEvent() => Log.D("Close Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnRebuildRadialMenuEvent() => Log.D("Rebuild Radial Menu Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnDialogDataEvent(DialogData dialogData) => Log.D($"Dialog Data Event Raised with: {dialogData.DialogLines.Length} lines", _LOG_COLOR, _LOG_TAG);
-        private void OnStartGameEvent() => Log.D("Start Game Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnTitleMenuEvent() => Log.D("Title Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnHudMenuEvent(HudEnum hud) => Log.D($"HUD Menu Event Raised for HUD: {hud}", _LOG_COLOR, _LOG_TAG);
+        private void OnPauseMenuEvent() => Log.D("Pause Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnDialogMenuEvent(DialogData dialogData) => Log.D($"Dialog Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnDeathMenuEvent() => Log.D("Death Menu Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnEnterLoadingScreenEvent() => Log.D("Enter Loading Screen Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnExitLoadingScreenEvent() => Log.D("Exit Loading Screen Event Raised", _LOG_COLOR, _LOG_TAG);
+
         #endregion
     }
 }
