@@ -14,11 +14,6 @@ namespace EchoCity
         [SerializeField] private UIManager uiManager;
         [SerializeField] private UIDocument uiDocument;
 
-        [Header("Invoking events")]
-        [SerializeField] private SOEventVoid pauseGameEvent;
-        [SerializeField] private SOEventVoid pauseMenuEvent;
-        [SerializeField] private SOEventVoid openSettingsMenuEvent;
-        [SerializeField] private SOEventVoid quitToTitleEvent;
 
         #region Private Fields
         private VisualElement _root;
@@ -37,7 +32,6 @@ namespace EchoCity
 
             StartCoroutine(InitCallbacksNextFrame());
 
-            uiManager.EnableUIActionMap();
             _showCursor = true;
         }
 
@@ -92,8 +86,6 @@ namespace EchoCity
             if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
             if (quitButton != null) quitButton.clicked -= QuitClickHandler;
 
-            uiManager.DisableUIActionMap();
-            uiManager.EnablePlayerActionMap();
             _showCursor = false;
         }
 
@@ -108,19 +100,11 @@ namespace EchoCity
                 button?.Blur();
         }
 
-        private void ResumeClickHandler()
-        {
-            pauseMenuEvent?.RaiseEvent();
-            pauseGameEvent?.RaiseEvent();
-        }
+        private void ResumeClickHandler() => uiManager.SwitchToPlayState();
 
-        private void SettingsClickHandler()
-        {
-            uiManager.OpenSettingsMenuHandler();
-            openSettingsMenuEvent?.RaiseEvent();
-        }
+        private void SettingsClickHandler() => uiManager.OpenSettingsMenu();
 
-        private void QuitClickHandler() => quitToTitleEvent?.RaiseEvent();
+        private void QuitClickHandler() => uiManager.SwitchToTitleState();
 
     }
 }

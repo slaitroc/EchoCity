@@ -1,138 +1,211 @@
 using UnityEngine;
-using EchoCity;
-using Unity.VisualScripting;
 
-public class UIManager : MonoBehaviour
+namespace EchoCity
 {
+    public class UIManager : MonoBehaviour
+    {
 #pragma warning disable CS0414
-    private const string _LOG_COLOR = "cyan";
-    private const string _LOG_TAG_FULL = "UI MANAGER";
+        private const string _LOG_COLOR = "cyan";
+        private const string _LOG_TAG_FULL = "UI MANAGER";
 #pragma warning restore CS0414
-    [Header("Input")]
-    [SerializeField] private UIInput uiInput;
+        [Header("UI Controllers")]
 
-    [Header ("Title Menu")]
-    [SerializeField] private TitleMenuController titleMenuController;
+        [Header("Title Menu")]
+        [SerializeField] private TitleMenuController titleMenuController;
 
-    [Header("HUD")]
-    [SerializeField] private CrosshairController crosshairController;
-    [SerializeField] private RadialMenuController radialMenuController;
-    [SerializeField] private WarningController warningController;
+        [Header("HUD")]
+        [SerializeField] private CrosshairController crosshairController;
+        [SerializeField] private RadialMenuController radialMenuController;
+        [SerializeField] private WarningController warningController;
+        // [SerializeField] private EquippedPanelController equippedPanelController;
 
-    [Header("Pause Menu")]
-    [SerializeField] private PauseMenuController pauseMenuController;
+        [Header("Pause Menu")]
+        [SerializeField] private PauseMenuController pauseMenuController;
 
-    [Header("Settings Menu")]
-    [SerializeField] private SettingsMenuController settingsMenuController;
+        [Header("Settings Menu")]
+        [SerializeField] private SettingsMenuController settingsMenuController;
 
-    [Header("Dialogs")]
-    [SerializeField] private DialogController dialogController;
+        [Header("Dialogs")]
+        [SerializeField] private DialogController dialogController;
 
-    [Header("Death Screen")]
-    [SerializeField] private DeathScreenController deathScreenController;
+        [Header("Death Screen")]
+        [SerializeField] private DeathScreenController deathScreenController;
+
+        [Header("Loading Screen")]
+        [SerializeField] private LoadingScreenController loadingScreenController;
+
+        [Header("Events")]
+        [Header("Invoking Events for GM")]
+        [SerializeField] private SOEventVoid switchToTitleStateEvent;
+        [SerializeField] private SOEventVoid switchToPlayStateEvent;
+        [SerializeField] private SOSceneEnumEvent switchToInitLevelEvent;
+
+        [Header("Observed Events From GM")]
+        [SerializeField] private SOEventVoid titleMenuEvent;
+        [SerializeField] private SOHudEnumEvent hudMenuEvent;
+        [SerializeField] private SOEventVoid pauseMenuEvent;
+        [SerializeField] private SODialogDataEvent dialogMenuEvent;
+        [SerializeField] private SOEventVoid deathMenuEvent;
+        [SerializeField] private SOEventVoid enterLoadingScreenEvent;
+        [SerializeField] private SOEventVoid exitLoadingScreenEvent;
+
+        [Header("Observed Events From Others")]
+        [SerializeField] private SOEventVoid canInteractStartEvent;
+        [SerializeField] private SOEventVoid canInteractStopEvent;
+        [SerializeField] private SOStringColorEvent spawnWarningEvent;
+        [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
+
+        [Header("External References")]
+        [SerializeField] private PlayerInventory _playerInventory;
+
+        #region Private Fields
+        private GameObject _titleMenu;
+        private GameObject _hud;
+        private GameObject _pauseMenu;
+        private GameObject _settingsMenu;
+        private GameObject _dialog;
+        private GameObject _deathScreen;
+        private GameObject _loadingScreen;
+        #endregion
 
 
-    [Header("Invoking Events")]
-    [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
-    // [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
 
-    private GameObject _titleMenu;
-    private GameObject _hud;
-    private GameObject _pauseMenu;
-    private GameObject _settingsMenu;
-    private GameObject _dialog;
-    private GameObject _deathScreen;
-
-    [SerializeField] private PlayerInventory _playerInventory;
-
-    void Awake()
-    {
-        _titleMenu = titleMenuController.gameObject;
-        _hud = crosshairController.gameObject;
-        _pauseMenu = pauseMenuController.gameObject;
-        _settingsMenu = settingsMenuController.gameObject;
-        _dialog = dialogController.gameObject;
-        _deathScreen = deathScreenController.gameObject;
-
-        if (_playerInventory == null)
+        void Awake()
         {
-            Log.E("PlayerInventory reference is missing in UIManager!", _LOG_COLOR, _LOG_TAG_FULL);
+            _titleMenu = titleMenuController.gameObject;
+            _hud = crosshairController.gameObject;
+            _pauseMenu = pauseMenuController.gameObject;
+            _settingsMenu = settingsMenuController.gameObject;
+            _dialog = dialogController.gameObject;
+            _deathScreen = deathScreenController.gameObject;
+            _loadingScreen = loadingScreenController.gameObject;
+
+            if (_playerInventory == null)
+            {
+                Log.E("PlayerInventory reference is missing in UIManager!", _LOG_COLOR, _LOG_TAG_FULL);
+            }
         }
+
+        private void OnEnable()
+        {
+            if (titleMenuEvent) titleMenuEvent.OnEventRaised += OpenTitleMenuHandler;
+            if (hudMenuEvent) hudMenuEvent.OnEventRaised += OpenHUDMenuHandler;
+            if (pauseMenuEvent) pauseMenuEvent.OnEventRaised += OpenPauseMenuHandler;
+            if (dialogMenuEvent) dialogMenuEvent.OnEventRaised += OpenDialogMenuHandler;
+            if (deathMenuEvent) deathMenuEvent.OnEventRaised += OpenDeathMenuHandler;
+            if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised += OpenLoadingScreenHandler;
+            if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised += CloseLoadingScreenHandler;
+
+            if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableHandler;
+            if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableHandler;
+            if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
+            // if (itemEquippedEvent) itemEquippedEvent.OnEventRaised += ItemEquippedHandler;
+        }
+
+        #region Public Methods - State Switching
+        public void SwitchToPlayState()
+        {
+            _titleMenu.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _dialog.SetActive(false);
+            _deathScreen.SetActive(false);
+
+            _hud.SetActive(true);
+            switchToPlayStateEvent?.RaiseEvent();
+        }
+
+        public void SwitchToTitleState()
+        {
+            _hud.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _dialog.SetActive(false);
+            _deathScreen.SetActive(false);
+
+            _titleMenu.SetActive(true);
+            switchToTitleStateEvent?.RaiseEvent();
+        }
+
+        public void SwitchToInitLevel(SceneEnum scene)
+        {
+            _titleMenu.SetActive(false);
+            _hud.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _dialog.SetActive(false);
+            _deathScreen.SetActive(false);
+
+            switchToInitLevelEvent?.RaiseEvent(scene);
+        }
+
+        public void OpenSettingsMenu() => _settingsMenu.SetActive(true);
+        public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
+        #endregion
+
+
+        #region Private Event Handlers
+        private void OpenTitleMenuHandler()
+        {
+            _hud.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _dialog.SetActive(false);
+            _deathScreen.SetActive(false);
+
+            _titleMenu.SetActive(true);
+        }
+
+        private void OpenHUDMenuHandler(HudEnum hud)
+        {
+            radialMenuController.enabled = !radialMenuController.enabled;
+        }
+
+        private void OpenPauseMenuHandler()
+        {
+            _hud.SetActive(false);
+            _titleMenu.SetActive(false);
+            _dialog.SetActive(false);
+            _deathScreen.SetActive(false);
+
+            _pauseMenu.SetActive(true);
+        }
+
+        private void OpenDialogMenuHandler(DialogData dialogData)
+        {
+            _hud.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _titleMenu.SetActive(false);
+            _deathScreen.SetActive(false);
+
+            _dialog.SetActive(true);
+            dialogController.SpawnDialogHandler(dialogData);
+        }
+
+        private void OpenDeathMenuHandler()
+        {
+            _hud.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _dialog.SetActive(false);
+            _titleMenu.SetActive(false);
+
+            _deathScreen.SetActive(true);
+        }
+
+        private void OpenLoadingScreenHandler() => _loadingScreen.SetActive(true);
+        private void CloseLoadingScreenHandler() => _loadingScreen.SetActive(false);
+
+        private void CrosshairInteractableHandler() => crosshairController.IsInteractable(!crosshairController.isInteractable);
+        private void SpawnWarningHandler(string warningText, Color color) => warningController.SpawnWarning(warningText, color);
+
+        // private void ItemEquippedHandler(int index, PickableData pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
+
+        #endregion
+        private void OnDisable()
+        {
+            if (titleMenuEvent) titleMenuEvent.OnEventRaised -= OpenTitleMenuHandler;
+            if (hudMenuEvent) hudMenuEvent.OnEventRaised -= OpenHUDMenuHandler;
+            if (pauseMenuEvent) pauseMenuEvent.OnEventRaised -= OpenPauseMenuHandler;
+            if (dialogMenuEvent) dialogMenuEvent.OnEventRaised -= OpenDialogMenuHandler;
+            if (deathMenuEvent) deathMenuEvent.OnEventRaised -= OpenDeathMenuHandler;
+        }
+
     }
 
-    public void PauseMenuHandler() => _pauseMenu.SetActive(!_pauseMenu.activeSelf);
-    public void OpenSettingsMenuHandler() => _settingsMenu.SetActive(true);
-    public void CloseSettingsMenuHandler() => _settingsMenu.SetActive(false);
-    public void HUDInteractableHandler() => crosshairController.IsInteractable(!crosshairController.isInteractable);
-    public void OpenRadialMenuHandler() => radialMenuController.enabled = true;
-    public void CloseRadialMenuHandler() => radialMenuController.enabled = false;
-
-    public void RemoveInventoryItemHandler(InventoryItem item)
-    {
-        Log.D("Remove Inventory Item Handler", "green", "UI MANAGER");
-    }
-
-    public void RebuildRadialMenuHandler()
-    {
-        radialMenuController.RebuildFromInventory();
-    }
-
-    public void SpawnWarningHandler(string warningText, Color color)
-    {
-        warningController.SpawnWarning(warningText, color);
-    }
-    
-    public void SpawnDialogHandler(DialogData dialogData)
-    {
-        dialogController.gameObject.SetActive(true);
-        dialogController.SpawnDialogHandler(dialogData);
-    }
-
-    // In the following handlers we enable/disable the relevant UI elements
-    // The element to be enabled must be enabled after disabling others to ensure proper activation of the UI Action Map
-    public void StartGameHandler()
-    {
-        _titleMenu.SetActive(false);
-        _pauseMenu.SetActive(false);
-        _dialog.SetActive(false);
-        _deathScreen.SetActive(false);
-        
-        _hud.SetActive(true);
-    }
-
-    public void QuitToTitleHandler()
-    {
-        _hud.SetActive(false);
-        _pauseMenu.SetActive(false);
-        _dialog.SetActive(false);
-        _deathScreen.SetActive(false);
-
-        _titleMenu.SetActive(true);
-    }
-
-    public void RestartGameHandler()
-    {
-        _titleMenu.SetActive(false);
-        _pauseMenu.SetActive(false);
-        _dialog.SetActive(false);
-        _deathScreen.SetActive(false);
-        
-        _hud.SetActive(true);
-    }
-
-    public void DeathScreenHandler()
-    {
-        _hud.SetActive(false);
-        _pauseMenu.SetActive(false);
-        _dialog.SetActive(false);
-        _titleMenu.SetActive(false);
-
-        _deathScreen.SetActive(true);
-    }
-
-
-
-    public void EnablePlayerActionMap() => enablePlayerActionMapEvent?.RaiseEvent();
-    public void EnableUIActionMap() => uiInput.EnableUIActionMap();
-    public void DisableUIActionMap() => uiInput.DisableUIActionMap();
 }

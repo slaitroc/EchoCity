@@ -13,13 +13,12 @@ namespace EchoCity
         [SerializeField] private InputActionAsset inputActionAsset;
 
         [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid pauseGameEvent;
-        [SerializeField] private SOEventVoid pauseMenuEvent;
-        [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
+        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
 
 
         [Header("Observing Events")]
         [SerializeField] private SOEventVoid enableUIActionMapEvent;
+        [SerializeField] private SOEventVoid disableUIActionMapEvent;
 
         private InputActionMap _uiActionMap;
 
@@ -46,12 +45,19 @@ namespace EchoCity
         private void OnExitPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            pauseMenuEvent?.RaiseEvent();
-            pauseGameEvent?.RaiseEvent();
-
+            switchToPlayingStateEvent?.RaiseEvent();
         }
 
-        public void EnableUIActionMap() => _uiActionMap.Enable();
-        public void DisableUIActionMap() => _uiActionMap.Disable();
+        private void OnEnable()
+        {
+            enableUIActionMapEvent.OnEventRaised -= EnableUIActionMap;
+            enableUIActionMapEvent.OnEventRaised += EnableUIActionMap;
+
+            disableUIActionMapEvent.OnEventRaised -= DisableUIActionMap;
+            disableUIActionMapEvent.OnEventRaised += DisableUIActionMap;
+        }
+
+        private void EnableUIActionMap() => _uiActionMap.Enable();
+        private void DisableUIActionMap() => _uiActionMap.Disable();
     }
 }

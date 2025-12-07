@@ -55,8 +55,7 @@ namespace EchoCity
 
         private void BackClickHandler()
         {
-            uiManager.CloseSettingsMenuHandler();
-            closeSettingsMenuEvent?.RaiseEvent();
+            uiManager.CloseSettingsMenu();
         }
 
         private void OnDisable()

@@ -50,7 +50,7 @@ namespace EchoCity
         private GameStatesFSM _fsm;
 
 
-        void Awake()
+        void Start()
         {
             _fsm = new GameStatesFSM(this);
             _fsm.Initialize();

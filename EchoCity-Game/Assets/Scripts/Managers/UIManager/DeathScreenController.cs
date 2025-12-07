@@ -41,7 +41,6 @@ namespace EchoCity
             StartCoroutine(InitCallbacksNextFrame());
 
             _showCursor = true;
-            uiManager.EnableUIActionMap();
         }
 
         IEnumerator InitCallbacksNextFrame()
@@ -105,21 +104,13 @@ namespace EchoCity
                 button?.Blur();
         }
 
-        private void RestartGameClickHandler() => StartCoroutine(StartGameDelay(restartGameDelay));
+        private void RestartGameClickHandler()
+        {
+            _showCursor = false;
+            uiManager.SwitchToInitLevel(SceneEnum.Level1);
+        }
 
         private void QuitClickHandler() => quitToTitleEvent?.RaiseEvent();
-
-        IEnumerator StartGameDelay(float delay)
-        {
-            uiManager.EnablePlayerActionMap();
-            _showCursor = false;
-
-            deathEvent?.RaiseEvent();
-            restartGameEvent?.RaiseEvent();
-
-            yield return new WaitForSeconds(delay);
-            gameObject.SetActive(false);
-        }
 
         private void OnDisable()
         {
@@ -127,9 +118,6 @@ namespace EchoCity
             if (_quitButton != null) _quitButton.clicked -= QuitClickHandler;
 
             _deathScreenPanel.RemoveFromClassList("show");
-
-            uiManager.DisableUIActionMap();
-            uiManager.EnablePlayerActionMap();
         }
     }
 }
