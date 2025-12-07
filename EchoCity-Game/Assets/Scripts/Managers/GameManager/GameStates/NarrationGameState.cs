@@ -19,6 +19,7 @@ namespace EchoCity
             Enter();
             _gameManager.DialogDataEvent.RaiseEvent(data);
         }
+        public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
         public override void Update() { }
         public override void Exit() { }
 
