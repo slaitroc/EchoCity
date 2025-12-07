@@ -32,7 +32,7 @@ namespace EchoCity
             PlayingState = new PlayingGameState(gameManager, this);
             PauseState = new PauseGameState(gameManager, this);
             NarrationState = new NarrationGameState(gameManager, this);
-            DeathState = new DeathState(gameManager, this);
+            DeathState = new DeathGameState(gameManager, this);
             HudState = new HudGameState(gameManager, this);
             _gameManager = gameManager;
         }

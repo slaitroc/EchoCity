@@ -13,7 +13,7 @@ namespace EchoCity
             _gameManager.TitleMenuEvent.RaiseEvent();
         }
         public override void Update() { }
-        public override void Exit() { }
+        public override void Exit() => _gameManager.SetPlayerOnSpawnEvent.RaiseEvent();
         public override GameStatesEnum GetEnum() => GameStatesEnum.Title;
         public override void SwitchToInitLevelHandler(SceneEnum scene) => _gameManager.LoadLevelEvent.RaiseEvent(scene);
         public override void EnterLoading() { }

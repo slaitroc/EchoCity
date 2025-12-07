@@ -24,6 +24,7 @@ namespace EchoCity
         public SOEventVoid WinMenuEvent;
         public SOEventVoid EnterLoadingScreenEvent;
         public SOEventVoid ExitLoadingScreenEvent;
+        public SOEventVoid SetPlayerOnSpawnEvent;
 
 
         public SOSceneEnumEvent LoadLevelEvent;
@@ -35,13 +36,13 @@ namespace EchoCity
         [Header("Observed Events")]
         [SerializeField] private SOEventVoid switchToTitleStateEvent;
         [SerializeField] private SOSceneEnumEvent switchToInitLevelStateEvent;
-        [SerializeField] private SOEventVoid switchTotPlayingStateEvent;
+        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
         [SerializeField] private SOEventVoid switchToPauseStateEvent;
         [SerializeField] private SOEventVoid switchToDeathStateEvent;
         [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
         [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
-        [SerializeField] private SOEventVoid loading;
-        [SerializeField] private SOEventVoid loadDoneEvent;
+        [SerializeField] private SOEventVoid enterLoadingEvent;
+        [SerializeField] private SOEventVoid exitLoadingEvent;
 
 
 
@@ -60,26 +61,26 @@ namespace EchoCity
         {
             if (switchToTitleStateEvent) switchToTitleStateEvent.OnEventRaised += SwitchToTitleStateHandler;
             if (switchToInitLevelStateEvent) switchToInitLevelStateEvent.OnEventRaised += SwitchToInitLevelStateHandler;
-            if (switchTotPlayingStateEvent) switchTotPlayingStateEvent.OnEventRaised += SwitchToPlayingStateHandler;
+            if (switchToPlayingStateEvent) switchToPlayingStateEvent.OnEventRaised += SwitchToPlayingStateHandler;
             if (switchToPauseStateEvent) switchToPauseStateEvent.OnEventRaised += SwitchToPauseStateHandler;
             if (switchToDeathStateEvent) switchToDeathStateEvent.OnEventRaised += SwitchToDeathStateHandler;
             if (switchToNarrationStateEvent) switchToNarrationStateEvent.OnEventRaised += SwitchToNarrationStateHandler;
             if (switchToHudStateEvent) switchToHudStateEvent.OnEventRaised += SwitchToHudStateHandler;
-            if (loading) loading.OnEventRaised += LoadingHandler;
-            if (loadDoneEvent) loadDoneEvent.OnEventRaised += DoneLoadingHandler;
+            if (enterLoadingEvent) enterLoadingEvent.OnEventRaised += LoadingHandler;
+            if (exitLoadingEvent) exitLoadingEvent.OnEventRaised += DoneLoadingHandler;
         }
 
         void OnDisable()
         {
             if (switchToTitleStateEvent) switchToTitleStateEvent.OnEventRaised -= SwitchToTitleStateHandler;
             if (switchToInitLevelStateEvent) switchToInitLevelStateEvent.OnEventRaised -= SwitchToInitLevelStateHandler;
-            if (switchTotPlayingStateEvent) switchTotPlayingStateEvent.OnEventRaised -= SwitchToPlayingStateHandler;
+            if (switchToPlayingStateEvent) switchToPlayingStateEvent.OnEventRaised -= SwitchToPlayingStateHandler;
             if (switchToPauseStateEvent) switchToPauseStateEvent.OnEventRaised -= SwitchToPauseStateHandler;
             if (switchToDeathStateEvent) switchToDeathStateEvent.OnEventRaised -= SwitchToDeathStateHandler;
             if (switchToNarrationStateEvent) switchToNarrationStateEvent.OnEventRaised -= SwitchToNarrationStateHandler;
             if (switchToHudStateEvent) switchToHudStateEvent.OnEventRaised -= SwitchToHudStateHandler;
-            if (loading) loading.OnEventRaised -= LoadingHandler;
-            if (loadDoneEvent) loadDoneEvent.OnEventRaised -= DoneLoadingHandler;
+            if (enterLoadingEvent) enterLoadingEvent.OnEventRaised -= LoadingHandler;
+            if (exitLoadingEvent) exitLoadingEvent.OnEventRaised -= DoneLoadingHandler;
 
         }
 
@@ -96,11 +97,5 @@ namespace EchoCity
 
         public void LoadingHandler() => _fsm.EnterLoading();
         public void DoneLoadingHandler() => _fsm.ExitLoading();
-
-
-
-
-
-
     }
 }
