@@ -10,6 +10,8 @@ namespace EchoCity
         private const string _LOG_COLOR = "#39e8d1ff";
 #pragma warning restore CS0414
 
+        [Header("UI")]
+        [SerializeField] private UIManager uiManager;
         [SerializeField] private InputActionAsset inputActionAsset;
 
         [Header("Invoking Events")]
@@ -45,7 +47,7 @@ namespace EchoCity
         private void OnExitPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            switchToPlayingStateEvent?.RaiseEvent();
+            uiManager.SwitchToPlayState();
         }
 
         private void OnEnable()
