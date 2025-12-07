@@ -9,7 +9,7 @@ public class PatrolEnemyState : EnemyState
     protected new string _LOG_TAG = "PATROL ENEMY STATE";
     #endregion
 
-    private Transform[] waypoints => _enemyAI.waypoints;
+    private Transform[] waypoints => _enemyAI.GetCurrentWaypoints();
     public int currentWaypointIndex = 0;
     private bool isWaitingAtWaypoint = false;
     private float _waitTimer = 0f;
@@ -26,6 +26,13 @@ public class PatrolEnemyState : EnemyState
         
         // Reset noise chase flag: quando torno in patrol, considero chiusa qualsiasi noise-chase
         _enemyAI.IsNoiseChaseActive = false;
+
+        // Ensure we have valid waypoints (from current patrol area or legacy waypoints)
+        if (waypoints == null || waypoints.Length == 0)
+        {
+            Log.W("PatrolEnemyState: No waypoints available. Cannot patrol.", _LOG_COLOR, _LOG_TAG);
+            return;
+        }
 
         _agent.isStopped = false;
         _agent.stoppingDistance = 0f;
@@ -88,6 +95,12 @@ public class PatrolEnemyState : EnemyState
 
     void GotoNextWaypoint()
     {
+        if (waypoints == null || waypoints.Length == 0)
+        {
+            Log.W("GotoNextWaypoint: No waypoints available.", _LOG_COLOR, _LOG_TAG);
+            return;
+        }
+        
         isWaitingAtWaypoint = false;
 
         _agent.isStopped = false;
