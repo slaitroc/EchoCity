@@ -1,15 +1,20 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/HUD/HUDStyleSheet.uss?fileID=7433441132597879392&amp;guid=d83f1d3204d7e494baca4adaac9ecc97&amp;type=3#HUDStyleSheet" />
+
     <ui:VisualElement name="hud-root" class="hud-root">
+
+        <!-- CROSSHAIR -->
         <ui:VisualElement name="crosshair-layer" class="crosshair-layer" style="top: 0; bottom: 0; right: 0; left: 0;">
             <ui:VisualElement name="crosshair" class="crosshair" />
         </ui:VisualElement>
+
+        <!-- INTERACTION PANEL -->
         <ui:VisualElement name="interaction-panel" class="interaction-panel">
             <ui:Label name="interaction-key" class="interaction-key" />
             <ui:Label name="interaction-text" text="Interact" class="interaction-text" />
         </ui:VisualElement>
 
-        <!-- Radial Menu Overlay -->
+        <!-- RADIAL MENU -->
         <ui:VisualElement name="RadialMenuRoot" class="radial-menu-root">
             <ui:VisualElement name="RadialCenter" class="radial-center">
                 <!-- menu items -->
@@ -53,17 +58,48 @@
                         <ui:Label text="Item 7"/>
                     </ui:VisualElement>
                 </ui:Button>
+
+                <!-- INFO PANEL -->
                 <ui:VisualElement name="RadialInfoPanel" class="radial-info-panel">
                     <ui:Label name="RadialInfoTitle" text="No Item Selected" class="radial-info-title" />
                     <ui:Label name="RadialInfoText" text="Select an Item and release the button to equip" class="radial-info-text" />
                 </ui:VisualElement>
+
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <!-- WARNING PANEL -->
         <ui:VisualElement name="WarningPanel" class="warning-panel">
             <ui:VisualElement name="WarningBox" class="warning-box">
                 <ui:Label name="WarningText" class="warning-text" text="Warning text placeholder"/>
             </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- TUTORIAL PANEL -->
+        <ui:VisualElement name="TutorialPanel" class="tutorial-panel">
+            <ui:Label name="TutorialTitle" class="tutorial-title" text="Tutorial" />
+
+            <ui:VisualElement name="TutorialLines" class="tutorial-lines">
+
+                <ui:VisualElement class="tutorial-line">
+                    <ui:Label text="Press" class="tutorial-text" />
+                    <ui:VisualElement name="KeyIcon_E" class="tutorial-key-icon" />
+                    <ui:Label text="to interact" class="tutorial-text" />
+                </ui:VisualElement>
+
+                <ui:VisualElement class="tutorial-line">
+                    <ui:Label text="Hold" class="tutorial-text" />
+                    <ui:VisualElement name="KeyIcon_Q" class="tutorial-key-icon" />
+                    <ui:Label text="to open the menu" class="tutorial-text" />
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- EQUIPPED ITEM PANEL -->
+        <ui:VisualElement name="EquippedPanel" class="equipped-panel">
+            <ui:VisualElement name="EquippedIcon" class="equipped-icon" />
+            <ui:Label name="EquippedName" class="equipped-name" text="No Item Equipped" />
         </ui:VisualElement>
         
     </ui:VisualElement>
