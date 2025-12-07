@@ -2,16 +2,16 @@ using UnityEngine;
 
 namespace EchoCity
 {
-    public class CardReaderInteractable : Interactable
+    public class EndDoorInteractable : Interactable
     {
         #region Constants
         protected override string _LOG_TAG => "CARD_READER";
         protected override string _TYPE_LOG_TAG => "GENERAL";
         #endregion
 
-        [Header("Prefabs")]
-        [SerializeField] GameObject cardPrefab;
-        [SerializeField] Transform cardSpawnPoint;
+        [Header("End Game Event")]
+        [SerializeField] SOEventVoid switchToWinStateEvent;
+
 
         [Header("Messages")]
         [SerializeField] SODialogContainer dialogContainerSuccess;
@@ -25,14 +25,13 @@ namespace EchoCity
             {
                 if (outcome)
                 {
-                    spawnMessageEvent?.RaiseEvent("CardReader Used!", new Color(1f, 0.5f, 0f, 1f));
-                    Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
+                    spawnMessageEvent?.RaiseEvent("Last door opened!", new Color(1f, 0.5f, 0f, 1f));
                     dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
-
+                    switchToWinStateEvent?.RaiseEvent();
                 }
                 else
                 {
-                    spawnMessageEvent?.RaiseEvent("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f));
+                    spawnMessageEvent?.RaiseEvent("Can not open door yet!", new Color(1f, 0.5f, 0f, 1f));
                     dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerFail));
                 }
             }
