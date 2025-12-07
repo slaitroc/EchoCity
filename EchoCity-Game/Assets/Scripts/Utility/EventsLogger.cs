@@ -1,4 +1,5 @@
 using System;
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace EchoCity
         [SerializeField] private SOEventVoid enableUIActionMapEvent;
         [SerializeField] private SOEventVoid disableUIActionMapEvent;
         [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
-
+        [SerializeField] private SOStringColorEvent spawnWarningEvent;
 
 
 
@@ -71,6 +72,7 @@ namespace EchoCity
             if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised += OnEnableUIActionMapEvent;
             if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised += OnDisableUIActionMapEvent;
             if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised += OnSwitchToHudStateEvent;
+            if (spawnWarningEvent != null) spawnWarningEvent.OnEventRaised += OnSpawnWarningEvent;
 
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised += OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised += OnExitInteractionRangeEvent;
@@ -101,6 +103,7 @@ namespace EchoCity
             if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised -= OnEnableUIActionMapEvent;
             if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised -= OnDisableUIActionMapEvent;
             if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised -= OnSwitchToHudStateEvent;
+            if (spawnWarningEvent != null) spawnWarningEvent.OnEventRaised -= OnSpawnWarningEvent;
 
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised -= OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised -= OnExitInteractionRangeEvent;
@@ -138,6 +141,7 @@ namespace EchoCity
         private void OnEnableUIActionMapEvent() => Log.D("Enable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnDisableUIActionMapEvent() => Log.D("Disable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
         private void OnSwitchToHudStateEvent(HudEnum hud) => Log.D($"Switch to HUD Menu Event Raised for HUD: {hud}", _LOG_COLOR, _LOG_TAG);
+        private void OnSpawnWarningEvent(string message, Color color) => Log.D($"Spawn Warning Event Raised with Message: {message}, Color: {color}", _LOG_COLOR, _LOG_TAG);
 
         #endregion
 
