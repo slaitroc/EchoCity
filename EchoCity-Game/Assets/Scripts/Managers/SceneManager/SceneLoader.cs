@@ -11,14 +11,15 @@ namespace EchoCity
         private string _LOG_COLOR = "#ed600eff";
 
         [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid loading;
-        [SerializeField] private SOEventVoid loadDoneEvent;
+        [SerializeField] private SOEventVoid enterLoadingEvent;
+        [SerializeField] private SOEventVoid exitLoadingEvent;
         // [SerializeField] private SOEventVoid unloadDoneEvent;
 
         [Header("Observed Events")]
         [SerializeField] private SOSceneEnumEvent loadLevelEvent;
         [SerializeField] private SOEventVoid unloadCurrentLevelEvent;
         [SerializeField] private SOEventVoid reloadLevelEvent;
+        [SerializeField] private SOEventVoid setPlayerOnSpawnEvent;
 
         [Header("Settings")]
         [SerializeField]
@@ -29,6 +30,9 @@ namespace EchoCity
         "Second-Level",
         "Third-Level"
     };
+        private GameObject _player;
+        private Transform _spawnPoint;
+
         private SceneEnum _currentLevelEnum = SceneEnum.None;
 
 
@@ -37,6 +41,7 @@ namespace EchoCity
             if (loadLevelEvent) loadLevelEvent.OnEventRaised += LoadLevelAdditiveHandler;
             if (unloadCurrentLevelEvent) unloadCurrentLevelEvent.OnEventRaised += UnloadCurrentLevelHandler;
             if (reloadLevelEvent) reloadLevelEvent.OnEventRaised += ReloadCurrentLevelHandler;
+            if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised += PlacePlayerOnSpawn;
 
         }
 
@@ -45,30 +50,31 @@ namespace EchoCity
             if (loadLevelEvent) loadLevelEvent.OnEventRaised -= LoadLevelAdditiveHandler;
             if (unloadCurrentLevelEvent) unloadCurrentLevelEvent.OnEventRaised -= UnloadCurrentLevelHandler;
             if (reloadLevelEvent) reloadLevelEvent.OnEventRaised -= ReloadCurrentLevelHandler;
+            if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised -= PlacePlayerOnSpawn;
         }
 
 
-        public void PlacePlayerOnSpawn()
+        public void PlacePlayerOnSpawn() //BUG
         {
-            GameObject spawn = GameObject.FindWithTag("Respawn");
-            GameObject player = GameObject.FindWithTag("Player");
-            PlayerController pc = player?.GetComponent<PlayerController>();
+            if (_player == null)
+                _player = GameObject.FindWithTag("Player");
+            if (_spawnPoint == null)
+                _spawnPoint = GameObject.FindWithTag("Respawn")?.transform;
+            PlayerController pc = _player?.GetComponent<PlayerController>();
 
-            if (spawn != null && player != null && pc != null)
+            if (_spawnPoint != null && _player != null && pc != null)
             {
-                player.transform.position = spawn.transform.position;
-                player.transform.rotation = spawn.transform.rotation;
+                _player.transform.position = _spawnPoint.position;
+                _player.transform.rotation = _spawnPoint.rotation;
                 pc.currentHealth = pc.maxHealth;
             }
-
         }
-        public void LoadLevelAdditiveHandler(SceneEnum scene) => StartCoroutine(LoadLevelAdditive(scene));
-        public void LoadSceneAdditiveNoActiveHandler(SceneEnum scene) => StartCoroutine(LoadSceneAdditiveNoActive(scene));
-        public void ReloadCurrentLevelHandler() => StartCoroutine(ReloadCurrentLevel());
-        public void UnloadCurrentLevelHandler() => StartCoroutine(UnloadOtherLevelsWithLoading(SceneEnum.None));
+        public void LoadLevelAdditiveHandler(SceneEnum scene) => StartCoroutine(LoadLevelAdditiveWithLoading(scene));
+        public void LoadSceneAdditiveNoActiveHandler(SceneEnum scene) => StartCoroutine(LoadSceneAdditiveNoActiveWithLoading(scene));
+        public void ReloadCurrentLevelHandler() => StartCoroutine(ReloadCurrentLevelWithLoading());
+        public void UnloadCurrentLevelHandler() => StartCoroutine(UnloadCurrentLevelWithLoading());
         public IEnumerator LoadLevelAdditive(SceneEnum scene)
         {
-            loading?.RaiseEvent();
             string sceneName = scenesNames[(int)scene];
 
 #if UNITY_EDITOR
@@ -78,7 +84,6 @@ namespace EchoCity
                 _currentLevelEnum = scene;
                 SceneManager.SetActiveScene(existingScene);
                 yield return StartCoroutine(UnloadOtherLevels(scene));
-                PlacePlayerOnSpawn();
                 Log.D("Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
                 yield break;
             }
@@ -100,15 +105,11 @@ namespace EchoCity
                 SceneManager.SetActiveScene(levelScene);
                 _currentLevelEnum = scene;
             }
-
-            PlacePlayerOnSpawn();
             Log.D("Loaded active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
-            loadDoneEvent?.RaiseEvent();
         }
 
         public IEnumerator LoadSceneAdditiveNoActive(SceneEnum scene)
         {
-            loading?.RaiseEvent();
             string sceneName = scenesNames[(int)scene];
 #if UNITY_EDITOR
             Scene existingScene = SceneManager.GetSceneByName(sceneName);
@@ -125,12 +126,10 @@ namespace EchoCity
             }
 
             Log.D("Loaded non-active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
-            loadDoneEvent?.RaiseEvent();
         }
 
         public IEnumerator ReloadCurrentLevel()
         {
-            loading?.RaiseEvent();
             var existingScene = SceneManager.GetSceneByName(scenesNames[(int)_currentLevelEnum]);
             if (existingScene.IsValid() && existingScene.isLoaded)
             {
@@ -140,12 +139,11 @@ namespace EchoCity
                     yield return null;
                 }
             }
-            StartCoroutine(LoadLevelAdditive(_currentLevelEnum));
+            yield return StartCoroutine(LoadLevelAdditive(_currentLevelEnum));
         }
 
         private IEnumerator UnloadOtherLevels(SceneEnum levelToKeep)
         {
-
             for (int i = 0; i < scenesNames.Length; i++)
             {
                 SceneEnum sceneEnum = (SceneEnum)i;
@@ -168,9 +166,51 @@ namespace EchoCity
 
         private IEnumerator UnloadOtherLevelsWithLoading(SceneEnum levelToKeep)
         {
-            loading?.RaiseEvent();
+            yield return StartCoroutine(StartLoading());
             yield return StartCoroutine(UnloadOtherLevels(levelToKeep));
-            loadDoneEvent?.RaiseEvent();
+            yield return StartCoroutine(StopLoading());
+        }
+
+        private IEnumerator LoadSceneAdditiveNoActiveWithLoading(SceneEnum scene)
+        {
+            yield return StartCoroutine(StartLoading());
+            yield return StartCoroutine(LoadSceneAdditiveNoActive(scene));
+            yield return StartCoroutine(StopLoading());
+        }
+
+        private IEnumerator LoadLevelAdditiveWithLoading(SceneEnum scene)
+        {
+            yield return StartCoroutine(StartLoading());
+            Log.D("Started loading level with loading screen.", $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            yield return StartCoroutine(LoadLevelAdditive(scene));
+            Log.D("Finished loading level with loading screen.", $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            yield return StartCoroutine(StopLoading());
+        }
+
+        private IEnumerator ReloadCurrentLevelWithLoading()
+        {
+            yield return StartCoroutine(StartLoading());
+            yield return StartCoroutine(ReloadCurrentLevel());
+            yield return StartCoroutine(StopLoading());
+        }
+
+        private IEnumerator UnloadCurrentLevelWithLoading()
+        {
+            yield return StartCoroutine(StartLoading());
+            yield return StartCoroutine(UnloadOtherLevels(SceneEnum.None));
+            yield return StartCoroutine(StopLoading());
+        }
+
+        private IEnumerator StartLoading()
+        {
+            enterLoadingEvent?.RaiseEvent();
+            yield return new WaitForSecondsRealtime(0.1f);
+        }
+
+        private IEnumerator StopLoading()
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            exitLoadingEvent?.RaiseEvent();
         }
     }
 }

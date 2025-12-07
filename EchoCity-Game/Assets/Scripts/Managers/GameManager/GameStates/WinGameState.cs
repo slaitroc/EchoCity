@@ -18,6 +18,8 @@ namespace EchoCity
         public override void Update() { }
         public override void Exit()
         {
+            if (_restart)
+                _gameManager.SetPlayerOnSpawnEvent.RaiseEvent();
             _toTitle = false;
             _restart = false;
         }

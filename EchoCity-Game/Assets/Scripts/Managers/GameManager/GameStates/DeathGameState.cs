@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 
 namespace EchoCity
 {
-    public class DeathState : GameState
+    public class DeathGameState : GameState
     {
         private bool _toTitle = false;
         private bool _restart = false;
-        public DeathState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public DeathGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
         public override GameStatesEnum GetEnum() => GameStatesEnum.Death;
         public override void Enter()
         {
@@ -20,6 +20,8 @@ namespace EchoCity
         }
         public override void Exit()
         {
+            if (_restart)
+                _gameManager.SetPlayerOnSpawnEvent.RaiseEvent();
             _toTitle = false;
             _restart = false;
         }
