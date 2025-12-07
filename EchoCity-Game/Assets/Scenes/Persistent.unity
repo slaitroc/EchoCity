@@ -1197,6 +1197,7 @@ GameObject:
   - component: {fileID: 3498586695423543583}
   - component: {fileID: 8295396198673500648}
   - component: {fileID: 6690043720143850809}
+  - component: {fileID: 8804095092423812754}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -2062,6 +2063,25 @@ RectTransform:
   m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8804095092423812754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4801644078234812864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1336935b07ec34100a7caf6ac22f874c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManager: {fileID: 8307759294045413454}
+  hudDocument: {fileID: 3956432865418711098}
+  enemyNoiseUIEvent: {fileID: 0}
+  hideDelay: 0.75
+  minFillNormalized: 0.05
+  _lastUpdateTime: 0
+  _isVisible: 0
 --- !u!114 &8872850788758578356
 MonoBehaviour:
   m_ObjectHideFlags: 0
