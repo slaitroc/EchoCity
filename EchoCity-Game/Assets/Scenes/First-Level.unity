@@ -9808,7 +9808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 335522809}
   m_Layer: 0
-  m_Name: Bunker-Factory Alex
+  m_Name: Bunker-Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13982,7 +13982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &449946113
 Transform:
   m_ObjectHideFlags: 0
@@ -29133,7 +29133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862614883}
   m_Layer: 0
-  m_Name: Noah's Lab Alex
+  m_Name: Noah's Lab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38208,7 +38208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1154493047}
   m_Layer: 0
-  m_Name: Bunker-Corridor Alex
+  m_Name: Bunker-Corridor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39299,16 +39299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5daaadab1bf2fc478c36fa0e0905a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _INTERACTABLE_LOG_TAG: INTERACTABLE
-  _LOG_COLOR: '#ff5733ff'
-  checkTagsEvent: {fileID: 0}
-  setPuzzleTagsEvent: {fileID: 0}
-  interactionOutcomeEvent: {fileID: 0}
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: 61fc36d83e190414cac0f070f42ec318, type: 2}
-  _canBePicked: 0
 --- !u!1001 &1182952999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64104,6 +64094,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 0.29725075, z: 5}
   m_Center: {x: -2.5, y: 3.8986254, z: 2.5}
+--- !u!1 &1907095686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1907095688}
+  - component: {fileID: 1907095687}
+  m_Layer: 0
+  m_Name: Tutorial Colliders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!135 &1907095687
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907095686}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2.83
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1907095688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907095686}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.56, y: -2.56, z: -11.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1908352669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 133218, guid: 3c9384aeec5558e45920da1b222d837d, type: 3}
@@ -74477,3 +74520,4 @@ SceneRoots:
   - {fileID: 1335201371}
   - {fileID: 417706064}
   - {fileID: 1707609771}
+  - {fileID: 1907095688}
