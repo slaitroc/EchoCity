@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985917968e027c846b67b3bc8fcc3965, type: 3}
+  m_Name: CableTool
+  m_EditorClassIdentifier: 
+  pickableName: Cable
+  pickableDescription: A cable that hopefully will be long enough
+  maxStackQuantity: 1
+  pickableIcon: {fileID: 21300000, guid: 66e81f29030864545a1fc3c9f22fcfbb, type: 3}
+  pickUpSound: {fileID: 11400000, guid: 7b15c7567aa3be044bd26e4cd6bf8c5f, type: 2}
+  toolSound: {fileID: 11400000, guid: 0183320dc5656ae4e940eeea09314a2f, type: 2}
+  dropSound: {fileID: 11400000, guid: c34d2611282459243832942ad9c63b16, type: 2}
+  pickablePrefab: {fileID: 1732101374085226, guid: 7e80eb82e894a4239a2d784fdaa5feb6, type: 3}

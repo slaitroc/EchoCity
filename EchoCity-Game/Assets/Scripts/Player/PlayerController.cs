@@ -15,7 +15,7 @@ namespace EchoCity
             Index = index;
             Data = data;
             Prefab = prefab;
-            
+
         }
     }
     public class PlayerController : MonoBehaviour
@@ -152,6 +152,8 @@ namespace EchoCity
         public void DropItem()
         {
             if (equippedItem == null) return;
+            if (equippedItem.Index == 0) return;
+
             Vector3 dropPosition = dropPoint != null ? dropPoint.position : transform.position + transform.forward;
             if (equippedItem.Prefab == null)
             {

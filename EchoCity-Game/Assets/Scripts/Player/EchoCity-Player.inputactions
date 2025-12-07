@@ -88,15 +88,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Test1",
-                    "type": "Button",
-                    "id": "2ca9673d-96aa-4712-9440-3cae013effd6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "PlayerHit",
                     "type": "Button",
                     "id": "80360ffb-f1e9-41a9-911c-9fe42a45364b",
@@ -124,9 +115,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Test4",
+                    "name": "Test1",
                     "type": "Button",
-                    "id": "da7152de-bbb0-4647-aadc-80558cc9928d",
+                    "id": "2ca9673d-96aa-4712-9440-3cae013effd6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -136,6 +127,24 @@
                     "name": "Test2",
                     "type": "Button",
                     "id": "4c85fe3a-4c57-44b9-bd0b-223551997b6e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Test3",
+                    "type": "Button",
+                    "id": "8776c40d-5c4a-420e-8c02-a371c1bd7d86",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Test4",
+                    "type": "Button",
+                    "id": "da7152de-bbb0-4647-aadc-80558cc9928d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -437,6 +446,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Test2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b7c52f7-f3b0-4f3e-a3c7-412be84bdc61",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Test3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

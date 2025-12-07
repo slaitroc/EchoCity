@@ -75,7 +75,7 @@ namespace EchoCity
 
 
 
-        private static void PlayAtPosition(AudioClip clip, Vector3 position, float volume, string mixerGroup)
+        public static void PlayAtPosition(AudioClip clip, Vector3 position, float volume, string mixerGroup)
         {
             GameObject tempGO = new GameObject("TempAudio");
             tempGO.transform.position = position;
@@ -87,6 +87,20 @@ namespace EchoCity
             aSource.Play();
             Object.Destroy(tempGO, clip.length);
         }
+
+
+        // public static void PlayAtPositionSchedule(AudioClip clip, Vector3 position, float volume, string mixerGroup, double scheduledTime)
+        // {
+        //     GameObject tempGO = new GameObject("TempAudio");
+        //     tempGO.transform.position = position;
+        //     AudioSource aSource = tempGO.AddComponent<AudioSource>();
+        //     aSource.spatialBlend = 1.0f; // 3D sound
+        //     aSource.clip = clip;
+        //     aSource.volume = volume;
+        //     aSource.outputAudioMixerGroup = mixerGroup == null ? _mixer.FindMatchingGroups("Master")[0] : _mixer.FindMatchingGroups(mixerGroup)[0];
+        //     aSource.Play();
+        //     Object.Destroy(tempGO, clip.length);
+        // }
 
         private static void PlayInAudioSource(AudioClip clip, float volume, string mixerGroup, AudioSource aSource = null)
         {

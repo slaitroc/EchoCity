@@ -1,5 +1,4 @@
 using StarterAssets;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,6 +33,7 @@ namespace EchoCity
         [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
         [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
         [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
+        [SerializeField] private SOEventVoid wearEcholocatorEvent;
 
         [Header("Interaction Range Colliders")]
         [SerializeField] private bool inInteractionRange = false;
@@ -47,6 +47,7 @@ namespace EchoCity
         [SerializeField] private SOEnemyAIEvent playerHitEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
         [SerializeField] private SOEventVoid switchToDeathStateEvent;
+        [SerializeField] private SOEventVoid switchToWinStateEvent;
 
         [Header("Dialog")]
         [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
@@ -67,7 +68,7 @@ namespace EchoCity
                 _playerActionMap["Look"].canceled += OnLook;
                 _playerActionMap["Jump"].performed += OnJump;
                 _playerActionMap["Sprint"].performed += OnSprint;
-                _playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
+                //_playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
                 _playerActionMap["Interact"].performed += OnInteract;
                 _playerActionMap["OpenInventory"].started += OnOpenInventory;
                 _playerActionMap["OpenInventory"].performed += OnCloseInventory;
@@ -78,6 +79,7 @@ namespace EchoCity
 
                 _playerActionMap["Test1"].performed += OnTest1;
                 _playerActionMap["Test2"].performed += OnTest2;
+                _playerActionMap["Test3"].performed += OnTest3;
                 _playerActionMap["Test4"].performed += OnTest4;
 
             }
@@ -159,7 +161,7 @@ namespace EchoCity
         {
             if (context.performed)
             {
-                materialToggleEvent?.RaiseEvent();
+                // materialToggleEvent?.RaiseEvent();
             }
         }
 
@@ -231,6 +233,15 @@ namespace EchoCity
             }
         }
 
+        private void OnTest3(InputAction.CallbackContext context)
+        {
+            //EQUIP ITEM TEST
+            if (context.performed)
+            {
+                switchToWinStateEvent?.RaiseEvent();
+            }
+        }
+
         private void OnPlayerHit(InputAction.CallbackContext context)
         {
             //PLAYER HIT TEST
@@ -290,6 +301,11 @@ namespace EchoCity
             inRangeInteractable = null;
         }
 
+        private void WearEcholocatorHandler()
+        {
+            materialToggleEvent?.RaiseEvent();
+        }
+
         private void SubscribeToEvents()
         {
             if (enterInteractableAreaEvent)
@@ -312,6 +328,11 @@ namespace EchoCity
                 disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMap;
                 disablePlayerActionMapEvent.OnEventRaised += DisablePlayerActionMap;
             }
+            if (wearEcholocatorEvent)
+            {
+                wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
+                wearEcholocatorEvent.OnEventRaised += WearEcholocatorHandler;
+            }
         }
         private void UnsubscribeFromEvents()
         {
@@ -319,6 +340,7 @@ namespace EchoCity
             if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
             if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMap;
             if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMap;
+            if (wearEcholocatorEvent) wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
         }
     }
 }
