@@ -295,5 +295,94 @@
     font-size: 18px;
     color: rgb(255, 0, 0);
     -unity-font-style: bold;
-    unity-text-align: middle-center;
+    -unity-text-align: middle-center;
+}
+
+
+.tutorial-panel {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    padding: 18px 22px;
+    background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tutorial-title {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgba(238, 238, 238, 1);
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.tutorial-lines {
+    display: flex;
+    flex-direction: column;
+}
+
+.tutorial-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 72px;
+    margin-bottom: 24px;
+}
+
+.tutorial-line:last-child {
+    margin-bottom: 0;
+}
+
+.tutorial-text {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 1);
+    -unity-font-style: normal;
+    margin-right: 16px;
+}
+
+.tutorial-key-icon {
+    width: 56px;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 16px;
+}
+
+
+
+
+/* EQUIPPED PANEL */
+.equipped-panel {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    padding: 18px 22px;
+    background-color: rgba(0,0,0,0.55);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.equipped-icon {
+    width: 56px;
+    height: 56px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.equipped-name {
+    font-size: 20px;
+    color: white;
+    -unity-font-style: bold;
+    margin-left: 8px;
 }

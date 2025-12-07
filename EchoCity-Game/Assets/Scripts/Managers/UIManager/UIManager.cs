@@ -17,7 +17,7 @@ namespace EchoCity
         [SerializeField] private CrosshairController crosshairController;
         [SerializeField] private RadialMenuController radialMenuController;
         [SerializeField] private WarningController warningController;
-        // [SerializeField] private EquippedPanelController equippedPanelController;
+        [SerializeField] private EquippedPanelController equippedPanelController;
 
         [Header("Pause Menu")]
         [SerializeField] private PauseMenuController pauseMenuController;
@@ -54,6 +54,7 @@ namespace EchoCity
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
+        [SerializeField] private SOIntEvent dropItemEvent;
 
         [Header("External References")]
         [SerializeField] private PlayerInventory _playerInventory;
@@ -99,7 +100,8 @@ namespace EchoCity
             if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableHandler;
             if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableHandler;
             if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
-            // if (itemEquippedEvent) itemEquippedEvent.OnEventRaised += ItemEquippedHandler;
+            if (itemEquippedEvent) itemEquippedEvent.OnEventRaised += ItemEquippedHandler;
+            if (dropItemEvent) dropItemEvent.OnEventRaised += DropItemEventHandler;
         }
 
         #region Public Methods - State Switching
@@ -194,7 +196,9 @@ namespace EchoCity
         private void CrosshairInteractableHandler() => crosshairController.IsInteractable(!crosshairController.isInteractable);
         private void SpawnWarningHandler(string warningText, Color color) => warningController.SpawnWarning(warningText, color);
 
-        // private void ItemEquippedHandler(int index, PickableData pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
+        private void ItemEquippedHandler(int index, PickableData pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
+        private void DropItemEventHandler(int index) => equippedPanelController.ClearEquipped();
+
 
         #endregion
         private void OnDisable()

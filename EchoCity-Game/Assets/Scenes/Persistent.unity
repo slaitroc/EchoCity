@@ -610,6 +610,8 @@ GameObject:
   - component: {fileID: 4803415241050670658}
   - component: {fileID: 1140177340753562385}
   - component: {fileID: 545193155023989840}
+  - component: {fileID: 5784754342820044693}
+  - component: {fileID: 5784754342820044692}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -1377,7 +1379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &5241972989766720214
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1483,6 +1485,38 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &5784754342820044692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16052370980729642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3efbe005af56341ecb0a57de95bea529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManager: {fileID: 8225272055854214584}
+  hudDocument: {fileID: 5784754342820044691}
+  noItemText: No Item Equipped
+--- !u!114 &5784754342820044693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16052370980729642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6791cdff5d34849a49f663a993391041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManager: {fileID: 8225272055854214584}
+  tutorialDocument: {fileID: 5784754342820044691}
+  tutorialLines:
+  - {fileID: 11400000, guid: 98f4e03a2ac5840d48a1a3b98d5fc466, type: 2}
+  - {fileID: 11400000, guid: e24764b55ee3047d084e51eeaec1da57, type: 2}
 --- !u!143 &5864102228902920922
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1777,7 +1811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 8225272055854214584}
   deathScreenDocument: {fileID: 5912294599543982899}
-  deathEvent: {fileID: 11400000, guid: 5443b9fde1571418fbe02e900f690105, type: 2}
+  deathEvent: {fileID: 11400000, guid: 4ec8849b76f374e5fac88cf410a49595, type: 2}
   restartGameEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
   quitToTitleEvent: {fileID: 11400000, guid: adc0531a0eb174fc3bc0336a6a52e416, type: 2}
   restartGameDelay: 1
@@ -1831,6 +1865,7 @@ MonoBehaviour:
   crosshairController: {fileID: 4803415241050670658}
   radialMenuController: {fileID: 1140177340753562385}
   warningController: {fileID: 545193155023989840}
+  equippedPanelController: {fileID: 5784754342820044692}
   pauseMenuController: {fileID: 5078201396577607585}
   settingsMenuController: {fileID: 6169734977805986761}
   dialogController: {fileID: 2489395034308430514}
@@ -1843,13 +1878,14 @@ MonoBehaviour:
   hudMenuEvent: {fileID: 11400000, guid: f44a8af08b5f17948911ec5e427f8305, type: 2}
   pauseMenuEvent: {fileID: 11400000, guid: b7be2bb134d5f4b2180d91019f0ef242, type: 2}
   dialogMenuEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
-  deathMenuEvent: {fileID: 11400000, guid: d8fb698d1148db14db2509f2e2f35c51, type: 2}
+  deathMenuEvent: {fileID: 11400000, guid: 4ec8849b76f374e5fac88cf410a49595, type: 2}
   enterLoadingScreenEvent: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
   exitLoadingScreenEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
   canInteractStartEvent: {fileID: 11400000, guid: 96d2037cf95b248c69bf68e590b210f4, type: 2}
   canInteractStopEvent: {fileID: 11400000, guid: 4ed842175d030460d88acc9d8d2a9d0e, type: 2}
   spawnWarningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
-  itemEquippedEvent: {fileID: 0}
+  itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
+  dropItemEvent: {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
   _playerInventory: {fileID: 56267960}
 --- !u!114 &8274396590735599071
 MonoBehaviour:
