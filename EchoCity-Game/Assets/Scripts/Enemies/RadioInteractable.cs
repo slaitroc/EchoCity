@@ -29,14 +29,14 @@ public class RadioInteractable : Interactable
     [Header("Radio Settings")]
     [Tooltip("Whether the radio starts active or inactive")]
     [SerializeField] private bool startActive = false;
-    
+
     [Tooltip("Duration in seconds before radio automatically turns off (0 = never auto-off)")]
     [Min(0f)]
     [SerializeField] private float autoOffDuration = 6f;
-    
+
     [Tooltip("Optional: AudioSource to play radio sound when active")]
     [SerializeField] private AudioSource radioAudioSource;
-    
+
     [Tooltip("Optional: AudioClip to play when radio is on")]
     [SerializeField] private AudioClip radioSoundClip;
 
@@ -49,7 +49,7 @@ public class RadioInteractable : Interactable
     {
         base.Awake();
         _confusingSoundSource = GetComponent<ConfusingSoundSource>();
-        
+
         if (_confusingSoundSource == null)
         {
             Log.E("RadioInteractable requires ConfusingSoundSource component!", _LOG_COLOR, _LOG_TAG_FULL);
@@ -108,7 +108,7 @@ public class RadioInteractable : Interactable
         _isOn = true;
         _confusingSoundSource.Activate();
         PlayRadioSound();
-        
+
         // Start auto-off timer if duration is set
         if (autoOffDuration > 0f)
         {
@@ -119,7 +119,7 @@ public class RadioInteractable : Interactable
         {
             _hasAutoOffTimer = false;
         }
-        
+
         // Optional: Add visual feedback (e.g., light, animation)
         // You can add particle effects, light components, etc. here
     }
@@ -130,7 +130,7 @@ public class RadioInteractable : Interactable
         _confusingSoundSource.Deactivate();
         StopRadioSound();
         _hasAutoOffTimer = false; // Cancel timer
-        
+
         // Optional: Remove visual feedback
     }
 
@@ -152,12 +152,12 @@ public class RadioInteractable : Interactable
         }
     }
 
-    public override void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck)
+    public override void CheckTags(PuzzleTagEnum[] tagsToCheck)
     {
         throw new System.NotImplementedException();
     }
 
-    public override void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
+    public override void SetTags(PuzzleTagEnum[] tagsToSet)
     {
         throw new System.NotImplementedException();
     }

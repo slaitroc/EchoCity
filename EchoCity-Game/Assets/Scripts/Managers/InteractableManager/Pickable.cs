@@ -52,12 +52,12 @@ namespace EchoCity.Interactables
                 canBePickedEvent.OnEventRaised -= InventoryHandler;
         }
 
-        public override void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck)
+        public override void CheckTags(PuzzleTagEnum[] tagsToCheck)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
+        public override void SetTags(PuzzleTagEnum[] tagsToSet)
         {
             throw new System.NotImplementedException();
         }

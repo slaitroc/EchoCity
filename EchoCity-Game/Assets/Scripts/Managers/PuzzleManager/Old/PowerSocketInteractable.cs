@@ -195,12 +195,12 @@ namespace EchoCity
             Log.D("Player needs cable to plug in", _LOG_COLOR, _LOG_TAG_FULL);
         }
 
-        public override void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck)
+        public override void CheckTags(PuzzleTagEnum[] tagsToCheck)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
+        public override void SetTags(PuzzleTagEnum[] tagsToSet)
         {
             throw new System.NotImplementedException();
         }
