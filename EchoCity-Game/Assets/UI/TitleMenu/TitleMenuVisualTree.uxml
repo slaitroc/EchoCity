@@ -13,9 +13,12 @@
             <ui:Button name="SettingsButton" class="title-menu-button">
                 <ui:Label text="Settings" />
             </ui:Button>
-            <ui:Button name="QuitButton" class="title-menu-button">
-                <ui:Label text="Quit" />
+            <ui:Button name="FeedbackButton" class="title-menu-button">
+                <ui:Label text="Feedback" />
             </ui:Button>
+            <!-- <ui:Button name="QuitButton" class="title-menu-button">
+                <ui:Label text="Quit" />
+            </ui:Button> -->
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

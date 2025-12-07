@@ -33,6 +33,7 @@ namespace EchoCity
 
         [Header("Loading Screen")]
         [SerializeField] private LoadingScreenController loadingScreenController;
+        [SerializeField] private FeedbackMenuController feedbackMenuController;
 
         [Header("Events")]
         [Header("Invoking Events for GM")]
@@ -67,6 +68,7 @@ namespace EchoCity
         private GameObject _dialog;
         private GameObject _deathScreen;
         private GameObject _loadingScreen;
+        private GameObject _feedbackMenu;
         #endregion
 
 
@@ -80,6 +82,7 @@ namespace EchoCity
             _dialog = dialogController.gameObject;
             _deathScreen = deathScreenController.gameObject;
             _loadingScreen = loadingScreenController.gameObject;
+            _feedbackMenu = feedbackMenuController.gameObject;
 
             if (_playerInventory == null)
             {
@@ -140,6 +143,8 @@ namespace EchoCity
 
         public void OpenSettingsMenu() => _settingsMenu.SetActive(true);
         public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
+        public void OpenFeedbackMenu() => _feedbackMenu.SetActive(true);
+        public void CloseFeedbackMenu() => _feedbackMenu.SetActive(false);
         #endregion
 
 

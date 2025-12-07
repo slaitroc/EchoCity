@@ -79,6 +79,7 @@ namespace EchoCity
             if (_thankYouPanel != null)
                 _thankYouPanel.style.display = DisplayStyle.None;
 
+            _feedbackTextField.Focus();
             SetRating(0);
         }
 
@@ -119,7 +120,7 @@ namespace EchoCity
 
         private void ThankYouContinueClickHandler()
         {
-            gameObject.SetActive(false);
+            uiManager.CloseFeedbackMenu();
         }
 
         private void OnDisable()

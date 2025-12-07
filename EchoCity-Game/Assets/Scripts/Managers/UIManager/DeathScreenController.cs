@@ -28,6 +28,7 @@ namespace EchoCity
         private VisualElement _deathScreenPanel;
         private VisualElement _deathBgAnimated;
         private Button _restartButton;
+        private Button _feedbackButton;
         private Button _quitButton;
         private Button[] buttons;
         private bool _isNavMode = false;
@@ -50,8 +51,9 @@ namespace EchoCity
             _deathBgAnimated.style.translate = new Translate(0, new Length(-100, LengthUnit.Percent));
 
             _restartButton = _root.Q<Button>("RestartButton");
+            _feedbackButton = _root.Q<Button>("FeedbackButton");
             _quitButton = _root.Q<Button>("QuitButton");
-            buttons = new Button[] { _restartButton, _quitButton };
+            buttons = new Button[] { _restartButton, _feedbackButton, _quitButton };
 
             yield return null;
 
@@ -88,6 +90,7 @@ namespace EchoCity
             });
 
             if (_restartButton != null) _restartButton.clicked += RestartGameClickHandler;
+            if (_feedbackButton != null) _feedbackButton.clicked += FeedbackClickHandler;
             if (_quitButton != null) _quitButton.clicked += QuitClickHandler;
 
             _deathScreenPanel.AddToClassList("show");
@@ -110,11 +113,14 @@ namespace EchoCity
             uiManager.SwitchToInitLevel(SceneEnum.Level1);
         }
 
+        private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
+
         private void QuitClickHandler() => uiManager.SwitchToTitleState();
 
         private void OnDisable()
         {
             if (_restartButton != null) _restartButton.clicked -= RestartGameClickHandler;
+            if (_feedbackButton != null) _feedbackButton.clicked -= FeedbackClickHandler;
             if (_quitButton != null) _quitButton.clicked -= QuitClickHandler;
 
             _deathScreenPanel.RemoveFromClassList("show");
