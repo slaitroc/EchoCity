@@ -39,12 +39,14 @@ public class LostTargetState : EnemyState
         _agent.isStopped = true;
         _agent.ResetPath();
         
-        // Play lost target phrase (e.g., "So che eri qui... ti ritroverò")
-        if (!_hasPlayedPhrase)
+        // Play state entry phrase
+        if (_enemyData.LostTargetState_Phrases != null)
         {
-            _enemyAI.PlayLostTargetPhrase();
-            _hasPlayedPhrase = true;
+            _enemyAI.PlayRandomPhrase(_enemyData.LostTargetState_Phrases);
         }
+        
+        // Emit investigation sound (for echolocation system)
+        EmitInvestigationSound();
         
         // Set animator to idle/defeated animation
         _animator.SetFloat(_animSpeedParameter, 0f, 0.2f, Time.deltaTime);
@@ -79,6 +81,29 @@ public class LostTargetState : EnemyState
     public override bool OnPlayerHit()
     {
         return false;
+    }
+    
+    /// <summary>
+    /// Emits investigation sound using parameters from SOEnemyData.
+    /// Called when entering LostTargetState.
+    /// Uses enemySoundEmissionEvent from EnemyAI (reference only, no logic in EnemyAI).
+    /// </summary>
+    private void EmitInvestigationSound()
+    {
+        // Get event from EnemyAI (just a reference, no logic)
+        if (_enemyAI.enemySoundEmissionEvent == null || _enemyData == null) return;
+        
+        // Create sound emission data with investigation parameters
+        SoundEmissionData soundData = new SoundEmissionData(
+            _enemyAI.transform.position,                            // pos: enemy position
+            _enemyData.InvestigationSoundRadius,                     // rad: radius
+            _enemyData.InvestigationSoundIntensity,                  // intens: intensity
+            _enemyData.InvestigationSoundDuration,                   // dur: duration
+            _enemyData.InvestigationSoundFrequency                   // objFreq: frequency (0=Low, 1=Mid, 2=High)
+        );
+        
+        // Raise event (logic is in the state, EnemyAI is just a reference holder)
+        _enemyAI.enemySoundEmissionEvent.RaiseEvent(soundData);
     }
 }
 
