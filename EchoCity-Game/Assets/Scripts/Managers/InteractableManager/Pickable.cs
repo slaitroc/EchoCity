@@ -38,16 +38,32 @@ namespace EchoCity.Interactables
 
 
 
-        void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             if (canBePickedEvent)
                 canBePickedEvent.OnEventRaised += InventoryHandler;
         }
 
-        void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             if (canBePickedEvent)
                 canBePickedEvent.OnEventRaised -= InventoryHandler;
+        }
+
+        public override void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void InteractionOutcomeHandler(bool outcome)
+        {
         }
 
 

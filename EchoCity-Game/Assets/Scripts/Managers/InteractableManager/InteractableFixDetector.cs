@@ -1,3 +1,4 @@
+using EchoCity;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -11,5 +12,20 @@ public class InteractableFixDetector : Interactable
     public override void Interact()
     {
         linkedInteractable?.Interact();
+    }
+
+    public override void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void InteractionOutcomeHandler(bool outcome)
+    {
+        throw new System.NotImplementedException();
     }
 }
