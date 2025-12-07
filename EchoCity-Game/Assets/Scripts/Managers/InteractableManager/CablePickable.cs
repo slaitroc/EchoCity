@@ -14,11 +14,16 @@ namespace EchoCity
         public override void InteractionOutcomeHandler(bool outcome)
         {
             base.InteractionOutcomeHandler(outcome);
-            if (outcome)
+            if (_waitForInteractionOutcome)
             {
-                spawnMessageEvent?.RaiseEvent("Cable Picked Up!", new Color(1f, 0.5f, 0f, 1f));
-                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainer));
+                if (outcome)
+                {
+                    spawnMessageEvent?.RaiseEvent("Cable Picked Up!", new Color(1f, 0.5f, 0f, 1f));
+                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainer));
+                }
             }
+            _waitForInteractionOutcome = false;
+
         }
     }
 }

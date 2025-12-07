@@ -12,7 +12,8 @@ namespace EchoCity
         BunkerDoorKeyPicked = 3,
         CablePicked = 4,
         FloppyDiskPicked = 5,
-        CardReaderIsOn = 6
+        CardReaderIsOn = 6,
+        LightsOn = 7
     }
 
     [System.Serializable]
@@ -38,7 +39,7 @@ namespace EchoCity
 #pragma warning restore CS0414
 
         [Header("Invoking Events")]
-        [SerializeField] private SOBoolEvent interactionOutcomeEvent; 
+        [SerializeField] private SOBoolEvent interactionOutcomeEvent;
         [Header("Observing Events")]
         [SerializeField] private SOPuzzleTagEnumArrayEvent checkTagsEvent;
         [SerializeField] private SOPuzzleTagEnumArrayEvent setPuzzleTagsEvent;
@@ -56,7 +57,8 @@ namespace EchoCity
                 new PuzzleTagState(PuzzleTagEnum.BunkerDoorKeyPicked, false),
                 new PuzzleTagState(PuzzleTagEnum.CablePicked, false),
                 new PuzzleTagState(PuzzleTagEnum.FloppyDiskPicked, false),
-                new PuzzleTagState(PuzzleTagEnum.CardReaderIsOn, false)
+                new PuzzleTagState(PuzzleTagEnum.CardReaderIsOn, false),
+                new PuzzleTagState(PuzzleTagEnum.LightsOn, true)
             };
             }
         }
@@ -69,6 +71,11 @@ namespace EchoCity
         private void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck)
         {
             bool allTagsActive = true;
+            if (tagsToCheck == null || tagsToCheck.Length == 0)
+            {
+                interactionOutcomeEvent?.RaiseEvent(false);
+                return;
+            }
             foreach (PuzzleTagEnum tag in tagsToCheck)
             {
                 foreach (PuzzleTagState activeTag in activePuzzleTags)
@@ -86,6 +93,7 @@ namespace EchoCity
 
         private void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
         {
+            if (tagsToSet == null || tagsToSet.Length == 0) return;
             if (activePuzzleTags == null || activePuzzleTags.Length == 0)
                 Log.E(" No active puzzle tags defined.", LOG_TAG, LOG_COLOR);
             foreach (PuzzleTagEnum tag in tagsToSet)

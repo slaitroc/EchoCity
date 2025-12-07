@@ -24,7 +24,7 @@ namespace EchoCity
         #region Private Fields
         [SerializeField] private Animator wallPanelSwitchAnimator;
         private readonly int _hashIsSwitchedOn = Animator.StringToHash("isSwitchedOn");
-        [SerializeField] private bool _isSwitchedOn = false;
+        [SerializeField] private bool _isSwitchedOn = true;
         private bool isSwitchedOn
         {
             get { return _isSwitchedOn; }
@@ -64,14 +64,17 @@ namespace EchoCity
             }
         }
 
-        public override void Interact()
-        {
-            isSwitchedOn = !isSwitchedOn;
-        }
-
         public override void InteractionOutcomeHandler(bool outcome)
         {
-            throw new System.NotImplementedException();
+            base.InteractionOutcomeHandler(outcome);
+            if (_waitForInteractionOutcome)
+            {
+                if (outcome)
+                {
+                    isSwitchedOn = !isSwitchedOn;
+                }
+            }
+            _waitForInteractionOutcome = false;
         }
     }
 }

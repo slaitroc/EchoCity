@@ -18,6 +18,7 @@ public abstract class Interactable : MonoBehaviour
     [Header("Interactable Settings")]
     [SerializeField] protected PuzzleTagEnum[] checkTags;
     [SerializeField] protected PuzzleTagEnum[] setTags;
+    protected bool _waitForInteractionOutcome = false;
 
     protected virtual void OnEnable()
     {
@@ -31,9 +32,14 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
     public virtual void Interact() => CheckTags(checkTags);
-    public void CheckTags(PuzzleTagEnum[] tagsToCheck) => checkTagsEvent?.RaiseEvent(tagsToCheck);
+    public void CheckTags(PuzzleTagEnum[] tagsToCheck)
+    {
+        _waitForInteractionOutcome = true;
+        checkTagsEvent?.RaiseEvent(tagsToCheck);
+    }
     public virtual void InteractionOutcomeHandler(bool outcome)
     {
+        if (!_waitForInteractionOutcome) return;
         if (outcome)
             SetTags(setTags);
     }
