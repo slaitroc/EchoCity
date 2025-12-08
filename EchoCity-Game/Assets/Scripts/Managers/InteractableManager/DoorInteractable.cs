@@ -45,4 +45,10 @@ public class DoorInteractable : LinkableInteractable
     {
         isOpen = !isOpen;
     }
+
+
+    public override void InteractionOutcomeHandler(bool outcome)
+    {
+        throw new System.NotImplementedException();
+    }
 }

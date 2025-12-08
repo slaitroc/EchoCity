@@ -23,6 +23,7 @@ namespace EchoCity
         public readonly HudGameState HudState;
         public readonly NarrationGameState NarrationState;
         public readonly GameState DeathState;
+        public readonly GameState WinState;
 
         public GameStatesFSM(GameManager gameManager)
         {
@@ -33,6 +34,7 @@ namespace EchoCity
             PauseState = new PauseGameState(gameManager, this);
             NarrationState = new NarrationGameState(gameManager, this);
             DeathState = new DeathGameState(gameManager, this);
+            WinState = new WinGameState(gameManager, this);
             HudState = new HudGameState(gameManager, this);
             _gameManager = gameManager;
         }

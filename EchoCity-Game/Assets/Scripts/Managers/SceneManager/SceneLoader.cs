@@ -202,12 +202,12 @@ namespace EchoCity
         private IEnumerator StartLoading()
         {
             enterLoadingEvent?.RaiseEvent();
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return new WaitForSecondsRealtime(0.5f);
         }
 
         private IEnumerator StopLoading()
         {
-            yield return new WaitForSecondsRealtime(0.1f);
+            yield return new WaitForSecondsRealtime(0.5f);
             exitLoadingEvent?.RaiseEvent();
         }
     }

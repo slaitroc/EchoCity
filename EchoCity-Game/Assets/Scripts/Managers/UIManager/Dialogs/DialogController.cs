@@ -78,10 +78,16 @@ namespace EchoCity
             uiManager.SwitchToPlayState();
         }
 
+        void Update()
+        {
+            MethodsUI.SetCursorState(true);
+        }
+
         void OnDisable()
         {
             _root.style.display = DisplayStyle.None;
             _continueButton.clicked -= AdvanceDialog;
+            MethodsUI.SetCursorState(false);
         }
     }
 

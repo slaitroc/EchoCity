@@ -15,7 +15,7 @@ namespace EchoCity
             Index = index;
             Data = data;
             Prefab = prefab;
-            
+
         }
     }
     public class PlayerController : MonoBehaviour
@@ -29,6 +29,8 @@ namespace EchoCity
         [SerializeField] private SOEventVoid materialToggleEvent;
         [SerializeField] private SOIntEvent itemDroppedEvent;
         [SerializeField] private SOEventVoid deathEvent;
+        [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
+
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
@@ -137,6 +139,7 @@ namespace EchoCity
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
                     ECSound.PlayRandomInAudioSource(equippedItem.Data.ToolSound, newAudioSphereEvent, "SFX", _playerAudioSource);
+                    playerEmittedSoundEvent?.RaiseEvent(transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }
                 else if (equippedItem.Data.PickableType == PickableType.Tool)
@@ -152,6 +155,8 @@ namespace EchoCity
         public void DropItem()
         {
             if (equippedItem == null) return;
+            if (equippedItem.Index == 0) return;
+
             Vector3 dropPosition = dropPoint != null ? dropPoint.position : transform.position + transform.forward;
             if (equippedItem.Prefab == null)
             {

@@ -28,6 +28,7 @@ namespace EchoCity
         public virtual void SwitchToPlayingHandler() { }
         public virtual void SwitchToPauseHandler() { }
         public virtual void SwitchToDeathHandler() { }
+        public virtual void SwitchToWinHandler() { }
         public virtual void SwitchToNarrationHandler(DialogData data) { }
         public virtual void SwitchToHudHandler(HudEnum hud) { }
     }

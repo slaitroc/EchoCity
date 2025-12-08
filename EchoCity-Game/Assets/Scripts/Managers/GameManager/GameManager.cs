@@ -38,6 +38,7 @@ namespace EchoCity
         [SerializeField] private SOSceneEnumEvent switchToInitLevelStateEvent;
         [SerializeField] private SOEventVoid switchToPlayingStateEvent;
         [SerializeField] private SOEventVoid switchToPauseStateEvent;
+        [SerializeField] private SOEventVoid switchToWinStateEvent;
         [SerializeField] private SOEventVoid switchToDeathStateEvent;
         [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
         [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
@@ -64,6 +65,7 @@ namespace EchoCity
             if (switchToPlayingStateEvent) switchToPlayingStateEvent.OnEventRaised += SwitchToPlayingStateHandler;
             if (switchToPauseStateEvent) switchToPauseStateEvent.OnEventRaised += SwitchToPauseStateHandler;
             if (switchToDeathStateEvent) switchToDeathStateEvent.OnEventRaised += SwitchToDeathStateHandler;
+            if (switchToWinStateEvent) switchToWinStateEvent.OnEventRaised += SwitchToWinStateHandler;
             if (switchToNarrationStateEvent) switchToNarrationStateEvent.OnEventRaised += SwitchToNarrationStateHandler;
             if (switchToHudStateEvent) switchToHudStateEvent.OnEventRaised += SwitchToHudStateHandler;
             if (enterLoadingEvent) enterLoadingEvent.OnEventRaised += LoadingHandler;
@@ -77,6 +79,7 @@ namespace EchoCity
             if (switchToPlayingStateEvent) switchToPlayingStateEvent.OnEventRaised -= SwitchToPlayingStateHandler;
             if (switchToPauseStateEvent) switchToPauseStateEvent.OnEventRaised -= SwitchToPauseStateHandler;
             if (switchToDeathStateEvent) switchToDeathStateEvent.OnEventRaised -= SwitchToDeathStateHandler;
+            if (switchToWinStateEvent) switchToWinStateEvent.OnEventRaised -= SwitchToWinStateHandler;
             if (switchToNarrationStateEvent) switchToNarrationStateEvent.OnEventRaised -= SwitchToNarrationStateHandler;
             if (switchToHudStateEvent) switchToHudStateEvent.OnEventRaised -= SwitchToHudStateHandler;
             if (enterLoadingEvent) enterLoadingEvent.OnEventRaised -= LoadingHandler;
@@ -92,6 +95,7 @@ namespace EchoCity
         public void SwitchToPlayingStateHandler() => _fsm.CurrentState.SwitchToPlayingHandler();
         public void SwitchToPauseStateHandler() => _fsm.CurrentState.SwitchToPauseHandler();
         public void SwitchToDeathStateHandler() => _fsm.CurrentState.SwitchToDeathHandler();
+        public void SwitchToWinStateHandler() => _fsm.CurrentState.SwitchToWinHandler();
         public void SwitchToNarrationStateHandler(DialogData data) => _fsm.CurrentState.SwitchToNarrationHandler(data);
         public void SwitchToHudStateHandler(HudEnum hud) => _fsm.CurrentState.SwitchToHudHandler(hud);
 
