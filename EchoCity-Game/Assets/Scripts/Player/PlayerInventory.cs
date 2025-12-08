@@ -17,6 +17,7 @@ public class PlayerInventory : MonoBehaviour
     [Header("Observing Events")]
     [SerializeField] private SOIntEvent dropItemEvent;
     [SerializeField] private SOPickableDataGameObjectEvent pickItemEvent;
+    [SerializeField] private SOSceneEnumEvent switchToInitStateEvent;
 
     [Header("Inventory")]
     [SerializeField] private InventoryItem[] itemsArray;
@@ -49,14 +50,15 @@ public class PlayerInventory : MonoBehaviour
     {
         if (pickItemEvent) pickItemEvent.OnEventRaised += AddItemHandler;
         if (dropItemEvent) dropItemEvent.OnEventRaised += RemoveItemHandler;
+        if (switchToInitStateEvent) switchToInitStateEvent.OnEventRaised += Clear;
     }
 
     void OnDisable()
     {
         if (pickItemEvent) pickItemEvent.OnEventRaised -= AddItemHandler;
         if (dropItemEvent) dropItemEvent.OnEventRaised -= RemoveItemHandler;
+        if (switchToInitStateEvent) switchToInitStateEvent.OnEventRaised -= Clear;
     }
-
 
     public void AddItemHandler(PickableData data, GameObject pickablePrefab)
     {
@@ -84,14 +86,15 @@ public class PlayerInventory : MonoBehaviour
         itemsArray[itemIndex] = null;
     }
 
-    public void Clear()
+    public void Clear(EchoCity.SceneEnum scene)
     {
-        for (int i = 0; i < itemsArray.Length; i++)
+        itemsArray = new InventoryItem[8];
+        prefabsArray = new GameObject[itemsArray.Length];
+        if (handsSoundTool != null)
         {
-            itemsArray[i] = null;
-            prefabsArray[i] = null;
+            InventoryItem handsItem = new InventoryItem(new PickableData(handsSoundTool));
+            itemsArray[0] = handsItem;
         }
-
         inventoryChangedEvent?.RaiseEvent();
     }
 }
