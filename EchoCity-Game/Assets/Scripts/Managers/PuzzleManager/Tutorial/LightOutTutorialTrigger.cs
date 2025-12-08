@@ -21,8 +21,8 @@ public class LightOutTutorialTrigger : TutorialTrigger
         }
         checkTagsEvent?.RaiseEvent(checkTags);
         wearEcholocatorEvent?.RaiseEvent();
-        ECSound.PlayAtPosition(audioClips[0], _audioPositions[0].position, 0.8f, "BackgroundMusic");
-        ECSound.PlayAtPosition(audioClips[1], _audioPositions[1].position, 0.7f, "BackgroundMusic");
+        ECSound.PlayAtPosition(audioClips[0], _audioPositions[0].position, 1f, "BackgroundMusic");
+        ECSound.PlayAtPosition(audioClips[1], _audioPositions[1].position, 1f, "BackgroundMusic");
         switchToNarrationStateEvent?.RaiseEvent(new DialogData(tutorialDialogContainer));
         gameObject.SetActive(false);
     }
