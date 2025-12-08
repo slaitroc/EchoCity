@@ -47,7 +47,13 @@ public struct SoundEmissionData
         position = pos;
         radius = soundSource.Radius;
         intensity = soundSource.Intensity;
-        duration = soundSource.AudioClip.length;
+        if (soundSource.AudioClip != null)
+            duration = soundSource.AudioClip.length;
+        else if (soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0)
+            duration = soundSource.RandomAudioClips[0].length; // Approximate with first clip
+        else
+            duration = 0f;
+
         soundClass = new SoundClass(
             soundSource.SoundClass.RangeFactor,
             soundSource.SoundClass.IntensityFactor,
@@ -80,7 +86,7 @@ public struct SoundEmissionData
         radius = rad;
         intensity = intens;
         duration = dur;
-        
+
         // Convert float frequency to Frequency enum
         Frequency frequencyEnum;
         if (freq <= 0f)
@@ -89,7 +95,7 @@ public struct SoundEmissionData
             frequencyEnum = Frequency.Mid;
         else
             frequencyEnum = Frequency.High;
-        
+
         // Create SoundClass with default values (these are typically from SOSoundSource)
         // Using reasonable defaults for investigation sounds
         soundClass = new SoundClass(

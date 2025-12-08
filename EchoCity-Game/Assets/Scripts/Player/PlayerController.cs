@@ -29,6 +29,8 @@ namespace EchoCity
         [SerializeField] private SOEventVoid materialToggleEvent;
         [SerializeField] private SOIntEvent itemDroppedEvent;
         [SerializeField] private SOEventVoid deathEvent;
+        [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
+
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
@@ -137,6 +139,7 @@ namespace EchoCity
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
                     ECSound.PlayRandomInAudioSource(equippedItem.Data.ToolSound, newAudioSphereEvent, "SFX", _playerAudioSource);
+                    playerEmittedSoundEvent?.RaiseEvent(transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }
                 else if (equippedItem.Data.PickableType == PickableType.Tool)

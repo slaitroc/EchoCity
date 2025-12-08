@@ -9,7 +9,7 @@ public class PatrolArea
 {
     public string name;
     public Transform[] waypoints;
-    
+
     /// <summary>
     /// Calculates the center position of this patrol area as the average of all waypoint positions.
     /// </summary>
@@ -17,10 +17,10 @@ public class PatrolArea
     {
         if (waypoints == null || waypoints.Length == 0)
             return Vector3.zero;
-        
+
         Vector3 center = Vector3.zero;
         int validWaypoints = 0;
-        
+
         foreach (var waypoint in waypoints)
         {
             if (waypoint != null)
@@ -29,7 +29,7 @@ public class PatrolArea
                 validWaypoints++;
             }
         }
-        
+
         return validWaypoints > 0 ? center / validWaypoints : Vector3.zero;
     }
 }
@@ -57,6 +57,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Observed Events")]
     [Tooltip("Event raised by InputManager when player performs an action (e.g., hitting object with item)")]
     [SerializeField] private SOPlayerActionEvent playerActionEvent;
+    [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
 
     [Header("References")]
     public NavMeshAgent agent;
@@ -67,7 +68,7 @@ public class EnemyAI : MonoBehaviour
     [Tooltip("Multiple patrol areas. Each area has its own set of waypoints. When returning to patrol, the enemy will choose the area closest to its current position.")]
     public PatrolArea[] patrolAreas;
     public AttackRangeDetector attackRangeDetector;
-    
+
     [HideInInspector]
     /// <summary>
     /// Currently selected patrol area. Set automatically when returning to patrol from StandAndExamine or LostTarget states.
@@ -127,19 +128,19 @@ public class EnemyAI : MonoBehaviour
         {
             Log.E("No SOEnemyData assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
         }
-        
+
         // Validate patrol areas
         if (patrolAreas == null || patrolAreas.Length == 0)
         {
             Log.E("No patrol areas assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
         }
-        
+
         // Initialize current patrol area if patrol areas are available
         if (patrolAreas != null && patrolAreas.Length > 0)
         {
             SelectClosestPatrolArea();
         }
-        
+
         if (attackRangeDetector == null)
         {
             Log.E("No AttackRangeDetector assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
@@ -151,9 +152,9 @@ public class EnemyAI : MonoBehaviour
 
     void OnEnable()
     {
-        if (playerActionEvent != null)
+        if (playerEmittedSoundEvent != null)
         {
-            playerActionEvent.OnEventRaised += OnPlayerAction;
+            playerEmittedSoundEvent.OnEventRaised += OnPlayerAction;
         }
 
         TryAssignPlayer();
@@ -161,9 +162,9 @@ public class EnemyAI : MonoBehaviour
 
     void OnDisable()
     {
-        if (playerActionEvent != null)
+        if (playerEmittedSoundEvent != null)
         {
-            playerActionEvent.OnEventRaised -= OnPlayerAction;
+            playerEmittedSoundEvent.OnEventRaised -= OnPlayerAction;
         }
     }
 
@@ -287,16 +288,16 @@ public class EnemyAI : MonoBehaviour
     /// Raised by InputManager - replaces current action (only one action at a time)
     /// Action properties (intensity, duration, frequency) come from the object/item used
     /// </summary>
-    void OnPlayerAction(PlayerActionData actionData)
+    void OnPlayerAction(Vector3 position, SoundEmissionData sound)
     {
         // Replace current action with new one (only one action active at a time)
-        _activePlayerAction = actionData;
-        _actionTimeRemaining = actionData.duration;
+        _activePlayerAction = new PlayerActionData(position, sound);
+        _actionTimeRemaining = sound.Duration;
         _hasActiveAction = true;
-        _actionPosition = actionData.position;
+        _actionPosition = position;
 
         // Save position for chase investigation (even if action expires later)
-        _lastChaseActionPosition = actionData.position;
+        _lastChaseActionPosition = position;
         _hasLastChaseActionPosition = true;
     }
 
@@ -462,7 +463,7 @@ public class EnemyAI : MonoBehaviour
     {
         _attraction = 0f;
     }
-    
+
     /// <summary>
     /// Selects the patrol area whose center is closest to the enemy's current position.
     /// Sets currentPatrolArea to the selected area.
@@ -474,34 +475,34 @@ public class EnemyAI : MonoBehaviour
             currentPatrolArea = null;
             return;
         }
-        
+
         Vector3 enemyPosition = transform.position;
         PatrolArea closestArea = null;
         float closestDistance = float.MaxValue;
-        
+
         foreach (var area in patrolAreas)
         {
             if (area == null || area.waypoints == null || area.waypoints.Length == 0)
                 continue;
-            
+
             Vector3 center = area.GetCenter();
             float distance = Vector3.Distance(enemyPosition, center);
-            
+
             if (distance < closestDistance)
             {
                 closestDistance = distance;
                 closestArea = area;
             }
         }
-        
+
         currentPatrolArea = closestArea;
-        
+
         if (currentPatrolArea == null)
         {
             Log.W("No valid patrol area found. Ensure patrol areas have at least one waypoint.", _LOG_COLOR, _LOG_TAG);
         }
     }
-    
+
     /// <summary>
     /// Returns the waypoints for the current patrol area.
     /// Used by PatrolEnemyState to get the waypoints to patrol.
@@ -512,7 +513,7 @@ public class EnemyAI : MonoBehaviour
         {
             return currentPatrolArea.waypoints;
         }
-        
+
         return null;
     }
     #endregion
