@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5777304383486920038}
   - component: {fileID: 7387573013006191233}
   - component: {fileID: 1204472107241218874}
-  - component: {fileID: 3765778881730675963}
+  - component: {fileID: 6081149977357788771}
   m_Layer: 0
   m_Name: SoundTool-Mid-Screwdriver
   m_TagString: Untagged
@@ -125,7 +125,7 @@ CapsuleCollider:
   m_Height: 1.13
   m_Direction: 0
   m_Center: {x: -0.00000011920929, y: 0.091564514, z: 0}
---- !u!114 &3765778881730675963
+--- !u!114 &6081149977357788771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,9 +134,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 9019797781247466490}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5daaadab1bf2fc478c36fa0e0905a8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
+  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
+  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
+  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
+  checkTags: 00000000
+  setTags: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}

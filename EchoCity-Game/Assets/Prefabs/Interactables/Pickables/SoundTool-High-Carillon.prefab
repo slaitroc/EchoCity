@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6565548788856607269}
   - component: {fileID: 7124912278037628567}
   - component: {fileID: 1978386433454837963}
+  - component: {fileID: 731098082241994560}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -86,6 +87,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &731098082241994560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153794293493062029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!1 &2690565331741262398
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +111,7 @@ GameObject:
   - component: {fileID: 5948716140490886068}
   - component: {fileID: 8369148438779983393}
   - component: {fileID: 8645962666607468124}
+  - component: {fileID: 4688439076200420290}
   m_Layer: 0
   m_Name: LidHinge
   m_TagString: Untagged
@@ -172,6 +187,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4688439076200420290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2690565331741262398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!1 &4537777910336760176
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +211,7 @@ GameObject:
   - component: {fileID: 4515635749341768412}
   - component: {fileID: 8320787533092106267}
   - component: {fileID: 6998628375932898655}
+  - component: {fileID: 7767305857774721217}
   m_Layer: 0
   m_Name: Box
   m_TagString: Untagged
@@ -258,6 +287,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7767305857774721217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537777910336760176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!1 &5337908310112159342
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +309,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8884299772005818300}
+  - component: {fileID: 3965556255802317529}
+  - component: {fileID: 1975192836765544653}
   m_Layer: 0
   m_Name: SoundTool-High-Carillon
   m_TagString: Untagged
@@ -295,6 +339,49 @@ Transform:
   - {fileID: 4692353265374310318}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 166.325, z: 0}
+--- !u!65 &3965556255802317529
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337908310112159342}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1975192836765544653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337908310112159342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
+  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
+  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
+  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
+  checkTags: 00000000
+  setTags: 
+  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
+  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
+  pickableData: {fileID: 11400000, guid: ed686a97e9a2ee04c956828f8a62fbb2, type: 2}
 --- !u!1 &5671003574447863441
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +393,7 @@ GameObject:
   - component: {fileID: 564592994924243462}
   - component: {fileID: 4348746905646233761}
   - component: {fileID: 599398430759654564}
+  - component: {fileID: 7405166466355532376}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -381,6 +469,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7405166466355532376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5671003574447863441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!1 &6245564772632294509
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +493,7 @@ GameObject:
   - component: {fileID: 4622367955532817069}
   - component: {fileID: 8759954089346587414}
   - component: {fileID: 8027882496407152658}
+  - component: {fileID: 6159899362342879344}
   m_Layer: 0
   m_Name: Lid
   m_TagString: Untagged
@@ -467,6 +569,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6159899362342879344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245564772632294509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!1 &8184333002406967405
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,6 +593,7 @@ GameObject:
   - component: {fileID: 4692353265374310318}
   - component: {fileID: 5925066201047396395}
   - component: {fileID: 9043855500437016680}
+  - component: {fileID: 6947321512051514790}
   m_Layer: 0
   m_Name: MusicLeaf
   m_TagString: Untagged
@@ -553,3 +669,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6947321512051514790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8184333002406967405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1

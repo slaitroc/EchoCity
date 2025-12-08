@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5291375441621292832}
   - component: {fileID: 1681866263107089602}
   - component: {fileID: 2921554663591500122}
-  - component: {fileID: 7330598876355636359}
   - component: {fileID: 3739604423625357895}
-  - component: {fileID: 5696927567950703106}
+  - component: {fileID: 3494900020996348424}
+  - component: {fileID: 8271992847789513432}
   m_Layer: 0
   m_Name: SoundTool-CannedFood
   m_TagString: Untagged
@@ -89,19 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7330598876355636359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7202091699739505704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectFrequency: 2
 --- !u!136 &3739604423625357895
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -125,7 +112,7 @@ CapsuleCollider:
   m_Height: 0.67
   m_Direction: 1
   m_Center: {x: 0.11, y: 0.16, z: 0.01}
---- !u!114 &5696927567950703106
+--- !u!114 &3494900020996348424
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,9 +121,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 7202091699739505704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5daaadab1bf2fc478c36fa0e0905a8e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectFrequency: 1
+--- !u!114 &8271992847789513432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7202091699739505704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
+  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
+  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
+  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
+  checkTags: 00000000
+  setTags: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
