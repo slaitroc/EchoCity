@@ -28,12 +28,17 @@ namespace EchoCity
             _interactionText = root.Q<TextElement>("interaction-text");
             _interactionKey = root.Q<VisualElement>("interaction-key");
 
+            SetVisible(true);
         }
 
-        public void SetVisible(bool visible)
+        private void OnDisable() => SetVisible(false);
+
+
+        private void SetVisible(bool visible)
         {
             if (_crosshair == null) return;
             _crosshair.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+            _interactionPanel.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         public void IsInteractable(bool isOnInteractable)

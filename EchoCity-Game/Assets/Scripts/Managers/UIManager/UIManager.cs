@@ -175,6 +175,7 @@ namespace EchoCity
         private void OpenHUDMenuHandler(HudEnum hud)
         {
             radialMenuController.enabled = !radialMenuController.enabled;
+            crosshairController.enabled = !crosshairController.enabled;
         }
 
         private void OpenPauseMenuHandler()
