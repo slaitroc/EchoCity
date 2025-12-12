@@ -36,8 +36,6 @@ namespace EchoCity
             _equippedIcon = _root.Q<VisualElement>("EquippedIcon");
             _equippedName = _root.Q<Label>("EquippedName");
 
-            ClearEquipped();
-
             yield return null;
         }
 
