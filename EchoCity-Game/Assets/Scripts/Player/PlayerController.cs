@@ -59,20 +59,20 @@ namespace EchoCity
         void OnEnable()
         {
             if (itemEquippedEvent)
-                itemEquippedEvent.OnEventRaised += EquipItem;
+                itemEquippedEvent.OnEventRaised += EquipItemHandler;
 
             if (playerHitEvent)
-                playerHitEvent.OnEventRaised += playerHit;
+                playerHitEvent.OnEventRaised += PlayerHitHandler;
 
         }
 
         void OnDisable()
         {
             if (itemEquippedEvent)
-                itemEquippedEvent.OnEventRaised -= EquipItem;
+                itemEquippedEvent.OnEventRaised -= EquipItemHandler;
 
             if (playerHitEvent)
-                playerHitEvent.OnEventRaised -= playerHit;
+                playerHitEvent.OnEventRaised -= PlayerHitHandler;
         }
 
         void Start()
@@ -111,7 +111,7 @@ namespace EchoCity
             ECSound.PlayAtPosition(fullInventorySound, transform.position, newAudioSphereEvent, "SFX");
         }
 
-        public void EquipItem(int index, PickableData data, GameObject prefab)
+        public void EquipItemHandler(int index, PickableData data, GameObject prefab)
         {
             Log.D($"Equipping item", LOG_COLOR, LOG_TAG);
             equippedItem = new EquippedItem(index, data, prefab);
@@ -120,7 +120,7 @@ namespace EchoCity
 
         }
 
-        public void playerHit(EnemyAI enemy)
+        public void PlayerHitHandler(EnemyAI enemy)
         {
             Log.D($"Taking {damageAmount} damage.", LOG_COLOR, LOG_TAG);
             currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
