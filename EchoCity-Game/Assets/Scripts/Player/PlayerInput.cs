@@ -58,30 +58,32 @@ namespace EchoCity
 
         void Awake()
         {
-            //starterAssetsInputs = GameObject.FindGameObjectWithTag("Player")?.GetComponent<StarterAssetsInputs>();
             _playerActionMap = inputActionAsset.FindActionMap("Player");
             if (_playerActionMap != null)
             {
+                // Movement
                 _playerActionMap["Move"].performed += OnMove;
                 _playerActionMap["Move"].canceled += OnMove;
                 _playerActionMap["Look"].performed += OnLook;
                 _playerActionMap["Look"].canceled += OnLook;
                 _playerActionMap["Jump"].performed += OnJump;
                 _playerActionMap["Sprint"].performed += OnSprint;
-                //_playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
                 _playerActionMap["Interact"].performed += OnInteract;
+                _playerActionMap["DropItem"].performed += OnDropItem;
+                _playerActionMap["UseTool"].performed += OnUseTool;
+
+                // UI
                 _playerActionMap["OpenInventory"].started += OnOpenInventory;
                 _playerActionMap["OpenInventory"].performed += OnCloseInventory;
                 _playerActionMap["EnterPause"].performed += OnEnterPause;
-                _playerActionMap["DropItem"].performed += OnDropItem;
-                _playerActionMap["UseTool"].performed += OnUseTool;
-                _playerActionMap["PlayerHit"].performed += OnPlayerHit;
 
+                //Test
+                //_playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
+                _playerActionMap["PlayerHit"].performed += OnPlayerHit;
                 _playerActionMap["Test1"].performed += OnTest1;
                 _playerActionMap["Test2"].performed += OnTest2;
                 _playerActionMap["Test3"].performed += OnTest3;
                 _playerActionMap["Test4"].performed += OnTest4;
-
             }
 
             //Error Logs
@@ -93,6 +95,44 @@ namespace EchoCity
 
         void OnEnable() => SubscribeToEvents();
         void OnDisable() => UnsubscribeFromEvents();
+
+        private void SubscribeToEvents()
+        {
+            if (enterInteractableAreaEvent)
+            {
+                enterInteractableAreaEvent.OnEventRaised -= EnterInteractionRangeHandler;
+                enterInteractableAreaEvent.OnEventRaised += EnterInteractionRangeHandler;
+            }
+            if (exitInteractableAreaEvent)
+            {
+                exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
+                exitInteractableAreaEvent.OnEventRaised += ExitInteractionRangeHandler;
+            }
+            if (enablePlayerActionMapEvent)
+            {
+                enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMapHandler;
+                enablePlayerActionMapEvent.OnEventRaised += EnablePlayerActionMapHandler;
+            }
+            if (disablePlayerActionMapEvent)
+            {
+                disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMapHandler;
+                disablePlayerActionMapEvent.OnEventRaised += DisablePlayerActionMapHandler;
+            }
+            if (wearEcholocatorEvent)
+            {
+                wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
+                wearEcholocatorEvent.OnEventRaised += WearEcholocatorHandler;
+            }
+        }
+        private void UnsubscribeFromEvents()
+        {
+            if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised -= EnterInteractionRangeHandler;
+            if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
+            if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMapHandler;
+            if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMapHandler;
+            if (wearEcholocatorEvent) wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
+        }
+
 
         void Update()
         {
@@ -107,14 +147,12 @@ namespace EchoCity
                 if (!_canInteract)
                 {
                     canInteractStartEvent.RaiseEvent();
-                    //Log.D("Can interact", _LOG_COLOR, _LOG_TAG);
                     _canInteract = true;
                 }
             }
             else if (_canInteract)
             {
                 canInteractStopEvent.RaiseEvent();
-                //Log.D("Can no longer interact", _LOG_COLOR, _LOG_TAG);
                 _canInteract = false;
             }
             #endregion
@@ -157,14 +195,6 @@ namespace EchoCity
             }
         }
 
-        private void OnWearEcholocator(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                // materialToggleEvent?.RaiseEvent();
-            }
-        }
-
         private void OnInteract(InputAction.CallbackContext context)
         {
             if (context.performed)
@@ -193,17 +223,37 @@ namespace EchoCity
 
         }
 
+        private void OnDropItem(InputAction.CallbackContext context)
+        {
+            //DROP ITEM TEST
+            if (context.performed)
+                playerController.DropItem();
+        }
+
+        private void OnUseTool(InputAction.CallbackContext context)
+        {
+            //USE TOOL TEST
+            if (context.performed)
+            {
+                playerController.UseTool();
+            }
+        }
+
+        #region UI
         private void OnEnterPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
             switchToPauseStateEvent.RaiseEvent();
         }
 
-
         private void OnOpenInventory(InputAction.CallbackContext context)
         {
             if (!context.started) return;
             _playerActionMap["Look"].performed -= OnLook;
+            _playerActionMap["Interact"].performed -= OnInteract;
+            _playerActionMap["DropItem"].performed -= OnDropItem;
+            _playerActionMap["UseTool"].performed -= OnUseTool;
+
             switchToHudStateEvent.RaiseEvent(HudEnum.Inventory);
 
         }
@@ -213,7 +263,20 @@ namespace EchoCity
             if (!context.performed) return;
             switchToPlayingStateEvent.RaiseEvent();
             _playerActionMap["Look"].performed += OnLook;
+            _playerActionMap["Interact"].performed += OnInteract;
+            _playerActionMap["DropItem"].performed += OnDropItem;
+            _playerActionMap["UseTool"].performed += OnUseTool;
         }
+
+        #endregion
+
+        #region Test Input Actions
+        private void OnWearEcholocator(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                materialToggleEvent?.RaiseEvent();
+        }
+
 
         private void OnTest1(InputAction.CallbackContext context)
         {
@@ -251,23 +314,6 @@ namespace EchoCity
             }
         }
 
-
-        private void OnDropItem(InputAction.CallbackContext context)
-        {
-            //DROP ITEM TEST
-            if (context.performed)
-                playerController.DropItem();
-        }
-
-        private void OnUseTool(InputAction.CallbackContext context)
-        {
-            //USE TOOL TEST
-            if (context.performed)
-            {
-                playerController.UseTool();
-            }
-        }
-
         private void OnTest4(InputAction.CallbackContext context)
         {
             // SPAWN DIALOG TEST
@@ -277,13 +323,15 @@ namespace EchoCity
             }
         }
 
-        private void EnablePlayerActionMap()
+        #endregion
+
+        private void EnablePlayerActionMapHandler()
         {
             _playerActionMap.Enable();
             MethodsUI.HideCursor();
         }
 
-        private void DisablePlayerActionMap()
+        private void DisablePlayerActionMapHandler()
         {
             _playerActionMap.Disable();
         }
@@ -304,43 +352,6 @@ namespace EchoCity
         private void WearEcholocatorHandler()
         {
             materialToggleEvent?.RaiseEvent();
-        }
-
-        private void SubscribeToEvents()
-        {
-            if (enterInteractableAreaEvent)
-            {
-                enterInteractableAreaEvent.OnEventRaised -= EnterInteractionRangeHandler;
-                enterInteractableAreaEvent.OnEventRaised += EnterInteractionRangeHandler;
-            }
-            if (exitInteractableAreaEvent)
-            {
-                exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
-                exitInteractableAreaEvent.OnEventRaised += ExitInteractionRangeHandler;
-            }
-            if (enablePlayerActionMapEvent)
-            {
-                enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMap;
-                enablePlayerActionMapEvent.OnEventRaised += EnablePlayerActionMap;
-            }
-            if (disablePlayerActionMapEvent)
-            {
-                disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMap;
-                disablePlayerActionMapEvent.OnEventRaised += DisablePlayerActionMap;
-            }
-            if (wearEcholocatorEvent)
-            {
-                wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
-                wearEcholocatorEvent.OnEventRaised += WearEcholocatorHandler;
-            }
-        }
-        private void UnsubscribeFromEvents()
-        {
-            if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised -= EnterInteractionRangeHandler;
-            if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
-            if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMap;
-            if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMap;
-            if (wearEcholocatorEvent) wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
         }
     }
 }
