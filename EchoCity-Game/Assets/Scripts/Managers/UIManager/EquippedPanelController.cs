@@ -20,6 +20,10 @@ namespace EchoCity
         private VisualElement _equippedPanel;
         private VisualElement _equippedIcon;
         private Label _equippedName;
+
+        private string _currentEquippedName = "";
+        private Sprite _currentEquippedIcon = null;
+
         #endregion
 
         private void OnEnable()
@@ -36,7 +40,8 @@ namespace EchoCity
             _equippedIcon = _root.Q<VisualElement>("EquippedIcon");
             _equippedName = _root.Q<Label>("EquippedName");
 
-            ClearEquipped();
+            if (_currentEquippedName != noItemText)
+                SetEquippedItem(_currentEquippedIcon, _currentEquippedName);
 
             yield return null;
         }
@@ -47,10 +52,12 @@ namespace EchoCity
                 return;
 
             _equippedName.text = string.IsNullOrWhiteSpace(itemName) ? noItemText : itemName;
+            _currentEquippedName = _equippedName.text;
 
             if (icon != null)
             {
                 _equippedIcon.style.backgroundImage = new StyleBackground(icon);
+                _currentEquippedIcon = icon;
             }
             else
             {
@@ -64,6 +71,8 @@ namespace EchoCity
                 return;
 
             _equippedName.text = noItemText;
+            _currentEquippedName = noItemText;
+            _currentEquippedIcon = null;
             _equippedIcon.style.backgroundImage = StyleKeyword.None;
         }
     }

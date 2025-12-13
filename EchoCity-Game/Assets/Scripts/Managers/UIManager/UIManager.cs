@@ -240,6 +240,14 @@ namespace EchoCity
             if (pauseMenuEvent) pauseMenuEvent.OnEventRaised -= OpenPauseMenuHandler;
             if (dialogMenuEvent) dialogMenuEvent.OnEventRaised -= OpenDialogMenuHandler;
             if (deathMenuEvent) deathMenuEvent.OnEventRaised -= OpenDeathMenuHandler;
+            if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised -= OpenLoadingScreenHandler;
+            if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised -= CloseLoadingScreenHandler;
+            if (winMenuEvent) winMenuEvent.OnEventRaised -= OpenWinMenuHandler;
+            if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= CrosshairInteractableHandler;
+            if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= CrosshairInteractableHandler;
+            if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= SpawnWarningHandler;
+            if (itemEquippedEvent) itemEquippedEvent.OnEventRaised -= ItemEquippedHandler;
+            if (dropItemEvent) dropItemEvent.OnEventRaised -= DropItemEventHandler;
         }
 
     }
