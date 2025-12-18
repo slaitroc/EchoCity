@@ -30,6 +30,8 @@ note on link
     A = Attraction function
     At = Attraction threshold
 end note
+Patrol -[#4050fbff]-> PlayerChase : <color:#4050fbff>player moving\n<color:#4050fbff> in FOV
+
 
 CheckSound : - moving toward the last heard sound above threshold
 
