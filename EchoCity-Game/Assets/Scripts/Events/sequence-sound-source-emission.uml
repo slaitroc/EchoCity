@@ -1,0 +1,99 @@
+@startuml
+skinparam backgroundColor #151b23
+
+skinparam defaultFontName "MesloLGL Nerd Font"
+skinparam defaultFontSize 13
+skinparam titleFontColor #cececeff
+skinparam MaxMessageSize 200
+
+
+skinparam note {
+    BackgroundColor #404040ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam noteTextAlignment center
+
+skinparam sequenceLifeLineBorderColor #cececeff
+
+skinparam arrowColor #cececeff
+skinparam arrowFontColor #cececeff
+
+skinparam sequenceArrow {
+    FontColor #cececeff
+    Color #cececeff
+    Thickness 1
+}
+
+skinparam sequenceGroupFontColor #cececeff
+skinparam sequenceGroupBorderColor #cececeff
+skinparam sequenceGroupHeaderBackgroundColor #cececeff
+skinparam sequenceGroupBackgroundColor #ffffffff
+
+
+skinparam participant {
+    BackgroundColor #202020ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam control {
+    BackgroundColor #4d1841ff
+    BorderColor #f148cdff
+    FontColor #cececeff
+}
+
+title SoundSource Emission Sequence Diagram
+
+participant "MonoBehaviour\n (!=Enemy)" as GameObject
+participant ECSound
+control Coroutines
+participant "Echolocation Manager" as EcholocationManager
+participant Enemy
+
+activate GameObject #4173b6ff
+
+/ rnote right of Enemy #404040ff 
+Enemy calculates A (attraction)
+and C (confusion) values in Update()
+based on the last perceived sound 
+and its position. 
+end note
+
+
+/ rnote over GameObject #404040ff : ...
+GameObject -> ECSound : EcSound.Play(<color:#e74d2fff>events</color>, soundSource)
+activate ECSound #4173b6ff
+rnote over ECSound #404040ff : ...
+
+ECSound -> ECSound ++-- #4173b6ff : PlayAudioClip()
+note right: Plays clips using AudioSource pooling \n and handles 3D sound settings and mixer groups 
+
+' --- Primo Invio ---
+ECSound ->> EcholocationManager : <color:#e74d2fff> SOSoundEmissionDataEvent <color:#e9cf0aff>newAudioSphereEvent
+
+EcholocationManager -> EcholocationManager ++-- #78cc2fff : <color:#78cc2fff> AddAudioSphereHandler()
+
+' --- Secondo Invio e Coroutine ---
+ECSound ->> Enemy : <color:#e74d2fff> SOSoundEmissionDataEvent <color:#e9cf0aff>newPerceivedSoundEvent
+
+Enemy -> Enemy ++-- #78cc2fff : <color:#78cc2fff> newPerceivedSoundHandler()
+
+alt if (<color:#4173b6ff>soundSource.isToolSound</color>)
+    ' La freccia asincrona indica l'avvio della coroutine
+    ECSound ->>  Coroutines  : <color:#f148cdff>StartCoroutine UpdatePositionCoroutine()
+    activate Coroutines #f148cdff
+
+    loop every X seconds
+        Coroutines ->> Enemy : <color:#e74d2fff>SOVector3Event <color:#e9cf0aff>updateSoundPositionEvent
+        Enemy -> Enemy ++-- #78cc2fff : <color:#78cc2fff> updatePerceivedPositionHandler()
+    end
+    deactivate Coroutines
+end
+    ECSound --> GameObject 
+    deactivate ECSound #4173b6ff
+
+rnote over GameObject #404040ff : ...
+
+@enduml
