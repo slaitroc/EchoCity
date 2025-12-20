@@ -27,6 +27,7 @@ namespace EchoCity
         private VisualElement _redBlinkOverlay;
         private VisualElement _blueBlinkOverlay;
         private Button startGameButton;
+        private Button playgroundButton;
         private Button settingsButton;
         private Button quitButton;
         private Button feedbackButton;
@@ -51,11 +52,11 @@ namespace EchoCity
         {
             _titleMenuContainer = _root.Q<VisualElement>("TitleMenuContainer");
             startGameButton = _root.Q<Button>("StartGameButton");
+            playgroundButton = _root.Q<Button>("PlaygroundButton");
             settingsButton = _root.Q<Button>("SettingsButton");
             // quitButton = _root.Q<Button>("QuitButton");
             feedbackButton = _root.Q<Button>("FeedbackButton");
-            buttons = new Button[] { startGameButton, settingsButton, feedbackButton };
-
+            buttons = new Button[] { startGameButton, playgroundButton, settingsButton, feedbackButton };
             _redBlinkOverlay = _root.Q<VisualElement>("RedBlinkOverlay");
             _blueBlinkOverlay = _root.Q<VisualElement>("BlueBlinkOverlay");
 
@@ -92,6 +93,7 @@ namespace EchoCity
             });
 
             if (startGameButton != null) startGameButton.clicked += StartGameClickHandler;
+            if (playgroundButton != null) playgroundButton.clicked += PlaygroundClickHandler;
             if (settingsButton != null) settingsButton.clicked += SettingsClickHandler;
             if (quitButton != null) quitButton.clicked += QuitClickHandler;
             if (feedbackButton != null) feedbackButton.clicked += FeedbackClickHandler;
@@ -151,6 +153,14 @@ namespace EchoCity
             uiManager.SwitchToInitLevel(SceneEnum.Level1);
         }
 
+        private void PlaygroundClickHandler()
+        {
+            _titleMenuContainer.AddToClassList("hide");
+            _showCursor = false;
+
+            uiManager.SwitchToInitLevel(SceneEnum.Playground);
+        }
+
         private void SettingsClickHandler()
         {
             uiManager.OpenSettingsMenu();
@@ -163,6 +173,7 @@ namespace EchoCity
         private void OnDisable()
         {
             if (startGameButton != null) startGameButton.clicked -= StartGameClickHandler;
+            if (playgroundButton != null) playgroundButton.clicked -= PlaygroundClickHandler;
             if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
             if (quitButton != null) quitButton.clicked -= QuitClickHandler;
             if (feedbackButton != null) feedbackButton.clicked -= FeedbackClickHandler;

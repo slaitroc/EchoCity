@@ -8,7 +8,8 @@ namespace EchoCity
         None = 0,
         Persistent = 1,
         Level1 = 2,
-        Level2 = 3
+        Level2 = 3,
+        Playground = 100
     }
 
     [CreateAssetMenu(fileName = "SceneEnumEventSO", menuName = "ECHO CITY/Events/SceneEnumEventSO")]
