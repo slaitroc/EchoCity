@@ -21,7 +21,9 @@ namespace EchoCity
         private VisualElement _root;
         private Label _speakerLabel;
         private Label _dialogueLabel;
+        private Button _skipButton;
         private Button _continueButton;
+        private Button[] buttons;
         private DialogData _currentDialogData;
         private int _currentLineIndex = 0;
         #endregion
@@ -38,12 +40,23 @@ namespace EchoCity
         {
             _speakerLabel = _root.Q<Label>("SpeakerLabel");
             _dialogueLabel = _root.Q<Label>("DialogueLabel");
+            _skipButton = _root.Q<Button>("SkipButton");
             _continueButton = _root.Q<Button>("ContinueButton");
+
+            buttons = new Button[] { _skipButton, _continueButton };
 
             yield return null;
 
+            _root.RegisterCallback<MouseMoveEvent>(evt =>
+            {
+                foreach (var button in buttons)
+                    button.pickingMode = PickingMode.Position;
+                DisableFocusHandler();
+            });
+
             _continueButton.clicked += AdvanceDialog;
-            _continueButton.Focus();
+            _skipButton.clicked += CloseDialog;
+
         }
 
         public void SpawnDialogHandler(DialogData dialogData)
@@ -78,12 +91,18 @@ namespace EchoCity
             uiManager.SwitchToPlayState();
         }
 
-        void Update()
+        private void Update()
         {
             MethodsUI.SetCursorState(true);
         }
 
-        void OnDisable()
+        private void DisableFocusHandler()
+        {
+            foreach (var button in buttons)
+                button?.Blur();
+        }
+
+        private void OnDisable()
         {
             _root.style.display = DisplayStyle.None;
             _continueButton.clicked -= AdvanceDialog;

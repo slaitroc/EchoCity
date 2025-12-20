@@ -4,9 +4,14 @@
         <ui:VisualElement name="TextBox" class="textbox">
             <ui:Label name="SpeakerLabel" class="speaker-label" text="Speaker" />
             <ui:Label name="DialogueLabel" class="dialog-label" text="Dialog text goes here. This is a sample dialog to show how the text will appear in the dialog box." />
-            <ui:Button name="ContinueButton" class="continue-button">
-                <ui:Label text="Continue" />
-            </ui:Button>
+            <ui:VisualElement name="ButtonContainer" class="button-container">
+                <ui:Button name="SkipButton" class="button skip-button">
+                    <ui:Label text="Skip" />
+                </ui:Button>
+                <ui:Button name="ContinueButton" class="button continue-button">
+                    <ui:Label text="Continue" />
+                </ui:Button>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
