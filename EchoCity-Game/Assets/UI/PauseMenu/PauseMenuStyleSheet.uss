@@ -26,7 +26,7 @@
 
 .panel {
     width: 70%;
-    height: 70%;
+    height: 80%;
     background-color: rgba(29, 29, 29, 0.95);
     border-radius: 16px;
     border-width: 1px;
@@ -39,6 +39,7 @@
 }
 
 .title {
+    bottom: 20px;
     -unity-font-style: normal;
     font-size: 100px;
     color: white;
@@ -46,6 +47,16 @@
     margin-bottom: 0px;
     -unity-text-align: middle-center;
     -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+}
+
+.buttons-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .button {

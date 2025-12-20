@@ -146,18 +146,13 @@ namespace EchoCity
 
         private void StartGameClickHandler()
         {
-
             _titleMenuContainer.AddToClassList("hide");
-            _showCursor = false;
-
             uiManager.SwitchToInitLevel(SceneEnum.Level1);
         }
 
         private void PlaygroundClickHandler()
         {
             _titleMenuContainer.AddToClassList("hide");
-            _showCursor = false;
-
             uiManager.SwitchToInitLevel(SceneEnum.Playground);
         }
 
@@ -177,6 +172,8 @@ namespace EchoCity
             if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
             if (quitButton != null) quitButton.clicked -= QuitClickHandler;
             if (feedbackButton != null) feedbackButton.clicked -= FeedbackClickHandler;
+
+            _showCursor = false;
         }
     }
 }
