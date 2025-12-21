@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: HandsClap
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  soundClassIntensityFactorMultiplier: 1.2
   audioClip: {fileID: 0}
+  audioLengthReference: 0.94306123
+  audioLengthOverride: 0.2
   intensity: 0.566
   volume: 0.712
   radius: 7.8
   gapBetweenSounds: 0
-  minimumDuration: 0.2
+  minimumDuration: 0.1
   emitOnStart: 0
   randomAudioClips:
   - {fileID: 8300000, guid: c9fd15e2707c4a84d93c41518c387f50, type: 3}

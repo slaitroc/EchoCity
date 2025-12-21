@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
   m_Name: SatellitePhoneKey
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  soundClass: {fileID: 11400000, guid: b9ba5889cfc2b2d41b9c957eecc272b9, type: 2}
+  soundClassIntensityFactorMultiplier: 1.05
   audioClip: {fileID: 0}
+  audioLengthReference: 0.1797279
+  audioLengthOverride: 0.2
   intensity: 0.597
-  volume: 0.503
+  volume: 0.372
   radius: 12.4
   gapBetweenSounds: 0
   minimumDuration: 0.1

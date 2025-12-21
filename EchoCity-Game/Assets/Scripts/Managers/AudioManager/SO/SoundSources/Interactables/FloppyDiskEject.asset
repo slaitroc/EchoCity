@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
   m_Name: FloppyDiskEject
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  soundClass: {fileID: 11400000, guid: c262f58ba54d01d4886b955d374e26d3, type: 2}
+  soundClassIntensityFactorMultiplier: 1
   audioClip: {fileID: 8300000, guid: 4f13192969b3ed843ac0d079dc6513df, type: 3}
+  audioLengthReference: 1.812517
+  audioLengthOverride: 1
   intensity: 0.409
   volume: 0.369
   radius: 10.1

@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: LowFrequencySoundClass
   m_EditorClassIdentifier: 
   frequency: 0
-  rangeFactor: 1.5
-  intensityFactor: 0.5
-  decay: 1
+  intensityFactor: 0.05
+  rangeFactor: 20
+  decay: 1.4
+  persistence: 0.8
+  isConfusing: 0
+  isEnemy: 0
+  isPlayerBodySound: 0

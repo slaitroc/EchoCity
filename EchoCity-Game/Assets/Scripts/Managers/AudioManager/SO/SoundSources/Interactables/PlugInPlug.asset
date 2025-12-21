@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
   m_Name: PlugInPlug
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  soundClass: {fileID: 11400000, guid: d4a43699c88e5f44494578a69af37aff, type: 2}
+  soundClassIntensityFactorMultiplier: 0.6
   audioClip: {fileID: 0}
+  audioLengthReference: 1.8750113
+  audioLengthOverride: 1
   intensity: 0.43
-  volume: 0.409
+  volume: 1
   radius: 12.8
   gapBetweenSounds: 0
   minimumDuration: 0.1

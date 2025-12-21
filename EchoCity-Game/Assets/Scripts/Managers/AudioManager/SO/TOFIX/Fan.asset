@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: MidFanSoundSource
+  m_Name: Fan
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
-  audioClip: {fileID: 8300000, guid: 6af6d56d5c573344a908029d8a7220c7, type: 3}
-  intensity: 0.5
-  volume: 0.4
-  radius: 3
+  soundClass: {fileID: 11400000, guid: 68ae3a0d3cc8ec043aa87aebc9c628fa, type: 2}
+  soundClassIntensityFactorMultiplier: 1
+  audioClip: {fileID: 8300000, guid: 24f164438a342d2449b1d35f26f869c6, type: 3}
+  audioLengthReference: 117.253334
+  audioLengthOverride: 117
+  intensity: 0.754
+  volume: 1
+  radius: 28.2
   gapBetweenSounds: 0
   minimumDuration: 0.1
   emitOnStart: 0

@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: HighGeneratorHum
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
+  soundClassIntensityFactorMultiplier: 1
   audioClip: {fileID: 8300000, guid: 360280740f9b070408fbaf7dafb202f5, type: 3}
+  audioLengthReference: 4
+  audioLengthOverride: 4
   intensity: 0.719
+  volume: 1
   radius: 4
   gapBetweenSounds: 2
   minimumDuration: 2

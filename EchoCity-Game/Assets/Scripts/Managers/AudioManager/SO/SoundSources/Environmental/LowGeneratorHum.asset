@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
   m_Name: LowGeneratorHum
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: d4a43699c88e5f44494578a69af37aff, type: 2}
+  soundClass: {fileID: 11400000, guid: 68ae3a0d3cc8ec043aa87aebc9c628fa, type: 2}
+  soundClassIntensityFactorMultiplier: 1
   audioClip: {fileID: 8300000, guid: 360280740f9b070408fbaf7dafb202f5, type: 3}
+  audioLengthReference: 4
+  audioLengthOverride: 4
   intensity: 0.754
+  volume: 1
   radius: 4
   gapBetweenSounds: 2
   minimumDuration: 2
