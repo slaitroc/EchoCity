@@ -1,5 +1,14 @@
 # Attraction System
 
+## 0. Tuning Parameters
+
+> [!Caution]
+>If you are here to tune the attraction system, you will likely want to modify the following parameters in the `SOSoundSource` Scriptable Object:
+>
+>- `Sound Class Intensity Factor Multiplier`: this will slightly adjust the intensity of the sound class without affecting the sound class.
+That is to avoid messing with the sound class parameters which require a deeper understanding of the system.
+>- `Audio Length Override`: this will regolate the duration of the calculation, which is often the easy way to adjust, tune the attraction behaviour to fit the sound.
+
 ## 1. Attraction Function
 
 The attraction system quantifies how much an enemy is drawn to a sound source. This is represented by a dynamic value called **Attraction (A)**, which fluctuates based on sound properties and distance.
