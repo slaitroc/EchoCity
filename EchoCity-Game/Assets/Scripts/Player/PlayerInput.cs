@@ -44,7 +44,6 @@ namespace EchoCity
         [Header("Invoking")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
         [SerializeField] private SOPickable examplePickable;
-        [SerializeField] private SOEnemyAIEvent playerHitEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
         [SerializeField] private SOEventVoid switchToDeathStateEvent;
         [SerializeField] private SOEventVoid switchToWinStateEvent;
@@ -310,7 +309,7 @@ namespace EchoCity
             //PLAYER HIT TEST
             if (context.performed)
             {
-                playerHitEvent?.RaiseEvent(null);
+                playerController.TakeDamage(10f);
             }
         }
 
