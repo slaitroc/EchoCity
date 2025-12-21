@@ -43,18 +43,20 @@ public struct SoundClass
 public struct SoundEmissionData
 {
     private Vector3 _position;
-    private  readonly float _radius;
+    private readonly float _radius;
     private readonly float _intensity;
     private readonly float _duration;
     private readonly SoundClass _soundClass;
     private readonly float _soundClassIntensityFactorMultiplier;
-    
+    private readonly bool _isEnvironmental;
+
     public readonly Vector3 Position => _position;
     public readonly float Radius => _radius;
     public readonly float Intensity => _intensity;
     public readonly float Duration => _duration;
     public readonly SoundClass SoundClass => _soundClass;
     public readonly float SoundClassIntensityFactorMultiplier => _soundClassIntensityFactorMultiplier;
+    public readonly bool IsEnvironmental => _isEnvironmental;
 
 
     public SoundEmissionData(Vector3 pos, SOSoundSource soundSource)
@@ -65,6 +67,7 @@ public struct SoundEmissionData
         _soundClassIntensityFactorMultiplier = soundSource.SoundClassIntensityFactorMultiplier;
         _soundClass = new SoundClass(soundSource.SoundClass);
         _duration = soundSource.AudioLengthOverride;
+        _isEnvironmental = soundSource.IsEnvironmental;
     }
 }
 

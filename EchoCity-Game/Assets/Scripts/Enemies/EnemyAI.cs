@@ -231,6 +231,8 @@ namespace EchoCity
         private void PerceivedSoundHandler(SoundEmissionData sound)
         {
             if (sound.SoundClass.IsEnemy == true) return; // ignore enemy sounds
+            //NOTE environmental sound could become the source of confusion
+            if (sound.IsEnvironmental == true) return; // ignore environmental sounds
             if (sound.SoundClass.IsPlayerBodySound == true)
             {
                 if (lastPS.RemainingTime <= 0f)
