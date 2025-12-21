@@ -1,0 +1,67 @@
+@startuml
+skinparam backgroundColor #151b23
+
+skinparam defaultFontName "MesloLGL Nerd Font"
+skinparam defaultFontSize 13
+skinparam titleFontColor #cececeff
+skinparam MaxMessageSize 200
+
+
+skinparam note {
+    BackgroundColor #404040ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam noteTextAlignment center
+
+skinparam sequenceLifeLineBorderColor #cececeff
+
+skinparam arrowColor #cececeff
+skinparam arrowFontColor #cececeff
+
+skinparam sequenceArrow {
+    FontColor #cececeff
+    Color #cececeff
+    Thickness 1
+}
+
+skinparam sequenceGroupFontColor #cececeff
+skinparam sequenceGroupBorderColor #cececeff
+skinparam sequenceGroupHeaderBackgroundColor #cececeff
+skinparam sequenceGroupBackgroundColor #ffffffff
+
+
+skinparam participant {
+    BackgroundColor #202020ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam control {
+    BackgroundColor #4d1841ff
+    BorderColor #f148cdff
+    FontColor #cececeff
+}
+
+title Damage Interfaces
+
+participant "IHitDetector\n(The Sensor)" as HitDetector
+participant "IDamageDealer\n(The Weapon/Owner)" as DamageDealer
+participant "IDamageable\n(The Victim)" as Damageable
+
+[-> HitDetector : hit detection
+activate HitDetector #ffffffff
+HitDetector -> HitDetector ++ #4173b6ff : HitDetected\n(IDamageDealer, IDamageable)
+HitDetector -> DamageDealer : DealDamage(IDamageable)
+activate DamageDealer #4173b6ff
+DamageDealer -> Damageable : TakeDamage(float amount)
+activate Damageable #4173b6ff
+Damageable --> DamageDealer :
+deactivate Damageable
+DamageDealer --> HitDetector :
+deactivate DamageDealer
+deactivate HitDetector
+
+
+@enduml
