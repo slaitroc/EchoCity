@@ -1,166 +1,67 @@
 using System.Collections;
 using UnityEngine;
 
-public class AttackEnemyState : EnemyState
+namespace EchoCity
 {
-    #region Constants
-    protected new string _LOG_TAG = "ATTACK ENEMY STATE";
-    #endregion
-
-    private bool _attackEnded;
-    private float _coolDownTimer;
-
-    public AttackEnemyState(EnemyAI enemyAI, EnemyFSM fsm) : base(enemyAI, fsm) { }
-
-    public override void Enter()
+    public class AttackEnemyState : EnemyState
     {
-        _coolDownTimer = 0f;
-        _attackEnded = false;
-        _enemyAI.CurrentState = EnemyStatesEnum.Attack;
+        private bool _attackEnded;
+        private float _coolDownTimer;
 
-        // Play state entry phrase
-        if (_enemyData.AttackEnemyState_Phrases != null)
+        public AttackEnemyState(IEnemyContext context, EnemyFSM fsm) : base(context, fsm) { }
+
+        public override EnemyStatesEnum GetEnum() => EnemyStatesEnum.Attack;
+        public override void Enter()
         {
-            _enemyAI.PlayRandomPhrase(_enemyData.AttackEnemyState_Phrases);
+            _coolDownTimer = 0f;
+            _attackEnded = false;
+
+            _animator.SetBool(_animIsAttacking, true);
+
+            _agent.isStopped = true;
+
+            _owner.StartCoroutine(AttackRoutine());
         }
-        
-        // Emit investigation sound (for echolocation system)
-        EmitInvestigationSound();
-
-        _enemyAI.StartCoroutine(AttackRoutine());
-    }
-    public override void Update(float attraction)
-    {
-        _animator.SetFloat(_animSpeedParameter, 0f, 0.2f, Time.deltaTime);
-
-        if (_attackEnded)
+        public override void Update()
         {
-            Vector3 dir = _enemyAI.player.position - _enemyAI.transform.position;
-            dir.y = 0f; // Keep only horizontal direction
-            Quaternion targetRot = Quaternion.LookRotation(dir);
-            _enemyAI.transform.rotation = Quaternion.Slerp(
-                _enemyAI.transform.rotation,
-                targetRot,
-                _enemyData.CoolDownRotationSpeed * Time.deltaTime
-            );
-            _coolDownTimer += Time.deltaTime;
-            
-            // Check if player is still in chase range - if so, skip cooldown and resume chase immediately
-            float distToPlayer = Vector3.Distance(_enemyAI.transform.position, _enemyAI.player.position);
-            
-            // For immediate chase resumption, use D_exit (15m) when HasConfirmedPlayer is true
-            bool playerStillInChaseRange = _enemyAI.HasConfirmedPlayer 
-                ? distToPlayer <= _enemyData.D_exit 
-                : distToPlayer <= _enemyData.D_enter;
-            
-            // If player is still close, skip cooldown and resume chase immediately
-            if (playerStillInChaseRange && _coolDownTimer >= 0.1f) // Small delay to allow rotation
-            {
-                bool noiseChase = _enemyAI.IsNoiseChaseActive;
-                
-                if (noiseChase)
-                {
-                    _fsm.SwitchState(_fsm.chaseState);
-                }
-                else
-                {
-                    _fsm.SwitchState(_fsm.chaseDistanceState);
-                }
-                return;
-            }
-            
-            // Otherwise, wait for full cooldown
-            if (_coolDownTimer >= _enemyData.AttackCoolDown)
-            {
-                bool noiseChase = _enemyAI.IsNoiseChaseActive;
+            _animator.SetFloat(_animSpeedParameter, 0f, _enemyData.AttackSpeedDampTime, Time.deltaTime);
 
-                if (noiseChase)
-                {
-                    // CASO 1: inseguimento nato da rumore (threshold superata oppure da CheckSound)
-                    // → ha senso usare attraction / threshold e poter tornare a CheckSound
-                    if (attraction >= _enemyData.NoiseThreshold || distToPlayer <= _enemyData.D_enter)
-                    {
-                        // ancora molto attratto o ancora vicino → continua a inseguire normalmente
-                        _fsm.SwitchState(_fsm.chaseState);
-                    }
-                    else if (attraction < _enemyData.NoiseLoseThreshold)
-                    {
-                        // attrazione bassa ma l'ultimo suono potrebbe essere ancora rilevante → CheckSound
-                        _fsm.SwitchState(_fsm.checkSoundState);
-                    }
-                    else
-                    {
-                        // caso intermedio: attraction tra LoseThreshold e Threshold → continua a cercare
-                        _fsm.SwitchState(_fsm.chaseState);
-                    }
-                }
-                else
-                {
-                    // CASO 2: inseguimento nato SOLO da distanza (ChaseDistance/Attack senza threshold > 1)
-                    // → NON ha senso usare CheckSound, ci basiamo solo sulla distanza.
-                    if (distToPlayer <= _enemyData.D_exit)
-                    {
-                        // Il player è ancora entro D_exit (15m) → continua a inseguire in ChaseDistanceState
-                        _fsm.SwitchState(_fsm.chaseDistanceState);
-                    }
-                    else
-                    {
-                        // Il player è oltre D_exit (15m) → LostTargetState
-                        _fsm.SwitchState(_fsm.lostTargetState);
-                    }
-                }
+            if (_attackEnded)
+            {
+                Vector3 dir = _fov.ActiveTarget.Transform.position - _owner.Transform.position;
+                dir.y = 0f; // Keep only horizontal direction
+                Quaternion targetRot = Quaternion.LookRotation(dir);
+                _owner.Transform.rotation = Quaternion.Slerp(
+                    _owner.Transform.rotation,
+                    targetRot,
+                    _enemyData.CoolDownRotationSpeed * Time.deltaTime
+                );
+                _coolDownTimer += Time.deltaTime;
+
+                if (_coolDownTimer >= _enemyData.AttackCoolDown)
+                    _fsm.SwitchState(_fsm.PlayerChaseState);
             }
         }
-    }
 
 
-    public override void Exit()
-    {
-        // Solo cleanup, NIENTE SwitchState qui dentro
-        _animator.SetBool(_animIsAttacking, false);
-        _attackEnded = false;
-        _enemyAI.attackRangeDetector.attackCollider.enabled = false;
-    }
+        public override void Exit()
+        {
+            _animator.SetBool(_animIsAttacking, false);
+            _attackEnded = false;
+            _hitDetector.Disable();
+        }
 
+        IEnumerator AttackRoutine()
+        {
+            yield return new WaitForSeconds(_enemyData.AttackDamageDelay);
+            _hitDetector.Enable();
+            yield return new WaitForSeconds(_enemyData.AttackDamageWindowTime);
+            _hitDetector.Disable();
+            yield return new WaitForSeconds(_enemyData.AttackDuration - _enemyData.AttackDamageDelay - _enemyData.AttackDamageWindowTime);
+            _animator.SetBool(_animIsAttacking, false);
+            _attackEnded = true;
+        }
 
-    IEnumerator AttackRoutine()
-    {
-        _animator.SetBool(_animIsAttacking, true);
-        _agent.isStopped = true;
-
-        yield return new WaitForSeconds(_enemyData.AttackDamageDelay);
-        _enemyAI.attackRangeDetector.attackCollider.enabled = true;
-
-        yield return new WaitForSeconds(_enemyData.AttackDamageWindowTime);
-        _enemyAI.attackRangeDetector.attackCollider.enabled = false;
-
-        yield return new WaitForSeconds(_enemyData.AttackDuration - _enemyData.AttackDamageDelay - _enemyData.AttackDamageWindowTime);
-        _animator.SetBool(_animIsAttacking, false);
-        _attackEnded = true;
-
-    }
-
-    public override bool OnPlayerHit()
-    {
-        Log.D($"{_enemyAI.name} hit the player!", _LOG_COLOR, _LOG_TAG);
-        return true;
-    }
-
-    private void EmitInvestigationSound()
-    {
-        // Get event from EnemyAI (just a reference, no logic)
-        if (_enemyAI.enemySoundEmissionEvent == null || _enemyData == null) return;
-        
-        // Create sound emission data with investigation parameters
-        SoundEmissionData soundData = new SoundEmissionData(
-            _enemyAI.transform.position,                            // pos: enemy position
-            _enemyData.InvestigationSoundRadius,                     // rad: radius
-            _enemyData.InvestigationSoundIntensity,                  // intens: intensity
-            _enemyData.InvestigationSoundDuration,                   // dur: duration
-            _enemyData.InvestigationSoundFrequency                   // objFreq: frequency (0=Low, 1=Mid, 2=High)
-        );
-        
-        // Raise event (logic is in the state, EnemyAI is just a reference holder)
-        _enemyAI.enemySoundEmissionEvent.RaiseEvent(soundData);
+        public override void DealDamage(IDamageable damageable) => damageable.TakeDamage(_enemyData.Damage);
     }
 }

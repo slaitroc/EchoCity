@@ -1,13 +1,13 @@
-[System.Serializable]
-public enum EnemyStatesEnum
+namespace EchoCity
 {
-    Patrol,
-    MandatoryChase,
-    Chase,
-    ChaseDistance,
-    Attack,
-    CheckSound,
-    StandAndExaminate,
-    LostTarget,
-    GettingConfused
+    [System.Serializable]
+    public enum EnemyStatesEnum
+    {
+        Patrol,
+        SoundChase,
+        CheckSound,
+        PlayerChase,
+        Confused,
+        Attack
+    }
 }

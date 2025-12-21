@@ -1,578 +1,341 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using EchoCity;
-using EchoCity;
 
-[System.Serializable]
-public class PatrolArea
+namespace EchoCity
 {
-    public string name;
-    public Transform[] waypoints;
-
-    /// <summary>
-    /// Calculates the center position of this patrol area as the average of all waypoint positions.
-    /// </summary>
-    public Vector3 GetCenter()
+    [System.Serializable]
+    public struct PatrolArea
     {
-        if (waypoints == null || waypoints.Length == 0)
-            return Vector3.zero;
+        [SerializeField] private string name;
+        [SerializeField] private Transform[] waypoints;
 
-        Vector3 center = Vector3.zero;
-        int validWaypoints = 0;
+        public string Name => name;
+        public Transform[] Waypoints => waypoints;
 
-        foreach (var waypoint in waypoints)
+        public Vector3 GetCenter()
         {
-            if (waypoint != null)
+            if (Waypoints == null || Waypoints.Length == 0) return Vector3.zero;
+
+            Vector3 center = Vector3.zero;
+            int validWaypoints = 0;
+
+            foreach (var waypoint in Waypoints)
             {
-                center += waypoint.position;
-                validWaypoints++;
+                if (waypoint != null)
+                {
+                    center += waypoint.position;
+                    validWaypoints++;
+                }
+            }
+            return validWaypoints > 0 ? center / validWaypoints : Vector3.zero;
+        }
+
+        public PatrolArea(string name, Transform[] waypoints)
+        {
+            this.name = name;
+            this.waypoints = waypoints;
+        }
+    }
+
+    [System.Serializable]
+    public class PerceivedSound
+    {
+        [SerializeField] private float _initTime;
+        [SerializeField] private Vector3 _position;
+        [SerializeField] private Frequency _frequency;
+        [SerializeField] private float _duration;
+        [SerializeField] private float _rangeFactor;
+        [SerializeField] private float _intensityFactor;
+        [SerializeField] private float _decay;
+        [SerializeField] private float _persistence;
+        [SerializeField] private float _rangeDecay;
+        [SerializeField] private bool _isConfusing;
+        [SerializeField] private bool _isEnemy;
+        public float InitTime => _initTime;
+        public float RemainingTime => (InitTime + Duration) - Time.time;
+        public Vector3 Position => _position;
+        public Frequency Frequency => _frequency;
+        public float Duration => _duration;
+        public float RangeFactor => _rangeFactor;
+        public float IntensityFactor => _intensityFactor;
+        public float Decay => _decay;
+        public float Persistence => _persistence;
+        public bool IsConfusing => _isConfusing;
+        public bool IsEnemy => _isEnemy;
+
+        public PerceivedSound(float time)
+        {
+            _initTime = time;
+            _position = Vector3.zero;
+            _frequency = Frequency.Low;
+            _duration = 0f;
+            _rangeFactor = 0f;
+            _intensityFactor = 0f;
+            _decay = 0f;
+            _persistence = 0.01f;
+            _isConfusing = false;
+            _isEnemy = false;
+        }
+
+        public void UpdatePerceivedSound(SoundEmissionData sound)
+        {
+            _initTime = Time.time;
+            _position = sound.Position;
+            _frequency = sound.SoundClass.Frequency;
+            _duration = sound.Duration;
+            _rangeFactor = sound.SoundClass.RangeFactor;
+            _intensityFactor = sound.SoundClass.IntensityFactor * sound.SoundClassIntensityFactorMultiplier;
+            _decay = sound.SoundClass.Decay;
+            _persistence = sound.SoundClass.Persistence;
+            _isConfusing = sound.SoundClass.IsConfusing;
+            _isEnemy = sound.SoundClass.IsEnemy;
+        }
+
+        public void UpdatePerceivedSound(PerceivedSound other)
+        {
+            _initTime = other.InitTime;
+            _position = other.Position;
+            _frequency = other.Frequency;
+            _duration = other.Duration;
+            _rangeFactor = other.RangeFactor;
+            _intensityFactor = other.IntensityFactor;
+            _decay = other.Decay;
+            _persistence = other.Persistence;
+            _isConfusing = other.IsConfusing;
+            _isEnemy = other.IsEnemy;
+        }
+
+        public void UpdatePosition(Vector3 newPosition) => _position = newPosition;
+    }
+
+    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(AudioSource))]
+    public class EnemyAI : MonoBehaviour, IFSMOwner, IEnemyContext, IDamageDealer, IHasFOV, IAttractionSystem, IConfusionSystem
+    {
+        #region fields and properties
+        [Header("Invoking Events")]
+        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+
+        [Header("Observed Events")]
+        [SerializeField] private SOSoundEmissionDataEvent enemyPerceivedSoundEvent;
+
+        [Header("Enemy Configuration")]
+        [SerializeField] private EnemyFOV fov;
+        [SerializeField] private NavMeshAgent agent;
+        [SerializeField] private PatrolArea[] patrolAreas;
+
+        [Tooltip("Multiple patrol areas. Each area has its own set of waypoints. When returning to patrol, the enemy will choose the area closest to its current position.")]
+        [SerializeField] private Animator animator;
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private CollisionHitDetector hitDetector;
+        [SerializeField] private SOEnemyData enemyData;
+
+        [Header("Runtime")]
+        [SerializeField] private EnemyStatesEnum CurrentState;
+        [SerializeField] private PatrolArea currentPatrolArea;
+        [SerializeField] private PerceivedSound lastPS;
+        [SerializeField] private PerceivedSound targetSound;
+        [SerializeField] private PerceivedSound lastAPS; //Attraction Perceived Sound
+        [SerializeField] private PerceivedSound lastCPS; //Confusing Perceived Sound
+
+        // IFSMOwner
+        public Transform Transform => this.transform;
+        public GameObject GameObject => this.gameObject;
+
+        // ENEMY CONTEXT
+        public IFSMOwner Owner => this;
+        public IFOV FOV => fov;
+        public EnemyStatesEnum CurrentStateEnum { get { return CurrentState; } set { CurrentState = value; } }
+        public SOEnemyData EnemyData => enemyData;
+        public NavMeshAgent Agent => agent;
+        public PatrolArea[] PatrolAreas => patrolAreas;
+        public PatrolArea CurrentPatrolArea { get { return currentPatrolArea; } set { currentPatrolArea = value; } }
+        public Animator Animator => animator;
+        public AudioSource AudioSource => audioSource;
+        public IHitDetector HitDetector => hitDetector;
+        public PerceivedSound LastPerceivedSound => lastPS;
+        public PerceivedSound TargetSound => targetSound;
+        public IAttractionSystem AttractionSystem => this;
+        public IConfusionSystem ConfusionSystem => this;
+        public SOSoundEmissionDataEvent NewAudioSphereEvent => newAudioSphereEvent;
+        public SOSoundEmissionDataEvent NewPerceivedSoundEvent => enemyPerceivedSoundEvent;
+
+        private EnemyFSM _fsm;
+        [SerializeField] private float _A = 0f; //attraction
+        private bool _attractionCompute = true;
+        [SerializeField] private float _C = 0f; //confusion
+        private bool _confusionCompute = true;
+
+        PerceivedSound IAttractionSystem.LastPerceivedSound { get => lastAPS; set => lastAPS = value; }
+        bool IAttractionSystem.Compute { get => _attractionCompute; set => _attractionCompute = value; }
+        public float CurrentAttraction => _A;
+        void IAttractionSystem.SetAttraction(float value) => _A = value;
+        PerceivedSound IConfusionSystem.LastPerceivedSound { get => lastCPS; set => lastCPS = value; }
+        bool IConfusionSystem.Compute { get => _confusionCompute; set => _confusionCompute = value; }
+        public float CurrentConfusion => _C;
+        void IConfusionSystem.SetConfusion(float value) => _C = value;
+        #endregion
+
+        void Awake()
+        {
+            Debug.Assert(TryGetComponent(out animator), "EnemyAI requires an Animator component.", this);
+            Debug.Assert(TryGetComponent(out audioSource), "EnemyAI requires an AudioSource component.", this);
+            Debug.Assert(TryGetComponent(out agent), "EnemyAI requires a NavMeshAgent component.", this);
+            Debug.Assert(fov != null, "EnemyAI requires a FOV component.", this);
+            Debug.Assert(enemyData != null, "No SOEnemyData assigned to EnemyAI on " + gameObject.name, this);
+            Debug.Assert(hitDetector != null, "No AttackRangeDetector assigned to EnemyAI on " + gameObject.name, this);
+            Debug.Assert(patrolAreas != null && patrolAreas.Length > 0, "No patrol areas assigned to EnemyAI on " + gameObject.name, this);
+        }
+
+        void OnEnable()
+        {
+            if (enemyPerceivedSoundEvent != null) enemyPerceivedSoundEvent.OnEventRaised += PerceivedSoundHandler;
+        }
+
+        void OnDisable()
+        {
+            if (enemyPerceivedSoundEvent != null) enemyPerceivedSoundEvent.OnEventRaised -= PerceivedSoundHandler;
+        }
+
+        void Start()
+        {
+            InitializeFOV(enemyData.FOVData); // Initialize FOV with enemy data
+            InitPerceivedSounds();
+            _fsm = new EnemyFSM(this);
+            _fsm.Initialize();
+        }
+
+        void Update()
+        {
+            UpdateFOV();
+            AttractionComputation();
+            ConfusionComputation();
+            _fsm.Update();
+            NotifyUI();
+            //agent.isStopped = true; // DEBUG: stop movement for testing
+        }
+
+        private void InitPerceivedSounds()
+        {
+            if (lastPS == null)
+                lastPS = new PerceivedSound(Time.time);
+            if (targetSound == null)
+                targetSound = new PerceivedSound(Time.time);
+            if (lastAPS == null)
+                lastAPS = new PerceivedSound(Time.time);
+            if (lastCPS == null)
+                lastCPS = new PerceivedSound(Time.time);
+        }
+
+        private void PerceivedSoundHandler(SoundEmissionData sound)
+        {
+            if (sound.SoundClass.IsEnemy == true) return; // ignore enemy sounds
+            if (sound.SoundClass.IsPlayerBodySound == true)
+            {
+                if (lastPS.RemainingTime <= 0f)
+                {
+                    lastPS.UpdatePerceivedSound(sound);
+                }
+            }
+            else
+                lastPS.UpdatePerceivedSound(sound);
+        }
+        public void DealDamage(IDamageable damageable) => _fsm.CurrentState.DealDamage(damageable);
+
+        // calculate attraction based on lastPS
+        public void AttractionComputation()
+        {
+            if (_attractionCompute == true)
+            {
+                // phase 1: increase A if there is an active sound 
+                if (lastPS.RemainingTime > 0f && _A < enemyData.AtMAX)
+                {
+                    float dist = Vector3.Distance(lastPS.Position, transform.position);
+                    dist = Mathf.Max(dist, enemyData.DistanceLowerBound);
+
+                    // distance based attenuation
+                    // 1.0f at 0 distance, decreases with distance 
+                    float distanceAttenuation = 1f / (1f + Mathf.Pow(dist / lastPS.RangeFactor, lastPS.Decay));
+
+                    // increment based on specific sound intensity and global enemy intensity
+                    float tempA = enemyData.AIntensity * lastPS.IntensityFactor * distanceAttenuation * Time.deltaTime;
+
+                    // Clamp per frame
+                    _A += Mathf.Min(tempA, enemyData.AMaxIncrementPerFrame);
+                }
+
+                // phase 2: decrease A (always active or post-sound)
+                // If there are no active sounds, increase the "silence" timer
+                var _timeSinceLastSound = 0f;
+                if (lastPS.RemainingTime <= 0f)
+                    _timeSinceLastSound += Time.deltaTime;
+
+                if (_A > 0f)
+                {
+                    // Decay accelerates over time: the longer since the sound, the faster A decreases
+                    // We use quadratic or exponential growth for decay acceleration
+                    float decayAcceleration = 1f + (_timeSinceLastSound * enemyData.DecayGrowthRate);
+                    float drop = enemyData.ADecay * (1f / lastPS.Persistence) * decayAcceleration * Time.deltaTime;
+
+                    _A -= drop;
+                    if (_A < 0f) _A = 0f;
+                }
+            }
+            if (_A >= enemyData.At && lastPS != lastAPS)
+                lastAPS.UpdatePerceivedSound(lastPS);
+        }
+
+        // calculate confusion based on lastPS (isConfusing)
+        public void ConfusionComputation()
+        {
+            if (_confusionCompute == true && lastPS.IsConfusing)
+            {
+                if (lastCPS.Position != Vector3.zero && lastCPS.RemainingTime <= 0f)
+                    if (_C > 0f)
+                        _C -= lastCPS.Decay * enemyData.CDecayFactor * Time.deltaTime;
+                    else
+                        _C = 0f;
+                else
+                {
+                    var distance = Vector3.Distance(lastPS.Position, transform.position);
+
+                    _C += enemyData.CIntensity
+                                    * lastPS.IntensityFactor
+                                    / Mathf.Pow((distance + 0.01f) * lastPS.RangeFactor, lastPS.Decay)
+                                    * Time.deltaTime;
+                }
+                if (_C >= enemyData.Ct && lastPS != lastCPS && lastPS.IsConfusing)
+                    lastCPS.UpdatePerceivedSound(lastPS);
             }
         }
 
-        return validWaypoints > 0 ? center / validWaypoints : Vector3.zero;
+
+        /// <summary>
+        /// Notifies UI with current attraction value (UI developer handles all thresholds and logic)
+        /// </summary>
+        void NotifyUI() { }
+
+        #region FOV Methods
+        public void InitializeFOV(FOVParams fovData)
+        {
+            if (fov == null) return;
+            fov.Initialize(fovData, transform);
+        }
+
+        public void UpdateFOV()
+        {
+            if (fov == null) return;
+            fov.UpdateTargets();
+        }
+        #endregion
+
+        void OnDrawGizmos()
+        {
+            //attack range
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, enemyData.AttackRange);
+        }
     }
 }
 
-[RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(AudioSource))]
-public class EnemyAI : MonoBehaviour
-{
-    #region Constants 
-    private string _LOG_TAG = "ENEMY AI";
-    private string _LOG_COLOR = "#ff0000ff";
-    #endregion
-    public enum State { Patrol, Chase }
-
-    #region  Serialized Fields
-
-    [Header("Invoking Events")]
-    [SerializeField] public SOEnemyAIEvent playerHitEvent;
-    [SerializeField] private SOEnemyNoiseUIEvent noiseUIEvent;
-    public SOEnemyInvestigationEvent investigationEvent;
-    [Tooltip("Event for emitting sounds from enemy (for echolocation system). Used by states.")]
-    public SOSoundEmissionDataEvent enemySoundEmissionEvent;
-
-    [Header("Observed Events")]
-    [Tooltip("Event raised by InputManager when player performs an action (e.g., hitting object with item)")]
-    [SerializeField] private SOPlayerActionEvent playerActionEvent;
-    [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
-
-    [Header("References")]
-    public NavMeshAgent agent;
-    public Animator animator;
-    public AudioSource audioSource;
-    public SOEnemyData enemyData;
-    public Transform player;
-    [Tooltip("Multiple patrol areas. Each area has its own set of waypoints. When returning to patrol, the enemy will choose the area closest to its current position.")]
-    public PatrolArea[] patrolAreas;
-    public AttackRangeDetector attackRangeDetector;
-
-    [HideInInspector]
-    /// <summary>
-    /// Currently selected patrol area. Set automatically when returning to patrol from StandAndExamine or LostTarget states.
-    /// </summary>
-    public PatrolArea currentPatrolArea { get; private set; }
-
-    [Header("FSM")]
-    private EnemyFSM _fsm;
-    public EnemyStatesEnum CurrentState;
-
-    [HideInInspector]
-    /// <summary>
-    /// Flag indicating if the enemy has confirmed the player's existence (has chased the player).
-    /// Used to differentiate between StandAndExamineState (suspicion before confirmation) 
-    /// and LostTargetState (loss after a real chase).
-    /// </summary>
-    public bool HasConfirmedPlayer = false;
-
-    /// <summary>
-    /// True se il nemico sta inseguendo il player perché ha superato la soglia di rumore
-    /// (NoiseThreshold) o è arrivato da un suono investigato. False se sta inseguendo solo
-    /// per distanza (ChaseDistance/Attack senza threshold superata).
-    /// </summary>
-    public bool IsNoiseChaseActive { get; set; } = false;
-    #endregion
-
-    #region Noise/Annoyance System (Centralized)
-    // Single active player action (only one action at a time)
-    // Actions come from InputManager when player performs actions (e.g., hitting object with item)
-    private PlayerActionData? _activePlayerAction = null;
-    private float _actionTimeRemaining = 0f;
-
-    // Attraction value (calculated and ready for states)
-    private float _attraction = 0f;
-
-    // Action position (for states to use - where the action occurred)
-    private Vector3 _actionPosition = Vector3.zero;
-    private bool _hasActiveAction = false;
-
-    // Last action position that triggered chase (saved even after action expires)
-    // Used by CheckSoundState to investigate the source
-    private Vector3 _lastChaseActionPosition = Vector3.zero;
-    private bool _hasLastChaseActionPosition = false;
-    #endregion
-
-    void Awake()
-    {
-        TryGetComponent(out agent);
-        TryGetComponent(out animator);
-        TryGetComponent(out audioSource);
-        if (!TryAssignPlayer())
-        {
-            Log.D("No player found for EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
-        }
-
-        if (enemyData == null)
-        {
-            Log.E("No SOEnemyData assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
-        }
-
-        // Validate patrol areas
-        if (patrolAreas == null || patrolAreas.Length == 0)
-        {
-            Log.E("No patrol areas assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
-        }
-
-        // Initialize current patrol area if patrol areas are available
-        if (patrolAreas != null && patrolAreas.Length > 0)
-        {
-            SelectClosestPatrolArea();
-        }
-
-        if (attackRangeDetector == null)
-        {
-            Log.E("No AttackRangeDetector assigned to EnemyAI on " + gameObject.name, _LOG_COLOR, _LOG_TAG);
-        }
-
-        _fsm = new EnemyFSM(this);
-        _fsm.Initialize();
-    }
-
-    void OnEnable()
-    {
-        if (playerEmittedSoundEvent != null)
-        {
-            playerEmittedSoundEvent.OnEventRaised += OnPlayerAction;
-        }
-
-        TryAssignPlayer();
-    }
-
-    void OnDisable()
-    {
-        if (playerEmittedSoundEvent != null)
-        {
-            playerEmittedSoundEvent.OnEventRaised -= OnPlayerAction;
-        }
-    }
-
-    void Update()
-    {
-        if (!TryAssignPlayer())
-        {
-            return;
-        }
-
-        if (enemyData == null)
-        {
-            _fsm.Update(_attraction);
-            return;
-        }
-
-        // Update player action duration and remove if expired
-        UpdateActiveAction();
-
-        // Calculate attraction (centralized logic)
-        CalculateAttraction();
-
-        // Notify UI with current attraction value (UI developer handles thresholds)
-        NotifyUI();
-
-        // Update FSM with calculated attraction (states receive ready value)
-        _fsm.Update(_attraction);
-    }
-
-    /// <summary>
-    /// Sync vertical position between NavMeshAgent and model
-    /// </summary>
-    void LateUpdate()
-    {
-        if (agent == null) return;
-
-        // Sync verticale tra NavMeshAgent e modello
-        Vector3 pos = transform.position;
-        pos.y = agent.nextPosition.y;
-        transform.position = pos;
-    }
-
-    /// <summary>
-    /// Updates active player action duration and removes it if expired
-    /// </summary>
-    void UpdateActiveAction()
-    {
-        if (_hasActiveAction && _activePlayerAction.HasValue)
-        {
-            _actionTimeRemaining -= Time.deltaTime;
-
-            if (_actionTimeRemaining <= 0f)
-            {
-                // Action expired - clear it
-                // BUT keep the position if it triggered a chase (for CheckSoundState)
-                _activePlayerAction = null;
-                _hasActiveAction = false;
-                // Don't reset _actionPosition here - it's used by GetSoundPosition()
-                // It will be updated when a new action arrives or cleared when chase ends
-            }
-        }
-    }
-
-    /// <summary>
-    /// Centralized attraction calculation using Attraction.cs formula
-    /// Handles: accumulation when player action is active, decay when no action, clamp to 0
-    /// Uses action properties (intensity, duration, frequency) from the object/item used by player
-    /// </summary>
-    void CalculateAttraction()
-    {
-        if (_hasActiveAction && _activePlayerAction.HasValue)
-        {
-            var action = _activePlayerAction.Value;
-
-            // Update action position (where the action occurred)
-            _actionPosition = action.position;
-
-            // Calculate distance to action position 
-            float distance = Vector3.Distance(transform.position, action.position);
-
-            // Calculate frequency multiplier
-            float frequencyMultiplier = GetFrequencyMultiplier(action.frequency);
-
-            // Calculate distance multiplier using Attraction.cs formula
-            // Formula: intensity * intensityFactor / Pow((distance + 0.01) * rangeFactor, decay)
-            float distanceMultiplier = 1f / Mathf.Pow((distance + 0.01f) * enemyData.NoiseRangeFactor, enemyData.NoiseDistanceDecay);
-
-            // Accumulate attraction per frame (continuous accumulation)
-            // Uses action intensity (from object/item used by player)
-            float contribution = action.intensity
-                                * enemyData.NoiseIntensityFactor
-                                * frequencyMultiplier
-                                * distanceMultiplier
-                                * Time.deltaTime;
-
-            _attraction += contribution;
-        }
-        else
-        {
-            // No active action - apply decay
-            ApplyDecay();
-        }
-
-        // Clamp attraction to 0 (never negative)
-        _attraction = Mathf.Max(0f, _attraction);
-    }
-
-    /// <summary>
-    /// Applies decay to attraction when no player action is active or action is too far
-    /// </summary>
-    void ApplyDecay()
-    {
-        if (_attraction > 0f)
-        {
-            _attraction -= enemyData.NoiseDecayRate * Time.deltaTime;
-        }
-    }
-
-    /// <summary>
-    /// Called when player performs an action (e.g., hitting object with item)
-    /// Raised by InputManager - replaces current action (only one action at a time)
-    /// Action properties (intensity, duration, frequency) come from the object/item used
-    /// </summary>
-    void OnPlayerAction(Vector3 position, SoundEmissionData sound)
-    {
-        // Replace current action with new one (only one action active at a time)
-        _activePlayerAction = new PlayerActionData(position, sound);
-        _actionTimeRemaining = sound.Duration;
-        _hasActiveAction = true;
-        _actionPosition = position;
-
-        // Save position for chase investigation (even if action expires later)
-        _lastChaseActionPosition = position;
-        _hasLastChaseActionPosition = true;
-    }
-
-    /// <summary>
-    /// Emits a sound from the enemy (for echolocation system).
-    /// Called by states when enemy makes noise (e.g., investigation phrases).
-    /// </summary>
-    public void OnPlayerHit()
-    {
-        if (_fsm.CurrentState.OnPlayerHit())
-            playerHitEvent?.RaiseEvent(this);
-    }
-
-    /// <summary>
-    /// Helper method to play a random phrase from a SOSoundSource using ECSound utility.
-    /// Uses RandomAudioClips array if available, otherwise uses main AudioClip.
-    /// Helper method to play a random phrase from a SOSoundSource using ECSound utility.
-    /// Uses RandomAudioClips array if available, otherwise uses main AudioClip.
-    /// </summary>
-    public void PlayRandomPhrase(SOSoundSource soundSource)
-    {
-        if (enemyData == null || soundSource == null)
-            if (enemyData == null || soundSource == null)
-                return;
-
-        // Use ECSound utility to play sound at enemy position
-        // Pass null for echolocation event since voice lines don't need to emit sounds for echolocation
-        // Use "SFX" mixer group (or null for Master)
-        if (soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0)
-        {
-            // Use random clip from array
-            ECSound.PlayRandomAtPosition(soundSource, transform.position, null, "SFX");
-        }
-        else if (soundSource.AudioClip != null)
-        {
-            // Use main audio clip
-            ECSound.PlayAtPosition(soundSource, transform.position, null, "SFX");
-        }
-        else
-        {
-            Log.W("SOSoundSource has no AudioClip or RandomAudioClips. Cannot play phrase.", _LOG_COLOR, _LOG_TAG);
-            return;
-        }
-
-        // Raise investigation event (optional: can decide if to raise for each type)
-        if (investigationEvent != null)
-        {
-            AudioClip selectedClip = soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0
-                ? soundSource.RandomAudioClips[Random.Range(0, soundSource.RandomAudioClips.Length)]
-                : soundSource.AudioClip;
-
-            if (selectedClip != null)
-            {
-                var investigationData = new EnemyInvestigationData(this, selectedClip);
-                investigationEvent.RaiseEvent(investigationData);
-            }
-        }
-    }
-
-    #region Public Getters for States
-    /// <summary>
-    /// Returns current attraction value (ready to use by states)
-    /// </summary>
-    public float GetAttraction()
-    {
-        return _attraction;
-    }
-
-    /// <summary>
-    /// Finds the nearest active confusing sound source within detection range.
-    /// Returns null if no active confusing sound source is found.
-    /// </summary>
-    public IConfusingSoundSource FindNearestConfusingSoundSource()
-    {
-        if (enemyData == null) return null;
-
-        IConfusingSoundSource nearest = null;
-        float nearestDistance = float.MaxValue;
-        float detectionRange = enemyData.ConfusingSoundDetectionRange;
-
-        // Find all ConfusingSoundSource components in the scene
-        ConfusingSoundSource[] allSources = FindObjectsOfType<ConfusingSoundSource>();
-
-        foreach (var source in allSources)
-        {
-            if (!source.IsActive) continue;
-
-            float distance = Vector3.Distance(transform.position, source.Position);
-
-            if (distance <= detectionRange && distance < nearestDistance)
-            {
-                nearest = source;
-                nearestDistance = distance;
-            }
-        }
-
-        return nearest;
-    }
-
-    /// <summary>
-    /// Checks if there's an active confusing sound source that should distract the enemy.
-    /// Returns true if conditions are met (active source, in range, attraction not too high).
-    /// Note: Player distance check is handled by global trigger in EnemyFSM (ChaseDistance if d <= 10m).
-    /// </summary>
-    public bool ShouldBeDistractedByConfusingSound()
-    {
-        if (enemyData == null) return false;
-
-        IConfusingSoundSource source = FindNearestConfusingSoundSource();
-        if (source == null) return false;
-
-        // Check if attraction is too high (already in MandatoryChase territory)
-        // If attraction >= 1.0, global trigger will switch to MandatoryChase anyway
-        if (_attraction >= enemyData.NoiseThreshold) return false;
-
-        return true;
-    }
-
-    /// <summary>
-    /// Returns the position of the active player action (or last chase action position if expired)
-    /// This is where the action occurred (e.g., where player hit an object)
-    /// Used by CheckSoundState to investigate the source
-    /// </summary>
-    public Vector3 GetSoundPosition()
-    {
-        // If there's an active action, return its position
-        if (_hasActiveAction && _actionPosition != Vector3.zero)
-        {
-            return _actionPosition;
-        }
-
-        // Otherwise, return the last known action position that triggered chase
-        if (_hasLastChaseActionPosition)
-        {
-            return _lastChaseActionPosition;
-        }
-
-        // Fallback: return current action position (might be zero)
-        return _actionPosition;
-    }
-
-    /// <summary>
-    /// Returns whether there is an active player action
-    /// </summary>
-    public bool HasActiveSound()
-    {
-        return _hasActiveAction;
-    }
-
-    /// <summary>
-    /// Clears the last chase action position (called when investigation is complete)
-    /// </summary>
-    public void ClearLastChaseActionPosition()
-    {
-        _hasLastChaseActionPosition = false;
-        _lastChaseActionPosition = Vector3.zero;
-    }
-
-    /// <summary>
-    /// Resets attraction to 0 (called by states when needed)
-    /// </summary>
-    public void ResetAttraction()
-    {
-        _attraction = 0f;
-    }
-
-    /// <summary>
-    /// Selects the patrol area whose center is closest to the enemy's current position.
-    /// Sets currentPatrolArea to the selected area.
-    /// </summary>
-    public void SelectClosestPatrolArea()
-    {
-        if (patrolAreas == null || patrolAreas.Length == 0)
-        {
-            currentPatrolArea = null;
-            return;
-        }
-
-        Vector3 enemyPosition = transform.position;
-        PatrolArea closestArea = null;
-        float closestDistance = float.MaxValue;
-
-        foreach (var area in patrolAreas)
-        {
-            if (area == null || area.waypoints == null || area.waypoints.Length == 0)
-                continue;
-
-            Vector3 center = area.GetCenter();
-            float distance = Vector3.Distance(enemyPosition, center);
-
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestArea = area;
-            }
-        }
-
-        currentPatrolArea = closestArea;
-
-        if (currentPatrolArea == null)
-        {
-            Log.W("No valid patrol area found. Ensure patrol areas have at least one waypoint.", _LOG_COLOR, _LOG_TAG);
-        }
-    }
-
-    /// <summary>
-    /// Returns the waypoints for the current patrol area.
-    /// Used by PatrolEnemyState to get the waypoints to patrol.
-    /// </summary>
-    public Transform[] GetCurrentWaypoints()
-    {
-        if (currentPatrolArea != null && currentPatrolArea.waypoints != null && currentPatrolArea.waypoints.Length > 0)
-        {
-            return currentPatrolArea.waypoints;
-        }
-
-        return null;
-    }
-    #endregion
-
-    #region Helper Methods (used internally)
-    bool TryAssignPlayer()
-    {
-        if (player != null) return true;
-
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (p == null) return false;
-
-        player = p.transform;
-        return true;
-    }
-
-    /// <summary>
-    /// Calculates frequency multiplier: Low=1x, Mid=1.5x, High=2x
-    /// </summary>
-    float GetFrequencyMultiplier(float frequency)
-    {
-        if (frequency <= 0f) return 1f;      // Low
-        if (frequency <= 1f) return 1.5f;      // Mid
-        return 2f;                             // High
-    }
-
-    /// <summary>
-    /// Notifies UI with current attraction value (UI developer handles all thresholds and logic)
-    /// </summary>
-    void NotifyUI()
-    {
-        if (noiseUIEvent == null || enemyData == null) return;
-
-        // Check if enemy is currently chasing (any chase-related state)
-        bool isChasing = CurrentState == EnemyStatesEnum.MandatoryChase ||
-                         CurrentState == EnemyStatesEnum.Chase ||
-                         CurrentState == EnemyStatesEnum.ChaseDistance ||
-                         CurrentState == EnemyStatesEnum.Attack;
-
-        // Pass attraction value and chase status - UI developer decides when to show/hide
-        var noiseData = new EnemyNoiseData(this, _attraction, 0f, enemyData.NoiseThreshold, isChasing);
-        noiseUIEvent.RaiseEvent(noiseData);
-    }
-    #endregion
-
-    void OnDrawGizmosSelected()
-    {
-        if (enemyData == null) return;
-
-        // D_enter: distance threshold for proximity chase (yellow)
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, enemyData.D_enter);
-
-        // D_exit: distance threshold for losing player (red)
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, enemyData.D_exit);
-
-        // AttackRange: distance at which enemy can attack (cyan)
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, enemyData.AttackRange);
-    }
-}

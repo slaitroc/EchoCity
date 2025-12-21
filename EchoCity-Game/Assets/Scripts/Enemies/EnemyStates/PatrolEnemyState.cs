@@ -1,115 +1,109 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PatrolEnemyState : EnemyState
+namespace EchoCity
 {
-    #region Constants
-    protected new string _LOG_TAG = "PATROL ENEMY STATE";
-    #endregion
-
-    private Transform[] waypoints => _enemyAI.GetCurrentWaypoints();
-    public int currentWaypointIndex = 0;
-    private bool isWaitingAtWaypoint = false;
-    private float _waitTimer = 0f;
-
-    public PatrolEnemyState(EnemyAI enemyAI, EnemyFSM fsm) : base(enemyAI, fsm) { }
-
-    public override void Enter()
+    public class PatrolEnemyState : EnemyState
     {
-        _enemyAI.CurrentState = EnemyStatesEnum.Patrol;
-        _enemyAI.attackRangeDetector.attackCollider.enabled = false;
+        private Transform[] _waypoints;
+        private PatrolArea _tempCurrentPatrolArea;
+        private int _currentWaypointIndex = 0;
+        private bool _isWaitingAtWaypoint = false;
+        private float _waitTimer = 0f;
 
-        // Reset confirmation flag when returning to patrol (after losing player)
-        _enemyAI.HasConfirmedPlayer = false;
-        
-        // Reset noise chase flag: quando torno in patrol, considero chiusa qualsiasi noise-chase
-        _enemyAI.IsNoiseChaseActive = false;
+        public PatrolEnemyState(IEnemyContext context, EnemyFSM fsm) : base(context, fsm) { }
 
-        // Ensure we have valid waypoints (from current patrol area or legacy waypoints)
-        if (waypoints == null || waypoints.Length == 0)
+        public override EnemyStatesEnum GetEnum() => EnemyStatesEnum.Patrol;
+        public override void Enter()
         {
-            Log.W("PatrolEnemyState: No waypoints available. Cannot patrol.", _LOG_COLOR, _LOG_TAG);
-            return;
-        }
+            _isWaitingAtWaypoint = false;
+            _waitTimer = 0f;
 
-        _agent.isStopped = false;
-        _agent.stoppingDistance = 0f;
+            _context.CurrentStateEnum = EnemyStatesEnum.Patrol;
+            _hitDetector.Disable();
 
-        if (!isWaitingAtWaypoint)
+            _currentWaypointIndex = EchoCityUtils.SelectClosestWaypoint(_patrolAreas, _owner.Transform, out _tempCurrentPatrolArea);
+            _context.CurrentPatrolArea = _tempCurrentPatrolArea;
+            _waypoints = _tempCurrentPatrolArea.Waypoints;
+
+            Debug.Assert(_waypoints != null && _waypoints.Length > 0, "PatrolEnemyState: Waypoints array is null or empty.");
+
+
+            _agent.isStopped = false;
+            _agent.stoppingDistance = _enemyData.WaypointArrivalThreshold;
+            _agent.autoBraking = true;
+            _agent.acceleration = _enemyData.PatrolAcceleration;
+            _agent.angularSpeed = _enemyData.PatrolAngularSpeed;
+            _agent.speed = _enemyData.PatrolSpeed * _enemyData.ChaseSpeed;
+
+            _attractionSystem.Compute = true;
+
             GotoNextWaypoint();
-    }
-    public override void Update(float attraction)
-    {
-        _agent.speed = _enemyData.PatrolSpeed * _enemyData.ChaseSpeed;
-
-        float targetSpeed = isWaitingAtWaypoint ? 0f : _enemyData.PatrolSpeed;
-        _animator.SetFloat(_animSpeedParameter, targetSpeed, 0.4f, Time.deltaTime);
-
-        // Check for confusing sound source (before other checks)
-        if (_enemyAI.ShouldBeDistractedByConfusingSound())
-        {
-            _fsm.SwitchState(_fsm.gettingConfusedState);
-            return;
         }
-
-        // Note: Global triggers in EnemyFSM handle:
-        // - A >= 1.0 → MandatoryChaseState
-        // - d <= 10m → ChaseDistanceState
-        // So PatrolState just continues patrolling if conditions are met
-
-        if (isWaitingAtWaypoint)
+        public override void Update()
         {
-            _waitTimer -= Time.deltaTime;
-            if (_waitTimer <= 0f)
+            // //DEBUG
+            // _agent.acceleration = _enemyData.PatrolAcceleration;
+            // _agent.angularSpeed = _enemyData.PatrolAngularSpeed;
+            // _agent.speed = _enemyData.PatrolSpeed * _enemyData.ChaseSpeed;
+
+            if (_fov.ClosestTarget.Transform != null && _fov.ClosestTarget.VisibilityStatus == TargetVisibilityEnum.VisibleInFOV)
             {
-                isWaitingAtWaypoint = false;
-                GotoNextWaypoint();
+                if (_fov.ClosestTarget.Velocity >= _enemyData.DetectionVelocity)
+                {
+                    _fsm.SwitchState(_fsm.PlayerChaseState);
+                    return;
+                }
             }
-            return;
+
+            if (_attractionSystem.CurrentAttraction >= _enemyData.At)
+            {
+                _fsm.SwitchState(_fsm.SoundChaseState);
+                return;
+            }
+
+
+            float targetSpeed = _isWaitingAtWaypoint ? 0f : _enemyData.PatrolSpeed;
+            _animator.SetFloat(_animSpeedParameter, targetSpeed, _enemyData.PatrolSpeedDampTime, Time.deltaTime);
+
+            if (_isWaitingAtWaypoint)
+            {
+                _waitTimer -= Time.deltaTime;
+                if (_waitTimer <= 0f)
+                {
+                    _isWaitingAtWaypoint = false;
+                    GotoNextWaypoint();
+                }
+                return;
+            }
+
+            if (!_agent.pathPending && _agent.remainingDistance <= _enemyData.WaypointArrivalThreshold)
+            {
+                StartWaitAtWaypoint();
+            }
         }
 
-        if (!_agent.pathPending && _agent.remainingDistance <= _enemyData.WaypointArrivalThreshold)
+        public override void Exit() { }
+        public override void DealDamage(IDamageable damageable) { }
+
+        private void StartWaitAtWaypoint()
         {
-            StartWaitAtWaypoint();
+            _isWaitingAtWaypoint = true;
+            _waitTimer = _context.EnemyData.WaypointPauseDuration;
+
+            _agent.isStopped = true;
+            _agent.ResetPath();
         }
-    }
 
-    public override void Exit()
-    {
-        isWaitingAtWaypoint = false;
-        _waitTimer = 0f;
-        _agent.isStopped = false;
-    }
-
-
-    private void StartWaitAtWaypoint()
-    {
-        isWaitingAtWaypoint = true;
-        _waitTimer = _enemyData.WaypointPauseDuration;
-
-        _agent.isStopped = true;
-        _agent.ResetPath();
-    }
-
-    void GotoNextWaypoint()
-    {
-        if (waypoints == null || waypoints.Length == 0)
+        private void GotoNextWaypoint()
         {
-            Log.W("GotoNextWaypoint: No waypoints available.", _LOG_COLOR, _LOG_TAG);
-            return;
+            _isWaitingAtWaypoint = false;
+            _agent.isStopped = false;
+            _agent.SetDestination(_waypoints[_currentWaypointIndex].position);
+            _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
         }
-        
-        isWaitingAtWaypoint = false;
 
-        _agent.isStopped = false;
-        _agent.SetDestination(waypoints[currentWaypointIndex].position);
-        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
-    }
 
-    public override bool OnPlayerHit()
-    {
-        return false;
+
     }
 }
