@@ -20,9 +20,8 @@ MonoBehaviour:
   intensity: 0.69
   volume: 0.278
   radius: 2
-  gapBetweenSounds: 0.71
-  minimumDuration: 0.1
-  emitOnStart: 0
+  minEchoDuration: 0.1
+  isEnvironmental: 1
   randomAudioClips:
   - {fileID: 8300000, guid: e086e63a5c53cb842a2a563d0c9f1700, type: 3}
   - {fileID: 8300000, guid: ca8f86862f9d49b48bf59f6830c428fa, type: 3}
