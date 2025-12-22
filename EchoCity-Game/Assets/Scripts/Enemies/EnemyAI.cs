@@ -258,7 +258,7 @@ namespace EchoCity
 
                     // distance based attenuation
                     // 1.0f at 0 distance, decreases with distance 
-                    float distanceAttenuation = 1f / (1f + Mathf.Pow(dist / lastPS.RangeFactor, lastPS.Decay));
+                    float distanceAttenuation = 1f / (1f + Mathf.Pow(dist / (lastPS.RangeFactor * enemyData.ARange), lastPS.Decay));
 
                     // increment based on specific sound intensity and global enemy intensity
                     float tempA = enemyData.AIntensity * lastPS.IntensityFactor * distanceAttenuation * Time.deltaTime;
@@ -311,7 +311,6 @@ namespace EchoCity
                     lastCPS.UpdatePerceivedSound(lastPS);
             }
         }
-
 
         /// <summary>
         /// Notifies UI with current attraction value (UI developer handles all thresholds and logic)

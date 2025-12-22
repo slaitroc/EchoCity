@@ -42,14 +42,15 @@ namespace EchoCity
 
         [Header("Thresholds")]
         [SerializeField] private float distanceLowerBound = 1.0f;
-
+        [SerializeField] private float aMaxIncrementPerFrame = 0.2f;
         [SerializeField] private float detectionVelocity = 1.0f;
         [SerializeField] private float at = 1.0f;
-        [SerializeField] private float atMAX = 1.0f;
+        [SerializeField] private float atMAX = 2.0f;
         [SerializeField] private float aIntensity = 1.0f;
         [SerializeField] private float aDecay = 0.08f;
         [SerializeField] private float decayGrowthRate = 0.5f;
-        [SerializeField] private float aMaxIncrementPerFrame = 0.2f;
+        [SerializeField] private float aRange = 1f;
+
 
         [SerializeField] private float ct = 1.0f;
         [SerializeField] private float ctMAX = 1.0f;
@@ -94,13 +95,14 @@ namespace EchoCity
         public float ConfusingSoundDetectionRange => confusingSoundDetectionRange;
 
         public float DetectionVelocity => detectionVelocity;
+        public float AMaxIncrementPerFrame => aMaxIncrementPerFrame;
         public float At => at;
         public float AtMAX => atMAX;
         public float DistanceLowerBound => distanceLowerBound;
         public float AIntensity => aIntensity;
         public float ADecay => aDecay;
         public float DecayGrowthRate => decayGrowthRate;
-        public float AMaxIncrementPerFrame => aMaxIncrementPerFrame;
+        public float ARange => aRange;
 
         public float Ct => ct;
         public float CtMAX => ctMAX;

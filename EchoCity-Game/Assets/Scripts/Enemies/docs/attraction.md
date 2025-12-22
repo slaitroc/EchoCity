@@ -23,9 +23,10 @@ The attraction system quantifies how much an enemy is drawn to a sound source. T
 
 The following formula gets applied if the last perceived sound is still active.
 
-$$\Delta A_{inc} = \min \left( \frac{I_{enemy} \cdot I_{sound}}{1 + \left( \frac{dist}{R_{sound}} \right)^{D_{sound}}} \cdot \Delta t, \text{MaxInc} \right)$$
+$$\Delta A_{inc} = \min \left( \frac{I_{enemy} \cdot I_{sound}}{1 + \left( \frac{dist}{R_{enemy} \cdot R_{sound}} \right)^{D_{sound}}} \cdot \Delta t, \text{MaxInc} \right)$$
 
 * $I_{enemy}$: `SOEnemyData.AIntensity` Enemy's hearing sensitivity (constant per enemy type).
+* $R_{enemy}$: `SOEnemyData.ARange` Enemy's hearing range (constant per enemy type). After this distance, the sound is less effective.
 * $I_{sound}$ = `SOSoundClass.IntensityFactor` : Base strength of the sound.
 * $R_{sound}$ = `SOSoundClass.RangeFactor` : Distance where attraction strength is **halved (50%)**.
 * $D_{sound}$ = `SOSoundClass.Decay` : How quickly the sound's influence diminishes with distance.
