@@ -478,9 +478,9 @@ MonoBehaviour:
   scenesNames:
   - None
   - Persistent
+  - Playground
   - First-Level
   - Second-Level
-  - Third-Level
 --- !u!1 &73036264344220498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,12 +1557,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0de813f7c7c046219848cad612cfa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
+  playerHitEvent: {fileID: 0}
   noiseUIEvent: {fileID: 0}
   investigationEvent: {fileID: 0}
-  enemySoundEmissionEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  playerActionEvent: {fileID: 11400000, guid: e646675eafdc44eb29d4a73e04f1fb59, type: 2}
-  playerEmittedSoundEvent: {fileID: 11400000, guid: a78e5a5464a5c024ab6288677e1da6da, type: 2}
+  enemySoundEmissionEvent: {fileID: 0}
+  playerActionEvent: {fileID: 0}
+  playerEmittedSoundEvent: {fileID: 0}
   agent: {fileID: 4078091062578297317}
   animator: {fileID: 5033251669108520399}
   audioSource: {fileID: 0}
@@ -1586,7 +1586,7 @@ MonoBehaviour:
     - {fileID: 1279525083}
     - {fileID: 550110305}
     - {fileID: 1671845032}
-  attackRangeDetector: {fileID: 6086960229466930306}
+  attackRangeDetector: {fileID: 0}
   CurrentState: 0
   HasConfirmedPlayer: 0
 --- !u!1 &1933927311706137471
@@ -5420,7 +5420,7 @@ MonoBehaviour:
   deathEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
   playerEmittedSoundEvent: {fileID: 11400000, guid: a78e5a5464a5c024ab6288677e1da6da, type: 2}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
-  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
+  playerHitEvent: {fileID: 0}
   fullInventorySound: {fileID: 11400000, guid: d2cef0896b5120044ac451ee4dcda5c6, type: 2}
   equippedItem:
     Index: 0
@@ -5557,7 +5557,7 @@ MonoBehaviour:
   inRangeInteractable: {fileID: 0}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
   examplePickable: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
-  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
+  playerHitEvent: {fileID: 0}
   spawnWarningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
   switchToDeathStateEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
   switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
