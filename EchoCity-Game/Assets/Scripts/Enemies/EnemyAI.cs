@@ -121,15 +121,13 @@ namespace EchoCity
         [SerializeField] private SOSoundEmissionDataEvent enemyPerceivedSoundEvent;
 
         [Header("Enemy Configuration")]
+        [SerializeField] private SOEnemyData enemyData;
         [SerializeField] private EnemyFOV fov;
-        [SerializeField] private NavMeshAgent agent;
+        [SerializeField] private CollisionHitDetector hitDetector;
         [SerializeField] private PatrolArea[] patrolAreas;
-
-        [Tooltip("Multiple patrol areas. Each area has its own set of waypoints. When returning to patrol, the enemy will choose the area closest to its current position.")]
+        [SerializeField] private NavMeshAgent agent;
         [SerializeField] private Animator animator;
         [SerializeField] private AudioSource audioSource;
-        [SerializeField] private CollisionHitDetector hitDetector;
-        [SerializeField] private SOEnemyData enemyData;
 
         [Header("Runtime")]
         [SerializeField] private EnemyStatesEnum CurrentState;
@@ -202,6 +200,7 @@ namespace EchoCity
         {
             InitializeFOV(enemyData.FOVData); // Initialize FOV with enemy data
             InitPerceivedSounds();
+            FindPatrolAreas();
             _fsm = new EnemyFSM(this);
             _fsm.Initialize();
         }
@@ -214,6 +213,23 @@ namespace EchoCity
             _fsm.Update();
             NotifyUI();
             //agent.isStopped = true; // DEBUG: stop movement for testing
+        }
+
+        //<summary> Finds and assigns patrol areas in the scene </summary>
+        private void FindPatrolAreas()
+        {
+            var areas = GameObject.FindGameObjectsWithTag("PatrolArea");
+            patrolAreas = new PatrolArea[areas.Length];
+            for (int i = 0; i < areas.Length; i++)
+            {
+                var areaObj = areas[i];
+                var waypoints = new Transform[areaObj.transform.childCount];
+                for (int j = 0; j < areaObj.transform.childCount; j++)
+                {
+                    waypoints[j] = areaObj.transform.GetChild(j);
+                }
+                patrolAreas[i] = new PatrolArea(areaObj.name, waypoints);
+            }
         }
 
         private void InitPerceivedSounds()
