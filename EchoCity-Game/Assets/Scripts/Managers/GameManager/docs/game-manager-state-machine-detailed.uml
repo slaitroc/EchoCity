@@ -1,0 +1,97 @@
+@startuml game-manager-state-machine-detailed
+title Game Manager State Machine (detailed)
+
+skinparam backgroundColor #151b23
+skinparam defaultFontName "MesloLGL Nerd Font"
+skinparam defaultFontSize 13
+skinparam titleFontColor #cececeff
+skinparam arrowColor #cececeff
+skinparam arrowFontColor #cececeff
+hide empty description
+
+skinparam state {
+    BackgroundColor #202020ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam note {
+    BackgroundColor #404040ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+Title : - player input -> off
+Title : - ui input -> on
+Title : - time scale -> paused
+
+Playing : - player input -> on
+Playing : - ui input -> off
+Playing : - time scale -> normal
+
+Loading: - previousState.EnterLoading()
+Loading: - previousState.ExitLoading()
+
+Narration : - player input -> off
+Narration : - ui input -> on
+Narration : - time scale -> paused
+
+HUD : - player input -> on
+HUD : - ui input -> on
+HUD : - time scale -> normal
+
+Paused : - player input -> off
+Paused : - ui input -> on
+Paused : - time scale -> paused
+
+Death : - player input -> off
+Death : - ui input -> on
+Death : - time scale -> paused
+
+Win : - player input -> off
+Win : - ui input -> on
+Win : - time scale -> paused
+
+note right of Loading
+    exiting loading triggered by
+    DoneLoadingHandler()
+end note
+
+
+[*] #cececeff -right-> Title : init
+
+Title --> Loading 
+
+Playing -up-> Paused #19478cff
+Playing -up-> Narration
+Playing -up-> HUD 
+Playing -right-> Win #3ca31cff
+Playing -left-> Death #8c1919ff
+
+Paused -down-> Playing
+Paused -down[#19478cff]-> Loading
+
+Narration -down-> Playing
+
+Death -down[#8c1919ff]-> Loading
+
+Win -down[#3ca31cff]-> Loading
+
+HUD -down-> Playing 
+HUD -down-> Paused
+HUD -down-> Narration
+HUD -left[hidden]-> Narration
+HUD -down-> Death
+
+Loading -up-> Playing 
+
+Loading -[#8c1919ff]-> Title
+Loading -[#8c1919ff]-> Playing
+
+Loading -[#3ca31cff]-> Title
+Loading -[#3ca31cff]-> Playing
+Loading -up[#19478cff]-> Title
+
+
+
+@enduml
