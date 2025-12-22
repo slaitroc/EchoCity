@@ -124,7 +124,6 @@ namespace EchoCity
         [SerializeField] private SOEnemyData enemyData;
         [SerializeField] private EnemyFOV fov;
         [SerializeField] private CollisionHitDetector hitDetector;
-        [SerializeField] private PatrolArea[] patrolAreas;
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private Animator animator;
         [SerializeField] private AudioSource audioSource;
@@ -132,6 +131,7 @@ namespace EchoCity
         [Header("Runtime")]
         [SerializeField] private EnemyStatesEnum CurrentState;
         [SerializeField] private PatrolArea currentPatrolArea;
+        [SerializeField] private PatrolArea[] patrolAreas;
         [SerializeField] private PerceivedSound lastPS;
         [SerializeField] private PerceivedSound targetSound;
         [SerializeField] private PerceivedSound lastAPS; //Attraction Perceived Sound
