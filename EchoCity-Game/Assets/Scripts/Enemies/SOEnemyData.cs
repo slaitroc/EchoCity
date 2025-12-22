@@ -40,7 +40,7 @@ namespace EchoCity
         [Header("Confusion")]
         [SerializeField] private float confusingSoundDetectionRange = 30f; // Maximum distance at which enemy can detect confusing sound sources (R_confuse)
 
-        [Header("Thresholds")]
+        [Header("Attraction Parameters")]
         [SerializeField] private float distanceLowerBound = 1.0f;
         [SerializeField] private float aMaxIncrementPerFrame = 0.2f;
         [SerializeField] private float detectionVelocity = 1.0f;
@@ -51,7 +51,7 @@ namespace EchoCity
         [SerializeField] private float decayGrowthRate = 0.5f;
         [SerializeField] private float aRange = 1f;
 
-
+        [Header("Confusion Parameters")]
         [SerializeField] private float ct = 1.0f;
         [SerializeField] private float ctMAX = 1.0f;
         [SerializeField] private float cIntensity = 0.8f;
