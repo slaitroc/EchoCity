@@ -22,7 +22,7 @@
     unity-font-style: bold;
     font-size: 32px;
     margin-bottom: 5px;
-    color: rgb(255, 210, 127);
+    color: #5A7ACD;
 }
 
 .dialog-label {
@@ -44,10 +44,10 @@
 
 .skip-button {
     position: relative;
-    background-color: rgba(255, 210, 127, 0.4);
-    border-width: 5px;
+    background-color: #5A7ACD;
     border-color: transparent;
     border-radius: 8px;
+    border-width: 3px;
     padding: 8px 12px;
     font-size: 20px;
     color: white;
@@ -59,7 +59,7 @@
     position: relative;
     bottom: 10px;
     background-color: rgba(255, 255, 255, 0.2);
-    border-width: 5px;
+    border-width: 3px;
     border-color: transparent;
     border-radius: 8px;
     padding: 8px 12px;
@@ -70,6 +70,6 @@
 
 .button:focus,
 .button:hover {
-    border-color: rgba(0, 255, 0, 0.5);
+    border-color: #EEEEEE;
 }
 
