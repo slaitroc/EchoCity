@@ -1,117 +1,42 @@
-using UnityEngine;
-
-[System.Serializable]
-public class EnemyFSM
+namespace EchoCity
 {
-    public EnemyState CurrentState { get; private set; }
-    private EnemyAI enemyAI;
-    
-    // All states
-    public PatrolEnemyState patrolState;
-    public MandatoryChaseState mandatoryChaseState;
-    public ChaseEnemyState chaseState;
-    public ChaseDistanceState chaseDistanceState;
-    public AttackEnemyState attackState;
-    public CheckSoundState checkSoundState;
-    public StandAndExaminateState standAndExaminateState;
-    public LostTargetState lostTargetState;
-    public GettingConfusedState gettingConfusedState;
-
-    public EnemyFSM(EnemyAI enemyAI)
+    [System.Serializable]
+    public class EnemyFSM : IEnemyStatesFSM
     {
-        this.enemyAI = enemyAI;
-        patrolState = new PatrolEnemyState(enemyAI, this);
-        mandatoryChaseState = new MandatoryChaseState(enemyAI, this);
-        chaseState = new ChaseEnemyState(enemyAI, this);
-        chaseDistanceState = new ChaseDistanceState(enemyAI, this);
-        attackState = new AttackEnemyState(enemyAI, this);
-        checkSoundState = new CheckSoundState(enemyAI, this);
-        standAndExaminateState = new StandAndExaminateState(enemyAI, this);
-        lostTargetState = new LostTargetState(enemyAI, this);
-        gettingConfusedState = new GettingConfusedState(enemyAI, this);
-    }
+        public IEnemyState CurrentState { get; private set; }
+        public IEnemyState PreviousState { get; private set; }
 
-    public void Initialize()
-    {
-        CurrentState = patrolState;
-        Log.D($"[{enemyAI.name}] FSM Initialized: Starting in Patrol state", "#00ff00ff", "ENEMY FSM");
-        CurrentState.Enter();
-    }
+        public IEnemyState PatrolState;
+        public IEnemyState SoundChaseState;
+        public IEnemyState PlayerChaseState;
+        public IEnemyState AttackState;
 
-    public void Update(float attraction)
-    {
-        if (enemyAI.enemyData == null)
+
+        public EnemyFSM(IEnemyContext context)
         {
-            CurrentState.Update(attraction);
-            return;
+            PatrolState = new PatrolEnemyState(context, this);
+            SoundChaseState = new SoundChaseEnemyState(context, this);
+            PlayerChaseState = new PlayerChaseEnemyState(context, this);
+            AttackState = new AttackEnemyState(context, this);
         }
-        
-        float distToPlayer = Vector3.Distance(enemyAI.transform.position, enemyAI.player.position);
-        
-        // GLOBAL TRIGGER 1: MandatoryChase
-        // Solo se: !HasConfirmedPlayer, !IsNoiseChaseActive, e CurrentState è uno degli stati non-chase specifici
-        // Se A >= A_enter (1.0) → MandatoryChaseState
-        bool canEnterMandatoryChase = !enemyAI.HasConfirmedPlayer 
-            && !enemyAI.IsNoiseChaseActive
-            && (CurrentState == patrolState || 
-                CurrentState == standAndExaminateState || 
-                CurrentState == checkSoundState || 
-                CurrentState == gettingConfusedState);
 
-        if (canEnterMandatoryChase && attraction >= enemyAI.enemyData.NoiseThreshold)
+        public void Initialize()
         {
-            SwitchState(mandatoryChaseState);
-            return;
+            CurrentState = PatrolState;
+            CurrentState.Enter();
         }
-        
-        // GLOBAL TRIGGER 2: ChaseDistance
-        // From ANY non-chase state (Patrol, CheckSound, StandAndExamine, LostTarget, GettingConfused):
-        // If d <= D_enter (10m) → ChaseDistanceState
-        // Note: LostTargetState can be interrupted if player gets too close
-        bool isNonChaseState = CurrentState == patrolState || 
-                               CurrentState == checkSoundState || 
-                               CurrentState == standAndExaminateState || 
-                               CurrentState == lostTargetState ||
-                               CurrentState == gettingConfusedState;
-        
-        if (isNonChaseState && distToPlayer <= enemyAI.enemyData.D_enter)
-        {
-            SwitchState(chaseDistanceState);
-            return;
-        }
-        
-        // Update current state
-        CurrentState.Update(attraction);
-    }
 
-    public void SwitchState(EnemyState newState)
-    {
-        string oldStateName = GetStateName(CurrentState);
-        string newStateName = GetStateName(newState);
-        
-        // Log state change
-        Log.D($"[{enemyAI.name}] State Change: {oldStateName} → {newStateName}", "#00ff00ff", "ENEMY FSM");
-        
-        CurrentState.Exit();
-        CurrentState = newState;
-        CurrentState.Enter();
-    }
-    
-    /// <summary>
-    /// Gets the name of a state for logging purposes
-    /// </summary>
-    private string GetStateName(EnemyState state)
-    {
-        if (state == null) return "NULL";
-        if (state == patrolState) return "Patrol";
-        if (state == mandatoryChaseState) return "MandatoryChase";
-        if (state == chaseState) return "Chase";
-        if (state == chaseDistanceState) return "ChaseDistance";
-        if (state == attackState) return "Attack";
-        if (state == checkSoundState) return "CheckSound";
-        if (state == standAndExaminateState) return "StandAndExamine";
-        if (state == lostTargetState) return "LostTarget";
-        if (state == gettingConfusedState) return "GettingConfused";
-        return state.GetType().Name;
+        public void Update()
+        {
+            CurrentState.Update();
+        }
+
+        public void SwitchState(IEnemyState newState)
+        {
+            CurrentState.Exit();
+            PreviousState = CurrentState;
+            CurrentState = newState;
+            CurrentState.Enter();
+        }
     }
 }

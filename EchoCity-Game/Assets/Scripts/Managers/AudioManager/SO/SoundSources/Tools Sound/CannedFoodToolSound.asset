@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
   m_Name: CannedFoodToolSound
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  soundClass: {fileID: 11400000, guid: b9ba5889cfc2b2d41b9c957eecc272b9, type: 2}
+  soundClassIntensityFactorMultiplier: 1
   audioClip: {fileID: 0}
+  audioLengthReference: 0.7623356
+  audioLengthOverride: 0.15
   intensity: 1
-  volume: 0.661
+  volume: 1
   radius: 7.7
   gapBetweenSounds: 0
   minimumDuration: 0.1

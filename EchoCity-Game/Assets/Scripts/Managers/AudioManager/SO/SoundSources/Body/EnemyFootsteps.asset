@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: EnemyFootsteps
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 49281afd3aa455741af4c174c271f1b2, type: 2}
+  soundClassIntensityFactorMultiplier: 1
   audioClip: {fileID: 0}
+  audioLengthReference: 0.34582767
+  audioLengthOverride: 0
   intensity: 0.3
   volume: 0.2
   radius: 3
-  gapBetweenSounds: 0
-  minimumDuration: 0.2
-  emitOnStart: 0
+  minEchoDuration: 0.1
+  isEnvironmental: 0
   randomAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
   - {fileID: 8300000, guid: 85016e0f2b01da248b9663dd49a161b0, type: 3}

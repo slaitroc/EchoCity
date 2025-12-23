@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
+  m_Name: HighGeneratorHum
+  m_EditorClassIdentifier: 
+  soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
+  soundClassIntensityFactorMultiplier: 1
+  audioClip: {fileID: 8300000, guid: 360280740f9b070408fbaf7dafb202f5, type: 3}
+  audioLengthReference: 4
+  audioLengthOverride: 4
+  intensity: 0.719
+  volume: 1
+  radius: 4
+  gapBetweenSounds: 2
+  minimumDuration: 2
+  emitOnStart: 1
+  randomAudioClips: []

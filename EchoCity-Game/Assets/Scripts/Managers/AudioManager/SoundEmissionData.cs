@@ -9,101 +9,65 @@ public enum Frequency
 
 public struct SoundClass
 {
-    private float rangeFactor;
-    private float intensityFactor;
-    private float decay;
-    private Frequency frequency;
+    private readonly float _rangeFactor;
+    private readonly float _intensityFactor;
+    private readonly float _decay;
+    private readonly float _persistence;
+    private readonly Frequency _frequency;
+    private readonly bool _isConfusing;
+    private readonly bool _isEnemy;
+    private readonly bool _isPlayerBodySound;
 
-    public float RangeFactor => rangeFactor;
-    public float IntensityFactor => intensityFactor;
-    public float Decay => decay;
-    public Frequency Frequency => frequency;
-    public SoundClass(float rangeF, float intensityF, float dec, Frequency frequency)
+    public readonly float RangeFactor => _rangeFactor;
+    public readonly float IntensityFactor => _intensityFactor;
+    public readonly float Decay => _decay;
+    public readonly float Persistence => _persistence;
+    public readonly Frequency Frequency => _frequency;
+    public readonly bool IsConfusing => _isConfusing;
+    public readonly bool IsEnemy => _isEnemy;
+    public readonly bool IsPlayerBodySound => _isPlayerBodySound;
+
+    public SoundClass(SOSoundClass soundClass)
     {
-        rangeFactor = rangeF;
-        intensityFactor = intensityF;
-        decay = dec;
-        this.frequency = frequency;
+        _rangeFactor = soundClass.RangeFactor;
+        _intensityFactor = soundClass.IntensityFactor;
+        _decay = soundClass.Decay;
+        _persistence = soundClass.Persistence;
+        _frequency = soundClass.Frequency;
+        _isConfusing = soundClass.IsConfusing;
+        _isEnemy = soundClass.IsEnemy;
+        _isPlayerBodySound = soundClass.IsPlayerBodySound;
     }
 }
 
 public struct SoundEmissionData
 {
-    private Vector3 position;
-    private float radius;
-    private float intensity;
-    private float duration;
-    private SoundClass soundClass;
+    private Vector3 _position;
+    private readonly float _radius;
+    private readonly float _intensity;
+    private readonly float _duration;
+    private readonly SoundClass _soundClass;
+    private readonly float _soundClassIntensityFactorMultiplier;
+    private readonly bool _isEnvironmental;
 
-    public Vector3 Position => position;
-    public float Radius => radius;
-    public float Intensity => intensity;
-    public float Duration => duration;
-    public SoundClass SoundClass => soundClass;
+    public readonly Vector3 Position => _position;
+    public readonly float Radius => _radius;
+    public readonly float Intensity => _intensity;
+    public readonly float Duration => _duration;
+    public readonly SoundClass SoundClass => _soundClass;
+    public readonly float SoundClassIntensityFactorMultiplier => _soundClassIntensityFactorMultiplier;
+    public readonly bool IsEnvironmental => _isEnvironmental;
 
 
     public SoundEmissionData(Vector3 pos, SOSoundSource soundSource)
     {
-        position = pos;
-        radius = soundSource.Radius;
-        intensity = soundSource.Intensity;
-        if (soundSource.AudioClip != null)
-            duration = soundSource.AudioClip.length;
-        else if (soundSource.RandomAudioClips != null && soundSource.RandomAudioClips.Length > 0)
-            duration = soundSource.RandomAudioClips[0].length; // Approximate with first clip
-        else
-            duration = 0f;
-
-        soundClass = new SoundClass(
-            soundSource.SoundClass.RangeFactor,
-            soundSource.SoundClass.IntensityFactor,
-            soundSource.SoundClass.Decay,
-            soundSource.SoundClass.Frequency
-        );
-    }
-
-    public SoundEmissionData(Vector3 pos, SOSoundSource soundSource, AudioClip clip)
-    {
-        position = pos;
-        radius = soundSource.Radius;
-        intensity = soundSource.Intensity;
-        duration = clip.length;
-        soundClass = new SoundClass(
-            soundSource.SoundClass.RangeFactor,
-            soundSource.SoundClass.IntensityFactor,
-            soundSource.SoundClass.Decay,
-            soundSource.SoundClass.Frequency
-        );
-    }
-
-    /// <summary>
-    /// Constructor for creating SoundEmissionData directly with parameters.
-    /// Frequency is a float: 0=Low, 1=Mid, 2=High
-    /// </summary>
-    public SoundEmissionData(Vector3 pos, float rad, float intens, float dur, float freq)
-    {
-        position = pos;
-        radius = rad;
-        intensity = intens;
-        duration = dur;
-
-        // Convert float frequency to Frequency enum
-        Frequency frequencyEnum;
-        if (freq <= 0f)
-            frequencyEnum = Frequency.Low;
-        else if (freq <= 1f)
-            frequencyEnum = Frequency.Mid;
-        else
-            frequencyEnum = Frequency.High;
-
-        // Create SoundClass with default values (these are typically from SOSoundSource)
-        // Using reasonable defaults for investigation sounds
-        soundClass = new SoundClass(
-            rangeF: 1f,           // Default range factor
-            intensityF: 1f,       // Default intensity factor
-            dec: 0.1f,            // Default decay
-            frequency: frequencyEnum
-        );
+        _position = pos;
+        _radius = soundSource.Radius;
+        _intensity = soundSource.Intensity;
+        _soundClassIntensityFactorMultiplier = soundSource.SoundClassIntensityFactorMultiplier;
+        _soundClass = new SoundClass(soundSource.SoundClass);
+        _duration = soundSource.AudioLengthOverride;
+        _isEnvironmental = soundSource.IsEnvironmental;
     }
 }
 

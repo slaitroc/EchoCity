@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
   m_Name: HighClockTickingSoundSource
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
+  soundClass: {fileID: 11400000, guid: b9ba5889cfc2b2d41b9c957eecc272b9, type: 2}
+  soundClassIntensityFactorMultiplier: 1
   audioClip: {fileID: 0}
+  audioLengthReference: 0.31251702
+  audioLengthOverride: 0.1
   intensity: 0.69
   volume: 0.278
   radius: 2
-  gapBetweenSounds: 0.71
-  minimumDuration: 0.1
-  emitOnStart: 0
+  minEchoDuration: 0.1
+  isEnvironmental: 1
   randomAudioClips:
   - {fileID: 8300000, guid: e086e63a5c53cb842a2a563d0c9f1700, type: 3}
   - {fileID: 8300000, guid: ca8f86862f9d49b48bf59f6830c428fa, type: 3}

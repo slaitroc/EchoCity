@@ -1,0 +1,99 @@
+@startuml enemy-state-machine
+title Enemy State Machine
+
+skinparam backgroundColor #151b23
+skinparam defaultFontName "MesloLGL Nerd Font"
+skinparam defaultFontSize 13
+skinparam titleFontColor #cececeff
+skinparam arrowColor #cececeff
+skinparam arrowFontColor #cececeff
+hide empty description
+
+skinparam state {
+    BackgroundColor #202020ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam note {
+    BackgroundColor #404040ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+
+[*] #cececeff -up-> Patrol 
+note on link
+    A = Attraction function
+    At = Attraction threshold
+end note
+
+Patrol : - walking from a waypoint to another
+state Patrol {
+    state "walk to wp" as wtp
+    state "set closest wp" as scwp
+    [*] #5f5e5eff -right-> scwp 
+    scwp -right-> wtp
+    wtp -right-> check : reached
+    state "check wp" as check {
+        state "wait at wp" as wait
+        state "set next wp" as snwp
+        [*] #5f5e5eff -down-> wait 
+        wait -right-> snwp 
+        snwp -up-> [*] #5f5e5eff
+    }
+    check -left-> wtp : checked
+}
+
+Patrol -down-> SoundChase : A >= At
+Patrol -left-> PlayerChase : target moving\n  in FOV
+
+
+state SoundChase {
+    state "set sound position" as ssp
+    state "check position" as cs
+    state "run to position" as rts
+    state "any state" as any #2975e0ff
+
+
+    [*] #5f5e5eff -right-> ssp
+    ssp -down-> rts : set course
+    rts -down-> cs : reached
+    cs -up-> rts : check complete
+    cs -right-> [*] #5f5e5eff
+
+    ssp -right[hidden]-> any
+    any -down-> ssp : new sound heard\n && A >= At
+}
+
+SoundChase : - attraction based chasing
+SoundChase --> PlayerChase : target moving\n in FOV
+SoundChase --> Patrol 
+SoundChase -left-> Attack : in attack range
+
+state PlayerChase {
+    state "set target transform" as stpc
+    state "chase transform" as cp
+
+    [*] #5f5e5eff -right-> stpc
+    stpc -down-> cp : set course
+
+}
+
+PlayerChase : - target based chasing
+PlayerChase --> SoundChase : target hidden
+PlayerChase -down->  Attack : in attack range
+
+state Attack {
+    state "try to hit player" as thp
+    state "cool down" as cd
+
+    [*] #5f5e5eff -right-> thp
+    thp -down-> cd : attack complete
+    cd -left-> [*] #5f5e5eff
+}
+
+Attack : - trying to hit player
+Attack -right-> SoundChase 
+
+@enduml

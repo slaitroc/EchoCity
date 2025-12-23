@@ -5,25 +5,19 @@ namespace EchoCity
 {
     public static class ECSound
     {
-        private const string _LOG_TAG = "SOUND_SOURCE";
-        private const string _LOG_COLOR = "yellow";
-
+        private const string _LOG_TAG = "EC-SOUND";
         private static AudioMixer _mixer;
         public static AudioMixer Mixer => _mixer;
 
         static ECSound()
         {
             _mixer = Resources.Load<AudioMixer>("EchoCity-AudioMixer");
-
         }
 
         public static void PlayAtPosition(SOSoundSource soundSource, Vector3 position, SOSoundEmissionDataEvent newAudioSphereEvent = null, string mixerGroup = null)
         {
-            if (soundSource == null || soundSource.AudioClip == null)
-            {
-                Log.W("SoundSource or AudioClip is null. Cannot play sound.", _LOG_COLOR, _LOG_TAG);
-                return;
-            }
+            Debug.Assert(soundSource != null && soundSource.AudioClip != null, $"{_LOG_TAG}-PlayAtPosition: soundSource or AudioClip is null.");
+            if (soundSource == null || soundSource.AudioClip == null) return;
             newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(position, soundSource));
             PlayAtPosition(soundSource.AudioClip, position, soundSource.Volume, mixerGroup);
         }
@@ -38,16 +32,15 @@ namespace EchoCity
                     PlayAtPosition(soundSource, position, newAudioSphereEvent, mixerGroup);
                     return;
                 }
-                Log.W("SoundSource RandomAudioClips is null or empty. Cannot play random sound.", _LOG_COLOR, _LOG_TAG);
+                Debug.Assert(false, $"{_LOG_TAG}-PlayRandomAtPosition: SoundSource RandomAudioClips is null or empty. Cannot play random sound.", soundSource);
                 return;
             }
 
             var index = Random.Range(0, soundSource.RandomAudioClips.Length);
             AudioClip clip = soundSource.RandomAudioClips[index];
 
-            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(position, soundSource, clip));
+            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(position, soundSource));
             PlayAtPosition(clip, position, soundSource.Volume, mixerGroup);
-
         }
 
 
@@ -62,14 +55,14 @@ namespace EchoCity
                     PlayInAudioSource(soundSource.AudioClip, soundSource.Volume, mixerGroup, audioSource);
                     return;
                 }
-                Log.W("SoundSource RandomAudioClips is null or empty. Cannot play random sound.", _LOG_COLOR, _LOG_TAG);
+                Debug.Assert(false, $"{_LOG_TAG}-PlayRandomInAudioSource: SoundSource RandomAudioClips is null or empty. Cannot play random sound.", soundSource);
                 return;
             }
 
             var index = Random.Range(0, soundSource.RandomAudioClips.Length);
             AudioClip clip = soundSource.RandomAudioClips[index];
 
-            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(audioSource.transform.position, soundSource, clip));
+            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(audioSource.transform.position, soundSource));
             PlayInAudioSource(clip, soundSource.Volume, mixerGroup, audioSource);
         }
 
@@ -108,6 +101,24 @@ namespace EchoCity
             aSource.clip = clip;
             aSource.volume = volume;
             aSource.Play();
+        }
+
+        //TODO
+        private static void GetEnemiesInRange(Vector3 position, float radius, AudioSource aSource)
+        {
+            Collider[] enemies = new Collider[10];
+            int numEnemies = Physics.OverlapSphereNonAlloc(position, radius, enemies, LayerMask.GetMask("Enemy"));
+            for (int i = 0; i < numEnemies; i++)
+            {
+                // IConfusable confuseable = enemies[i].GetComponent<IConfusable>();
+                // // if (confuseable != null)
+                // {
+                //     confuseable.Confuse(aSource);
+                // }
+
+            }
+
+
         }
 
 

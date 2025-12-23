@@ -18,7 +18,7 @@ namespace EchoCity
 
         }
     }
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageable
     {
 
         private const string LOG_TAG = "PLAYER CONTROLLER";
@@ -34,7 +34,6 @@ namespace EchoCity
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
-        [SerializeField] private SOEnemyAIEvent playerHitEvent;
 
         [Header("Inventory")]
         public SOSoundSource fullInventorySound;
@@ -60,19 +59,12 @@ namespace EchoCity
         {
             if (itemEquippedEvent)
                 itemEquippedEvent.OnEventRaised += EquipItemHandler;
-
-            if (playerHitEvent)
-                playerHitEvent.OnEventRaised += PlayerHitHandler;
-
         }
 
         void OnDisable()
         {
             if (itemEquippedEvent)
                 itemEquippedEvent.OnEventRaised -= EquipItemHandler;
-
-            if (playerHitEvent)
-                playerHitEvent.OnEventRaised -= PlayerHitHandler;
         }
 
         void Start()
@@ -120,7 +112,7 @@ namespace EchoCity
 
         }
 
-        public void PlayerHitHandler(EnemyAI enemy)
+        public void TakeDamage(float damageAmount)
         {
             Log.D($"Taking {damageAmount} damage.", LOG_COLOR, LOG_TAG);
             currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: PickUpMetal
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
+  soundClassIntensityFactorMultiplier: 3
   audioClip: {fileID: 8300000, guid: dc55106ce1b45a641b88b187ca036ee9, type: 3}
-  intensity: 0.993
+  audioLengthReference: 0.5355102
+  audioLengthOverride: 0.4
+  intensity: 1
   volume: 0.683
   radius: 12.5
   gapBetweenSounds: 0

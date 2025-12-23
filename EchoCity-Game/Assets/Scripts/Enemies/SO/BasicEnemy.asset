@@ -12,37 +12,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3896ed5884f69ba4bbc46fe54dc31bdb, type: 3}
   m_Name: BasicEnemy
   m_EditorClassIdentifier: 
-  D_enter: 10
-  D_exit: 15
-  AttackRange: 3.43
-  ChaseSpeed: 6.5
-  PatrolSpeed: 0.515
-  WaypointPauseDuration: 2
-  WaypointArrivalThreshold: 0.3
-  NoiseThreshold: 1
-  NoiseLoseThreshold: 0.8
-  MinChaseDuration: 3
-  NoiseIntensityFactor: 1
-  NoiseRangeFactor: 1
-  NoiseDistanceDecay: 0.5
-  NoiseDecayRate: 0.5
-  MandatoryChaseState_Phrases: {fileID: 11400000, guid: fe82e67f4fdabb8429bc58dd94df3662, type: 2}
-  ChaseEnemyState_Phrases: {fileID: 11400000, guid: a2ee3f7ffb5ac4c43ae8cdbae58483ee, type: 2}
-  ChaseDistanceState_Phrases: {fileID: 11400000, guid: b50861429f8b4d0498f190390b0af253, type: 2}
-  AttackEnemyState_Phrases: {fileID: 11400000, guid: a2ee3f7ffb5ac4c43ae8cdbae58483ee, type: 2}
-  CheckSoundState_Phrases: {fileID: 11400000, guid: fe82e67f4fdabb8429bc58dd94df3662, type: 2}
-  StandAndExaminateState_Phrases: {fileID: 11400000, guid: b50861429f8b4d0498f190390b0af253, type: 2}
-  LostTargetState_Phrases: {fileID: 11400000, guid: a2ee3f7ffb5ac4c43ae8cdbae58483ee, type: 2}
-  GettingConfusedState_Phrases: {fileID: 11400000, guid: fe82e67f4fdabb8429bc58dd94df3662, type: 2}
-  InvestigationSoundIntensity: 0.3
-  InvestigationSoundDuration: 1
-  InvestigationSoundFrequency: 0
-  InvestigationSoundRadius: 5
-  ConfusingSoundDetectionRange: 30
-  ConfusingSoundDuration: 6
-  AttackAnimation: {fileID: 7400000, guid: c1a066f118e5d4c4e96a6dead7956b65, type: 2}
-  AttackDuration: 2.625
-  AttackDamageDelay: 1.2
-  AttackDamageWindowTime: 0.5
-  AttackCoolDown: 2
-  CoolDownRotationSpeed: 12.66
+  fovData:
+    Range: 8.63
+    Angle: 43.4
+  patrolSpeed: 0.5
+  patrolSpeedDampTime: 0.2
+  patrolAcceleration: 20
+  patrolAngularSpeed: 400
+  waypointPauseDuration: 2
+  waypointArrivalThreshold: 2
+  chaseSpeed: 3
+  chaseSpeedDampTime: 0.2
+  chaseAcceleration: 8
+  chaseAngularSpeed: 400
+  chaseSoundArrivalThreshold: 2
+  checkSoundPauseDuration: 2
+  minChaseDuration: 5
+  attackRange: 2.3
+  attackSpeedDampTime: 0.2
+  damage: 30
+  attackAnimation: {fileID: 7400000, guid: c1a066f118e5d4c4e96a6dead7956b65, type: 2}
+  attackDuration: 2.625
+  attackDamageDelay: 1
+  attackDamageWindowTime: 0.5
+  attackCoolDown: 0
+  coolDownRotationSpeed: 5
+  confusingSoundDetectionRange: 30
+  distanceLowerBound: 3
+  aMaxIncrementPerFrame: 1000
+  detectionVelocity: 1
+  at: 1
+  atMAX: 2
+  aIntensity: 5
+  aDecay: 0.085
+  decayGrowthRate: 100
+  aRange: 1
+  ct: 1
+  ctMAX: 1
+  cIntensity: 1
+  cDecayFactor: 0.32
+  soundChaseStatePhrases: {fileID: 0}
+  playerChaseStatePhrases: {fileID: 0}
+  attackStatePhrases: {fileID: 0}
+  checkSoundStatePhrases: {fileID: 0}
+  lostTargetPhrases: {fileID: 0}
+  confusedStatePhrases: {fileID: 0}
