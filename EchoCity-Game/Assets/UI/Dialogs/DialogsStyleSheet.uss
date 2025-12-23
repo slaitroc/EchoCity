@@ -22,12 +22,12 @@
     unity-font-style: bold;
     font-size: 32px;
     margin-bottom: 5px;
-    color: #5A7ACD;
+    color: rgba(90, 122, 205, 1);
 }
 
 .dialog-label {
     font-size: 26px;
-    color: white;
+    color: rgba(255, 255, 255, 1);
 }
 
 .button-container {
@@ -44,13 +44,13 @@
 
 .skip-button {
     position: relative;
-    background-color: #5A7ACD;
-    border-color: transparent;
+    background-color: rgba(90, 122, 205, 1);
+    border-color: rgba(0, 0, 0, 0);
     border-radius: 8px;
     border-width: 3px;
     padding: 8px 12px;
     font-size: 20px;
-    color: white;
+    color: rgba(255, 255, 255, 1);
     cursor: pointer;
     top: 10px;
 }
@@ -60,16 +60,15 @@
     bottom: 10px;
     background-color: rgba(255, 255, 255, 0.2);
     border-width: 3px;
-    border-color: transparent;
+    border-color: rgba(0, 0, 0, 0);
     border-radius: 8px;
     padding: 8px 12px;
     font-size: 20px;
-    color: white;
+    color: rgba(255, 255, 255, 1);
     cursor: pointer;
 }
 
 .button:focus,
 .button:hover {
-    border-color: #EEEEEE;
+    border-color: rgba(238, 238, 238, 1);
 }
-
