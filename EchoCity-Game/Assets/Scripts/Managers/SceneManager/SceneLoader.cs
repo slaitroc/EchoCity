@@ -42,7 +42,6 @@ namespace EchoCity
             if (unloadCurrentLevelEvent) unloadCurrentLevelEvent.OnEventRaised += UnloadCurrentLevelHandler;
             if (reloadLevelEvent) reloadLevelEvent.OnEventRaised += ReloadCurrentLevelHandler;
             if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised += PlacePlayerOnSpawn;
-
         }
 
         private void OnDisable()
@@ -52,7 +51,6 @@ namespace EchoCity
             if (reloadLevelEvent) reloadLevelEvent.OnEventRaised -= ReloadCurrentLevelHandler;
             if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised -= PlacePlayerOnSpawn;
         }
-
 
         public void PlacePlayerOnSpawn() //BUG
         {
@@ -73,11 +71,12 @@ namespace EchoCity
         public void LoadSceneAdditiveNoActiveHandler(SceneEnum scene) => StartCoroutine(LoadSceneAdditiveNoActiveWithLoading(scene));
         public void ReloadCurrentLevelHandler() => StartCoroutine(ReloadCurrentLevelWithLoading());
         public void UnloadCurrentLevelHandler() => StartCoroutine(UnloadCurrentLevelWithLoading());
+
         public IEnumerator LoadLevelAdditive(SceneEnum scene)
         {
             string sceneName = scenesNames[(int)scene];
-
 #if UNITY_EDITOR
+            //if the scene is already loaded, just set it active and unload others
             Scene existingScene = SceneManager.GetSceneByName(sceneName);
             if (existingScene.IsValid() && existingScene.isLoaded)
             {
@@ -142,6 +141,7 @@ namespace EchoCity
             yield return StartCoroutine(LoadLevelAdditive(_currentLevelEnum));
         }
 
+        // Unloads all levels except the specified one
         private IEnumerator UnloadOtherLevels(SceneEnum levelToKeep)
         {
             for (int i = 0; i < scenesNames.Length; i++)

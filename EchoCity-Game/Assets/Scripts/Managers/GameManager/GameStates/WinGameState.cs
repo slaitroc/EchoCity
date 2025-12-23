@@ -39,7 +39,7 @@ namespace EchoCity
         public override void SwitchToInitLevelHandler(SceneEnum scene)
         {
             _restart = true;
-            _gameManager.ReloadLevelEvent.RaiseEvent();
+            _gameManager.LoadLevelEvent.RaiseEvent(scene);
         }
     }
 }
