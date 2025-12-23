@@ -1383,7 +1383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1379732219092029711
 Transform:
   m_ObjectHideFlags: 0
@@ -1557,8 +1557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0de813f7c7c046219848cad612cfa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHitEvent: {fileID: 0}
-  noiseUIEvent: {fileID: 0}
+  playerHitEvent: {fileID: 11400000, guid: a32f6db4bbe0bf749bd4dab2137b045b, type: 2}
+  noiseUIEvent: {fileID: 11400000, guid: b1795c6c1fecf4e9fb1e0729d276ba7d, type: 2}
   investigationEvent: {fileID: 0}
   enemySoundEmissionEvent: {fileID: 0}
   playerActionEvent: {fileID: 0}
@@ -3675,6 +3675,7 @@ GameObject:
   - component: {fileID: 7854739263412934793}
   - component: {fileID: 8243044582833020489}
   - component: {fileID: 1181520305264546771}
+  - component: {fileID: 8243044582833020490}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -5638,6 +5639,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e24764b55ee3047d084e51eeaec1da57, type: 2}
   - {fileID: 11400000, guid: 30e2c170a0b004af5897cbcb197ed8c1, type: 2}
   - {fileID: 11400000, guid: 2cf70d07c01de40c195f86ab55457b25, type: 2}
+--- !u!114 &8243044582833020490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5354991708404271185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1336935b07ec34100a7caf6ac22f874c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManager: {fileID: 3969561829711415350}
+  hudDocument: {fileID: 557246910997754761}
+  enemyNoiseUIEvent: {fileID: 11400000, guid: b1795c6c1fecf4e9fb1e0729d276ba7d, type: 2}
+  hideDelay: 5
+  minFillNormalized: 0.05
+  _shouldShow: 0
 --- !u!1 &8271982753614926909
 GameObject:
   m_ObjectHideFlags: 0

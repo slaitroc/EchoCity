@@ -8,6 +8,15 @@
             <ui:VisualElement name="crosshair" class="crosshair" />
         </ui:VisualElement>
 
+        <!-- ENEMY NOISE / AWARENESS PANEL -->
+        <ui:VisualElement name="EnemyNoisePanel" class="enemy-noise-panel">
+            <ui:VisualElement name="EnemyNoiseBarBackground" class="enemy-noise-bar-bg">
+                <ui:VisualElement name="EnemyNoiseBarFill" class="enemy-noise-bar-fill" />
+            </ui:VisualElement>
+            <!-- <ui:Label name="EnemyNoiseLabel" class="enemy-noise-label" text="" /> -->
+        </ui:VisualElement>
+
+
         <!-- INTERACTION PANEL -->
         <ui:VisualElement name="interaction-panel" class="interaction-panel">
             <ui:Label name="interaction-key" class="interaction-key" />
