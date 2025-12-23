@@ -4,10 +4,13 @@
         <ui:VisualElement name="dimmer" class="dimmer" />
         <ui:VisualElement name="panel" class="panel">
             <ui:Label name="title" text="Paused" class="title" style="font-size: 150%;" />
-            <ui:Button name="ResumeButton" text="Resume" class="button" />
-            <ui:Button name="SettingsButton" text="Settings" class="button" />
-            <ui:Button name="FeedbackButton" text="Feedback" class="button" />
-            <ui:Button name="QuitButton" text="Quit to Title" class="button" />
+            <ui:VisualElement name="buttons-container" class="buttons-container">
+                <ui:Button name="ResumeButton" text="Resume" class="button" />
+                <ui:Button name="PlaygroundButton" text="Playground" class="button" />
+                <ui:Button name="SettingsButton" text="Settings" class="button" />
+                <ui:Button name="FeedbackButton" text="Feedback" class="button" />
+                <ui:Button name="QuitButton" text="Quit to Title" class="button" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

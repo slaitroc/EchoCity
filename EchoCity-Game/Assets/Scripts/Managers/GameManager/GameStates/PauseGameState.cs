@@ -8,7 +8,7 @@ namespace EchoCity
     public class PauseGameState : GameState
     {
         private bool _toTitle = false;
-        private bool _restart = false;
+        private bool _loadLevel = false;
         public PauseGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
         public override void Enter()
         {
@@ -17,17 +17,17 @@ namespace EchoCity
             _gameManager.EnableUIInputEvent.RaiseEvent();
             _gameManager.PauseMenuEvent.RaiseEvent();
         }
-        public override void Update(){}
+        public override void Update() { }
         public override void Exit()
         {
             _toTitle = false;
-            _restart = false;
+            _loadLevel = false;
         }
         public override void ExitLoading()
         {
             if (_toTitle)
                 _fsm.SwitchState(_fsm.TitleState);
-            if (_restart)
+            if (_loadLevel)
                 _fsm.SwitchState(_fsm.PlayingState);
         }
         public override GameStatesEnum GetEnum() => GameStatesEnum.Pause;
@@ -40,8 +40,8 @@ namespace EchoCity
         }
         public override void SwitchToInitLevelHandler(SceneEnum scene)
         {
-            _restart = true;
-            _gameManager.ReloadLevelEvent.RaiseEvent();
+            _loadLevel = true;
+            _gameManager.LoadLevelEvent.RaiseEvent(scene);
         }
     }
 }

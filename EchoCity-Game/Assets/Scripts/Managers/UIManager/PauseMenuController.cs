@@ -18,6 +18,7 @@ namespace EchoCity
         #region Private Fields
         private VisualElement _root;
         private Button resumeButton;
+        private Button playgroundButton;
         private Button settingsButton;
         private Button feedbackButton;
         private Button quitButton;
@@ -40,10 +41,11 @@ namespace EchoCity
         {
 
             resumeButton = _root.Q<Button>("ResumeButton");
+            playgroundButton = _root.Q<Button>("PlaygroundButton");
             settingsButton = _root.Q<Button>("SettingsButton");
             feedbackButton = _root.Q<Button>("FeedbackButton");
             quitButton = _root.Q<Button>("QuitButton");
-            buttons = new Button[] { resumeButton, settingsButton, feedbackButton, quitButton };
+            buttons = new Button[] { resumeButton, playgroundButton, settingsButton, feedbackButton, quitButton };
 
             yield return null;
 
@@ -78,22 +80,13 @@ namespace EchoCity
             });
 
             if (resumeButton != null) resumeButton.clicked += ResumeClickHandler;
+            if (playgroundButton != null) playgroundButton.clicked += PlaygroundClickHandler;
             if (settingsButton != null) settingsButton.clicked += SettingsClickHandler;
             if (feedbackButton != null) feedbackButton.clicked += FeedbackClickHandler;
             if (quitButton != null) quitButton.clicked += QuitClickHandler;
         }
 
-        private void OnDisable()
-        {
-            if (resumeButton != null) resumeButton.clicked -= ResumeClickHandler;
-            if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
-            if (feedbackButton != null) feedbackButton.clicked -= FeedbackClickHandler;
-            if (quitButton != null) quitButton.clicked -= QuitClickHandler;
-
-            _showCursor = false;
-        }
-
-        void Update()
+        private void Update()
         {
             MethodsUI.SetCursorState(_showCursor);
         }
@@ -106,8 +99,20 @@ namespace EchoCity
 
         private void ResumeClickHandler() => uiManager.SwitchToPlayState();
         private void SettingsClickHandler() => uiManager.OpenSettingsMenu();
+        private void PlaygroundClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.Playground);
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
         private void QuitClickHandler() => uiManager.SwitchToTitleState();
+
+        private void OnDisable()
+        {
+            if (resumeButton != null) resumeButton.clicked -= ResumeClickHandler;
+            if (playgroundButton != null) playgroundButton.clicked -= PlaygroundClickHandler;
+            if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
+            if (feedbackButton != null) feedbackButton.clicked -= FeedbackClickHandler;
+            if (quitButton != null) quitButton.clicked -= QuitClickHandler;
+
+            _showCursor = false;
+        }
 
     }
 }

@@ -29,7 +29,7 @@ namespace EchoCity
         {
             LoadingState = new LoadingGameState(gameManager, this);
             TitleState = new TitleGameState(gameManager, this);
-            InitLevelState = new InitLevelGameState(gameManager, this);
+            // InitLevelState = new InitLevelGameState(gameManager, this);
             PlayingState = new PlayingGameState(gameManager, this);
             PauseState = new PauseGameState(gameManager, this);
             NarrationState = new NarrationGameState(gameManager, this);

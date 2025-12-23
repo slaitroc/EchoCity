@@ -21,6 +21,7 @@ namespace EchoCity
         private VisualElement _deathMenuPanel;
         private VisualElement _deathBgAnimated;
         private Button _restartButton;
+        private Button _playgroundButton;
         private Button _feedbackButton;
         private Button _quitButton;
         private Button[] buttons;
@@ -44,6 +45,7 @@ namespace EchoCity
             _deathBgAnimated.style.translate = new Translate(0, new Length(-100, LengthUnit.Percent));
 
             _restartButton = _root.Q<Button>("RestartButton");
+            _playgroundButton = _root.Q<Button>("PlaygroundButton");
             _feedbackButton = _root.Q<Button>("FeedbackButton");
             _quitButton = _root.Q<Button>("QuitButton");
             buttons = new Button[] { _restartButton, _feedbackButton, _quitButton };
@@ -83,6 +85,7 @@ namespace EchoCity
             });
 
             if (_restartButton != null) _restartButton.clicked += RestartGameClickHandler;
+            if (_playgroundButton != null) _playgroundButton.clicked += PlaygroundClickHandler;
             if (_feedbackButton != null) _feedbackButton.clicked += FeedbackClickHandler;
             if (_quitButton != null) _quitButton.clicked += QuitClickHandler;
 
@@ -100,14 +103,9 @@ namespace EchoCity
                 button?.Blur();
         }
 
-        private void RestartGameClickHandler()
-        {
-            _showCursor = false;
-            uiManager.SwitchToInitLevel(SceneEnum.Level1);
-        }
-
+        private void RestartGameClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.Level1);
+        private void PlaygroundClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.Playground);
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
-
         private void QuitClickHandler() => uiManager.SwitchToTitleState();
 
         private void OnDisable()
@@ -115,8 +113,10 @@ namespace EchoCity
             if (_restartButton != null) _restartButton.clicked -= RestartGameClickHandler;
             if (_feedbackButton != null) _feedbackButton.clicked -= FeedbackClickHandler;
             if (_quitButton != null) _quitButton.clicked -= QuitClickHandler;
+            if (_playgroundButton != null) _playgroundButton.clicked -= PlaygroundClickHandler;
 
             _deathMenuPanel.RemoveFromClassList("show");
+            _showCursor = false;
         }
     }
 }

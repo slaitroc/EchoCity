@@ -5,9 +5,12 @@
     <ui:VisualElement name="DeathBgAnimated" class="death-bg-animated" />
         <ui:VisualElement name="DeathMenuPanel" class="panel">
             <ui:Label name="title" text="YOU DIED" class="title" />
-            <ui:Button name="RestartButton" text="Restart" class="button" />
-            <ui:Button name="FeedbackButton" text="Feedback" class="button" />
-            <ui:Button name="QuitButton" text="Quit to Title" class="button" />
+            <ui:VisualElement name="buttons-container" class="buttons-container">
+                <ui:Button name="RestartButton" text="Restart" class="button" />
+                <ui:Button name="PlaygroundButton" text="Playground" class="button" />
+                <ui:Button name="FeedbackButton" text="Feedback" class="button" />
+                <ui:Button name="QuitButton" text="Quit to Title" class="button" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

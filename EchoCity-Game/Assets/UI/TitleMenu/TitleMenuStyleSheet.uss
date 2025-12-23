@@ -28,8 +28,7 @@
 
 .title-menu-content {
     position: relative;
-    width: 100%;
-    max-width: 1600px;
+    width: 80%;
     padding: 80px 120px;
     display: flex;
     flex-direction: column;
@@ -37,16 +36,10 @@
     gap: 32px;
 }
 
-.title-menu-logo {
-    width: 500px;
-    height: 500px;
-    -unity-background-scale-mode: scale-to-fit;
-    align-self: center;
-    margin-bottom: -100px;
-    -unity-background-image-tint-color: rgba(255, 255, 255, 0.95);
-}
-
 .title-menu-title {
+    position: relative;
+    top: 100px;
+    bottom: 50px;
     align-self: center;
     margin-bottom: 80px;
     font-size: 150px;
@@ -59,9 +52,20 @@
     -unity-background-scale-mode: scale-to-fit;
 }
 
+.title-menu-buttons-container {
+    position: relative;
+    top: 50px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .title-menu-button {
-    height: 15%;
-    width: 80%;
+    height: 20%;
+    width: 100%;
     align-self: center;
     font-size: 500%;
     margin: 20px;

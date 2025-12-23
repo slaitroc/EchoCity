@@ -5,20 +5,24 @@
         <ui:VisualElement name="RedBlinkOverlay" class="screen-blink-overlay-red"  />
         <ui:VisualElement name="BlueBlinkOverlay" class="screen-blink-overlay-blue"  />
         <ui:VisualElement class="title-menu-content">
-            <ui:Image name="titleLogo" class="title-menu-logo" />
             <ui:Label text="Echo City" class="title-menu-title" />
-            <ui:Button name="StartGameButton" class="title-menu-button">
-                <ui:Label text="Start Game" />
-            </ui:Button>
-            <ui:Button name="SettingsButton" class="title-menu-button">
-                <ui:Label text="Settings" />
-            </ui:Button>
-            <ui:Button name="FeedbackButton" class="title-menu-button">
-                <ui:Label text="Feedback" />
-            </ui:Button>
-            <!-- <ui:Button name="QuitButton" class="title-menu-button">
-                <ui:Label text="Quit" />
-            </ui:Button> -->
+            <ui:VisualElement class="title-menu-buttons-container">
+                <ui:Button name="StartGameButton" class="title-menu-button">
+                    <ui:Label text="Start Game" />
+                </ui:Button>
+                <ui:Button name="PlaygroundButton" class="title-menu-button">
+                    <ui:Label text="Playground" />
+                </ui:Button>
+                <ui:Button name="SettingsButton" class="title-menu-button">
+                    <ui:Label text="Settings" />
+                </ui:Button>
+                <ui:Button name="FeedbackButton" class="title-menu-button">
+                    <ui:Label text="Feedback" />
+                </ui:Button>
+                <!-- <ui:Button name="QuitButton" class="title-menu-button">
+                    <ui:Label text="Quit" />
+                </ui:Button> -->
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
