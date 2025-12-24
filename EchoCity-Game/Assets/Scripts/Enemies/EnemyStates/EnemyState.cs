@@ -25,7 +25,7 @@ namespace EchoCity
         protected IAttractionSystem _attractionSystem;
         protected IConfusionSystem _confusionSystem;
         protected SOSoundEmissionDataEvent _newAudioSphereEvent;
-        protected SOSoundEmissionDataEvent _newPerceivedSoundEvent;
+        protected SOIAttractionEvent _enemyAttractionEvent;
 
 
         public EnemyState(IEnemyContext context, EnemyFSM fsm)
@@ -47,7 +47,7 @@ namespace EchoCity
             _attractionSystem = _context.AttractionSystem;
             _confusionSystem = _context.ConfusionSystem;
             _newAudioSphereEvent = _context.NewAudioSphereEvent;
-            _newPerceivedSoundEvent = _context.NewPerceivedSoundEvent;
+            _enemyAttractionEvent = _context.EnemyAttractionEvent;
         }
 
         public abstract EnemyStatesEnum GetEnum();

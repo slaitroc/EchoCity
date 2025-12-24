@@ -111,11 +111,12 @@ namespace EchoCity
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(AudioSource))]
-    public class EnemyAI : MonoBehaviour, IFSMOwner, IEnemyContext, IDamageDealer, IHasFOV, IAttractionSystem, IConfusionSystem
+    public class EnemyAI : MonoBehaviour, IFSMOwner, IEnemyContext, IDamageDealer, IHasFOV, ISoundPerceiver, IAttractionSystem, IConfusionSystem
     {
         #region fields and properties
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+        [SerializeField] private SOIAttractionEvent enemyAttractionEvent;
 
         [Header("Observed Events")]
         [SerializeField] private SOSoundEmissionDataEvent enemyPerceivedSoundEvent;
@@ -157,7 +158,7 @@ namespace EchoCity
         public IAttractionSystem AttractionSystem => this;
         public IConfusionSystem ConfusionSystem => this;
         public SOSoundEmissionDataEvent NewAudioSphereEvent => newAudioSphereEvent;
-        public SOSoundEmissionDataEvent NewPerceivedSoundEvent => enemyPerceivedSoundEvent;
+        public SOIAttractionEvent EnemyAttractionEvent => enemyAttractionEvent;
 
         private EnemyFSM _fsm;
         [SerializeField] private float _A = 0f; //attraction
@@ -183,7 +184,6 @@ namespace EchoCity
             Debug.Assert(fov != null, "EnemyAI requires a FOV component.", this);
             Debug.Assert(enemyData != null, "No SOEnemyData assigned to EnemyAI on " + gameObject.name, this);
             Debug.Assert(hitDetector != null, "No AttackRangeDetector assigned to EnemyAI on " + gameObject.name, this);
-            Debug.Assert(patrolAreas != null && patrolAreas.Length > 0, "No patrol areas assigned to EnemyAI on " + gameObject.name, this);
         }
 
         void OnEnable()
@@ -244,7 +244,7 @@ namespace EchoCity
                 lastCPS = new PerceivedSound(Time.time);
         }
 
-        private void PerceivedSoundHandler(SoundEmissionData sound)
+        public void PerceivedSoundHandler(SoundEmissionData sound)
         {
             if (sound.SoundClass.IsEnemy == true) return; // ignore enemy sounds
             //NOTE environmental sound could become the source of confusion
