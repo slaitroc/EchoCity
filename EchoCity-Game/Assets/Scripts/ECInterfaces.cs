@@ -106,8 +106,8 @@ namespace EchoCity
         IConfusionSystem ConfusionSystem { get; }
         // <summary> Echolocation enemy's events </summary>
         SOSoundEmissionDataEvent NewAudioSphereEvent { get; }
-        // <summary> enemy's events </summary>
-        SOSoundEmissionDataEvent NewPerceivedSoundEvent { get; }
+        // <summary> enemyAttraction event </summary>
+        SOIAttractionEvent EnemyAttractionEvent { get; }
     }
 
     public interface IEnemyState : IState, IDamageDealer //TODO
@@ -140,27 +140,36 @@ namespace EchoCity
     public interface IDamageable { void TakeDamage(float amount); }
 
     //ATTRAACTION/CONFUSION
-    public interface IAttractionSystem
+    public interface IAttraction
+    {
+        //<summary> Current attraction level </summary>
+        float CurrentAttraction { get; }
+    }
+
+    public interface IAttractionSystem : IAttraction
     {
         //<summary> Attraction computation logic </summary>
         void AttractionComputation();
         //<summary> Whether to compute attraction or not </summary>
         bool Compute { get; set; }
-        //<summary> Current attraction level </summary>
-        float CurrentAttraction { get; }
         //<summary> Sets the current attraction to a specific value </summary>
         void SetAttraction(float value);
         //<summary> The last perceived sound above threshold </summary>
         PerceivedSound LastPerceivedSound { get; set; }
     }
-    public interface IConfusionSystem
+
+    public interface IConfusion
+    {
+        // <summary> Current confusion level </summary>
+        float CurrentConfusion { get; }
+    }
+
+    public interface IConfusionSystem : IConfusion
     {
         // <summary> Confusion computation logic </summary>
         void ConfusionComputation();
         // <summary> Whether to compute confusion or not </summary>
         bool Compute { get; set; }
-        // <summary> Current confusion level </summary>
-        float CurrentConfusion { get; }
         // <summary> Sets the current confusion to a specific value </summary>
         void SetConfusion(float value);
         //<summary> The last perceived sound above threshold </summary>
@@ -191,5 +200,13 @@ namespace EchoCity
         void Initialize(FOVParams fovData, Transform owner);
         // <summary> Updates the FOV targets (including closest and active target) </summary>
         void UpdateTargets();
+    }
+
+    public interface ISoundPerceiver
+    {
+        //<summary> Handles a new perceived sound </summary>
+        void PerceivedSoundHandler(SoundEmissionData ps);
+        //<summary> The last perceived sound </summary>
+        PerceivedSound LastPerceivedSound { get; }
     }
 }
