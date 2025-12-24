@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace EchoCity
 {
-    public class EnemyNoiseHUDController : MonoBehaviour
+    public class AttractionHUDController : MonoBehaviour
     {
         #region Serialized Fields
 
@@ -13,8 +13,9 @@ namespace EchoCity
         [SerializeField] private UIManager uiManager;
         [SerializeField] private UIDocument hudDocument;
 
-        [Header("Events")]
-        // [SerializeField] private SOEnemyNoiseUIEvent enemyNoiseUIEvent;
+        [Header("Player Attraction")]
+        [SerializeField] private PlayerController playerController;
+        private IAttraction _playerA;
 
         [Header("Behaviour")]
         [Tooltip("Time delay before hiding the panel after last update.")]
@@ -23,7 +24,7 @@ namespace EchoCity
         [Tooltip("Minimal normalized fill (0–1)")]
         [Range(0f, 1f)]
         [SerializeField] private float minFillNormalized = 0.05f;
-        // [SerializeField] private EnemyNoiseData _currentData;
+        [SerializeField] private float _currentAttraction;
         [SerializeField] private bool _shouldShow;
 
         #endregion
@@ -42,6 +43,15 @@ namespace EchoCity
         #endregion
 
 
+        private void OnValidate()
+        {
+            if (playerController != null)
+                _playerA = playerController;
+            Debug.Assert(_playerA != null, "PlayerController does not implement IAttraction", this);
+        }
+
+
+
         private void OnEnable()
         {
             if (hudDocument == null)
@@ -52,52 +62,17 @@ namespace EchoCity
             _panel = _root.Q<VisualElement>("EnemyNoisePanel");
             _barFill = _root.Q<VisualElement>("EnemyNoiseBarFill");
             // _label = _root.Q<Label>("EnemyNoiseLabel");
-
-            // if (enemyNoiseUIEvent != null)
-            // enemyNoiseUIEvent.OnEventRaised += OnEnemyNoiseUpdate;
         }
 
-        private void OnDisable()
+        void Update()
         {
-            // if (enemyNoiseUIEvent != null)
-            // enemyNoiseUIEvent.OnEventRaised -= OnEnemyNoiseUpdate;
+            UpdateBar(_playerA.CurrentAttraction);
         }
 
-        // private void OnEnemyNoiseUpdate(EnemyNoiseData data)
-        // {
-        //     if (_panel == null)
-        //         return;
+        private void OnDisable() { }
 
-
-        //     if (!_noiseValues.ContainsKey(data.enemy))
-        //         _noiseValues.Add(data.enemy, 0f);
-
-        //     _noiseValues[data.enemy] = data.currentNoiseLevel;
-
-        //     _shouldShow =
-        //         data.isChasing ||
-        //         data.shouldShowUI ||
-        //         data.currentNoiseLevel >= data.chaseThreshold;
-
-        //     if (!_shouldShow)
-        //         return;
-
-        //     // ShowPanel();
-        //     // StartCoroutine(HideAfterDelay());
-
-        //     float normalized = data.isChasing
-        //         ? 1f
-        //         : (data.chaseThreshold > 0f
-        //                 ? Mathf.Clamp01(data.currentNoiseLevel / data.chaseThreshold)
-        //                 : 0f);
-
-        //     UpdateBar(normalized, data.isChasing);
-
-        //     // Inspector debug
-        //     _currentData = data;
-        // }
-
-
+        private void OnAttractionUpdate(IAttraction data)
+        { }
 
         private void ShowPanel()
         {
@@ -123,10 +98,11 @@ namespace EchoCity
             _barFill.style.width = new Length(0f, LengthUnit.Percent);
         }
 
-        private void UpdateBar(float normalizedValue, bool isChasing)
+        private void UpdateBar(float value)
         {
-            float clamped = Mathf.Clamp01(normalizedValue);
-            float displayed = Mathf.Lerp(minFillNormalized, 1f, clamped);
+            float maxAttraction = 2f;
+            float normalized = value / maxAttraction;
+            float displayed = Mathf.Lerp(minFillNormalized, 1f, normalized);
 
             _barFill.style.width = new Length(displayed * 100f, LengthUnit.Percent);
             // _label.text = GetAwarenessLabel(clamped, isChasing);
@@ -146,6 +122,5 @@ namespace EchoCity
 
             return "Low awareness";
         }
-
     }
 }
