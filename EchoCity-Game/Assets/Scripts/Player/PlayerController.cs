@@ -15,10 +15,22 @@ namespace EchoCity
             Index = index;
             Data = data;
             Prefab = prefab;
-
         }
     }
-    public class PlayerController : MonoBehaviour, IDamageable
+
+    public class AttractionTarget
+    {
+        public Transform Transform;
+        public IAttraction AttractionData;
+
+        public AttractionTarget(Transform transform, IAttraction data)
+        {
+            Transform = transform;
+            AttractionData = data;
+        }
+    }
+
+    public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem
     {
 
         private const string LOG_TAG = "PLAYER CONTROLLER";
@@ -34,11 +46,24 @@ namespace EchoCity
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
+        [SerializeField] private SOIAttractionEvent enemyAttractionEvent;
+        [SerializeField] private SOSoundEmissionDataEvent perceivedSoundEvent;
+
 
         [Header("Inventory")]
         public SOSoundSource fullInventorySound;
         public EquippedItem equippedItem = null;
         [SerializeField] private Transform dropPoint;
+
+        [Header("Attraction")]
+        [SerializeField] private float fixedDistanceEstimation = 7f;
+        [SerializeField] private SOEnemyData sampleEnemy;
+        [SerializeField] private float activeAttraction; //DEBUG
+        private AttractionTarget attractionTarget;
+        private AttractionTarget[] _attractionTargets;
+        private float _A = 0f;
+        private PerceivedSound lastPS;
+        private bool _attractionCompute = true;
 
         [Header("Health Settings")]
         public float maxHealth = 100f;
@@ -55,18 +80,36 @@ namespace EchoCity
         private GameObject _playerToolsAudio;
         private AudioSource _playerAudioSource;
 
+        public bool Compute { get => _attractionCompute; set => _attractionCompute = value; }
+        public float CurrentAttraction => attractionTarget != null ? attractionTarget.AttractionData.CurrentAttraction : _A;
+        public PerceivedSound LastPerceivedSound { get => lastPS; set => lastPS = value; }
+
         void OnEnable()
         {
             if (itemEquippedEvent)
                 itemEquippedEvent.OnEventRaised += EquipItemHandler;
+            if (enemyAttractionEvent != null)
+                enemyAttractionEvent.OnEventRaised += UpdateActiveAttractionTargets;
+            if (perceivedSoundEvent != null)
+                perceivedSoundEvent.OnEventRaised += PerceivedSoundHandler;
         }
 
         void OnDisable()
         {
             if (itemEquippedEvent)
                 itemEquippedEvent.OnEventRaised -= EquipItemHandler;
+            if (enemyAttractionEvent != null)
+                enemyAttractionEvent.OnEventRaised -= UpdateActiveAttractionTargets;
+            if (perceivedSoundEvent != null)
+                perceivedSoundEvent.OnEventRaised -= PerceivedSoundHandler;
         }
 
+
+        void Awake()
+        {
+            _attractionTargets = new AttractionTarget[3];
+            lastPS = new PerceivedSound(0f);
+        }
         void Start()
         {
             currentHealth = maxHealth;
@@ -82,6 +125,11 @@ namespace EchoCity
 
         void Update()
         {
+            activeAttraction = CurrentAttraction; //DEBUG
+            UpdateAttractionTarget();
+            AttractionComputation();
+
+            // Health regeneration over time
             if (currentHealth < maxHealth && currentHealth > 0 && Time.time - _lastTimeDamaged > healthRegenDelay)
             {
                 currentHealth += healthRegenRate * Time.deltaTime;
@@ -97,6 +145,7 @@ namespace EchoCity
                 overlayImage.color = overlayColor;
             }
         }
+
 
         public void EmitFullInventorySound()
         {
@@ -144,6 +193,7 @@ namespace EchoCity
                 Log.D("No item equipped in the specified slot.", "#39e8d1ff", "PLAYER CONTROLLER");
             }
         }
+
         public void DropItem()
         {
             if (equippedItem == null) return;
@@ -162,6 +212,121 @@ namespace EchoCity
             materialToggleEvent?.RaiseEvent();
             itemDroppedEvent?.RaiseEvent(equippedItem.Index);
             equippedItem = null;
+        }
+
+        // player estimated attraction computation
+        public void AttractionComputation()
+        {
+            if (_attractionCompute == true)
+            {
+                // phase 1: increase A if there is an active sound 
+                if (lastPS.RemainingTime > 0f && _A < sampleEnemy.AtMAX)
+                {
+                    //NOTE: using fixed distance estimation for player-enemy distance
+                    float dist = fixedDistanceEstimation;
+                    dist = Mathf.Max(dist, sampleEnemy.DistanceLowerBound);
+
+                    // distance based attenuation
+                    // 1.0f at 0 distance, decreases with distance 
+                    float distanceAttenuation = 1f / (1f + Mathf.Pow(dist / (lastPS.RangeFactor * sampleEnemy.ARange), lastPS.Decay));
+
+                    // increment based on specific sound intensity and global enemy intensity
+                    float tempA = sampleEnemy.AIntensity * lastPS.IntensityFactor * distanceAttenuation * Time.deltaTime;
+
+                    // Clamp per frame
+                    _A += Mathf.Min(tempA, sampleEnemy.AMaxIncrementPerFrame);
+                }
+
+                // phase 2: decrease A (always active or post-sound)
+                // If there are no active sounds, increase the "silence" timer
+                var _timeSinceLastSound = 0f;
+                if (lastPS.RemainingTime <= 0f)
+                    _timeSinceLastSound += Time.deltaTime;
+
+                if (_A > 0f)
+                {
+                    // Decay accelerates over time: the longer since the sound, the faster A decreases
+                    // We use quadratic or exponential growth for decay acceleration
+                    float decayAcceleration = 1f + (_timeSinceLastSound * sampleEnemy.DecayGrowthRate);
+                    float drop = sampleEnemy.ADecay * (1f / lastPS.Persistence) * decayAcceleration * Time.deltaTime;
+
+                    _A -= drop;
+                    if (_A < 0f) _A = 0f;
+                }
+            }
+        }
+
+        public void SetAttraction(float value)
+        {
+            _A = Mathf.Clamp(value, 0f, sampleEnemy.AtMAX);
+        }
+
+        public void PerceivedSoundHandler(SoundEmissionData sound)
+        {
+            if (sound.SoundClass.IsEnemy == true) return; // ignore enemy sounds
+            if (sound.IsEnvironmental == true) return; // ignore environmental sounds
+            if (sound.SoundClass.IsPlayerBodySound == true)
+            {
+                if (lastPS.RemainingTime <= 0f)
+                {
+                    lastPS.UpdatePerceivedSound(sound);
+                }
+            }
+            else
+                lastPS.UpdatePerceivedSound(sound);
+
+        }
+
+        private void UpdateActiveAttractionTargets(IAttraction attraction, Transform transform, bool isAboveThreshold)
+        {
+            if (isAboveThreshold)
+            {
+                for (int i = 0; i < _attractionTargets.Length - 1; i++)
+                {
+                    if (_attractionTargets[i] == null)
+                    {
+                        _attractionTargets[i] = new AttractionTarget(transform, attraction);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < _attractionTargets.Length; i++)
+                {
+                    if (_attractionTargets[i].Transform == transform)
+                    {
+                        _attractionTargets[i] = null;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void UpdateAttractionTarget()
+        {
+            if (_attractionTargets.Length == 0)
+            {
+                attractionTarget = null;
+                return;
+            }
+
+            AttractionTarget closest = null;
+            float closestDist = float.MaxValue;
+
+            foreach (AttractionTarget t in _attractionTargets)
+            {
+                if (t != null)
+                {
+                    float dist = Vector3.Distance(transform.position, t.Transform.position);
+                    if (dist < closestDist)
+                    {
+                        closestDist = dist;
+                        closest = t;
+                    }
+                }
+            }
+            attractionTarget = closest;
         }
     }
 }
