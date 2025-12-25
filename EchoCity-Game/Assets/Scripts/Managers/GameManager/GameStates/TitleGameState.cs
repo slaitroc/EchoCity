@@ -4,7 +4,7 @@ namespace EchoCity
 {
     public class TitleGameState : GameState
     {
-        public TitleGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public TitleGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
         public override void Enter()
         {//TODO audio
             Time.timeScale = 0;
@@ -15,7 +15,7 @@ namespace EchoCity
         public override void Update() { }
         public override void Exit() => _gameManager.SetPlayerOnSpawnEvent.RaiseEvent();
         public override GameStatesEnum GetEnum() => GameStatesEnum.Title;
-        public override void SwitchToInitLevelHandler(SceneEnum scene) => _gameManager.LoadLevelEvent.RaiseEvent(scene);
+        public override void InitLevelHandler(SceneEnum scene) => _gameManager.LoadLevelEvent.RaiseEvent(scene);
         public override void EnterLoading() { }
         public override void ExitLoading()
         {

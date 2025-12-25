@@ -5,7 +5,7 @@ namespace EchoCity
     public class HudGameState : GameState
     {
         private HudEnum _currentHud;
-        public HudGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public HudGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
         public override GameStatesEnum GetEnum() => GameStatesEnum.Hud;
         public override void Enter() => _gameManager.EnableUIInputEvent.RaiseEvent();
         public void EnterHud(HudEnum hud)

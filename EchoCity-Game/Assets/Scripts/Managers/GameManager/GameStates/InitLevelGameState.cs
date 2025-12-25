@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class InitLevelGameState : GameState
 {
-    public InitLevelGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+    public InitLevelGameState(GameManager gameManager, GameManagerFSM fsm) : base(gameManager, fsm) { }
 
     public override void Enter()
     {

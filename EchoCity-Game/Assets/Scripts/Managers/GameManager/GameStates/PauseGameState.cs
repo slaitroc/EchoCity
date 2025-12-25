@@ -9,7 +9,7 @@ namespace EchoCity
     {
         private bool _toTitle = false;
         private bool _loadLevel = false;
-        public PauseGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public PauseGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
         public override void Enter()
         {
             Time.timeScale = 0;
@@ -38,7 +38,7 @@ namespace EchoCity
             _toTitle = true;
             _gameManager.UnloadCurrentLevelEvent.RaiseEvent();
         }
-        public override void SwitchToInitLevelHandler(SceneEnum scene)
+        public override void InitLevelHandler(SceneEnum scene)
         {
             _loadLevel = true;
             _gameManager.LoadLevelEvent.RaiseEvent(scene);

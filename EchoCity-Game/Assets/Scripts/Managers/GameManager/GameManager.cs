@@ -1,41 +1,39 @@
+using UnityEditor.Search;
 using UnityEngine;
 
 namespace EchoCity
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, IFSMOwner, IGMContext
     {
-#pragma warning disable CS0414
-        private string _LOG_TAG = "GAME MANAGER";
-        private string _LOG_COLOR = "#00ff00ff";
-#pragma warning restore CS0414
-
+        #region fields and properties
         [Header("Invoking Events")]
-        [SerializeField] private SOEventDoubleParam<GameStatesEnum, GameStatesEnum> switchGameStateEvent;
-        public SOEventVoid EnablePlayerInputEvent;
-        public SOEventVoid DisablePlayerInputEvent;
-        public SOEventVoid EnableUIInputEvent;
-        public SOEventVoid DisableUIInputEvent;
+        [SerializeField] private SOGameManagerStateTransitionEvent switchGameStateEvent;
 
-        public SOEventVoid TitleMenuEvent;
-        public SOEventVoid PauseMenuEvent;
-        public SOHudEnumEvent HudMenuEvent;
-        public SODialogDataEvent DialogDataEvent;
-        public SOEventVoid DeathMenuEvent;
-        public SOEventVoid WinMenuEvent;
-        public SOEventVoid EnterLoadingScreenEvent;
-        public SOEventVoid ExitLoadingScreenEvent;
-        public SOEventVoid SetPlayerOnSpawnEvent;
+        // INPUT
+        [SerializeField] private SOEventVoid enablePlayerInputEvent;
+        [SerializeField] private SOEventVoid disablePlayerInputEvent;
+        [SerializeField] private SOEventVoid enableUIInputEvent;
+        [SerializeField] private SOEventVoid disableUIInputEvent;
 
+        // UI MANAGER EVENTS
+        [SerializeField] private SOEventVoid titleMenuEvent;
+        [SerializeField] private SOEventVoid pauseMenuEvent;
+        [SerializeField] private SOHudEnumEvent hudMenuEvent;
+        [SerializeField] private SODialogDataEvent dialogDataEvent;
+        [SerializeField] private SOEventVoid deathMenuEvent;
+        [SerializeField] private SOEventVoid winMenuEvent;
+        [SerializeField] private SOEventVoid enterLoadingScreenEvent;
+        [SerializeField] private SOEventVoid exitLoadingScreenEvent;
 
-        public SOSceneEnumEvent LoadLevelEvent;
-        public SOEventVoid UnloadCurrentLevelEvent;
-        public SOEventVoid ReloadLevelEvent;
-
-        //[SerializeField] private SOEventVoid reloadLevelEvent;
+        // SCENE MANAGEMENT
+        [SerializeField] private SOEventVoid setPlayerOnSpawnEvent;
+        [SerializeField] private SOSceneEnumEvent loadLevelEvent;
+        [SerializeField] private SOEventVoid unloadCurrentLevelEvent;
+        [SerializeField] private SOEventVoid reloadLevelEvent;
 
         [Header("Observed Events")]
         [SerializeField] private SOEventVoid switchToTitleStateEvent;
-        [SerializeField] private SOSceneEnumEvent switchToInitLevelStateEvent;
+        [SerializeField] private SOSceneEnumEvent switchLevelEvent;
         [SerializeField] private SOEventVoid switchToPlayingStateEvent;
         [SerializeField] private SOEventVoid switchToPauseStateEvent;
         [SerializeField] private SOEventVoid switchToWinStateEvent;
@@ -45,23 +43,46 @@ namespace EchoCity
         [SerializeField] private SOEventVoid enterLoadingEvent;
         [SerializeField] private SOEventVoid exitLoadingEvent;
 
-
-
         [Header("FSM")]
-        public GameStatesEnum CurrentState;
-        private GameStatesFSM _fsm;
+        [SerializeField] private GameStatesEnum currentState;
+        private GameManagerFSM _fsm;
 
+        // IFSMOwner
+        public Transform Transform => this.transform;
+        public GameObject GameObject => this.gameObject;
+
+        // GM Context
+        IFSMOwner IGMContext.Owner => this;
+        GameStatesEnum IGMContext.CurrentStateEnum { get => currentState; set => currentState = value; }
+        SOEventVoid IGMContext.EnablePlayerInputEvent => enablePlayerInputEvent;
+        SOEventVoid IGMContext.DisablePlayerInputEvent => disablePlayerInputEvent;
+        SOEventVoid IGMContext.EnableUIInputEvent => enableUIInputEvent;
+        SOEventVoid IGMContext.DisableUIInputEvent => disableUIInputEvent;
+        SOEventVoid IGMContext.TitleMenuEvent => titleMenuEvent;
+        SOEventVoid IGMContext.PauseMenuEvent => pauseMenuEvent;
+        SOHudEnumEvent IGMContext.HudMenuEvent => hudMenuEvent;
+        SODialogDataEvent IGMContext.DialogDataEvent => dialogDataEvent;
+        SOEventVoid IGMContext.DeathMenuEvent => deathMenuEvent;
+        SOEventVoid IGMContext.WinMenuEvent => winMenuEvent;
+        SOEventVoid IGMContext.EnterLoadingScreenEvent => enterLoadingScreenEvent;
+        SOEventVoid IGMContext.ExitLoadingScreenEvent => exitLoadingScreenEvent;
+        SOEventVoid IGMContext.SetPlayerOnSpawnEvent => setPlayerOnSpawnEvent;
+        SOSceneEnumEvent IGMContext.LoadLevelEvent => loadLevelEvent;
+        SOEventVoid IGMContext.UnloadCurrentLevelEvent => unloadCurrentLevelEvent;
+        SOEventVoid IGMContext.ReloadLevelEvent => reloadLevelEvent;
+        SOGameManagerStateTransitionEvent IGMContext.SwitchGameStateEvent => switchGameStateEvent;
+        #endregion
 
         void Start()
         {
-            _fsm = new GameStatesFSM(this);
+            _fsm = new GameManagerFSM(this);
             _fsm.Initialize();
         }
 
         void OnEnable()
         {
             if (switchToTitleStateEvent) switchToTitleStateEvent.OnEventRaised += SwitchToTitleStateHandler;
-            if (switchToInitLevelStateEvent) switchToInitLevelStateEvent.OnEventRaised += SwitchToInitLevelStateHandler;
+            if (switchLevelEvent) switchLevelEvent.OnEventRaised += InitLevelHandler;
             if (switchToPlayingStateEvent) switchToPlayingStateEvent.OnEventRaised += SwitchToPlayingStateHandler;
             if (switchToPauseStateEvent) switchToPauseStateEvent.OnEventRaised += SwitchToPauseStateHandler;
             if (switchToDeathStateEvent) switchToDeathStateEvent.OnEventRaised += SwitchToDeathStateHandler;
@@ -75,7 +96,7 @@ namespace EchoCity
         void OnDisable()
         {
             if (switchToTitleStateEvent) switchToTitleStateEvent.OnEventRaised -= SwitchToTitleStateHandler;
-            if (switchToInitLevelStateEvent) switchToInitLevelStateEvent.OnEventRaised -= SwitchToInitLevelStateHandler;
+            if (switchLevelEvent) switchLevelEvent.OnEventRaised -= InitLevelHandler;
             if (switchToPlayingStateEvent) switchToPlayingStateEvent.OnEventRaised -= SwitchToPlayingStateHandler;
             if (switchToPauseStateEvent) switchToPauseStateEvent.OnEventRaised -= SwitchToPauseStateHandler;
             if (switchToDeathStateEvent) switchToDeathStateEvent.OnEventRaised -= SwitchToDeathStateHandler;
@@ -84,14 +105,12 @@ namespace EchoCity
             if (switchToHudStateEvent) switchToHudStateEvent.OnEventRaised -= SwitchToHudStateHandler;
             if (enterLoadingEvent) enterLoadingEvent.OnEventRaised -= LoadingHandler;
             if (exitLoadingEvent) exitLoadingEvent.OnEventRaised -= DoneLoadingHandler;
-
         }
 
         void Update() => _fsm.Update();
         public void RaiseSwitchStateEvent(GameStatesEnum from, GameStatesEnum to) => switchGameStateEvent.RaiseEvent(from, to);
-
         public void SwitchToTitleStateHandler() => _fsm.CurrentState.SwitchToTitleHandler();
-        public void SwitchToInitLevelStateHandler(SceneEnum scene) => _fsm.CurrentState.SwitchToInitLevelHandler(scene);
+        public void InitLevelHandler(SceneEnum scene) => _fsm.CurrentState.InitLevelHandler(scene);
         public void SwitchToPlayingStateHandler() => _fsm.CurrentState.SwitchToPlayingHandler();
         public void SwitchToPauseStateHandler() => _fsm.CurrentState.SwitchToPauseHandler();
         public void SwitchToDeathStateHandler() => _fsm.CurrentState.SwitchToDeathHandler();

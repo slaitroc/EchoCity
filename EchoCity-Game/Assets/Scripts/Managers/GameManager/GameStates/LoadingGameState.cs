@@ -4,7 +4,7 @@ namespace EchoCity
 {
     public class LoadingGameState : GameState
     {
-        public LoadingGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public LoadingGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
 
         public override void Enter()
         {

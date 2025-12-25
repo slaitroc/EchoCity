@@ -5,7 +5,7 @@ namespace EchoCity
 {
     public class PlayingGameState : GameState
     {
-        public PlayingGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public PlayingGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
         public override void Enter()
         {
             Time.timeScale = 1;

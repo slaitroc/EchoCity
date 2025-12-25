@@ -4,20 +4,15 @@ using System.Collections.Generic;
 namespace EchoCity
 {
     [Serializable]
-    public class GameStatesFSM
+    public class GameManagerFSM : IFSMWithLoading
     {
-#pragma warning disable CS0414
-        private readonly string _LOG_TAG = "GM-FSM";
-        private readonly string _LOG_COLOR = "green";
-#pragma warning restore CS0414
-
-        private readonly GameManager _gameManager;
+        private readonly IGMContext _context;
         public GameState CurrentState { get; private set; }
         public GameState PreviousState { get; private set; }
         private GameState _inLoadingState;
+
         public readonly GameState LoadingState;
         public readonly GameState TitleState;
-        public readonly GameState InitLevelState;
         public readonly GameState PlayingState;
         public readonly GameState PauseState;
         public readonly HudGameState HudState;
@@ -25,31 +20,32 @@ namespace EchoCity
         public readonly GameState DeathState;
         public readonly GameState WinState;
 
-        public GameStatesFSM(GameManager gameManager)
+        public GameManagerFSM(IGMContext context)
         {
-            LoadingState = new LoadingGameState(gameManager, this);
-            TitleState = new TitleGameState(gameManager, this);
-            // InitLevelState = new InitLevelGameState(gameManager, this);
-            PlayingState = new PlayingGameState(gameManager, this);
-            PauseState = new PauseGameState(gameManager, this);
-            NarrationState = new NarrationGameState(gameManager, this);
-            DeathState = new DeathGameState(gameManager, this);
-            WinState = new WinGameState(gameManager, this);
-            HudState = new HudGameState(gameManager, this);
-            _gameManager = gameManager;
+
+
+            LoadingState = new LoadingGameState(context, this);
+            TitleState = new TitleGameState(context, this);
+            PlayingState = new PlayingGameState(context, this);
+            PauseState = new PauseGameState(context, this);
+            NarrationState = new NarrationGameState(context, this);
+            DeathState = new DeathGameState(context, this);
+            WinState = new WinGameState(context, this);
+            HudState = new HudGameState(context, this);
+            _context = context;
         }
 
         public void Initialize()
         {
             CurrentState = TitleState;
             CurrentState.Enter();
-            _gameManager.RaiseSwitchStateEvent(GameStatesEnum.None, GameStatesEnum.Title);
+            _context.SwitchGameStateEvent.RaiseEvent(GameStatesEnum.None, GameStatesEnum.Title);
         }
         public void Initialize(GameState state)
         {
             CurrentState = state;
             CurrentState.Enter();
-            _gameManager.RaiseSwitchStateEvent(GameStatesEnum.None, state.GetEnum());
+            _context.SwitchGameStateEvent.RaiseEvent(GameStatesEnum.None, state.GetEnum());
         }
 
 
@@ -59,14 +55,14 @@ namespace EchoCity
             PreviousState = CurrentState;
             CurrentState = state;
             CurrentState.Enter();
-            _gameManager.RaiseSwitchStateEvent(PreviousState.GetEnum(), state.GetEnum());
+            _context.SwitchGameStateEvent.RaiseEvent(PreviousState.GetEnum(), state.GetEnum());
         }
 
         public void SwitchStateUpdateOnly(GameState state)
         {
             PreviousState = CurrentState;
             CurrentState = state;
-            _gameManager.RaiseSwitchStateEvent(PreviousState.GetEnum(), state.GetEnum());
+            _context.SwitchGameStateEvent.RaiseEvent(PreviousState.GetEnum(), state.GetEnum());
         }
 
         public void EnterLoading()
@@ -76,7 +72,7 @@ namespace EchoCity
             _inLoadingState = CurrentState;
             CurrentState = LoadingState;
             LoadingState.Enter();
-            _gameManager.RaiseSwitchStateEvent(_inLoadingState.GetEnum(), LoadingState.GetEnum());
+            _context.SwitchGameStateEvent.RaiseEvent(_inLoadingState.GetEnum(), LoadingState.GetEnum());
         }
 
         public void ExitLoading()
@@ -86,7 +82,7 @@ namespace EchoCity
             CurrentState = _inLoadingState;
             _inLoadingState.ExitLoading();
             _inLoadingState = null;
-            _gameManager.RaiseSwitchStateEvent(GameStatesEnum.Loading, CurrentState.GetEnum());
+            _context.SwitchGameStateEvent.RaiseEvent(GameStatesEnum.Loading, CurrentState.GetEnum());
         }
 
         public void SwitchToNarration(DialogData data)
@@ -103,7 +99,6 @@ namespace EchoCity
             PreviousState = CurrentState;
             CurrentState = HudState;
             HudState.EnterHud(hud);
-
         }
 
         public void Update()

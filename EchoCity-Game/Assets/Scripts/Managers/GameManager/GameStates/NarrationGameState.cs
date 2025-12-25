@@ -5,7 +5,7 @@ namespace EchoCity
 {
     public class NarrationGameState : GameState
     {
-        public NarrationGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public NarrationGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
 
         public override GameStatesEnum GetEnum() => GameStatesEnum.Narration;
         public override void Enter()
