@@ -129,7 +129,7 @@ namespace EchoCity
         [SerializeField] private AudioSource audioSource;
 
         [Header("Runtime")]
-        [SerializeField] private EnemyStatesEnum CurrentState;
+        [SerializeField] private EnemyStatesEnum currentState;
         [SerializeField] private PatrolArea currentPatrolArea;
         [SerializeField] private PatrolArea[] patrolAreas;
         [SerializeField] private PerceivedSound lastPS;
@@ -138,17 +138,19 @@ namespace EchoCity
         [SerializeField] private PerceivedSound lastCPS; //Confusing Perceived Sound
 
         // IFSMOwner
+        private EnemyFSM _fsm;
+
         public Transform Transform => this.transform;
         public GameObject GameObject => this.gameObject;
 
         // ENEMY CONTEXT
         public IFSMOwner Owner => this;
         public IFOV FOV => fov;
-        public EnemyStatesEnum CurrentStateEnum { get { return CurrentState; } set { CurrentState = value; } }
+        public EnemyStatesEnum CurrentStateEnum { get => currentState; set => currentState = value; }
         public SOEnemyData EnemyData => enemyData;
         public NavMeshAgent Agent => agent;
         public PatrolArea[] PatrolAreas => patrolAreas;
-        public PatrolArea CurrentPatrolArea { get { return currentPatrolArea; } set { currentPatrolArea = value; } }
+        public PatrolArea CurrentPatrolArea { get => currentPatrolArea; set => currentPatrolArea = value; }
         public Animator Animator => animator;
         public AudioSource AudioSource => audioSource;
         public IHitDetector HitDetector => hitDetector;
@@ -159,16 +161,19 @@ namespace EchoCity
         public SOSoundEmissionDataEvent NewAudioSphereEvent => newAudioSphereEvent;
         public SOSoundEmissionDataEvent NewPerceivedSoundEvent => enemyPerceivedSoundEvent;
 
-        private EnemyFSM _fsm;
+        // ATTRACTION System
         [SerializeField] private float _A = 0f; //attraction
         private bool _attractionCompute = true;
-        [SerializeField] private float _C = 0f; //confusion
-        private bool _confusionCompute = true;
 
         PerceivedSound IAttractionSystem.LastPerceivedSound { get => lastAPS; set => lastAPS = value; }
         bool IAttractionSystem.Compute { get => _attractionCompute; set => _attractionCompute = value; }
         public float CurrentAttraction => _A;
         void IAttractionSystem.SetAttraction(float value) => _A = value;
+
+        // CONFUSION System
+        [SerializeField] private float _C = 0f; //confusion
+        private bool _confusionCompute = true;
+
         PerceivedSound IConfusionSystem.LastPerceivedSound { get => lastCPS; set => lastCPS = value; }
         bool IConfusionSystem.Compute { get => _confusionCompute; set => _confusionCompute = value; }
         public float CurrentConfusion => _C;

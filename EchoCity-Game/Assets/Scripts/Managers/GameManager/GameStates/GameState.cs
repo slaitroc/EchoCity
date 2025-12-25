@@ -1,20 +1,14 @@
 namespace EchoCity
 {
-    public abstract class GameState
+    public abstract class GameState : IGameState
     {
-        #region Constants
-        protected string _LOG_TAG = "GAME STATE";
-        protected string _LOG_COLOR = "#00ff00ff";
-        #endregion
+        protected IGMContext _gameManager;
+        protected GameManagerFSM _fsm;
 
-
-        protected GameManager _gameManager;
-        protected GameStatesFSM _fsm;
-
-        public GameState(GameManager gameManager, GameStatesFSM fsm)
+        public GameState(IGMContext context, GameManagerFSM fsm)
         {
-            this._gameManager = gameManager;
-            this._fsm = fsm;
+            _gameManager = context;
+            _fsm = fsm;
         }
 
         public abstract GameStatesEnum GetEnum();
@@ -24,7 +18,7 @@ namespace EchoCity
         public virtual void Exit() { }
         public virtual void ExitLoading() { }
         public virtual void SwitchToTitleHandler() { }
-        public virtual void SwitchToInitLevelHandler(SceneEnum scene) { }
+        public virtual void InitLevelHandler(SceneEnum scene) { }
         public virtual void SwitchToPlayingHandler() { }
         public virtual void SwitchToPauseHandler() { }
         public virtual void SwitchToDeathHandler() { }

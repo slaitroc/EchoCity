@@ -9,7 +9,7 @@ namespace EchoCity
     {
         private bool _toTitle = false;
         private bool _restart = false;
-        public DeathGameState(GameManager gameManager, GameStatesFSM fsm) : base(gameManager, fsm) { }
+        public DeathGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
         public override GameStatesEnum GetEnum() => GameStatesEnum.Death;
         public override void Enter()
         {
@@ -37,7 +37,7 @@ namespace EchoCity
             _toTitle = true;
             _gameManager.UnloadCurrentLevelEvent.RaiseEvent();
         }
-        public override void SwitchToInitLevelHandler(SceneEnum scene)
+        public override void InitLevelHandler(SceneEnum scene)
         {
             _restart = true;
             _gameManager.LoadLevelEvent.RaiseEvent(scene);

@@ -16,6 +16,7 @@ namespace EchoCity
         //<summary> The owner's game object </summary>
         GameObject GameObject { get; }
     }
+
     public interface IState
     {
         //<summary> Called when entering the state </summary>
@@ -51,11 +52,44 @@ namespace EchoCity
     }
 
     //GAME MANAGER
+    public interface IGMContext
+    {
+        // <summary> The FSM owner </summary>
+        IFSMOwner Owner { get; }
+        // <summary> FSM current state </summary>
+        GameStatesEnum CurrentStateEnum { get; set; }
+
+        SOGameManagerStateTransitionEvent SwitchGameStateEvent { get; }
+
+        // INPUT EVENTS
+        SOEventVoid EnablePlayerInputEvent { get; }
+        SOEventVoid DisablePlayerInputEvent { get; }
+        SOEventVoid EnableUIInputEvent { get; }
+        SOEventVoid DisableUIInputEvent { get; }
+
+        // UI MANAGER EVENTS
+        SOEventVoid TitleMenuEvent { get; }
+        SOEventVoid PauseMenuEvent { get; }
+        SOHudEnumEvent HudMenuEvent { get; }
+        SODialogDataEvent DialogDataEvent { get; }
+        SOEventVoid DeathMenuEvent { get; }
+        SOEventVoid WinMenuEvent { get; }
+        SOEventVoid EnterLoadingScreenEvent { get; }
+        SOEventVoid ExitLoadingScreenEvent { get; }
+
+        // SCENE MANAGEMENT EVENTS
+        SOEventVoid SetPlayerOnSpawnEvent { get; }
+        SOSceneEnumEvent LoadLevelEvent { get; }
+        SOEventVoid UnloadCurrentLevelEvent { get; }
+        SOEventVoid ReloadLevelEvent { get; }
+
+
+    }
     public interface IGameState : IStateWithLoading
     {
         GameStatesEnum GetEnum();
         void SwitchToTitleHandler();
-        void SwitchToInitLevelHandler(SceneEnum scene);
+        void InitLevelHandler(SceneEnum scene);
         void SwitchToPlayingHandler();
         void SwitchToPauseHandler();
         void SwitchToDeathHandler();
@@ -73,7 +107,6 @@ namespace EchoCity
     }
 
     //ENEMY AI
-
     public interface IEnemyContext
     {
         // <summary> Enemy data Scriptable Object </summary>
