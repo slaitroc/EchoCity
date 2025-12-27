@@ -76,6 +76,7 @@ namespace EchoCity
         void Start()
         {
             Debug.Assert(TryGetComponent(out fovCollider), $"{nameof(fovCollider)} is not assigned on {gameObject.name}");
+            fovCollider.isTrigger = true;
             enemyData = null; //deactivate gizmo debug by default
         }
 
