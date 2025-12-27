@@ -22,6 +22,16 @@
             <ui:Label name="interaction-text" text="Interact" class="interaction-text" />
         </ui:VisualElement>
 
+        <!-- QUEST LOGGER PANEL -->
+        <ui:VisualElement name="QuestLoggerPanel" class="quest-logger-panel">
+            <ui:Label name="QuestLoggerTitle" class="quest-logger-title" text="Objectives" />
+            <ui:VisualElement name="QuestLoggerList" class="quest-logger-list" />
+            <ui:VisualElement class="quest-item">
+                <ui:VisualElement class="quest-check" />
+                <ui:Label class="quest-text" text="Find the key" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
         <!-- RADIAL MENU -->
         <ui:VisualElement name="RadialMenuRoot" class="radial-menu-root">
             <ui:VisualElement name="RadialCenter" class="radial-center">
