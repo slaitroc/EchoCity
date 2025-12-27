@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,11 +22,13 @@ namespace EchoCity
         [Tooltip("Time delay before hiding the panel after last update.")]
         [SerializeField] private float hideDelay = 5.0f;
 
+        [Header("Bar Settings")]
         [Tooltip("Minimal normalized fill (0–1)")]
         [Range(0f, 1f)]
         [SerializeField] private float minFillNormalized = 0.05f;
-        [SerializeField] private float _currentAttraction;
-        [SerializeField] private bool _shouldShow;
+        [SerializeField] private float maxAttraction = 2f;
+        [SerializeField] private float highAttractionThreshold = 1f;
+        [SerializeField] private float mediumAttractionThreshold = 0.5f;
 
         #endregion
 
@@ -34,11 +37,10 @@ namespace EchoCity
         private VisualElement _root;
         private VisualElement _panel;
         private VisualElement _barFill;
-        private Label _label;
         private bool _isVisible;
-
-
-        private readonly Dictionary<EnemyAI, float> _noiseValues = new();
+        private float normalizedAttraction;
+        private float displayedAttraction;
+        private Coroutine _hideRoutine;
 
         #endregion
 
@@ -51,7 +53,6 @@ namespace EchoCity
         }
 
 
-
         private void OnEnable()
         {
             if (hudDocument == null)
@@ -59,9 +60,10 @@ namespace EchoCity
 
             _root = hudDocument.rootVisualElement;
 
-            _panel = _root.Q<VisualElement>("EnemyNoisePanel");
-            _barFill = _root.Q<VisualElement>("EnemyNoiseBarFill");
-            // _label = _root.Q<Label>("EnemyNoiseLabel");
+            _panel = _root.Q<VisualElement>("EnemyAttractionPanel");
+            _barFill = _root.Q<VisualElement>("EnemyAttractionBarFill");
+
+            _isVisible = false;
         }
 
         void Update()
@@ -69,58 +71,65 @@ namespace EchoCity
             UpdateBar(_playerA.CurrentAttraction);
         }
 
-        private void OnDisable() { }
-
-        private void OnAttractionUpdate(IAttraction data)
-        { }
 
         private void ShowPanel()
         {
-            if (_isVisible)
-                return;
+            if (_hideRoutine != null)
+            {
+                StopCoroutine(_hideRoutine);
+                _hideRoutine = null;
+            }
+
+            if (_isVisible) return;
 
             _isVisible = true;
             _panel.AddToClassList("visible");
         }
-
-        private IEnumerator HideAfterDelay()
+        IEnumerator HideAfterDelayCoroutine()
         {
-            yield return new WaitForSecondsRealtime(hideDelay);
-
+            yield return new WaitForSeconds(hideDelay);
             HidePanel();
+
+            _hideRoutine = null;
         }
 
         private void HidePanel()
         {
+            if (!_isVisible) return;
+
             _isVisible = false;
             _panel.RemoveFromClassList("visible");
-
-            _barFill.style.width = new Length(0f, LengthUnit.Percent);
         }
 
         private void UpdateBar(float value)
         {
-            float maxAttraction = 2f;
-            float normalized = value / maxAttraction;
-            float displayed = Mathf.Lerp(minFillNormalized, 1f, normalized);
+            normalizedAttraction = value / maxAttraction;
+            displayedAttraction = Mathf.Lerp(minFillNormalized, 1f, normalizedAttraction);
 
-            _barFill.style.width = new Length(displayed * 100f, LengthUnit.Percent);
-            // _label.text = GetAwarenessLabel(clamped, isChasing);
-        }
+            _barFill.style.width = new Length(displayedAttraction * 100f, LengthUnit.Percent);
 
-        private string GetAwarenessLabel(float normalized, bool isChasing)
-        {
-            if (isChasing)
-                return "Enemy is chasing you";
+            if (value > 0f)
+            {
+                ShowPanel();
 
-            if (normalized >= 0.95f)
-                return "Detection imminent";
-            if (normalized >= 0.60f)
-                return "Enemy highly suspicious";
-            if (normalized >= 0.30f)
-                return "Enemy sensed something";
+                if (_hideRoutine != null)
+                {
+                    StopCoroutine(_hideRoutine);
+                    _hideRoutine = null;
+                }
 
-            return "Low awareness";
+                if (value > highAttractionThreshold)
+                    _barFill.style.backgroundColor = Color.red;
+                else if (value > mediumAttractionThreshold)
+                    _barFill.style.backgroundColor = Color.yellow;
+                else
+                    _barFill.style.backgroundColor = Color.green;
+            }
+            else
+            {
+                if (_isVisible && _hideRoutine == null)
+                    _hideRoutine = StartCoroutine(HideAfterDelayCoroutine());
+            }
         }
     }
 }

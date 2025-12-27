@@ -8,12 +8,11 @@
             <ui:VisualElement name="crosshair" class="crosshair" />
         </ui:VisualElement>
 
-        <!-- ENEMY NOISE / AWARENESS PANEL -->
-        <ui:VisualElement name="EnemyNoisePanel" class="enemy-noise-panel">
-            <ui:VisualElement name="EnemyNoiseBarBackground" class="enemy-noise-bar-bg">
-                <ui:VisualElement name="EnemyNoiseBarFill" class="enemy-noise-bar-fill" />
+        <!-- ENEMY ATTRACTION PANEL -->
+        <ui:VisualElement name="EnemyAttractionPanel" class="enemy-attraction-panel">
+            <ui:VisualElement name="EnemyAttractionBarBackground" class="enemy-attraction-bar-bg">
+                <ui:VisualElement name="EnemyAttractionBarFill" class="enemy-attraction-bar-fill" />
             </ui:VisualElement>
-            <!-- <ui:Label name="EnemyNoiseLabel" class="enemy-noise-label" text="" /> -->
         </ui:VisualElement>
 
 
