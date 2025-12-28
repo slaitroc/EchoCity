@@ -8,6 +8,14 @@
             <ui:VisualElement name="crosshair" class="crosshair" />
         </ui:VisualElement>
 
+        <!-- ENEMY ATTRACTION PANEL -->
+        <ui:VisualElement name="EnemyAttractionPanel" class="enemy-attraction-panel">
+            <ui:VisualElement name="EnemyAttractionBarBackground" class="enemy-attraction-bar-bg">
+                <ui:VisualElement name="EnemyAttractionBarFill" class="enemy-attraction-bar-fill" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+
         <!-- INTERACTION PANEL -->
         <ui:VisualElement name="interaction-panel" class="interaction-panel">
             <ui:Label name="interaction-key" class="interaction-key" />
