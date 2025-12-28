@@ -5,15 +5,8 @@ namespace EchoCity
     [RequireComponent(typeof(Animator))]
     public class DoorAreaInteractable : PlayerAreaInteractable
     {
-        #region Constants
-        protected override string _LOG_TAG => "DOOR";
-        #endregion
-
-        #region Serialized Fields
         [Header("Door Settings")]
-        #endregion
 
-        #region Private Fields
         [SerializeField] private Animator doorAnimator;
         private readonly int _hashIsOpen = Animator.StringToHash("isOpen");
         [SerializeField] private bool _isOpen = false;
@@ -28,7 +21,6 @@ namespace EchoCity
                 doorAnimator?.SetBool(_hashIsOpen, _isOpen);
             }
         }
-        #endregion
 
         protected override void Awake()
         {
@@ -38,7 +30,6 @@ namespace EchoCity
 
         public override void Interact()
         {
-            //Log.D("Interaction!", "#ff5733ff", $"{_INTERACTABLE_LOG_TAG}+{_LOG_TAG}");
             isOpen = !isOpen;
         }
 

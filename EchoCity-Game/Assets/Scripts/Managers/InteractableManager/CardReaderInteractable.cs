@@ -1,16 +1,11 @@
 using UnityEngine;
+using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
     public class CardReaderInteractable : Interactable
     {
-        #region Constants
-        protected override string _LOG_TAG => "CARD_READER";
-        protected override string _TYPE_LOG_TAG => "GENERAL";
-        #endregion
-
         [Header("Sound")]
-        [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] SOSoundSource useSoundSource;
 
         [Header("Prefabs")]
@@ -30,7 +25,7 @@ namespace EchoCity
                 if (outcome)
                 {
                     spawnMessageEvent?.RaiseEvent("CardReader Used!", new Color(1f, 0.5f, 0f, 1f));
-                    ECSound.PlayAtPosition(useSoundSource, transform.position, newAudioSphereEvent, "SFX");
+                    PlayAtPosition(transform.position, useSoundSource, _audioContext, MixerGroupEnum.SFX);
                     Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
                     materialToggleEvent?.RaiseEvent();
                     materialToggleEvent?.RaiseEvent();
