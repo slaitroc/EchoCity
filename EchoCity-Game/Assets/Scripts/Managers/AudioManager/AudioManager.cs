@@ -3,6 +3,7 @@ using System.Collections;
 using EchoCity;
 using Unity.VisualScripting;
 using UnityEngine;
+using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
@@ -28,8 +29,8 @@ namespace EchoCity
             _audioSource2.spatialBlend = 0.0f; // 2D sound
             _audioSource1.volume = 0.5f;
             _audioSource2.volume = 0.5f;
-            _audioSource1.outputAudioMixerGroup = ECSound.Mixer.FindMatchingGroups("BackgroundMusic")[0];
-            _audioSource2.outputAudioMixerGroup = ECSound.Mixer.FindMatchingGroups("BackgroundMusic")[0];
+            _audioSource1.outputAudioMixerGroup = GetMixerGroup(MixerGroupEnum.Music);
+            _audioSource2.outputAudioMixerGroup = GetMixerGroup(MixerGroupEnum.Music);
 
             gameManagerStateTransitionEvent.OnEventRaised += StateTransitionHandler;
             PlayTitleMusic();
