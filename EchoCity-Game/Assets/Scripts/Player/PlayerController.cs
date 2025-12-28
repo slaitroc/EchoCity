@@ -51,6 +51,8 @@ namespace EchoCity
 
         private float _lastTimeDamaged;
 
+        private AudioContext _audioContext;
+
         [Header("Audio")]
         private GameObject _playerToolsAudio;
         private AudioSource _playerAudioSource;
@@ -69,6 +71,8 @@ namespace EchoCity
 
         void Start()
         {
+            _audioContext = new AudioContext(newAudioSphereEvent);
+
             currentHealth = maxHealth;
             _lastTimeDamaged = float.NegativeInfinity;
 
@@ -100,7 +104,7 @@ namespace EchoCity
 
         public void EmitFullInventorySound()
         {
-            ECSound.PlayAtPosition(fullInventorySound, transform.position, newAudioSphereEvent, "SFX");
+            EchoCitySound.PlayInAudioSource(fullInventorySound.AudioClip, fullInventorySound.Volume, _playerAudioSource, EchoCitySound.MixerGroupEnum.SFX);
         }
 
         public void EquipItemHandler(int index, PickableData data, GameObject prefab)
@@ -130,7 +134,7 @@ namespace EchoCity
             {
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
-                    ECSound.PlayRandomInAudioSource(equippedItem.Data.ToolSound, newAudioSphereEvent, "SFX", _playerAudioSource);
+                    EchoCitySound.PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, EchoCitySound.MixerGroupEnum.SFX);
                     playerEmittedSoundEvent?.RaiseEvent(transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }

@@ -2,6 +2,7 @@ using EchoCity;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
+using static EchoCity.EchoCitySound;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -19,6 +20,7 @@ namespace StarterAssets
         [Header("ECHO CITY")]
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+        private AudioContext _audioContext;
 
         [Header("Sound Sources")]
         [Tooltip("Sound played when character lands on ground")]
@@ -141,6 +143,7 @@ namespace StarterAssets
 
         private void Start()
         {
+            _audioContext = new AudioContext(newAudioSphereEvent);
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _hasAnimator = TryGetComponent(out _animator);
@@ -390,14 +393,14 @@ namespace StarterAssets
         private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
-                ECSound.PlayRandomAtPosition(FootstepSoundSource, transform.TransformPoint(_controller.center), newAudioSphereEvent, "SFX");
+                PlayRandomAtPosition(transform.position, FootstepSoundSource, _audioContext, MixerGroupEnum.SFX);
 
         }
 
         private void OnLand(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
-                ECSound.PlayAtPosition(LandingSoundSource, transform.TransformPoint(_controller.center), newAudioSphereEvent, "SFX");
+                PlayAtPosition(transform.position, LandingSoundSource, _audioContext, MixerGroupEnum.SFX);
 
         }
     }

@@ -2,6 +2,7 @@ using EchoCity;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using static EchoCity.EchoCitySound;
 #endif
 
 namespace StarterAssets
@@ -61,6 +62,7 @@ namespace StarterAssets
 
         [Header("Invoking Events")]
         public SOSoundEmissionDataEvent newAudioSphereEvent;
+        private AudioContext _audioContext;
 
         [Header("Sound Sources")]
         [Tooltip("Sound played when character lands on ground")]
@@ -121,6 +123,7 @@ namespace StarterAssets
 
         private void Start()
         {
+            _audioContext = new AudioContext(newAudioSphereEvent);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 
@@ -336,7 +339,7 @@ namespace StarterAssets
                     if ((footstepSounds[i].layer.value & (1 << hitLayer)) != 0)
                     {
                         SOSoundSource soundSource = footstepSounds[i].SoundSource;
-                        ECSound.PlayRandomAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                        PlayRandomAtPosition(transform.position, soundSource, _audioContext, MixerGroupEnum.SFX);
                         return;
                     }
                 }
@@ -356,7 +359,7 @@ namespace StarterAssets
                     if ((landingSounds[i].layer.value & (1 << hitLayer)) != 0)
                     {
                         SOSoundSource soundSource = landingSounds[i].SoundSource;
-                        ECSound.PlayAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                        PlayAtPosition(transform.position, soundSource, _audioContext, MixerGroupEnum.SFX);
                         return;
                     }
                 }
