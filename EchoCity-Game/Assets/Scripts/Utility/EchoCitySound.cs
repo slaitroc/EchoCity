@@ -29,7 +29,7 @@ namespace EchoCity
                 case MixerGroupEnum.Master:
                     return "Master";
                 case MixerGroupEnum.Music:
-                    return "Music";
+                    return "BackgroundMusic";
                 case MixerGroupEnum.SFX:
                     return "SFX";
                 case MixerGroupEnum.Voice:
