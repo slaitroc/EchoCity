@@ -5,20 +5,14 @@ namespace EchoCity
 {
     public class InteractableManager : MonoBehaviour
     {
-        #region Constants
         private string _LOG_TAG = "INTERACTABLE MANAGER";
-        #endregion
+        private string _LOG_COLOR = "#33ff57ff";
 
-        #region Serialized Fields
         [SerializeField] private AreaInteractable activeAreaInteractable;
-        #endregion
-
-        #region Private Fields
-        #endregion
 
         public void TriggerInteraction()
         {
-            Log.D($"Triggered interaction on {activeAreaInteractable.name}", "#33ff57ff", _LOG_TAG);
+            Log.DLazy(() => $"Triggered interaction on {activeAreaInteractable.name}", _LOG_TAG, _LOG_COLOR);
             activeAreaInteractable?.Interact();
         }
 
@@ -27,11 +21,11 @@ namespace EchoCity
             if (interactable == null)
             {
                 activeAreaInteractable = null;
-                //Log.D($"Cleared active interactable", "#33ff57ff", _LOG_TAG);
+                Log.DLazy(() => $"Cleared active interactable", _LOG_TAG, _LOG_COLOR);
                 return;
             }
             activeAreaInteractable = interactable;
-            //Log.D($"Set active interactable to {activeInteractable.name}", "#33ff57ff", _LOG_TAG);
+            Log.DLazy(() => $"Set active interactable to {activeAreaInteractable.name}", _LOG_TAG, _LOG_COLOR);
         }
     }
 }

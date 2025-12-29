@@ -90,9 +90,8 @@ namespace EchoCity
 
         private void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
         {
+            Debug.Assert(activePuzzleTags != null && activePuzzleTags.Length > 0, "Active puzzle tags array is null or empty");
             if (tagsToSet == null || tagsToSet.Length == 0) return;
-            if (activePuzzleTags == null || activePuzzleTags.Length == 0)
-                Log.E(" No active puzzle tags defined.", LOG_TAG, LOG_COLOR);
             foreach (PuzzleTagEnum tag in tagsToSet)
             {
                 for (int i = 0; i < activePuzzleTags.Length; i++)

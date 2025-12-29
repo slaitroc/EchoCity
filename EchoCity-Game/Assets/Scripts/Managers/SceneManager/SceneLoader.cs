@@ -83,7 +83,7 @@ namespace EchoCity
                 _currentLevelEnum = scene;
                 SceneManager.SetActiveScene(existingScene);
                 yield return StartCoroutine(UnloadOtherLevels(scene));
-                Log.D("Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+                Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, _LOG_TAG, _LOG_COLOR);
                 yield break;
             }
 #endif
@@ -104,7 +104,7 @@ namespace EchoCity
                 SceneManager.SetActiveScene(levelScene);
                 _currentLevelEnum = scene;
             }
-            Log.D("Loaded active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            Log.DLazy(() => "Loaded active scene: " + sceneName, _LOG_TAG, _LOG_COLOR);
         }
 
         public IEnumerator LoadSceneAdditiveNoActive(SceneEnum scene)
@@ -114,7 +114,7 @@ namespace EchoCity
             Scene existingScene = SceneManager.GetSceneByName(sceneName);
             if (existingScene.IsValid() && existingScene.isLoaded)
             {
-                Log.D("Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+                Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_TAG}", $"{_LOG_COLOR}");
                 yield break;
             }
 #endif
@@ -124,7 +124,7 @@ namespace EchoCity
                 yield return null;
             }
 
-            Log.D("Loaded non-active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            Log.DLazy(() => "Loaded non-active scene: " + sceneName, _LOG_TAG, _LOG_COLOR);
         }
 
         public IEnumerator ReloadCurrentLevel()
@@ -158,7 +158,7 @@ namespace EchoCity
                         {
                             yield return null;
                         }
-                        Log.D("Unloaded scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+                        Log.DLazy(() => "Unloaded scene: " + sceneName, _LOG_TAG, _LOG_COLOR);
                     }
                 }
             }

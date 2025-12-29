@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
@@ -158,16 +159,16 @@ namespace EchoCity
 
         public void EquipItemHandler(int index, PickableData data, GameObject prefab)
         {
-            Log.D($"Equipping item", LOG_COLOR, LOG_TAG);
+            Log.DLazy(() => "Equipping item", LOG_TAG, LOG_COLOR);
             equippedItem = new EquippedItem(index, data, prefab);
             if (prefab == null)
-                Log.E($"EquipItem received null prefab for item '{data.Name}' (index {index})", LOG_COLOR, LOG_TAG);
+                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", LOG_COLOR, LOG_TAG);
 
         }
 
         public void TakeDamage(float damageAmount)
         {
-            Log.D($"Taking {damageAmount} damage.", LOG_COLOR, LOG_TAG);
+            Log.DLazy(() => $"Taking {damageAmount} damage.", LOG_TAG, LOG_COLOR);
             currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
             _lastTimeDamaged = Time.time;
             if (currentHealth <= 0)
@@ -183,7 +184,7 @@ namespace EchoCity
             {
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
-                    EchoCitySound.PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, EchoCitySound.MixerGroupEnum.SFX);
+                    PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, MixerGroupEnum.SFX);
                     playerEmittedSoundEvent?.RaiseEvent(transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }

@@ -161,7 +161,7 @@ namespace EchoCity
             uiManager.OpenSettingsMenu();
         }
 
-        private void QuitClickHandler() => Log.D("Quit button clicked", _LOG_COLOR, _LOG_TAG);
+        private void QuitClickHandler() => Log.DLazy(() => "Quit button clicked", _LOG_TAG, _LOG_COLOR);
 
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
 

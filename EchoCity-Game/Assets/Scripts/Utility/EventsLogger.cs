@@ -125,52 +125,51 @@ namespace EchoCity
         }
 
         #region Game Manager Events
-        private void OnSwitchGameStateEvent(GameStatesEnum from, GameStatesEnum to) => Log.D($"Switch Game State Event Raised from {from} to {to}", _LOG_COLOR, _LOG_TAG);
+        private void OnSwitchGameStateEvent(GameStatesEnum from, GameStatesEnum to) => Log.DLazy(() => $"Switch Game State Event Raised from {from} to {to}", _LOG_TAG, _LOG_COLOR);
         //ui
-        private void OnPauseEvent() => Log.D("Pause Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnPauseEvent() => Log.DLazy(() => "Pause Event Raised", _LOG_TAG, _LOG_COLOR);
         #endregion
 
         #region Enemies
-        private void OnPlayerHit(EnemyAI enemyAI) => Log.D($"Player Hit Event Raised by Enemy: {enemyAI.gameObject.name}", _LOG_COLOR, _LOG_TAG);
+        private void OnPlayerHit(EnemyAI enemyAI) => Log.DLazy(() => $"Player Hit Event Raised by Enemy: {enemyAI.gameObject.name}", _LOG_TAG, _LOG_COLOR);
         #endregion
 
         #region Echolocation 
-        private void OnNewAudioSphereEvent(SoundEmissionData soundEmissionData) => Log.D($"New Audio Sphere Event Raised at Position: {soundEmissionData.Position}, Radius: {soundEmissionData.Radius}, Intensity: {soundEmissionData.Intensity}", _LOG_COLOR, _LOG_TAG);
+        private void OnNewAudioSphereEvent(SoundEmissionData soundEmissionData) => Log.DLazy(() => $"New Audio Sphere Event Raised at Position: {soundEmissionData.Position}, Radius: {soundEmissionData.Radius}, Intensity: {soundEmissionData.Intensity}", _LOG_TAG, _LOG_COLOR);
         #endregion
 
         #region Input 
-        private void OnInteractEvent() => Log.D("Interact Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnIntEventExample(int value) => Log.D($"Int Event Raised with Value: {value}", _LOG_COLOR, _LOG_TAG);
-        private void OnStringEventExample(string value) => Log.D($"String Event Raised with Value: {value}", _LOG_COLOR, _LOG_TAG);
-        private void OnVoidEventExample() => Log.D("Void Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnEnablePlayerActionMapEvent() => Log.D("Enable Player Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnDisablePlayerActionMapEvent() => Log.D("Disable Player Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnEnableUIActionMapEvent() => Log.D("Enable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnDisableUIActionMapEvent() => Log.D("Disable UI Action Map Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnSwitchToHudStateEvent(HudEnum hud) => Log.D($"Switch to HUD Menu Event Raised for HUD: {hud}", _LOG_COLOR, _LOG_TAG);
-        private void OnSpawnWarningEvent(string message, Color color) => Log.D($"Spawn Warning Event Raised with Message: {message}, Color: {color}", _LOG_COLOR, _LOG_TAG);
-
+        private void OnInteractEvent() => Log.DLazy(() => "Interact Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnIntEventExample(int value) => Log.DLazy(() => $"Int Event Raised with Value: {value}", _LOG_TAG, _LOG_COLOR);
+        private void OnStringEventExample(string value) => Log.DLazy(() => $"String Event Raised with Value: {value}", _LOG_TAG, _LOG_COLOR);
+        private void OnVoidEventExample() => Log.DLazy(() => "Void Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnEnablePlayerActionMapEvent() => Log.DLazy(() => "Enable Player Action Map Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnDisablePlayerActionMapEvent() => Log.DLazy(() => "Disable Player Action Map Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnEnableUIActionMapEvent() => Log.DLazy(() => "Enable UI Action Map Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnDisableUIActionMapEvent() => Log.DLazy(() => "Disable UI Action Map Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnSwitchToHudStateEvent(HudEnum hud) => Log.DLazy(() => $"Switch to HUD Menu Event Raised for HUD: {hud}", _LOG_TAG, _LOG_COLOR);
+        private void OnSpawnWarningEvent(string message, Color color) => Log.DLazy(() => $"Spawn Warning Event Raised with Message: {message}, Color: {color}", _LOG_TAG, _LOG_COLOR);
         #endregion
 
         #region Interactable
-        private void OnEnterInteractionRangeEvent(Interactable interactable) => Log.D($"Enter Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_COLOR, _LOG_TAG);
-        private void OnExitInteractionRangeEvent(Interactable interactable) => Log.D($"Exit Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_COLOR, _LOG_TAG);
-        private void OnPickedPickableEvent(PickableData data, GameObject prefab) => Log.D($"Picked Pickable Event Raised for Pickable Data: {data.Name}", _LOG_COLOR, _LOG_TAG);
+        private void OnEnterInteractionRangeEvent(Interactable interactable) => Log.DLazy(() => $"Enter Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_TAG, _LOG_COLOR);
+        private void OnExitInteractionRangeEvent(Interactable interactable) => Log.DLazy(() => $"Exit Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_TAG, _LOG_COLOR);
+        private void OnPickedPickableEvent(PickableData data, GameObject prefab) => Log.DLazy(() => $"Picked Pickable Event Raised for Pickable Data: {data.Name}", _LOG_TAG, _LOG_COLOR);
         #endregion
 
         #region UI
-        private void OnTitleMenuEvent() => Log.D("Title Menu Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnHudMenuEvent(HudEnum hud) => Log.D($"HUD Menu Event Raised for HUD: {hud}", _LOG_COLOR, _LOG_TAG);
-        private void OnPauseMenuEvent() => Log.D("Pause Menu Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnDialogMenuEvent(DialogData dialogData) => Log.D($"Dialog Menu Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnDeathMenuEvent() => Log.D("Death Menu Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnEnterLoadingScreenEvent() => Log.D("Enter Loading Screen Event Raised", _LOG_COLOR, _LOG_TAG);
-        private void OnExitLoadingScreenEvent() => Log.D("Exit Loading Screen Event Raised", _LOG_COLOR, _LOG_TAG);
+        private void OnTitleMenuEvent() => Log.DLazy(() => "Title Menu Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnHudMenuEvent(HudEnum hud) => Log.DLazy(() => $"HUD Menu Event Raised for HUD: {hud}", _LOG_TAG, _LOG_COLOR);
+        private void OnPauseMenuEvent() => Log.DLazy(() => "Pause Menu Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnDialogMenuEvent(DialogData dialogData) => Log.DLazy(() => $"Dialog Menu Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnDeathMenuEvent() => Log.DLazy(() => "Death Menu Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnEnterLoadingScreenEvent() => Log.DLazy(() => "Enter Loading Screen Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnExitLoadingScreenEvent() => Log.DLazy(() => "Exit Loading Screen Event Raised", _LOG_TAG, _LOG_COLOR);
 
         #endregion
 
         #region Misc
-        private void OnFeedbackSubmittedEvent(int rating, string feedback) => Log.D($"Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", _LOG_COLOR, _LOG_TAG);
+        private void OnFeedbackSubmittedEvent(int rating, string feedback) => Log.DLazy(() => $"Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", _LOG_TAG, _LOG_COLOR);
         #endregion
     }
 }

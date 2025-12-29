@@ -79,7 +79,7 @@ namespace EchoCity
 
         private void AdvanceDialog()
         {
-            Log.D("Advance Dialog", "green", _LOG_TAG);
+            Log.DLazy(() => "Advance Dialog", _LOG_TAG, _LOG_COLOR);
             _currentLineIndex++;
 
             if (_currentLineIndex < _currentDialogData.DialogLines.Length) ShowCurrentLine();
