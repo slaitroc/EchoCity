@@ -16,7 +16,7 @@ namespace EchoCity
         private VisualElement _interactionKey;
 
 
-        public bool isInteractable = false;
+        // public bool isShowing = false;
 
         void OnEnable()
         {
@@ -41,23 +41,36 @@ namespace EchoCity
             _interactionPanel.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
-        public void IsInteractable(bool isOnInteractable)
+        public void IsInteractable(bool showPanel, bool isInteractable = false, string interactionText = "Interact")
         {
             if (_crosshair == null) return;
 
-            if (isOnInteractable)
+            if (showPanel)
             {
-                _crosshair.AddToClassList("interact");
                 _interactionPanel.AddToClassList("visible");
-                _interactionText.text = "Interact";
+                _interactionText.text = interactionText;
+
+                if (isInteractable)
+                {
+                    _crosshair.AddToClassList("interact");
+                    _crosshair.RemoveFromClassList("no-interact");
+                    _interactionKey.style.display = DisplayStyle.Flex;
+                }
+                else
+                {
+                    _crosshair.RemoveFromClassList("interact");
+                    _crosshair.AddToClassList("no-interact");
+                    _interactionKey.style.display = DisplayStyle.None;
+                }
             }
             else
             {
                 _crosshair.RemoveFromClassList("interact");
+                _crosshair.RemoveFromClassList("no-interact");
                 _interactionPanel.RemoveFromClassList("visible");
             }
 
-            isInteractable = isOnInteractable;
+            // isShowing = showPanel;
 
         }
     }

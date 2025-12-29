@@ -23,7 +23,7 @@ namespace EchoCity
         [SerializeField] private SOEventVoid switchToPauseStateEvent;
         [SerializeField] private SOEventVoid switchToPlayingStateEvent;
         [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
-        [SerializeField] private SOEventVoid canInteractStartEvent;
+        [SerializeField] private SOBoolStringEvent canInteractStartEvent;
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
         [SerializeField] private SOEventVoid areaInteractionEvent;
@@ -145,7 +145,7 @@ namespace EchoCity
             {
                 if (!_canInteract)
                 {
-                    canInteractStartEvent.RaiseEvent();
+                    canInteractStartEvent.RaiseEvent(true, "Test interaction");
                     _canInteract = true;
                 }
             }
@@ -156,7 +156,6 @@ namespace EchoCity
             }
             #endregion
         }
-
 
         private void OnMove(InputAction.CallbackContext context)
         {
