@@ -16,8 +16,6 @@ namespace EchoCity
         private VisualElement _interactionKey;
 
 
-        // public bool isShowing = false;
-
         void OnEnable()
         {
             var uiDocument = GetComponent<UIDocument>();
@@ -69,9 +67,7 @@ namespace EchoCity
                 _crosshair.RemoveFromClassList("no-interact");
                 _interactionPanel.RemoveFromClassList("visible");
             }
-
-            // isShowing = showPanel;
-
         }
+
     }
 }
