@@ -50,17 +50,10 @@ namespace EchoCity
             Debug.Assert(switchLinkedObject != null, $"WallPanelSwitchInteractable: No switchLinkedObject assigned on {gameObject.name}.");
         }
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        protected override void ResolveInteraction(bool outcome)
         {
-            if (_waitForInteractionOutcome)
-            {
-                if (!outcome)
-                {
-                    isSwitchedOn = !isSwitchedOn;
-                }
-
-            }
-            _waitForInteractionOutcome = false;
+            if (!outcome)
+                isSwitchedOn = !isSwitchedOn;
         }
     }
 }

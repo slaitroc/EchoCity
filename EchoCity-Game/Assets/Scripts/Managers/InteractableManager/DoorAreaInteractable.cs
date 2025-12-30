@@ -28,14 +28,13 @@ namespace EchoCity
             TryGetComponent(out doorAnimator);
         }
 
+        //skips puzzle interaction to just toggle door open/close
         public override void Interact()
         {
             isOpen = !isOpen;
         }
 
-        public override void InteractionOutcomeHandler(bool outcome)
-        {
-            throw new System.NotImplementedException();
-        }
+        protected override void ResolveInteraction(bool outcome) { }
+
     }
 }
