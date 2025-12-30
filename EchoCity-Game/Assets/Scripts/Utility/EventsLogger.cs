@@ -1,54 +1,53 @@
 using System;
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
+
 
 namespace EchoCity
 {
-
     public class EventsLogger : MonoBehaviour
     {
+#if UNITY_EDITOR
+        public static class SenderColorCache
+        {
+            // Classe interna generica: la vera "magia" della cache
+            private static class Storage<T>
+            {
+                public static readonly string HexColor = GenerateColor(typeof(T).Name);
 
-        #region Constants
-        private string _LOG_TAG = "EVENTS LOGGER";
-        private string _LOG_COLOR = "#ff8800ff";
-        #endregion
+                private static string GenerateColor(string name)
+                {
+                    int hash = name.GetHashCode();
+                    float r = (Mathf.Abs(hash & 0xFF0000) >> 16) / 255f;
+                    float g = (Mathf.Abs(hash & 0x00FF00) >> 8) / 255f;
+                    float b = Mathf.Abs(hash & 0x0000FF) / 255f;
 
-        #region Serialized Fields
-        [Header("Observing Events From")]
-        [Space(5)]
-        [Header("Game Manager")]
+                    // Mix con il bianco per la leggibilità (0.4f = 40% bianco)
+                    UnityEngine.Color c = UnityEngine.Color.Lerp(new UnityEngine.Color(r, g, b), UnityEngine.Color.white, 0.4f);
+                    return "#" + ColorUtility.ToHtmlStringRGB(c);
+                }
+            }
+
+            // Metodo pubblico per ottenere il colore
+            // Nota: qui usiamo un po' di Reflection (MakeGenericType) solo la PRIMA volta 
+            // che un tipo viene loggato. Poi diventa un accesso diretto alla memoria.
+            public static string GetColor(object sender)
+            {
+                Type type = sender.GetType();
+                // Recuperiamo il campo statico 'HexColor' dalla classe Storage<IlTuoTipo>
+                var storageType = typeof(Storage<>).MakeGenericType(type);
+                return (string)storageType.GetField("HexColor").GetValue(null);
+            }
+        }
+        [Header("GM to any")]
         [SerializeField] private SOEventDoubleParam<GameStatesEnum, GameStatesEnum> switchGameStateEvent;
 
-        [Header("Enemies")]
-        [SerializeField] private SOEnemyAIEvent playerHitEvent;
-
-        [Header("Echolocation")]
-        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
-
-        [Header("Input")]
-        [SerializeField] private SOEventVoid pauseGameEvent;
-        [SerializeField] private SOEventVoid interactEvent;
-        [SerializeField] private SOIntEvent intEventExample;
-        [SerializeField] private SOStringEvent stringEventExample;
-        [SerializeField] private SOEventVoid voidEventExample;
+        [Header("GM to Player")]
         [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
         [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
+
+        [Header("GM to UI")]
         [SerializeField] private SOEventVoid enableUIActionMapEvent;
         [SerializeField] private SOEventVoid disableUIActionMapEvent;
-        [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
-        [SerializeField] private SOStringColorEvent spawnWarningEvent;
-
-
-
-        [Header("Interactables")]
-        [SerializeField] private SOAreaInteractableEvent enterInteractionAreaEvent;
-        [SerializeField] private SOAreaInteractableEvent exitInteractionAreaEvent;
-        [SerializeField] private SOPickableDataGameObjectEvent pickedPickableEvent;
-
-        [Header("UI")]
-
-        [Header("Observed Events From GM")]
         [SerializeField] private SOEventVoid titleMenuEvent;
         [SerializeField] private SOHudEnumEvent hudMenuEvent;
         [SerializeField] private SOEventVoid pauseMenuEvent;
@@ -57,37 +56,76 @@ namespace EchoCity
         [SerializeField] private SOEventVoid enterLoadingScreenEvent;
         [SerializeField] private SOEventVoid exitLoadingScreenEvent;
 
+
+        [Header("Player & UI to GM")]
+        [SerializeField] private SOEventVoid switchToTitleStateEvent;
+        [SerializeField] private SOSceneEnumEvent switchLevelEvent;
+        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
+        [SerializeField] private SOEventVoid switchToPauseStateEvent;
+        [SerializeField] private SOEventVoid switchToWinStateEvent;
+        [SerializeField] private SOEventVoid switchToDeathStateEvent;
+        [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
+        [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
+
+        [Header("SL to GM")]
+        [SerializeField] private SOEventVoid enterLoadingEvent;
+        [SerializeField] private SOEventVoid exitLoadingEvent;
+
+        [SerializeField] private SOEventVoid interactEvent;
+        [SerializeField] private SOStringColorEvent spawnWarningEvent;
+
+        [Header("Enemies to Player")]
+        [SerializeField] private SOIAttractionEvent updatePlayerAttractionTargetEvent;
+
+        [Header("Any to EM & Enemies")]
+        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+
+        [Header("Interactables")]
+        [SerializeField] private SOAreaInteractableEvent enterInteractionAreaEvent;
+        [SerializeField] private SOAreaInteractableEvent exitInteractionAreaEvent;
+        [SerializeField] private SOPickableDataGameObjectEvent pickedPickableEvent;
+
         [Header("Misc")]
         [SerializeField] private SOIntStringEvent feedbackSubmittedEvent;
-        #endregion
+
+        [Header("Test events here")]
+        [SerializeField] private SOIntEvent intEventExample;
+        [SerializeField] private SOStringEvent stringEventExample;
+        [SerializeField] private SOEventVoid voidEventExample;
 
         void OnEnable()
         {
-            if (switchGameStateEvent != null) switchGameStateEvent.OnEventRaised += OnSwitchGameStateEvent;
-            if (playerHitEvent != null) playerHitEvent.OnEventRaised += OnPlayerHit;
-            if (newAudioSphereEvent != null) newAudioSphereEvent.OnEventRaised += OnNewAudioSphereEvent;
+            if (switchGameStateEvent != null) switchGameStateEvent.OnEventRaised += OnSwitchGameState;
+
+            if (enablePlayerActionMapEvent != null) enablePlayerActionMapEvent.OnEventRaised += OnEnablePlayerActionMap;
+            if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised += OnDisablePlayerActionMap;
+
+            if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised += OnEnableUIActionMap;
+            if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised += OnDisableUIActionMap;
+
+            if (titleMenuEvent != null) titleMenuEvent.OnEventRaised += OnTitleMenu;
+            if (hudMenuEvent != null) hudMenuEvent.OnEventRaised += OnHudMenu;
+            if (pauseMenuEvent != null) pauseMenuEvent.OnEventRaised += OnPauseMenu;
+            if (dialogMenuEvent != null) dialogMenuEvent.OnEventRaised += OnDialogMenu;
+            if (deathMenuEvent != null) deathMenuEvent.OnEventRaised += OnDeathMenu;
+            if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised += OnEnterLoadingScreen;
+            if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised += OnExitLoadingScreen;
+
+            // if (updatePlayerAttractionTargetEvent != null) updatePlayerAttractionTargetEvent.OnEventRaised += OnUpdatePlayerAttractionTarget;
+
+            if (newAudioSphereEvent != null) newAudioSphereEvent.OnEventRaised += OnNewAudioSphere;
+
+            if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised += OnSwitchToHudState;
             if (interactEvent != null) interactEvent.OnEventRaised += OnInteractEvent;
             if (intEventExample != null) intEventExample.OnEventRaised += OnIntEventExample;
             if (stringEventExample != null) stringEventExample.OnEventRaised += OnStringEventExample;
             if (voidEventExample != null) voidEventExample.OnEventRaised += OnVoidEventExample;
-            if (enablePlayerActionMapEvent != null) enablePlayerActionMapEvent.OnEventRaised += OnEnablePlayerActionMapEvent;
-            if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised += OnDisablePlayerActionMapEvent;
-            if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised += OnEnableUIActionMapEvent;
-            if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised += OnDisableUIActionMapEvent;
-            if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised += OnSwitchToHudStateEvent;
             if (spawnWarningEvent != null) spawnWarningEvent.OnEventRaised += OnSpawnWarningEvent;
 
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised += OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised += OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised += OnPickedPickableEvent;
-            if (pauseGameEvent != null) pauseGameEvent.OnEventRaised += OnPauseEvent;
-            if (titleMenuEvent != null) titleMenuEvent.OnEventRaised += OnTitleMenuEvent;
-            if (hudMenuEvent != null) hudMenuEvent.OnEventRaised += OnHudMenuEvent;
-            if (pauseMenuEvent != null) pauseMenuEvent.OnEventRaised += OnPauseMenuEvent;
-            if (dialogMenuEvent != null) dialogMenuEvent.OnEventRaised += OnDialogMenuEvent;
-            if (deathMenuEvent != null) deathMenuEvent.OnEventRaised += OnDeathMenuEvent;
-            if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised += OnEnterLoadingScreenEvent;
-            if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised += OnExitLoadingScreenEvent;
+            if (switchToPauseStateEvent != null) switchToPauseStateEvent.OnEventRaised += OnPauseEvent;
 
             if (feedbackSubmittedEvent != null) feedbackSubmittedEvent.OnEventRaised += OnFeedbackSubmittedEvent;
         }
@@ -95,81 +133,87 @@ namespace EchoCity
 
         void OnDisable()
         {
-            if (switchGameStateEvent != null) switchGameStateEvent.OnEventRaised -= OnSwitchGameStateEvent;
-            if (pauseGameEvent != null) pauseGameEvent.OnEventRaised -= OnPauseEvent;
-            if (playerHitEvent != null) playerHitEvent.OnEventRaised -= OnPlayerHit;
-            if (newAudioSphereEvent != null) newAudioSphereEvent.OnEventRaised -= OnNewAudioSphereEvent;
+            if (switchGameStateEvent != null) switchGameStateEvent.OnEventRaised -= OnSwitchGameState;
+            if (switchToPauseStateEvent != null) switchToPauseStateEvent.OnEventRaised -= OnPauseEvent;
+            if (newAudioSphereEvent != null) newAudioSphereEvent.OnEventRaised -= OnNewAudioSphere;
             if (interactEvent != null) interactEvent.OnEventRaised -= OnInteractEvent;
             if (intEventExample != null) intEventExample.OnEventRaised -= OnIntEventExample;
             if (stringEventExample != null) stringEventExample.OnEventRaised -= OnStringEventExample;
             if (voidEventExample != null) voidEventExample.OnEventRaised -= OnVoidEventExample;
-            if (enablePlayerActionMapEvent != null) enablePlayerActionMapEvent.OnEventRaised -= OnEnablePlayerActionMapEvent;
-            if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised -= OnDisablePlayerActionMapEvent;
-            if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised -= OnEnableUIActionMapEvent;
-            if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised -= OnDisableUIActionMapEvent;
-            if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised -= OnSwitchToHudStateEvent;
+            if (enablePlayerActionMapEvent != null) enablePlayerActionMapEvent.OnEventRaised -= OnEnablePlayerActionMap;
+            if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised -= OnDisablePlayerActionMap;
+            if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised -= OnEnableUIActionMap;
+            if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised -= OnDisableUIActionMap;
+            if (switchToHudStateEvent != null) switchToHudStateEvent.OnEventRaised -= OnSwitchToHudState;
             if (spawnWarningEvent != null) spawnWarningEvent.OnEventRaised -= OnSpawnWarningEvent;
 
             if (enterInteractionAreaEvent != null) enterInteractionAreaEvent.OnEventRaised -= OnEnterInteractionRangeEvent;
             if (exitInteractionAreaEvent != null) exitInteractionAreaEvent.OnEventRaised -= OnExitInteractionRangeEvent;
             if (pickedPickableEvent != null) pickedPickableEvent.OnEventRaised -= OnPickedPickableEvent;
-            if (titleMenuEvent != null) titleMenuEvent.OnEventRaised -= OnTitleMenuEvent;
-            if (hudMenuEvent != null) hudMenuEvent.OnEventRaised -= OnHudMenuEvent;
-            if (pauseMenuEvent != null) pauseMenuEvent.OnEventRaised -= OnPauseMenuEvent;
-            if (dialogMenuEvent != null) dialogMenuEvent.OnEventRaised -= OnDialogMenuEvent;
-            if (deathMenuEvent != null) deathMenuEvent.OnEventRaised -= OnDeathMenuEvent;
-            if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised -= OnEnterLoadingScreenEvent;
-            if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised -= OnExitLoadingScreenEvent;
+            if (titleMenuEvent != null) titleMenuEvent.OnEventRaised -= OnTitleMenu;
+            if (hudMenuEvent != null) hudMenuEvent.OnEventRaised -= OnHudMenu;
+            if (pauseMenuEvent != null) pauseMenuEvent.OnEventRaised -= OnPauseMenu;
+            if (dialogMenuEvent != null) dialogMenuEvent.OnEventRaised -= OnDialogMenu;
+            if (deathMenuEvent != null) deathMenuEvent.OnEventRaised -= OnDeathMenu;
+            if (enterLoadingScreenEvent != null) enterLoadingScreenEvent.OnEventRaised -= OnEnterLoadingScreen;
+            if (exitLoadingScreenEvent != null) exitLoadingScreenEvent.OnEventRaised -= OnExitLoadingScreen;
 
             if (feedbackSubmittedEvent != null) feedbackSubmittedEvent.OnEventRaised -= OnFeedbackSubmittedEvent;
         }
 
+        private string GetColoredName(IEventSender sender)
+        {
+            string color = SenderColorCache.GetColor(sender);
+            return $"<color={color}>[{sender.SenderName}]</color>";
+        }
+
         #region Game Manager Events
-        private void OnSwitchGameStateEvent(GameStatesEnum from, GameStatesEnum to) => Log.DLazy(() => $"Switch Game State Event Raised from {from} to {to}", _LOG_TAG, _LOG_COLOR);
+        private void OnSwitchGameState(IEventSender sender, GameStatesEnum from, GameStatesEnum to) => Log.DLazy(() => $"{GetColoredName(sender)}: Switch Game State Event Raised from {from} to {to}", this);
         //ui
-        private void OnPauseEvent() => Log.DLazy(() => "Pause Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnPauseEvent(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Pause Event Raised", this);
         #endregion
 
         #region Enemies
-        private void OnPlayerHit(EnemyAI enemyAI) => Log.DLazy(() => $"Player Hit Event Raised by Enemy: {enemyAI.gameObject.name}", _LOG_TAG, _LOG_COLOR);
+        private void OnPlayerHit(IEventSender sender, EnemyAI enemyAI) => Log.DLazy(() => $"{GetColoredName(sender)}: Player Hit Event Raised by Enemy: {enemyAI.gameObject.name}", this);
         #endregion
 
         #region Echolocation 
-        private void OnNewAudioSphereEvent(SoundEmissionData soundEmissionData) => Log.DLazy(() => $"New Audio Sphere Event Raised at Position: {soundEmissionData.Position}, Radius: {soundEmissionData.Radius}, Intensity: {soundEmissionData.Intensity}", _LOG_TAG, _LOG_COLOR);
+        private void OnNewAudioSphere(IEventSender sender, SoundEmissionData soundEmissionData) => Log.DLazy(() => $"{GetColoredName(sender)}: New Audio Sphere Event Raised at Position: {soundEmissionData.Position}, Radius: {soundEmissionData.Radius}, Intensity: {soundEmissionData.Intensity}", this);
         #endregion
 
         #region Input 
-        private void OnInteractEvent() => Log.DLazy(() => "Interact Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnIntEventExample(int value) => Log.DLazy(() => $"Int Event Raised with Value: {value}", _LOG_TAG, _LOG_COLOR);
-        private void OnStringEventExample(string value) => Log.DLazy(() => $"String Event Raised with Value: {value}", _LOG_TAG, _LOG_COLOR);
-        private void OnVoidEventExample() => Log.DLazy(() => "Void Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnEnablePlayerActionMapEvent() => Log.DLazy(() => "Enable Player Action Map Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnDisablePlayerActionMapEvent() => Log.DLazy(() => "Disable Player Action Map Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnEnableUIActionMapEvent() => Log.DLazy(() => "Enable UI Action Map Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnDisableUIActionMapEvent() => Log.DLazy(() => "Disable UI Action Map Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnSwitchToHudStateEvent(HudEnum hud) => Log.DLazy(() => $"Switch to HUD Menu Event Raised for HUD: {hud}", _LOG_TAG, _LOG_COLOR);
-        private void OnSpawnWarningEvent(string message, Color color) => Log.DLazy(() => $"Spawn Warning Event Raised with Message: {message}, Color: {color}", _LOG_TAG, _LOG_COLOR);
+        private void OnInteractEvent(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Interact Event Raised", this);
+        private void OnIntEventExample(IEventSender sender, int value) => Log.DLazy(() => $"{GetColoredName(sender)}: Int Event Raised with Value: {value}", this);
+        private void OnStringEventExample(IEventSender sender, string value) => Log.DLazy(() => $"{GetColoredName(sender)}: String Event Raised with Value: {value}", this);
+        private void OnVoidEventExample(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Void Event Raised", this);
+        private void OnEnablePlayerActionMap(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Enable Player Action Map Event Raised", this);
+        private void OnDisablePlayerActionMap(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Disable Player Action Map Event Raised", this);
+        private void OnEnableUIActionMap(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Enable UI Action Map Event Raised", this);
+        private void OnDisableUIActionMap(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Disable UI Action Map Event Raised", this);
+        private void OnSwitchToHudState(IEventSender sender, HudEnum hud) => Log.DLazy(() => $"{GetColoredName(sender)}: Switch to HUD Menu Event Raised for HUD: {hud}", this);
+        private void OnSpawnWarningEvent(IEventSender sender, string message, Color color) => Log.DLazy(() => $"{GetColoredName(sender)}: Spawn Warning Event Raised with Message: {message}, Color: {color}", this);
         #endregion
 
         #region Interactable
-        private void OnEnterInteractionRangeEvent(Interactable interactable) => Log.DLazy(() => $"Enter Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_TAG, _LOG_COLOR);
-        private void OnExitInteractionRangeEvent(Interactable interactable) => Log.DLazy(() => $"Exit Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", _LOG_TAG, _LOG_COLOR);
-        private void OnPickedPickableEvent(PickableData data, GameObject prefab) => Log.DLazy(() => $"Picked Pickable Event Raised for Pickable Data: {data.Name}", _LOG_TAG, _LOG_COLOR);
+        private void OnEnterInteractionRangeEvent(IEventSender sender, Interactable interactable) => Log.DLazy(() => $"{GetColoredName(sender)}: Enter Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", this);
+        private void OnExitInteractionRangeEvent(IEventSender sender, Interactable interactable) => Log.DLazy(() => $"{GetColoredName(sender)}: Exit Interaction Range Event Raised for Interactable: {interactable.gameObject.name}", this);
+        private void OnPickedPickableEvent(IEventSender sender, PickableData data, GameObject prefab) => Log.DLazy(() => $"{GetColoredName(sender)}: Picked Pickable Event Raised for Pickable Data: {data.Name}", this);
         #endregion
 
         #region UI
-        private void OnTitleMenuEvent() => Log.DLazy(() => "Title Menu Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnHudMenuEvent(HudEnum hud) => Log.DLazy(() => $"HUD Menu Event Raised for HUD: {hud}", _LOG_TAG, _LOG_COLOR);
-        private void OnPauseMenuEvent() => Log.DLazy(() => "Pause Menu Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnDialogMenuEvent(DialogData dialogData) => Log.DLazy(() => $"Dialog Menu Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnDeathMenuEvent() => Log.DLazy(() => "Death Menu Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnEnterLoadingScreenEvent() => Log.DLazy(() => "Enter Loading Screen Event Raised", _LOG_TAG, _LOG_COLOR);
-        private void OnExitLoadingScreenEvent() => Log.DLazy(() => "Exit Loading Screen Event Raised", _LOG_TAG, _LOG_COLOR);
+        private void OnTitleMenu(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Title Menu Event Raised", this);
+        private void OnHudMenu(IEventSender sender, HudEnum hud) => Log.DLazy(() => $"{GetColoredName(sender)}: HUD Menu Event Raised for HUD: {hud}", this);
+        private void OnPauseMenu(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Pause Menu Event Raised", this);
+        private void OnDialogMenu(IEventSender sender, DialogData dialogData) => Log.DLazy(() => $"{GetColoredName(sender)}: Dialog Menu Event Raised", this);
+        private void OnDeathMenu(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Death Menu Event Raised", this);
+        private void OnEnterLoadingScreen(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Enter Loading Screen Event Raised", this);
+        private void OnExitLoadingScreen(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Exit Loading Screen Event Raised", this);
 
         #endregion
 
         #region Misc
-        private void OnFeedbackSubmittedEvent(int rating, string feedback) => Log.DLazy(() => $"Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", _LOG_TAG, _LOG_COLOR);
+        private void OnFeedbackSubmittedEvent(IEventSender sender, int rating, string feedback) => Log.DLazy(() => $"{GetColoredName(sender)}: Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", this);
         #endregion
+#endif
     }
 }
