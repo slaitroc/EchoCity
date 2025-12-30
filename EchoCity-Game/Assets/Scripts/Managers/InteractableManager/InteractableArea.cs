@@ -5,20 +5,13 @@ namespace EchoCity
     [RequireComponent(typeof(Collider))]
     public class InteractionArea : MonoBehaviour
     {
-        #region Constants
         private string _LOG_TAG = "INTERACTABLE RANGE";
         private string _LOG_COLOR = "#3399ffff";
-        #endregion
 
-        #region Serialized Fields
         [Header("Invoking Events")]
         [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
         [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
         [SerializeField] private AreaInteractable interactable;
-        #endregion
-
-        #region Private Fields
-        #endregion
 
 #pragma warning disable CS0414
         #region Debug Fields
@@ -32,10 +25,7 @@ namespace EchoCity
 
         void Awake()
         {
-            if (!interactable)
-            {
-                Log.E($"No Interactable assigned to InteractableRange on {gameObject.name}", _LOG_COLOR, _LOG_TAG);
-            }
+            Debug.Assert(interactable, "No Interactable assigned to InteractableRange on {gameObject.name}", this);
         }
 
         protected virtual void OnTriggerEnter(Collider other)

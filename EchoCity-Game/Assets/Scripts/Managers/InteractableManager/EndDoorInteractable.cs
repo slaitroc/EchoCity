@@ -7,30 +7,25 @@ namespace EchoCity
         [Header("End Game Event")]
         [SerializeField] SOEventVoid switchToWinStateEvent;
 
-
         [Header("Messages")]
         [SerializeField] SODialogContainer dialogContainerSuccess;
         [SerializeField] SODialogContainer dialogContainerFail;
         [SerializeField] SODialogDataEvent dialogDataEvent;
         [SerializeField] SOStringColorEvent spawnMessageEvent;
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        protected override void ResolveInteraction(bool outcome)
         {
-            if (_waitForInteractionOutcome)
+            if (outcome)
             {
-                if (outcome)
-                {
-                    spawnMessageEvent?.RaiseEvent("Last door opened!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
-                    switchToWinStateEvent?.RaiseEvent();
-                }
-                else
-                {
-                    spawnMessageEvent?.RaiseEvent("Can not open door yet!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerFail));
-                }
+                spawnMessageEvent?.RaiseEvent("Last door opened!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
+                switchToWinStateEvent?.RaiseEvent();
             }
-            _waitForInteractionOutcome = false;
+            else
+            {
+                spawnMessageEvent?.RaiseEvent("Can not open door yet!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerFail));
+            }
         }
     }
 }

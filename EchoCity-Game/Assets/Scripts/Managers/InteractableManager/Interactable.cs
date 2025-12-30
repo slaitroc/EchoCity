@@ -1,50 +1,38 @@
-using EchoCity;
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour, IHasDescription
+namespace EchoCity
 {
-    [Header("Invoking Events")]
-    [SerializeField] protected SOPuzzleTagEnumArrayEvent checkTagsEvent;
-    [SerializeField] protected SOPuzzleTagEnumArrayEvent setPuzzleTagsEvent;
-    [SerializeField] protected SOEventVoid materialToggleEvent;
-    [SerializeField] protected SOSoundEmissionDataEvent newAudioSphereEvent;
-    [Header("Observing Events")]
-    [SerializeField] protected SOBoolEvent interactionOutcomeEvent;
-    [Header("Interactable Settings")]
-    [SerializeField] protected PuzzleTagEnum[] checkTags;
-    [SerializeField] protected PuzzleTagEnum[] setTags;
-
-    protected bool _waitForInteractionOutcome = false;
-    protected AudioContext _audioContext;
-
-    [SerializeField] protected string _description;
-    private bool _isInteractable = true;
-
-    public string Description => _description;
-    public bool isInteractable => _isInteractable;
-
-    protected virtual void OnEnable()
+    public abstract class Interactable : MonoBehaviour, IInteractable
     {
-        if (interactionOutcomeEvent != null) interactionOutcomeEvent.OnEventRaised += InteractionOutcomeHandler;
-    }
+        [Header("Invoking Events")]
+        [SerializeField] protected SOSoundEmissionDataEvent newAudioSphereEvent;
+        [Header("Interactable Settings")]
+        [SerializeField] private PuzzleManager puzzleManager;
+        [SerializeField] protected PuzzleTagState[] checkTags;
+        [SerializeField] protected PuzzleTagState[] setTags;
+        protected AudioContext _audioContext;
 
-    protected virtual void OnDisable()
-    {
-        if (interactionOutcomeEvent != null) interactionOutcomeEvent.OnEventRaised -= InteractionOutcomeHandler;
-    }
+        protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
 
-    protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
+        protected virtual void Start()
+        {
+            if (puzzleManager == null)
+                puzzleManager = GameObject.FindWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
+            Debug.Assert(puzzleManager != null, "PuzzleManager not found in the scene");
+            _audioContext = new AudioContext(newAudioSphereEvent);
+        }
+        public virtual void Interact()
+        {
+            bool outcome = puzzleManager?.TryUpdateTagsHandler(checkTags, setTags) ?? false;
+            ResolveInteraction(outcome);
+        }
 
-    protected virtual void Start()
-    {
-        _audioContext = new AudioContext(newAudioSphereEvent);
+        protected abstract void ResolveInteraction(bool outcome);
+
+        void OnValidate()
+        {
+            if (puzzleManager == null)
+                puzzleManager = GameObject.FindWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
+        }
     }
-    public virtual void Interact() => CheckTags(checkTags);
-    public void CheckTags(PuzzleTagEnum[] tagsToCheck)
-    {
-        _waitForInteractionOutcome = true;
-        checkTagsEvent?.RaiseEvent(tagsToCheck);
-    }
-    public abstract void InteractionOutcomeHandler(bool outcome);
-    public void SetTags(PuzzleTagEnum[] tagsToSet) => setPuzzleTagsEvent?.RaiseEvent(tagsToSet);
 }

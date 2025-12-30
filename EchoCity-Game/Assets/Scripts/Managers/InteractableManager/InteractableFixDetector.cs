@@ -1,9 +1,7 @@
-using EchoCity;
 using UnityEngine;
 
 namespace EchoCity
 {
-
     [RequireComponent(typeof(Collider))]
     public class InteractableFixDetector : Interactable
     {
@@ -15,9 +13,6 @@ namespace EchoCity
             linkedInteractable?.Interact();
         }
 
-        public override void InteractionOutcomeHandler(bool outcome)
-        {
-            _waitForInteractionOutcome = false;
-        }
+        protected override void ResolveInteraction(bool outcome){}
     }
 }

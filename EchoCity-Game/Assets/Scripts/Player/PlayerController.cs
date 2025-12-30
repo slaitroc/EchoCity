@@ -33,10 +33,6 @@ namespace EchoCity
 
     public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem
     {
-
-        private const string LOG_TAG = "PLAYER CONTROLLER";
-        private const string LOG_COLOR = "#39e8d1ff";
-
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;

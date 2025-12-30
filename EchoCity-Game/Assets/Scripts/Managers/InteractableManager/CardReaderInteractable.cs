@@ -5,6 +5,8 @@ namespace EchoCity
 {
     public class CardReaderInteractable : Interactable
     {
+        [Header("Invoking Events")]
+        [SerializeField] protected SOEventVoid materialToggleEvent;
         [Header("Sound")]
         [SerializeField] SOSoundSource useSoundSource;
 
@@ -18,27 +20,23 @@ namespace EchoCity
         [SerializeField] SODialogDataEvent dialogDataEvent;
         [SerializeField] SOStringColorEvent spawnMessageEvent;
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        protected override void ResolveInteraction(bool outcome)
         {
-            if (_waitForInteractionOutcome)
+            if (outcome)
             {
-                if (outcome)
-                {
-                    spawnMessageEvent?.RaiseEvent("CardReader Used!", new Color(1f, 0.5f, 0f, 1f));
-                    PlayAtPosition(transform.position, useSoundSource, _audioContext, MixerGroupEnum.SFX);
-                    Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
-                    materialToggleEvent?.RaiseEvent();
-                    materialToggleEvent?.RaiseEvent();
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
+                spawnMessageEvent?.RaiseEvent("CardReader Used!", new Color(1f, 0.5f, 0f, 1f));
+                PlayAtPosition(transform.position, useSoundSource, _audioContext, MixerGroupEnum.SFX);
+                Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
+                materialToggleEvent?.RaiseEvent();
+                materialToggleEvent?.RaiseEvent();
+                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
 
-                }
-                else
-                {
-                    spawnMessageEvent?.RaiseEvent("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerFail));
-                }
             }
-            _waitForInteractionOutcome = false;
+            else
+            {
+                spawnMessageEvent?.RaiseEvent("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerFail));
+            }
         }
     }
 }
