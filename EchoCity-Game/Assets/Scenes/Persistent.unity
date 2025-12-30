@@ -2175,10 +2175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8460cd2814f456b4287f66d9f4528181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
-  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
-  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
-  activePuzzleTags: []
+  puzzleTags: []
 --- !u!1 &8792939852616119554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2295,7 +2292,7 @@ GameObject:
   - component: {fileID: 8714278021380127983}
   m_Layer: 0
   m_Name: Puzzle Manager
-  m_TagString: Untagged
+  m_TagString: PuzzleManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
