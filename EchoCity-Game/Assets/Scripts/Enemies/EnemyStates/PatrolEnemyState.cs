@@ -41,7 +41,7 @@ namespace EchoCity
             GotoNextWaypoint();
 
             //send event to player controller to update attraction HUD
-            _enemyAttractionEvent?.RaiseEvent(_attractionSystem, _owner.Transform, false);
+            _enemyAttractionEvent?.RaiseEvent(_context, _attractionSystem, _owner.Transform, false);
         }
         public override void Update()
         {
@@ -88,7 +88,7 @@ namespace EchoCity
 
         public override void Exit()
         {
-            _enemyAttractionEvent?.RaiseEvent(_attractionSystem, _owner.Transform, true);
+            _enemyAttractionEvent?.RaiseEvent(_context, _attractionSystem, _owner.Transform, true);
         }
         public override void DealDamage(IDamageable damageable) { }
 

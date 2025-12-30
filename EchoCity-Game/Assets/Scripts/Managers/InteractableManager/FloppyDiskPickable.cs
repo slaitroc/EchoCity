@@ -14,8 +14,8 @@ namespace EchoCity
             base.ResolveInteraction(outcome);
             if (outcome)
             {
-                spawnMessageEvent?.RaiseEvent("FloppyDisk Picked Up!", new Color(1f, 0.5f, 0f, 1f));
-                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainer));
+                spawnMessageEvent?.RaiseEvent(this, "FloppyDisk Picked Up!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainer));
             }
         }
     }

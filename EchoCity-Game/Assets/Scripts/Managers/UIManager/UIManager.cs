@@ -2,12 +2,8 @@ using UnityEngine;
 
 namespace EchoCity
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : MonoBehaviour, IEventSender
     {
-#pragma warning disable CS0414
-        private const string _LOG_COLOR = "cyan";
-        private const string _LOG_TAG_FULL = "UI MANAGER";
-#pragma warning restore CS0414
         [Header("UI Controllers")]
 
         [Header("Title Menu")]
@@ -39,11 +35,16 @@ namespace EchoCity
         [SerializeField] private WinMenuController winMenuController;
 
         [Header("Events")]
+
         [Header("Invoking Events for GM")]
         [SerializeField] private SOEventVoid switchToTitleStateEvent;
         [SerializeField] private SOEventVoid switchToPlayStateEvent;
         [SerializeField] private SOSceneEnumEvent switchToInitLevelEvent;
 
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => true;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.UI };
 
         [Header("Observed Events From GM")]
         [SerializeField] private SOEventVoid titleMenuEvent;
@@ -93,7 +94,7 @@ namespace EchoCity
 
             if (_playerInventory == null)
             {
-                Log.E("PlayerInventory reference is missing in UIManager!", _LOG_COLOR, _LOG_TAG_FULL);
+                Log.ELazy(() => "PlayerInventory reference is missing in UIManager!", this);
             }
         }
 
@@ -125,7 +126,7 @@ namespace EchoCity
             _winMenu.SetActive(false);
 
             _hud.SetActive(true);
-            switchToPlayStateEvent?.RaiseEvent();
+            switchToPlayStateEvent?.RaiseEvent(this);
         }
 
         public void SwitchToTitleState()
@@ -137,7 +138,7 @@ namespace EchoCity
             _winMenu.SetActive(false);
 
             _titleMenu.SetActive(true);
-            switchToTitleStateEvent?.RaiseEvent();
+            switchToTitleStateEvent?.RaiseEvent(this);
         }
 
         public void SwitchToInitLevel(SceneEnum scene)
@@ -149,7 +150,7 @@ namespace EchoCity
             _winMenu.SetActive(false);
 
             _hud.SetActive(true);
-            switchToInitLevelEvent?.RaiseEvent(scene);
+            switchToInitLevelEvent?.RaiseEvent(this, scene);
         }
 
 
@@ -161,7 +162,7 @@ namespace EchoCity
 
 
         #region Private Event Handlers
-        private void OpenTitleMenuHandler()
+        private void OpenTitleMenuHandler(IEventSender sender)
         {
             _hud.SetActive(false);
             _pauseMenu.SetActive(false);
@@ -172,13 +173,13 @@ namespace EchoCity
             _titleMenu.SetActive(true);
         }
 
-        private void OpenHUDMenuHandler(HudEnum hud)
+        private void OpenHUDMenuHandler(IEventSender sender, HudEnum hud)
         {
             radialMenuController.enabled = !radialMenuController.enabled;
             crosshairController.enabled = !crosshairController.enabled;
         }
 
-        private void OpenPauseMenuHandler()
+        private void OpenPauseMenuHandler(IEventSender sender)
         {
             _hud.SetActive(false);
             _titleMenu.SetActive(false);
@@ -189,7 +190,7 @@ namespace EchoCity
             _pauseMenu.SetActive(true);
         }
 
-        private void OpenDialogMenuHandler(DialogData dialogData)
+        private void OpenDialogMenuHandler(IEventSender sender, DialogData dialogData)
         {
             _hud.SetActive(false);
             _pauseMenu.SetActive(false);
@@ -201,7 +202,7 @@ namespace EchoCity
             dialogController.SpawnDialogHandler(dialogData);
         }
 
-        private void OpenDeathMenuHandler()
+        private void OpenDeathMenuHandler(IEventSender sender)
         {
             _hud.SetActive(false);
             _pauseMenu.SetActive(false);
@@ -212,7 +213,7 @@ namespace EchoCity
             _deathMenu.SetActive(true);
         }
 
-        private void OpenWinMenuHandler()
+        private void OpenWinMenuHandler(IEventSender sender)
         {
             _hud.SetActive(false);
             _pauseMenu.SetActive(false);
@@ -223,15 +224,15 @@ namespace EchoCity
             _winMenu.SetActive(true);
         }
 
-        private void OpenLoadingScreenHandler() => _loadingScreen.SetActive(true);
-        private void CloseLoadingScreenHandler() => _loadingScreen.SetActive(false);
+        private void OpenLoadingScreenHandler(IEventSender sender) => _loadingScreen.SetActive(true);
+        private void CloseLoadingScreenHandler(IEventSender sender) => _loadingScreen.SetActive(false);
 
-        private void CrosshairInteractableStartHandler(bool isInteractable, string text) => crosshairController.IsInteractable(true, isInteractable, text);
-        private void CrosshairInteractableStopHandler() => crosshairController.IsInteractable(false);
-        private void SpawnWarningHandler(string warningText, Color color) => warningController.SpawnWarning(warningText, color);
+        private void CrosshairInteractableStartHandler(IEventSender sender, bool isInteractable, string text) => crosshairController.IsInteractable(true, isInteractable, text);
+        private void CrosshairInteractableStopHandler(IEventSender sender) => crosshairController.IsInteractable(false);
+        private void SpawnWarningHandler(IEventSender sender, string warningText, Color color) => warningController.SpawnWarning(warningText, color);
 
-        private void ItemEquippedHandler(int index, PickableData pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
-        private void DropItemEventHandler(int index) => equippedPanelController.ClearEquipped();
+        private void ItemEquippedHandler(IEventSender sender, int index, PickableData pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
+        private void DropItemEventHandler(IEventSender sender, int index) => equippedPanelController.ClearEquipped();
 
 
         #endregion

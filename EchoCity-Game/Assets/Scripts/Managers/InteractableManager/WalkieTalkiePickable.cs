@@ -16,8 +16,8 @@ namespace EchoCity
             base.ResolveInteraction(outcome);
             if (outcome)
             {
-                spawnMessageEvent?.RaiseEvent("WalkieTalkie Picked Up!", new Color(1f, 0.5f, 0f, 1f));
-                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainer));
+                spawnMessageEvent?.RaiseEvent(this, "WalkieTalkie Picked Up!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainer));
             }
         }
     }

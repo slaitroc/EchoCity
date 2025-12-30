@@ -2,12 +2,12 @@ namespace EchoCity
 {
     public abstract class GameState : IGameState
     {
-        protected IGMContext _gameManager;
+        protected IGMContext _context;
         protected GameManagerFSM _fsm;
 
         public GameState(IGMContext context, GameManagerFSM fsm)
         {
-            _gameManager = context;
+            _context = context;
             _fsm = fsm;
         }
 

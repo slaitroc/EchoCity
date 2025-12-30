@@ -18,7 +18,7 @@ public class LightOutTutorialTrigger : TutorialTrigger
                 light.SetActive(false);
             }
         }
-        wearEcholocatorEvent?.RaiseEvent();
+        wearEcholocatorEvent?.RaiseEvent(this);
         PlayAtPosition(audioClips[0], _audioPositions[0].position, 1f, MixerGroupEnum.SFX);
         PlayAtPosition(audioClips[1], _audioPositions[1].position, 1f, MixerGroupEnum.SFX);
         base.ResolveInteraction(outcome);

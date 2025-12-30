@@ -11,7 +11,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
     //[RequireComponent(typeof(PlayerInput))]
 #endif
-    public class EC_FirstPersonController : MonoBehaviour
+    public class EC_FirstPersonController : MonoBehaviour, IEventSender
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -63,6 +63,11 @@ namespace StarterAssets
         [Header("Invoking Events")]
         public SOSoundEmissionDataEvent newAudioSphereEvent;
         private AudioContext _audioContext;
+
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => false;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Sound Sources")]
         [Tooltip("Sound played when character lands on ground")]
@@ -123,7 +128,7 @@ namespace StarterAssets
 
         private void Start()
         {
-            _audioContext = new AudioContext(newAudioSphereEvent);
+            _audioContext = new AudioContext(this, newAudioSphereEvent);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 

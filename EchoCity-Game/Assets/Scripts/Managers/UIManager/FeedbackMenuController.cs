@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 namespace EchoCity
 {
     [RequireComponent(typeof(UIDocument))]
-    public class FeedbackMenuController : MonoBehaviour
+    public class FeedbackMenuController : MonoBehaviour, IEventSender
     {
         private const string _LOG_TAG = "UI-FeedbackMenu";
         private const string _LOG_COLOR = "#ff0000ff";
@@ -16,6 +16,11 @@ namespace EchoCity
 
         [Header("Invoking events")]
         [SerializeField] private SOIntStringEvent feedbackSubmittedEvent;
+
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => false;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.UI };
 
         #region Private Fields
         private VisualElement _root;
@@ -32,6 +37,7 @@ namespace EchoCity
         private Button _thankYouContinueButton;
 
         private bool _showCursor;
+
         #endregion
 
         private void OnEnable()
@@ -114,7 +120,7 @@ namespace EchoCity
         private void SubmitFeedbackClickHandler()
         {
             string feedbackText = _feedbackTextField != null ? _feedbackTextField.value : string.Empty;
-            feedbackSubmittedEvent?.RaiseEvent(_currentRating, feedbackText);
+            feedbackSubmittedEvent?.RaiseEvent(this, _currentRating, feedbackText);
 
             if (_feedbackPanel != null)
                 _feedbackPanel.style.display = DisplayStyle.None;

@@ -31,10 +31,16 @@ namespace EchoCity
             _isActive = isActive;
         }
     }
-    public class PuzzleManager : MonoBehaviour
+    public class PuzzleManager : MonoBehaviour, IEventSender
     {
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => true;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Puzzle };
+
         [Header("Puzzle Tags")]
         [SerializeField] private PuzzleTagState[] puzzleTags;
+
 
         void Awake()
         {

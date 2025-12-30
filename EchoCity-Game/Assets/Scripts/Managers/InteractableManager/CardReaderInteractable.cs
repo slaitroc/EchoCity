@@ -24,18 +24,17 @@ namespace EchoCity
         {
             if (outcome)
             {
-                spawnMessageEvent?.RaiseEvent("CardReader Used!", new Color(1f, 0.5f, 0f, 1f));
+                spawnMessageEvent?.RaiseEvent(this, "CardReader Used!", new Color(1f, 0.5f, 0f, 1f));
                 PlayAtPosition(transform.position, useSoundSource, _audioContext, MixerGroupEnum.SFX);
                 Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
-                materialToggleEvent?.RaiseEvent();
-                materialToggleEvent?.RaiseEvent();
-                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
-
+                materialToggleEvent?.RaiseEvent(this);
+                materialToggleEvent?.RaiseEvent(this);
+                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainerSuccess));
             }
             else
             {
-                spawnMessageEvent?.RaiseEvent("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f));
-                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerFail));
+                spawnMessageEvent?.RaiseEvent(this, "CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainerFail));
             }
         }
     }

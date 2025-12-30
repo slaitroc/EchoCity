@@ -52,7 +52,7 @@ namespace EchoCity
     }
 
     //GAME MANAGER
-    public interface IGMContext
+    public interface IGMContext : IEventSender
     {
         // <summary> The FSM owner </summary>
         IFSMOwner Owner { get; }
@@ -107,7 +107,7 @@ namespace EchoCity
     }
 
     //ENEMY AI
-    public interface IEnemyContext
+    public interface IEnemyContext : IEventSender
     {
         // <summary> Enemy data Scriptable Object </summary>
         SOEnemyData EnemyData { get; }
@@ -238,11 +238,22 @@ namespace EchoCity
     public interface ISoundPerceiver
     {
         //<summary> Handles a new perceived sound </summary>
-        void PerceivedSoundHandler(SoundEmissionData ps);
+        void PerceivedSoundHandler(IEventSender sender, SoundEmissionData ps);
         //<summary> The last perceived sound </summary>
         PerceivedSound LastPerceivedSound { get; }
     }
 
+    public interface IEventSender
+    {
+        //<summary> Name of the sender </summary>
+        string SenderName { get; }
+        //<summary> ID of the sender </summary>
+        int SenderID { get; }
+        //<summary> Category of the sender </summary>
+        bool IsManager { get; }
+        EventSenderCategoriesEnum[] SenderCategory { get; }
+
+    }
     //INTERACTABLE
     public interface IInteractable
     {

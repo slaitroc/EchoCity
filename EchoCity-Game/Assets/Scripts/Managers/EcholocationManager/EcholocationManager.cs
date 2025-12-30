@@ -14,6 +14,12 @@ namespace EchoCity
     {
         private const int MAX_AUDIO_SPHERES = 64;
 
+        [Header("Observed Events")]
+        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+        [SerializeField] private SOEventVoid materialToggleEvent;
+
+
+        [Header("Echolocation Settings")]
         [SerializeField] private bool useEcholocationMaterial = true;
         [SerializeField] private Material echolocationMaterial;
 
@@ -60,6 +66,19 @@ namespace EchoCity
             lineWidthID = Shader.PropertyToID("_LineWidth");
             pointSizeID = Shader.PropertyToID("_PointSize");
             visualizationModeID = Shader.PropertyToID("_VisualizationMode");
+        }
+
+        void OnEnable()
+        {
+            if (newAudioSphereEvent) newAudioSphereEvent.OnEventRaised += AddAudioSphereHandler;
+            if (materialToggleEvent) materialToggleEvent.OnEventRaised += MaterialSwitcherHandler;
+
+        }
+
+        void OnDisable()
+        {
+            if (newAudioSphereEvent) newAudioSphereEvent.OnEventRaised -= AddAudioSphereHandler;
+            if (materialToggleEvent) materialToggleEvent.OnEventRaised -= MaterialSwitcherHandler;
         }
 
         private void OnValidate()
@@ -141,7 +160,7 @@ namespace EchoCity
             activeSpheres.Add(newSphere);
         }
 
-        public void AddAudioSphereHandler(SoundEmissionData data)
+        public void AddAudioSphereHandler(IEventSender sender, SoundEmissionData data)
         {
             var newSphere = new AudioSphere(
                 data.Position,
@@ -156,7 +175,7 @@ namespace EchoCity
             activeSpheres.Add(newSphere);
         }
 
-        public void MaterialSwitcherHandler()
+        public void MaterialSwitcherHandler(IEventSender sender)
         {
             useEcholocationMaterial = !useEcholocationMaterial;
 

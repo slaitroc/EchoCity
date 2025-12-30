@@ -4,8 +4,6 @@ namespace EchoCity
 {
     public class CablePickable : Pickable
     {
-
-
         [Header("Messages")]
         [SerializeField] SODialogContainer dialogContainer;
         [SerializeField] SODialogDataEvent dialogDataEvent;
@@ -16,8 +14,8 @@ namespace EchoCity
             base.ResolveInteraction(outcome);
             if (outcome)
             {
-                spawnMessageEvent?.RaiseEvent("Cable Picked Up!", new Color(1f, 0.5f, 0f, 1f));
-                dialogDataEvent?.RaiseEvent(new DialogData(dialogContainer));
+                spawnMessageEvent?.RaiseEvent(this, "Cable Picked Up!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainer));
             }
         }
     }

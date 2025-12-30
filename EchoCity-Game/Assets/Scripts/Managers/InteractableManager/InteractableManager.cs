@@ -7,13 +7,7 @@ namespace EchoCity
     {
         [SerializeField] private AreaInteractable activeAreaInteractable;
 
-        public void TriggerInteraction()
-        {
-            Log.DLazy(() => $"Triggered interaction on {activeAreaInteractable.name}", this);
-            activeAreaInteractable?.Interact();
-        }
-
-        public void SetActiveInteractable(AreaInteractable interactable)
+        public void SetActiveInteractable(IEventSender sender, AreaInteractable interactable)
         {
             if (interactable == null)
             {

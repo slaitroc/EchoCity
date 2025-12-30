@@ -14,13 +14,18 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM 
     //[RequireComponent(typeof(PlayerInput))]
 #endif
-    public class EC_ThirdPersonController : MonoBehaviour
+    public class EC_ThirdPersonController : MonoBehaviour, IEventSender
     {
 
         [Header("ECHO CITY")]
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         private AudioContext _audioContext;
+
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => false;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Sound Sources")]
         [Tooltip("Sound played when character lands on ground")]
@@ -131,7 +136,6 @@ namespace StarterAssets
             }
         }
 
-
         private void Awake()
         {
             // get a reference to our main camera
@@ -143,7 +147,7 @@ namespace StarterAssets
 
         private void Start()
         {
-            _audioContext = new AudioContext(newAudioSphereEvent);
+            _audioContext = new AudioContext(this, newAudioSphereEvent);
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _hasAnimator = TryGetComponent(out _animator);

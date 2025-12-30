@@ -13,6 +13,6 @@ namespace EchoCity
             linkedInteractable?.Interact();
         }
 
-        protected override void ResolveInteraction(bool outcome){}
+        protected override void ResolveInteraction(bool outcome) { }
     }
 }

@@ -21,11 +21,11 @@ namespace EchoCity
             if (outcome)
             {
                 _canBePicked = true;
-                itemPickedEvent?.RaiseEvent(new PickableData(pickableData), pickableData.PickablePrefab);
+                itemPickedEvent?.RaiseEvent(this, new PickableData(pickableData), pickableData.PickablePrefab);
             }
         }
 
-        public void InventoryHandler(bool canPickUp)
+        public void InventoryHandler(IEventSender sender, bool canPickUp)
         {
             if (canPickUp && _canBePicked)
             {

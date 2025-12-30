@@ -1,3 +1,4 @@
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 namespace EchoCity
@@ -8,19 +9,19 @@ namespace EchoCity
         public override void Enter()
         {//TODO audio
             Time.timeScale = 0;
-            _gameManager.DisablePlayerInputEvent.RaiseEvent();
-            _gameManager.EnableUIInputEvent.RaiseEvent();
-            _gameManager.TitleMenuEvent.RaiseEvent();
+            _context.DisablePlayerInputEvent.RaiseEvent(_context);
+            _context.EnableUIInputEvent.RaiseEvent(_context);
+            _context.TitleMenuEvent.RaiseEvent(_context);
         }
         public override void Update() { }
-        public override void Exit() => _gameManager.SetPlayerOnSpawnEvent.RaiseEvent();
+        public override void Exit() => _context.SetPlayerOnSpawnEvent.RaiseEvent(_context);
         public override GameStatesEnum GetEnum() => GameStatesEnum.Title;
-        public override void InitLevelHandler(SceneEnum scene) => _gameManager.LoadLevelEvent.RaiseEvent(scene);
+        public override void InitLevelHandler(SceneEnum scene) => _context.LoadLevelEvent.RaiseEvent(_context, scene);
         public override void EnterLoading() { }
         public override void ExitLoading()
         {
-            _gameManager.DisablePlayerInputEvent.RaiseEvent();
-            _gameManager.EnableUIInputEvent.RaiseEvent();
+            _context.DisablePlayerInputEvent.RaiseEvent(_context);
+            _context.EnableUIInputEvent.RaiseEvent(_context);
             _fsm.SwitchState(_fsm.PlayingState);
         }
     }

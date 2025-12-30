@@ -38341,9 +38341,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 0}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
+  _description: 
   switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
   dialogContainerSuccess: {fileID: 11400000, guid: 497d0dcff38e244fbbc4da4c7828f067, type: 2}
   dialogContainerFail: {fileID: 11400000, guid: b564213884a29483a8dc86a9bfe98fad, type: 2}
@@ -42415,8 +42417,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   soundSource: {fileID: 11400000, guid: 815bf1836564bec4b8f9e5e8963b1865, type: 2}
-  emitOnStart: 1
-  gapBetweenSounds: 0
   emitOnStart: 1
   gapBetweenSounds: 0
 --- !u!82 &1539462846
@@ -61955,7 +61955,9 @@ MonoBehaviour:
   tutorialDialogContainer: {fileID: 11400000, guid: 00ca6e6856df8446fa9a760e40f892fe, type: 2}
   switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 0
   setTags: []
 --- !u!114 &245479332745480907
 MonoBehaviour:
@@ -61971,8 +61973,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   soundSource: {fileID: 11400000, guid: b764989168d9473418a05fba947022df, type: 2}
-  emitOnStart: 1
-  gapBetweenSounds: 0
   emitOnStart: 1
   gapBetweenSounds: 0
 --- !u!65 &286153778085949031
@@ -62094,7 +62094,9 @@ MonoBehaviour:
   tutorialDialogContainer: {fileID: 11400000, guid: dedaf29724f3947f2a5f771d96c8acd7, type: 2}
   switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 0
   setTags: []
   audioClips:
   - {fileID: 8300000, guid: f89d9b35269df57458946f04f4720d14, type: 3}
@@ -62263,9 +62265,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
+  _description: 
   hasFixDetector: 1
   detector: {fileID: 3312011534037541223}
   doorAnimator: {fileID: 7131236439588080833}
@@ -62470,7 +62474,9 @@ MonoBehaviour:
   tutorialDialogContainer: {fileID: 11400000, guid: 966a108269fbb421294261e2b494f211, type: 2}
   switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 0
   setTags: []
 --- !u!4 &1084530219776944999
 Transform:
@@ -62522,8 +62528,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   soundSource: {fileID: 11400000, guid: 553e8324492489f40b78d5fcddcb4254, type: 2}
-  emitOnStart: 1
-  gapBetweenSounds: 0
   emitOnStart: 1
   gapBetweenSounds: 0
 --- !u!4 &1322470773750439094
@@ -62653,6 +62657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 3
@@ -62660,6 +62665,7 @@ MonoBehaviour:
   setTags:
   - _tag: 3
     _isActive: 1
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
   pickableData: {fileID: 11400000, guid: ab854fcb9fe6d6e44a261e4d431af3f9, type: 2}
@@ -63023,6 +63029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 2
@@ -63030,6 +63037,7 @@ MonoBehaviour:
   setTags:
   - _tag: 2
     _isActive: 1
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
   pickableData: {fileID: 11400000, guid: 40184c959aa726441a5ddacec8f80f4f, type: 2}
@@ -63049,11 +63057,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
     _isActive: 0
   setTags: []
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
   pickableData: {fileID: 11400000, guid: b0d27fab71d05e449919984589991233, type: 2}
@@ -63123,9 +63133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 0}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
+  _description: 
   linkedInteractable: {fileID: 653042473285973397}
 --- !u!23 &3317158660876436629
 MeshRenderer:
@@ -63586,11 +63598,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
     _isActive: 0
   setTags: []
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
   pickableData: {fileID: 11400000, guid: ed686a97e9a2ee04c956828f8a62fbb2, type: 2}
@@ -64210,7 +64224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!135 &4751633018157295732
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -64382,11 +64396,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
     _isActive: 0
   setTags: []
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
   pickableData: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
@@ -64532,7 +64548,9 @@ MonoBehaviour:
   tutorialDialogContainer: {fileID: 11400000, guid: 105ec83c002644b01a253a9b517b1aa3, type: 2}
   switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 0
   setTags: []
 --- !u!4 &5685134293285620591
 Transform:
@@ -65103,6 +65121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 4
@@ -65110,6 +65129,7 @@ MonoBehaviour:
   setTags:
   - _tag: 4
     _isActive: 1
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
   pickableData: {fileID: 11400000, guid: b7bd79ad65fc56449a3822c9158f169c, type: 2}
@@ -65195,6 +65215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 4
@@ -65204,6 +65225,7 @@ MonoBehaviour:
   setTags:
   - _tag: 0
     _isActive: 0
+  _description: 
   materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
   useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
   cardPrefab: {fileID: 2224368390549605647, guid: f16ddeba5edac764da33972634453b46, type: 3}
@@ -65833,11 +65855,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 7
     _isActive: 1
   setTags: []
+  _description: 
   hasFixDetector: 0
   detector: {fileID: 0}
   switchLinkedObject: {fileID: 0}

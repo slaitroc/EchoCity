@@ -3,15 +3,18 @@ using UnityEngine;
 namespace EchoCity
 {
     [RequireComponent(typeof(Collider))]
-    public class InteractionArea : MonoBehaviour
+    public class InteractionArea : MonoBehaviour, IEventSender
     {
-        private string _LOG_TAG = "INTERACTABLE RANGE";
-        private string _LOG_COLOR = "#3399ffff";
-
         [Header("Invoking Events")]
         [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
         [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
         [SerializeField] private AreaInteractable interactable;
+
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => false;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Interactable };
+
 
 #pragma warning disable CS0414
         #region Debug Fields
@@ -33,7 +36,7 @@ namespace EchoCity
             if (!other.CompareTag("Player")) return;
             isPlayerInRange = true;
             interactable.OnEnteringRangeArea(other);
-            enterInteractableAreaEvent?.RaiseEvent(interactable);
+            enterInteractableAreaEvent?.RaiseEvent(this, interactable);
 
             //Log.D($"Player entered interactable range", _LOG_COLOR, _LOG_TAG);
         }
@@ -43,7 +46,7 @@ namespace EchoCity
             if (!other.CompareTag("Player")) return;
             isPlayerInRange = false;
             interactable.OnExitingRangeArea(other);
-            exitInteractableAreaEvent?.RaiseEvent(interactable);
+            exitInteractableAreaEvent?.RaiseEvent(this, interactable);
             //Log.D($"Player exited interactable range", _LOG_COLOR, _LOG_TAG);
         }
 

@@ -31,15 +31,19 @@ namespace EchoCity
         }
     }
 
-    public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem
+    public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem, IEventSender
     {
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOIntEvent itemDroppedEvent;
+        [SerializeField] private SOIntEvent dropItemEvent;
         [SerializeField] private SOEventVoid deathEvent;
         [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
 
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => false;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
@@ -83,6 +87,7 @@ namespace EchoCity
         public float CurrentAttraction => attractionTarget != null ? attractionTarget.AttractionData.CurrentAttraction : _A;
         public PerceivedSound LastPerceivedSound { get => lastPS; set => lastPS = value; }
 
+
         void OnEnable()
         {
             if (itemEquippedEvent)
@@ -111,7 +116,7 @@ namespace EchoCity
         }
         void Start()
         {
-            _audioContext = new AudioContext(newAudioSphereEvent);
+            _audioContext = new AudioContext(this, newAudioSphereEvent);
 
             currentHealth = maxHealth;
             _lastTimeDamaged = float.NegativeInfinity;
@@ -153,7 +158,7 @@ namespace EchoCity
             EchoCitySound.PlayInAudioSource(fullInventorySound.AudioClip, fullInventorySound.Volume, _playerAudioSource, EchoCitySound.MixerGroupEnum.SFX);
         }
 
-        public void EquipItemHandler(int index, PickableData data, GameObject prefab)
+        public void EquipItemHandler(IEventSender sender, int index, PickableData data, GameObject prefab)
         {
             Log.DLazy(() => "Equipping item", this);
             equippedItem = new EquippedItem(index, data, prefab);
@@ -170,7 +175,7 @@ namespace EchoCity
             if (currentHealth <= 0)
             {
                 Log.W("YOU DIED", "-", "red");
-                deathEvent?.RaiseEvent();
+                deathEvent?.RaiseEvent(this);
             }
         }
 
@@ -181,7 +186,7 @@ namespace EchoCity
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
                     PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, MixerGroupEnum.SFX);
-                    playerEmittedSoundEvent?.RaiseEvent(transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
+                    playerEmittedSoundEvent?.RaiseEvent(this, transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }
                 else if (equippedItem.Data.PickableType == PickableType.Tool)
@@ -209,9 +214,9 @@ namespace EchoCity
             {
                 Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
             }
-            materialToggleEvent?.RaiseEvent();
-            materialToggleEvent?.RaiseEvent();
-            itemDroppedEvent?.RaiseEvent(equippedItem.Index);
+            materialToggleEvent?.RaiseEvent(this);
+            materialToggleEvent?.RaiseEvent(this);
+            dropItemEvent?.RaiseEvent(this, equippedItem.Index);
             equippedItem = null;
         }
 
@@ -262,7 +267,7 @@ namespace EchoCity
             _A = Mathf.Clamp(value, 0f, sampleEnemy.AtMAX);
         }
 
-        public void PerceivedSoundHandler(SoundEmissionData sound)
+        public void PerceivedSoundHandler(IEventSender sender, SoundEmissionData sound)
         {
             if (sound.SoundClass.IsEnemy == true) return; // ignore enemy sounds
             if (sound.IsEnvironmental == true) return; // ignore environmental sounds
@@ -278,7 +283,7 @@ namespace EchoCity
 
         }
 
-        private void UpdateActiveAttractionTargets(IAttraction attraction, Transform transform, bool isAboveThreshold)
+        private void UpdateActiveAttractionTargets(IEventSender sender, IAttraction attraction, Transform transform, bool isAboveThreshold)
         {
             if (isAboveThreshold)
             {
@@ -295,11 +300,12 @@ namespace EchoCity
             {
                 for (int i = 0; i < _attractionTargets.Length; i++)
                 {
-                    if (_attractionTargets[i].Transform == transform)
-                    {
-                        _attractionTargets[i] = null;
-                        break;
-                    }
+                    if (_attractionTargets[i] != null)
+                        if (_attractionTargets[i].Transform == transform)
+                        {
+                            _attractionTargets[i] = null;
+                            break;
+                        }
                 }
             }
         }
