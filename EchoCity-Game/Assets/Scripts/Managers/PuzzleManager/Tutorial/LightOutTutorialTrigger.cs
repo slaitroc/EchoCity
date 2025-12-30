@@ -19,11 +19,11 @@ public class LightOutTutorialTrigger : TutorialTrigger
                 light.SetActive(false);
             }
         }
-        checkTagsEvent?.RaiseEvent(checkTags);
-        wearEcholocatorEvent?.RaiseEvent();
+        checkTagsEvent?.RaiseEvent(this, checkTags);
+        wearEcholocatorEvent?.RaiseEvent(this);
         EchoCitySound.PlayAtPosition(audioClips[0], _audioPositions[0].position, 1f, EchoCitySound.MixerGroupEnum.SFX);
         EchoCitySound.PlayAtPosition(audioClips[1], _audioPositions[1].position, 1f, EchoCitySound.MixerGroupEnum.SFX);
-        switchToNarrationStateEvent?.RaiseEvent(new DialogData(tutorialDialogContainer));
+        switchToNarrationStateEvent?.RaiseEvent(this, new DialogData(tutorialDialogContainer));
         gameObject.SetActive(false);
     }
 }

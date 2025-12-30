@@ -11,15 +11,15 @@ namespace EchoCity
         [SerializeField] SODialogDataEvent dialogDataEvent;
         [SerializeField] SOStringColorEvent spawnMessageEvent;
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        public override void InteractionOutcomeHandler(IEventSender sender, bool outcome)
         {
-            base.InteractionOutcomeHandler(outcome);
+            base.InteractionOutcomeHandler(sender, outcome);
             if (_waitForInteractionOutcome)
             {
                 if (outcome)
                 {
-                    spawnMessageEvent?.RaiseEvent("Battery Picked Up!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainer));
+                    spawnMessageEvent?.RaiseEvent(this, "Battery Picked Up!", new Color(1f, 0.5f, 0f, 1f));
+                    dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainer));
                     SetTags(setTags);
                 }
             }

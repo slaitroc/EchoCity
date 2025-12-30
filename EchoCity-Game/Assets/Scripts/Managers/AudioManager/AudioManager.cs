@@ -42,7 +42,7 @@ namespace EchoCity
             Destroy(_audioSourceGO);
         }
 
-        private void StateTransitionHandler(GameStatesEnum currentState, GameStatesEnum newState)
+        private void StateTransitionHandler(IEventSender sender, GameStatesEnum currentState, GameStatesEnum newState)
         {
             if (newState == GameStatesEnum.Playing && !_isPlayingPlayingMusic)
             {

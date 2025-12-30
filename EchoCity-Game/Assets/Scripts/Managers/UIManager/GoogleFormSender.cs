@@ -48,7 +48,7 @@ namespace EchoCity
                 feedbackSubmittedEvent.OnEventRaised -= FeedbackSubmit;
         }
 
-        private void FeedbackSubmit(int rating, string suggestions)
+        private void FeedbackSubmit(IEventSender sender, int rating, string suggestions)
         {
             formData = new GoogleFormData[]
             {

@@ -14,20 +14,20 @@ namespace EchoCity
         [SerializeField] SODialogDataEvent dialogDataEvent;
         [SerializeField] SOStringColorEvent spawnMessageEvent;
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        public override void InteractionOutcomeHandler(IEventSender sender, bool outcome)
         {
             if (_waitForInteractionOutcome)
             {
                 if (outcome)
                 {
-                    spawnMessageEvent?.RaiseEvent("Last door opened!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
-                    switchToWinStateEvent?.RaiseEvent();
+                    spawnMessageEvent?.RaiseEvent(this, "Last door opened!", new Color(1f, 0.5f, 0f, 1f));
+                    dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainerSuccess));
+                    switchToWinStateEvent?.RaiseEvent(this);
                 }
                 else
                 {
-                    spawnMessageEvent?.RaiseEvent("Can not open door yet!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerFail));
+                    spawnMessageEvent?.RaiseEvent(this, "Can not open door yet!", new Color(1f, 0.5f, 0f, 1f));
+                    dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainerFail));
                 }
             }
             _waitForInteractionOutcome = false;

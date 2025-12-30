@@ -16,17 +16,17 @@ namespace EchoCity
 
         protected bool _canBePicked = false;
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        public override void InteractionOutcomeHandler(IEventSender sender, bool outcome)
         {
             if (!_waitForInteractionOutcome) return;
             if (outcome)
             {
                 _canBePicked = true;
-                itemPickedEvent?.RaiseEvent(new PickableData(pickableData), pickableData.PickablePrefab);
+                itemPickedEvent?.RaiseEvent(this, new PickableData(pickableData), pickableData.PickablePrefab);
             }
         }
 
-        public void InventoryHandler(bool canPickUp)
+        public void InventoryHandler(IEventSender sender, bool canPickUp)
         {
             if (canPickUp && _canBePicked)
             {

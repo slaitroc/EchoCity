@@ -33,7 +33,7 @@ namespace EchoCity
             isOpen = !isOpen;
         }
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        public override void InteractionOutcomeHandler(IEventSender sender, bool outcome)
         {
             throw new System.NotImplementedException();
         }

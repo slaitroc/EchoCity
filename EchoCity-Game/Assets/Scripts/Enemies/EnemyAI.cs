@@ -118,6 +118,11 @@ namespace EchoCity
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOIAttractionEvent enemyAttractionEvent;
 
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => false;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Enemy };
+
         [Header("Observed Events")]
         [SerializeField] private SOSoundEmissionDataEvent enemyPerceivedSoundEvent;
 
@@ -178,6 +183,7 @@ namespace EchoCity
         PerceivedSound IConfusionSystem.LastPerceivedSound { get => lastCPS; set => lastCPS = value; }
         bool IConfusionSystem.Compute { get => _confusionCompute; set => _confusionCompute = value; }
         public float CurrentConfusion => _C;
+
         void IConfusionSystem.SetConfusion(float value) => _C = value;
         #endregion
 
@@ -249,7 +255,7 @@ namespace EchoCity
                 lastCPS = new PerceivedSound(Time.time);
         }
 
-        public void PerceivedSoundHandler(SoundEmissionData sound)
+        public void PerceivedSoundHandler(IEventSender sender, SoundEmissionData sound)
         {
             if (sound.SoundClass.IsEnemy == true) return; // ignore enemy sounds
             //NOTE environmental sound could become the source of confusion

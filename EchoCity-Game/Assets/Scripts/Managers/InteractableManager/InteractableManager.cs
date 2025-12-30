@@ -7,13 +7,31 @@ namespace EchoCity
     {
         [SerializeField] private AreaInteractable activeAreaInteractable;
 
-        public void TriggerInteraction()
+        [Header("Observed Events")]
+        [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
+        [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
+        [SerializeField] private SOEventVoid interactEvent;
+
+        void OnEnable()
+        {
+            if (interactEvent) interactEvent.OnEventRaised += TriggerInteraction;
+            if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised += SetActiveInteractable;
+            if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised += SetActiveInteractable;
+        }
+
+        void OnDisable()
+        {
+            if (interactEvent) interactEvent.OnEventRaised -= TriggerInteraction;
+            if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised -= SetActiveInteractable;
+            if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= SetActiveInteractable;
+        }
+        public void TriggerInteraction(IEventSender sender)
         {
             Log.DLazy(() => $"Triggered interaction on {activeAreaInteractable.name}", this);
             activeAreaInteractable?.Interact();
         }
 
-        public void SetActiveInteractable(AreaInteractable interactable)
+        public void SetActiveInteractable(IEventSender sender, AreaInteractable interactable)
         {
             if (interactable == null)
             {

@@ -15,7 +15,7 @@ namespace EchoCity
             linkedInteractable?.Interact();
         }
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        public override void InteractionOutcomeHandler(IEventSender sender, bool outcome)
         {
             _waitForInteractionOutcome = false;
         }

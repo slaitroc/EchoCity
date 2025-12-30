@@ -31,21 +31,23 @@ namespace EchoCity
 
         }
     }
-    public class PuzzleManager : MonoBehaviour
+    public class PuzzleManager : MonoBehaviour, IEventSender
     {
-#pragma warning disable CS0414
-        private const string LOG_TAG = "PUZZLE MANAGER";
-        private const string LOG_COLOR = "#33ff57ff";
-#pragma warning restore CS0414
-
         [Header("Invoking Events")]
         [SerializeField] private SOBoolEvent interactionOutcomeEvent;
+
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => true;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Puzzle };
+
         [Header("Observing Events")]
         [SerializeField] private SOPuzzleTagEnumArrayEvent checkTagsEvent;
         [SerializeField] private SOPuzzleTagEnumArrayEvent setPuzzleTagsEvent;
         [Header("Puzzle Tags")]
         [SerializeField]
         private PuzzleTagState[] activePuzzleTags;
+
 
         void Awake()
         {
@@ -65,12 +67,12 @@ namespace EchoCity
             if (setPuzzleTagsEvent != null) setPuzzleTagsEvent.OnEventRaised += SetTagsHandler;
         }
 
-        private void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck)
+        private void CheckTagsHandler(IEventSender sender, PuzzleTagEnum[] tagsToCheck)
         {
             bool allTagsActive = true;
             if (tagsToCheck == null || tagsToCheck.Length == 0)
             {
-                interactionOutcomeEvent?.RaiseEvent(false);
+                interactionOutcomeEvent?.RaiseEvent(this, false);
                 return;
             }
             foreach (PuzzleTagEnum tag in tagsToCheck)
@@ -85,10 +87,10 @@ namespace EchoCity
                 }
                 if (!allTagsActive) break;
             }
-            interactionOutcomeEvent?.RaiseEvent(allTagsActive);
+            interactionOutcomeEvent?.RaiseEvent(this, allTagsActive);
         }
 
-        private void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
+        private void SetTagsHandler(IEventSender sender, PuzzleTagEnum[] tagsToSet)
         {
             Debug.Assert(activePuzzleTags != null && activePuzzleTags.Length > 0, "Active puzzle tags array is null or empty");
             if (tagsToSet == null || tagsToSet.Length == 0) return;

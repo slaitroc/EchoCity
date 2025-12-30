@@ -6,8 +6,10 @@ namespace EchoCity
     public class AudioContext
     {
         public readonly SOSoundEmissionDataEvent NewAudioSphereEvent;
-        public AudioContext(SOSoundEmissionDataEvent newAudioSphereEvent)
+        public readonly IEventSender Sender;
+        public AudioContext(IEventSender sender, SOSoundEmissionDataEvent newAudioSphereEvent)
         {
+            Sender = sender;
             NewAudioSphereEvent = newAudioSphereEvent;
         }
     }
@@ -48,6 +50,7 @@ namespace EchoCity
         private const string _LOG_TAG = "ECHO CITY SOUND";
         private static AudioMixer _mixer;
         public static AudioMixer Mixer => _mixer;
+
         static EchoCitySound()
         {
             _mixer = Resources.Load<AudioMixer>("EchoCity-AudioMixer");
@@ -83,7 +86,7 @@ namespace EchoCity
             Debug.Assert(soundSource != null && soundSource.AudioClip != null, $"{_LOG_TAG}-PlayAtPosition: soundSource or AudioClip is null.");
             if (soundSource == null || soundSource.AudioClip == null) return;
             PlayAtPosition(soundSource.AudioClip, position, soundSource.Volume, mixerGroup);
-            audioContext.NewAudioSphereEvent?.RaiseEvent(new SoundEmissionData(position, soundSource));
+            audioContext.NewAudioSphereEvent?.RaiseEvent(audioContext.Sender, new SoundEmissionData(position, soundSource));
         }
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace EchoCity
                 {
                     // Fallback to main audio clip if random clips are not available
                     PlayAtPosition(position, soundSource, audioContext, mixerGroup);
-                    audioContext.NewAudioSphereEvent?.RaiseEvent(new SoundEmissionData(position, soundSource));
+                    audioContext.NewAudioSphereEvent?.RaiseEvent(audioContext.Sender, new SoundEmissionData(position, soundSource));
                     return;
                 }
                 else
@@ -110,7 +113,7 @@ namespace EchoCity
             else
             {
                 PlayAtPosition(clip, position, soundSource.Volume, MixerGroupEnum.Master);
-                audioContext.NewAudioSphereEvent?.RaiseEvent(new SoundEmissionData(position, soundSource));
+                audioContext.NewAudioSphereEvent?.RaiseEvent(audioContext.Sender, new SoundEmissionData(position, soundSource));
             }
         }
 
@@ -125,7 +128,7 @@ namespace EchoCity
                 if (soundSource?.AudioClip != null)
                 {
                     // Fallback to main audio clip if random clips are not available
-                    audioContext.NewAudioSphereEvent?.RaiseEvent(new SoundEmissionData(audioSource.transform.position, soundSource));
+                    audioContext.NewAudioSphereEvent?.RaiseEvent(audioContext.Sender, new SoundEmissionData(audioSource.transform.position, soundSource));
                     PlayInAudioSource(soundSource.AudioClip, soundSource.Volume, audioSource, mixerGroup);
                     return;
                 }
@@ -135,7 +138,7 @@ namespace EchoCity
                     return;
                 }
             }
-            audioContext.NewAudioSphereEvent?.RaiseEvent(new SoundEmissionData(audioSource.transform.position, soundSource));
+            audioContext.NewAudioSphereEvent?.RaiseEvent(audioContext.Sender, new SoundEmissionData(audioSource.transform.position, soundSource));
             PlayInAudioSource(clip, soundSource.Volume, audioSource, mixerGroup);
         }
 
@@ -156,7 +159,7 @@ namespace EchoCity
         /// </summary>
         public static void PlayInAudioSource(SOSoundSource soundSource, AudioSource aSource, AudioContext audioContext, MixerGroupEnum mixerGroup = MixerGroupEnum.Master)
         {
-            audioContext.NewAudioSphereEvent?.RaiseEvent(new SoundEmissionData(aSource.transform.position, soundSource));
+            audioContext.NewAudioSphereEvent?.RaiseEvent(audioContext.Sender, new SoundEmissionData(aSource.transform.position, soundSource));
             PlayInAudioSource(soundSource.AudioClip, soundSource.Volume, aSource, mixerGroup);
         }
     }

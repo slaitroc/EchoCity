@@ -7,14 +7,14 @@ namespace EchoCity
         private HudEnum _currentHud;
         public HudGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
         public override GameStatesEnum GetEnum() => GameStatesEnum.Hud;
-        public override void Enter() => _gameManager.EnableUIInputEvent.RaiseEvent();
+        public override void Enter() => _context.EnableUIInputEvent.RaiseEvent(_context);
         public void EnterHud(HudEnum hud)
         {
             Enter();
             switch (hud)
             {
                 case HudEnum.Inventory:
-                    _gameManager.HudMenuEvent.RaiseEvent(HudEnum.Inventory);
+                    _context.HudMenuEvent.RaiseEvent(_context, HudEnum.Inventory);
                     _currentHud = HudEnum.Inventory;
                     break;
                 //TODO other HUDs
@@ -29,7 +29,7 @@ namespace EchoCity
             switch (_currentHud)
             {
                 case HudEnum.Inventory:
-                    _gameManager.HudMenuEvent.RaiseEvent(HudEnum.None);
+                    _context.HudMenuEvent.RaiseEvent(_context, HudEnum.None);
                     break;
                 //TODO other HUDs
                 default:
