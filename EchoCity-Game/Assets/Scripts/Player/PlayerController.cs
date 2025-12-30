@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
@@ -158,21 +159,21 @@ namespace EchoCity
 
         public void EquipItemHandler(int index, PickableData data, GameObject prefab)
         {
-            Log.D($"Equipping item", LOG_COLOR, LOG_TAG);
+            Log.DLazy(() => "Equipping item", this);
             equippedItem = new EquippedItem(index, data, prefab);
             if (prefab == null)
-                Log.E($"EquipItem received null prefab for item '{data.Name}' (index {index})", LOG_COLOR, LOG_TAG);
+                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
 
         }
 
         public void TakeDamage(float damageAmount)
         {
-            Log.D($"Taking {damageAmount} damage.", LOG_COLOR, LOG_TAG);
+            Log.DLazy(() => $"Taking {damageAmount} damage.", this);
             currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
             _lastTimeDamaged = Time.time;
             if (currentHealth <= 0)
             {
-                Log.W("YOU DIED", "red", LOG_TAG);
+                Log.W("YOU DIED", "-", "red");
                 deathEvent?.RaiseEvent();
             }
         }
@@ -183,7 +184,7 @@ namespace EchoCity
             {
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
-                    EchoCitySound.PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, EchoCitySound.MixerGroupEnum.SFX);
+                    PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, MixerGroupEnum.SFX);
                     playerEmittedSoundEvent?.RaiseEvent(transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }
@@ -194,7 +195,7 @@ namespace EchoCity
             }
             else
             {
-                Log.D("No item equipped in the specified slot.", "#39e8d1ff", "PLAYER CONTROLLER");
+                Log.DLazy(() => "No item equipped in the specified slot.", this);
             }
         }
 
@@ -206,7 +207,7 @@ namespace EchoCity
             Vector3 dropPosition = dropPoint != null ? dropPoint.position : transform.position + transform.forward;
             if (equippedItem.Prefab == null)
             {
-                Log.E("Tried to drop an item but equipped prefab is null. Drop cancelled.", "#ff6666ff", "PLAYER CONTROLLER");
+                Log.ELazy(() => "Tried to drop an item but equipped prefab is null. Drop cancelled.", this);
             }
             else
             {
