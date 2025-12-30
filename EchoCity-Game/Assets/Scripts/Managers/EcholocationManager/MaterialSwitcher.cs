@@ -5,6 +5,7 @@ namespace EchoCity
 {
     public static class MaterialSwitcher
     {
+        private class StaticLog { }
         private static Dictionary<Renderer, Material[]> _originalMaterials;
         private static bool _hasStoredMaterials;
 
@@ -32,7 +33,7 @@ namespace EchoCity
 
             if (overrideMaterial == null)
             {
-                Log.ELazy(() => "MaterialUtils.ApplyOverrideMaterial: overrideMaterial is NULL!");
+                Log.ELazy<StaticLog>(() => "overrideMaterial is NULL!");
                 return;
             }
 

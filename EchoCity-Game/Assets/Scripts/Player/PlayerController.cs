@@ -33,10 +33,6 @@ namespace EchoCity
 
     public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem
     {
-
-        private const string LOG_TAG = "PLAYER CONTROLLER";
-        private const string LOG_COLOR = "#39e8d1ff";
-
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
@@ -159,21 +155,21 @@ namespace EchoCity
 
         public void EquipItemHandler(int index, PickableData data, GameObject prefab)
         {
-            Log.DLazy(() => "Equipping item", LOG_TAG, LOG_COLOR);
+            Log.DLazy(() => "Equipping item", this);
             equippedItem = new EquippedItem(index, data, prefab);
             if (prefab == null)
-                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", LOG_COLOR, LOG_TAG);
+                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
 
         }
 
         public void TakeDamage(float damageAmount)
         {
-            Log.DLazy(() => $"Taking {damageAmount} damage.", LOG_TAG, LOG_COLOR);
+            Log.DLazy(() => $"Taking {damageAmount} damage.", this);
             currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
             _lastTimeDamaged = Time.time;
             if (currentHealth <= 0)
             {
-                Log.W("YOU DIED", "red", LOG_TAG);
+                Log.W("YOU DIED", "-", "red");
                 deathEvent?.RaiseEvent();
             }
         }
@@ -195,7 +191,7 @@ namespace EchoCity
             }
             else
             {
-                Log.D("No item equipped in the specified slot.", "#39e8d1ff", "PLAYER CONTROLLER");
+                Log.DLazy(() => "No item equipped in the specified slot.", this);
             }
         }
 
@@ -207,7 +203,7 @@ namespace EchoCity
             Vector3 dropPosition = dropPoint != null ? dropPoint.position : transform.position + transform.forward;
             if (equippedItem.Prefab == null)
             {
-                Log.E("Tried to drop an item but equipped prefab is null. Drop cancelled.", "#ff6666ff", "PLAYER CONTROLLER");
+                Log.ELazy(() => "Tried to drop an item but equipped prefab is null. Drop cancelled.", this);
             }
             else
             {
