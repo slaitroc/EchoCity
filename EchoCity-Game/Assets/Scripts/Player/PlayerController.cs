@@ -37,7 +37,7 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOIntEvent itemDroppedEvent;
+        [SerializeField] private SOIntEvent dropItemEvent;
         [SerializeField] private SOEventVoid deathEvent;
         [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
 
@@ -217,7 +217,7 @@ namespace EchoCity
             }
             materialToggleEvent?.RaiseEvent(this);
             materialToggleEvent?.RaiseEvent(this);
-            itemDroppedEvent?.RaiseEvent(this, equippedItem.Index);
+            dropItemEvent?.RaiseEvent(this, equippedItem.Index);
             equippedItem = null;
         }
 
