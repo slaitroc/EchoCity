@@ -6,18 +6,10 @@ namespace EchoCity
 {
     public class DialogController : MonoBehaviour
     {
-        #region Constants
-        private const string _LOG_TAG = "UI-Dialogs";
-        private const string _LOG_COLOR = "#f0e40fff";
-        #endregion
-
-        #region Serialized Fields
         [Header("UI")]
         [SerializeField] private UIManager uiManager;
         [SerializeField] private UIDocument dialogDocument;
-        #endregion
 
-        #region Private Fields
         private VisualElement _root;
         private Label _speakerLabel;
         private Label _dialogueLabel;
@@ -26,7 +18,6 @@ namespace EchoCity
         private Button[] buttons;
         private DialogData _currentDialogData;
         private int _currentLineIndex = 0;
-        #endregion
 
         private void OnEnable()
         {
@@ -79,7 +70,7 @@ namespace EchoCity
 
         private void AdvanceDialog()
         {
-            Log.DLazy(() => "Advance Dialog", _LOG_TAG, _LOG_COLOR);
+            Log.DLazy(() => "Advance Dialog", this);
             _currentLineIndex++;
 
             if (_currentLineIndex < _currentDialogData.DialogLines.Length) ShowCurrentLine();

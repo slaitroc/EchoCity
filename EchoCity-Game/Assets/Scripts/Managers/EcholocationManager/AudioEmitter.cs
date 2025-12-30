@@ -51,7 +51,7 @@ namespace EchoCity
             AudioClip clipToPlay = GetAudioClip();
             if (!clipToPlay)
             {
-                Log.W("AudioEmitter has no AudioClip to play.");
+                Log.WLazy(() => "No AudioClip to play.", this);
                 return;
             }
             else

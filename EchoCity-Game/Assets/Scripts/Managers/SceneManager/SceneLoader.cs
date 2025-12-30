@@ -7,9 +7,6 @@ namespace EchoCity
 {
     public class SceneLoader : MonoBehaviour
     {
-        private string _LOG_TAG = "SCENE LOADER";
-        private string _LOG_COLOR = "#ed600eff";
-
         [Header("Invoking Events")]
         [SerializeField] private SOEventVoid enterLoadingEvent;
         [SerializeField] private SOEventVoid exitLoadingEvent;
@@ -83,7 +80,7 @@ namespace EchoCity
                 _currentLevelEnum = scene;
                 SceneManager.SetActiveScene(existingScene);
                 yield return StartCoroutine(UnloadOtherLevels(scene));
-                Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, _LOG_TAG, _LOG_COLOR);
+                Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, this);
                 yield break;
             }
 #endif
@@ -104,7 +101,7 @@ namespace EchoCity
                 SceneManager.SetActiveScene(levelScene);
                 _currentLevelEnum = scene;
             }
-            Log.DLazy(() => "Loaded active scene: " + sceneName, _LOG_TAG, _LOG_COLOR);
+            Log.DLazy(() => "Loaded active scene: " + sceneName, this);
         }
 
         public IEnumerator LoadSceneAdditiveNoActive(SceneEnum scene)
@@ -114,7 +111,7 @@ namespace EchoCity
             Scene existingScene = SceneManager.GetSceneByName(sceneName);
             if (existingScene.IsValid() && existingScene.isLoaded)
             {
-                Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_TAG}", $"{_LOG_COLOR}");
+                Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, this);
                 yield break;
             }
 #endif
@@ -124,7 +121,7 @@ namespace EchoCity
                 yield return null;
             }
 
-            Log.DLazy(() => "Loaded non-active scene: " + sceneName, _LOG_TAG, _LOG_COLOR);
+            Log.DLazy(() => "Loaded non-active scene: " + sceneName, this);
         }
 
         public IEnumerator ReloadCurrentLevel()
@@ -158,7 +155,7 @@ namespace EchoCity
                         {
                             yield return null;
                         }
-                        Log.DLazy(() => "Unloaded scene: " + sceneName, _LOG_TAG, _LOG_COLOR);
+                        Log.DLazy(() => "Unloaded scene: " + sceneName, this);
                     }
                 }
             }

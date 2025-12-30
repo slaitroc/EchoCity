@@ -12,8 +12,6 @@ namespace EchoCity
 
     public class EcholocationManager : MonoBehaviour
     {
-        private string _LOG_TAG = "ECHOLOCATION MANAGER";
-        private string _LOG_COLOR = "orange";
         private const int MAX_AUDIO_SPHERES = 64;
 
         [SerializeField] private bool useEcholocationMaterial = true;
@@ -71,12 +69,12 @@ namespace EchoCity
                 if (useEcholocationMaterial && echolocationMaterial != null)
                 {
                     MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
-                    Log.DLazy(() => "Echolocation Material Applied", _LOG_TAG, _LOG_COLOR);
+                    Log.DLazy(() => "Echolocation Material Applied", this);
                 }
                 else
                 {
                     MaterialSwitcher.RestoreOriginalMaterials();
-                    Log.DLazy(() => "Restored Original Materials", _LOG_TAG, _LOG_COLOR);
+                    Log.DLazy(() => "Restored Original Materials", this);
                 }
             }
         }
@@ -165,12 +163,12 @@ namespace EchoCity
             if (useEcholocationMaterial && echolocationMaterial != null)
             {
                 MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
-                Log.DLazy(() => "Switched to Echolocation Material", _LOG_TAG, _LOG_COLOR);
+                Log.DLazy(() => "Switched to Echolocation Material", this);
             }
             else
             {
                 MaterialSwitcher.RestoreOriginalMaterials();
-                Log.DLazy(() => "Restored Original Materials", _LOG_TAG, _LOG_COLOR);
+                Log.DLazy(() => "Restored Original Materials", this);
             }
         }
     }
