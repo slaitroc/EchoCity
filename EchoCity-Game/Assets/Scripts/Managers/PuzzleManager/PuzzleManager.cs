@@ -6,14 +6,15 @@ namespace EchoCity
     public enum PuzzleTagEnum
     {
         //FIRST LEVEL TAGS
-        None = 0,
-        PhonePicked = 1,
-        WalkieTalkiePicked = 2,
-        BunkerDoorKeyPicked = 3,
-        CablePicked = 4,
-        FloppyDiskPicked = 5,
-        CardReaderIsOn = 6,
-        LightsOff = 7
+        NONE,
+        PhonePicked,
+        WalkieTalkiePicked,
+        BunkerDoorKeyPicked,
+        CablePicked,
+        FloppyDiskPicked,
+        CardReaderIsOn,
+        LightingEnabled,
+        MAX
     }
 
     [System.Serializable]
@@ -26,82 +27,69 @@ namespace EchoCity
 
         public PuzzleTagState(PuzzleTagEnum tag, bool isActive)
         {
-            this._tag = tag;
-            this._isActive = isActive;
-
+            _tag = tag;
+            _isActive = isActive;
         }
     }
     public class PuzzleManager : MonoBehaviour
     {
-#pragma warning disable CS0414
-        private const string LOG_TAG = "PUZZLE MANAGER";
-        private const string LOG_COLOR = "#33ff57ff";
-#pragma warning restore CS0414
-
-        [Header("Invoking Events")]
-        [SerializeField] private SOBoolEvent interactionOutcomeEvent;
-        [Header("Observing Events")]
-        [SerializeField] private SOPuzzleTagEnumArrayEvent checkTagsEvent;
-        [SerializeField] private SOPuzzleTagEnumArrayEvent setPuzzleTagsEvent;
         [Header("Puzzle Tags")]
-        [SerializeField]
-        private PuzzleTagState[] activePuzzleTags;
+        [SerializeField] private PuzzleTagState[] puzzleTags;
 
         void Awake()
         {
-            activePuzzleTags = new PuzzleTagState[]{
-                new PuzzleTagState(PuzzleTagEnum.PhonePicked, false),
-                new PuzzleTagState(PuzzleTagEnum.WalkieTalkiePicked, false),
-                new PuzzleTagState(PuzzleTagEnum.BunkerDoorKeyPicked, false),
-                new PuzzleTagState(PuzzleTagEnum.CablePicked, false),
-                new PuzzleTagState(PuzzleTagEnum.FloppyDiskPicked, false),
-                new PuzzleTagState(PuzzleTagEnum.CardReaderIsOn, false),
-                new PuzzleTagState(PuzzleTagEnum.LightsOff, false)
-            };
-        }
-        void OnEnable()
-        {
-            if (checkTagsEvent != null) checkTagsEvent.OnEventRaised += CheckTagsHandler;
-            if (setPuzzleTagsEvent != null) setPuzzleTagsEvent.OnEventRaised += SetTagsHandler;
+            puzzleTags = new PuzzleTagState[(int)PuzzleTagEnum.MAX];
+            InitializeTags();
+            Debug.Assert(puzzleTags != null && puzzleTags.Length > 0, "Active puzzle tags array is null or empty");
         }
 
-        private void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck)
+        public bool TryUpdateTagsHandler(PuzzleTagState[] tagsToCheck, PuzzleTagState[] tagsToSet)
         {
-            bool allTagsActive = true;
+            bool outcome = CheckTags(tagsToCheck);
+            if (outcome)
+                SetTags(tagsToSet);
+            return outcome;
+        }
+
+        private void InitializeTags()
+        {
+            // Initialize all tags to inactive
+            for (int i = 0; i < puzzleTags.Length; i++)
+                puzzleTags[i] = new PuzzleTagState((PuzzleTagEnum)i, false);
+
+            // Set specific tags to active at the start
+            puzzleTags[(int)PuzzleTagEnum.LightingEnabled].IsActive = true;
+        }
+
+        // if tagsToCheck is null or empty, return false
+        // the NONE tag is used as a terminator, so if encountered, the check stops there
+        // return true only if all tags in tagsToCheck match the current puzzleTags state
+        private bool CheckTags(PuzzleTagState[] tagsToCheck)
+        {
             if (tagsToCheck == null || tagsToCheck.Length == 0)
+                return false;
+
+            bool allTagsActive = true;
+            for (int i = 0; i < tagsToCheck.Length; i++)
             {
-                interactionOutcomeEvent?.RaiseEvent(false);
-                return;
-            }
-            foreach (PuzzleTagEnum tag in tagsToCheck)
-            {
-                foreach (PuzzleTagState activeTag in activePuzzleTags)
+                if (tagsToCheck[i].Tag == PuzzleTagEnum.NONE)
+                    break;
+                if (puzzleTags[(int)tagsToCheck[i].Tag].IsActive != tagsToCheck[i].IsActive)
                 {
-                    if (tag == activeTag.Tag && !activeTag.IsActive)
-                    {
-                        allTagsActive = false;
-                        break;
-                    }
+                    allTagsActive = false;
+                    break;
                 }
-                if (!allTagsActive) break;
             }
-            interactionOutcomeEvent?.RaiseEvent(allTagsActive);
+            return allTagsActive;
         }
 
-        private void SetTagsHandler(PuzzleTagEnum[] tagsToSet)
+        private void SetTags(PuzzleTagState[] tagsToSet)
         {
-            Debug.Assert(activePuzzleTags != null && activePuzzleTags.Length > 0, "Active puzzle tags array is null or empty");
             if (tagsToSet == null || tagsToSet.Length == 0) return;
-            foreach (PuzzleTagEnum tag in tagsToSet)
+            for (int i = 0; i < tagsToSet.Length; i++)
             {
-                for (int i = 0; i < activePuzzleTags.Length; i++)
-                {
-                    if (tag == activePuzzleTags[i].Tag)
-                    {
-                        activePuzzleTags[i].IsActive = true;
-                        break;
-                    }
-                }
+                if (tagsToSet[i].Tag == PuzzleTagEnum.NONE) return;
+                puzzleTags[(int)tagsToSet[i].Tag].IsActive = tagsToSet[i].IsActive;
             }
         }
 
