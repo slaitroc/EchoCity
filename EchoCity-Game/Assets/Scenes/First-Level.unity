@@ -38305,6 +38305,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 050000000300000002000000
   setTags: 00000000
+  _description: 
   switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
   dialogContainerSuccess: {fileID: 11400000, guid: 497d0dcff38e244fbbc4da4c7828f067, type: 2}
   dialogContainerFail: {fileID: 11400000, guid: b564213884a29483a8dc86a9bfe98fad, type: 2}
@@ -42376,6 +42377,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   soundSource: {fileID: 11400000, guid: 815bf1836564bec4b8f9e5e8963b1865, type: 2}
+  emitOnStart: 1
+  gapBetweenSounds: 0
 --- !u!82 &1539462846
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61920,6 +61923,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   soundSource: {fileID: 11400000, guid: b764989168d9473418a05fba947022df, type: 2}
+  emitOnStart: 1
+  gapBetweenSounds: 0
 --- !u!65 &286153778085949031
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -62215,6 +62220,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 0}
   checkTags: 
   setTags: 
+  _description: 
   hasFixDetector: 1
   detector: {fileID: 3312011534037541223}
   doorAnimator: {fileID: 0}
@@ -62474,6 +62480,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   soundSource: {fileID: 11400000, guid: 553e8324492489f40b78d5fcddcb4254, type: 2}
+  emitOnStart: 1
+  gapBetweenSounds: 0
 --- !u!4 &1322470773750439094
 Transform:
   m_ObjectHideFlags: 0
@@ -62606,6 +62614,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 00000000
   setTags: 03000000
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -62975,6 +62984,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 00000000
   setTags: 02000000
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -63000,6 +63010,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 00000000
   setTags: 
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -63075,6 +63086,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 0}
   checkTags: 
   setTags: 
+  _description: 
   linkedInteractable: {fileID: 653042473285973397}
 --- !u!23 &3317158660876436629
 MeshRenderer:
@@ -63540,6 +63552,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 00000000
   setTags: 
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -64160,7 +64173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &4751633018157295732
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -64337,6 +64350,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 00000000
   setTags: 
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -65061,6 +65075,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 00000000
   setTags: 04000000
+  _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -65152,6 +65167,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 04000000
   setTags: 06000000
+  _description: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
   cardPrefab: {fileID: 2224368390549605647, guid: f16ddeba5edac764da33972634453b46, type: 3}
@@ -65786,6 +65802,7 @@ MonoBehaviour:
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   checkTags: 07000000
   setTags: 
+  _description: This is a simple light switch...
   hasFixDetector: 0
   detector: {fileID: 0}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
