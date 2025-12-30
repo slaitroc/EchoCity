@@ -139,7 +139,7 @@ namespace EchoCity
             var origin = Camera.main.transform.position;
             var direction = Camera.main.transform.forward;
             Ray ray = new Ray(origin, direction);
-            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
+            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, (1 << 6) | (1 << 8), QueryTriggerInteraction.Collide);
             var description = hitInfo.collider?.GetComponent<IHasDescription>();
             if (description != null)
             {
