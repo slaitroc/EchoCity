@@ -4,11 +4,6 @@ namespace EchoCity
 {
     public class EndDoorInteractable : Interactable
     {
-        #region Constants
-        protected override string _LOG_TAG => "CARD_READER";
-        protected override string _TYPE_LOG_TAG => "GENERAL";
-        #endregion
-
         [Header("End Game Event")]
         [SerializeField] SOEventVoid switchToWinStateEvent;
 

@@ -1,17 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
     [RequireComponent(typeof(Collider))]
     public abstract class Pickable : Interactable
     {
-        protected override string _TYPE_LOG_TAG => "PICKABLE";
-        protected override string _LOG_TAG => pickableData != null ? pickableData.name : "NO_DATA";
-
         [Header("Invoking Events")]
         [SerializeField] protected SOPickableDataGameObjectEvent itemPickedEvent;
-        [SerializeField] protected SOSoundEmissionDataEvent newAudioSphereEvent;
         [Header("Observing Events")]
         [SerializeField] protected SOBoolEvent canBePickedEvent;
         [Header("Pickable Data")]
@@ -33,7 +30,7 @@ namespace EchoCity
         {
             if (canPickUp && _canBePicked)
             {
-                ECSound.PlayAtPosition(pickableData.PickUpSound, transform.position, newAudioSphereEvent, "SFX");
+                PlayAtPosition(transform.position, pickableData.PickUpSound, _audioContext, MixerGroupEnum.SFX);
                 Destroy(gameObject);
             }
             _canBePicked = false;

@@ -4,7 +4,6 @@ namespace EchoCity
 {
     public abstract class AreaInteractable : Interactable
     {
-        protected override string _TYPE_LOG_TAG => "AREA";
         [SerializeField] protected InteractionArea interactableArea;
         [SerializeField] protected Collider _playerInRange;
         private Collider _rangeCollider;
@@ -12,11 +11,7 @@ namespace EchoCity
         protected override void Awake()
         {
             base.Awake();
-            if (!interactableArea)
-            {
-                Log.E($"No InteractableArea assigned to Interactable on {gameObject.name}", _LOG_COLOR, _LOG_TAG_FULL);
-                return;
-            }
+            Debug.Assert(interactableArea != null, "Interaction Area is not assigned!", this);
             _rangeCollider = interactableArea.GetComponent<Collider>();
             _rangeCollider.isTrigger = true;
         }
