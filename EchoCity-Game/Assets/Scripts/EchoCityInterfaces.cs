@@ -243,6 +243,14 @@ namespace EchoCity
         PerceivedSound LastPerceivedSound { get; }
     }
 
+    public interface IPuzzleManager
+    {
+        //<summary> Checks if the given puzzle tags are active </summary>
+        void CheckTagsHandler(PuzzleTagEnum[] tagsToCheck);
+        //<summary> Sets the given puzzle tags to active </summary>
+        void SetTagsHandler(PuzzleTagEnum[] tagsToSet);
+    }
+
     //INTERACTABLE
     public interface IHasDescription
     {
