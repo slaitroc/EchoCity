@@ -1,75 +1,120 @@
 using System;
 using System.Diagnostics;
+using UnityEngine;
 
 namespace EchoCity
 {
-        public static class Log
+    /// <summary>
+    /// Logging system for EchoCity.
+    /// Uses Static Generic Caching to avoid Dictionary lookups and Reflection overhead at runtime.
+    /// Logs are automatically stripped from non-development builds via Conditional attributes.
+    /// </summary>
+    public static class Log
+    {
+        private enum LogTypeEnum
         {
-                private const string MAIN_TAG = "D_LOG";
-                private const string DEFAULT_COLOR = "orange";
+            Default,
+            Warning,
+            Error
+        }
+        /// <summary>
+        /// Internal cache that stores type-specific metadata.
+        /// Creates a unique static instance of this class for every type T.
+        /// </summary>
+        private static class TypeData<T>
+        {
+            public static readonly string Name = typeof(T).Name;
+            public static readonly string Color = GenerateColorForType(typeof(T));
 
-                // --- LOG DEFAULT (D) ---
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void D(object message) => LogToUnity(message.ToString(), "Log", DEFAULT_COLOR, MAIN_TAG);
+            private static string GenerateColorForType(Type type)
+            {
+                // Generate a deterministic color based on the class name hash
+                int hash = type.Name.GetHashCode();
+                float r = (Mathf.Abs(hash & 0xFF0000) >> 16) / 255f;
+                float g = (Mathf.Abs(hash & 0x00FF00) >> 8) / 255f;
+                float b = Mathf.Abs(hash & 0x0000FF) / 255f;
 
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void D(object message, string contextTag, string customColor = DEFAULT_COLOR)
-                    => LogToUnity(message.ToString(), "Log", customColor, $"{MAIN_TAG}][{contextTag}");
+                // Brighten the color to ensure readability on dark Editor themes
+                Color c = UnityEngine.Color.Lerp(new Color(r, g, b), UnityEngine.Color.white, 0.4f);
+                return "#" + ColorUtility.ToHtmlStringRGB(c);
+            }
+        }
 
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void DLazy(Func<string> messageFactory, string contextTag = null, string customColor = DEFAULT_COLOR)
-                    => LogToUnity(messageFactory(), "Log", customColor, contextTag == null ? MAIN_TAG : $"{MAIN_TAG}][{contextTag}");
+        private const string DEFAULT_COLOR = "#ffffff";
 
-                // --- WARNING (W) ---
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void W(object message) => LogToUnity(message.ToString(), "Warning", DEFAULT_COLOR, "W_" + MAIN_TAG);
+        // --- DEBUG LOGS (D) ---
 
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void W(object message, string contextTag, string customColor = DEFAULT_COLOR)
-                    => LogToUnity(message.ToString(), "Warning", customColor, $"W_{MAIN_TAG}][{contextTag}");
+        /// <summary> Instance-based Lazy Log. Usage: Log.DLazy(() => "message", this); </summary>
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void DLazy<T>(Func<string> messageFactory, T sender) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Default, TypeData<T>.Color, $"{TypeData<T>.Name}");
 
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void WLazy(Func<string> messageFactory, string contextTag = null, string customColor = DEFAULT_COLOR)
-                    => LogToUnity(messageFactory(), "Warning", customColor, contextTag == null ? "W_" + MAIN_TAG : $"W_{MAIN_TAG}][{contextTag}");
+        /// <summary> Static-based Lazy Log. Usage: Log.DLazy<ClassName>(() => "message"); </summary>
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void DLazy<T>(Func<string> messageFactory) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Default, TypeData<T>.Color, $"{TypeData<T>.Name}");
 
-                // --- ERROR (E) ---
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void E(object message) => LogToUnity(message.ToString(), "Error", DEFAULT_COLOR, "E_" + MAIN_TAG);
+        /// <summary> Manual Log with custom tag and color. </summary>
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void D(object message, string contextTag, string customColor = DEFAULT_COLOR) =>
+            LogToUnity(message.ToString(), LogTypeEnum.Default, customColor, $"{contextTag}");
 
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void E(object message, string contextTag, string customColor = DEFAULT_COLOR)
-                    => LogToUnity(message.ToString(), "Error", customColor, $"E_{MAIN_TAG}][{contextTag}");
+        // --- WARNING LOGS (W) ---
 
-                [Conditional("UNITY_EDITOR")]
-                [Conditional("DEVELOPMENT_BUILD")]
-                public static void ELazy(Func<string> messageFactory, string contextTag = null, string customColor = DEFAULT_COLOR)
-                    => LogToUnity(messageFactory(), "Error", customColor, contextTag == null ? "E_" + MAIN_TAG : $"E_{MAIN_TAG}][{contextTag}");
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void WLazy<T>(Func<string> messageFactory, T sender) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Warning, TypeData<T>.Color, $"{TypeData<T>.Name}");
 
-                // --- CORE LOGIC ---
-                private static void LogToUnity(string message, string type, string tagColor, string tagText)
-                {
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void WLazy<T>(Func<string> messageFactory) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Warning, TypeData<T>.Color, $"{TypeData<T>.Name}");
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void W(object message, string contextTag, string customColor = DEFAULT_COLOR) =>
+            LogToUnity(message.ToString(), LogTypeEnum.Warning, customColor, $"{contextTag}");
+
+        // --- ERROR LOGS (E) ---
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void ELazy<T>(Func<string> messageFactory, T sender) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Error, TypeData<T>.Color, $"{TypeData<T>.Name}");
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void ELazy<T>(Func<string> messageFactory) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Error, TypeData<T>.Color, $"{TypeData<T>.Name}");
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void E(object message, string contextTag, string customColor = DEFAULT_COLOR) =>
+            LogToUnity(message.ToString(), LogTypeEnum.Error, customColor, $"{contextTag}");
+
+        // --- INTERNAL CORE LOGIC ---
+
+        /// <summary>
+        /// Routes the formatted message to the appropriate Unity Debug method.
+        /// Rich-text colors are stripped automatically when not in the Unity Editor.
+        /// </summary>
+        private static void LogToUnity(string message, LogTypeEnum type, string tagColor, string tagText)
+        {
 #if UNITY_EDITOR
-                        // Formato: [D_LOG][CONTESTO]-Messaggio (con colori)
-                        string formattedMsg = $"<color={tagColor}>[{tagText}]</color>-{message}";
+            string formattedMsg = $"<color={tagColor}>[{tagText}]</color>-{message}";
 #else
-            // Formato: [D_LOG][CONTESTO]-Messaggio (senza colori per log file)
             string formattedMsg = $"[{tagText}]-{message}";
 #endif
-
-                        switch (type)
-                        {
-                                case "Warning": UnityEngine.Debug.LogWarning(formattedMsg); break;
-                                case "Error": UnityEngine.Debug.LogError(formattedMsg); break;
-                                default: UnityEngine.Debug.Log(formattedMsg); break;
-                        }
-                }
+            switch (type)
+            {
+                case LogTypeEnum.Warning: UnityEngine.Debug.LogWarning(formattedMsg); break;
+                case LogTypeEnum.Error: UnityEngine.Debug.LogError(formattedMsg); break;
+                default: UnityEngine.Debug.Log(formattedMsg); break;
+            }
         }
+    }
 }
