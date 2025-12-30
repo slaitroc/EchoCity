@@ -16,7 +16,7 @@ namespace EchoCity
         [SerializeField] private SOEventVoid switchToPauseStateEvent;
         [SerializeField] private SOEventVoid switchToPlayingStateEvent;
         [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
-        [SerializeField] private SOEventVoid canInteractStartEvent;
+        [SerializeField] private SOBoolStringEvent canInteractStartEvent;
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
         [SerializeField] private SOEventVoid areaInteractionEvent;
@@ -114,13 +114,13 @@ namespace EchoCity
             var origin = Camera.main.transform.position;
             var direction = Camera.main.transform.forward;
             Ray ray = new Ray(origin, direction);
-            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
-            var interactable = hitInfo.collider?.GetComponent<Interactable>();
-            if (interactable != null)
+            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, (1 << 6) | (1 << 8), QueryTriggerInteraction.Collide);
+            var description = hitInfo.collider?.GetComponent<IHasDescription>();
+            if (description != null)
             {
                 if (!_canInteract)
                 {
-                    canInteractStartEvent.RaiseEvent(this);
+                    canInteractStartEvent.RaiseEvent(this, description.isInteractable, description.Description);
                     _canInteract = true;
                 }
             }
@@ -131,6 +131,8 @@ namespace EchoCity
             }
             #endregion
         }
+
+
 
 
         private void OnMove(InputAction.CallbackContext context)

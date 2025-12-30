@@ -28,10 +28,7 @@ namespace EchoCity
 
         void Awake()
         {
-            if (!interactable)
-            {
-                Log.ELazy(() => $"No Interactable assigned to InteractableRange", this);
-            }
+            Debug.Assert(interactable, "No Interactable assigned to InteractableRange on {gameObject.name}", this);
         }
 
         protected virtual void OnTriggerEnter(Collider other)

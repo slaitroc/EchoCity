@@ -20,13 +20,12 @@ namespace StarterAssets
         [Header("ECHO CITY")]
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+        private AudioContext _audioContext;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
         bool IEventSender.IsManager => false;
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
-
-        private AudioContext _audioContext;
 
         [Header("Sound Sources")]
         [Tooltip("Sound played when character lands on ground")]

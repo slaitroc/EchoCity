@@ -10,20 +10,14 @@ namespace EchoCity
         [SerializeField] SODialogDataEvent dialogDataEvent;
         [SerializeField] SOStringColorEvent spawnMessageEvent;
 
-        public override void InteractionOutcomeHandler(IEventSender sender, bool outcome)
+        protected override void ResolveInteraction(bool outcome)
         {
-            base.InteractionOutcomeHandler(sender, outcome);
-            if (_waitForInteractionOutcome)
+            base.ResolveInteraction(outcome);
+            if (outcome)
             {
-                if (outcome)
-                {
-                    spawnMessageEvent?.RaiseEvent(this, "Metal Bar Picked Up!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainer));
-                    SetTags(setTags);
-                }
+                spawnMessageEvent?.RaiseEvent(this, "Metal Bar Picked Up!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainer));
             }
-            _waitForInteractionOutcome = false;
-
         }
     }
 }

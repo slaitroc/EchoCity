@@ -5,7 +5,6 @@ using static EchoCity.EchoCitySound;
 public class DoorInteractable : LinkableInteractable
 {
 
-    #region Private Fields
     [SerializeField] private Animator doorAnimator;
     [SerializeField] private SOSoundSource openSound;
     [SerializeField] private SOSoundSource closeSound;
@@ -31,8 +30,6 @@ public class DoorInteractable : LinkableInteractable
             doorAnimator?.SetBool(_hashIsOpen, _isOpen);
         }
     }
-    #endregion
-
 
     protected override void Awake()
     {
@@ -40,14 +37,13 @@ public class DoorInteractable : LinkableInteractable
         TryGetComponent(out doorAnimator);
     }
 
+    //skips puzzle interaction to just toggle door open/close
     public override void Interact()
     {
         isOpen = !isOpen;
     }
 
 
-    public override void InteractionOutcomeHandler(IEventSender sender, bool outcome)
-    {
-        throw new System.NotImplementedException();
-    }
+    protected override void ResolveInteraction(bool outcome) { }
+
 }

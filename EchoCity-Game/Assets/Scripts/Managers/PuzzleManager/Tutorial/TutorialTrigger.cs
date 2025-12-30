@@ -8,14 +8,10 @@ namespace EchoCity
     {
         [SerializeField] protected SODialogContainer tutorialDialogContainer;
         [SerializeField] protected SODialogDataEvent switchToNarrationStateEvent;
-        [Header("Invoking Events")]
-        [SerializeField] protected SOPuzzleTagEnumArrayEvent checkTagsEvent;
-        [SerializeField] protected SOPuzzleTagEnumArrayEvent setTagsEvent;
-        [Header("Observing Events")]
-        [SerializeField] protected SOBoolEvent interactionOutcomeEvent;
         [Header("Puzzle Tags")]
-        [SerializeField] protected PuzzleTagEnum[] checkTags;
-        [SerializeField] protected PuzzleTagEnum[] setTags;
+        [SerializeField] protected PuzzleManager puzzleManager;
+        [SerializeField] protected PuzzleTagState[] checkTags;
+        [SerializeField] protected PuzzleTagState[] setTags;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -27,27 +23,29 @@ namespace EchoCity
 
         void OnEnable()
         {
-            if (interactionOutcomeEvent != null) interactionOutcomeEvent.OnEventRaised += InteractionOutcomeHandler;
+            if (puzzleManager == null)
+                puzzleManager = GameObject.FindWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
+            Debug.Assert(puzzleManager != null, "PuzzleManager not found in the scene");
         }
-
-        void OnDisable()
+        protected virtual void ResolveInteraction(bool outcome)
         {
-            if (interactionOutcomeEvent != null) interactionOutcomeEvent.OnEventRaised -= InteractionOutcomeHandler;
-        }
-
-        private void InteractionOutcomeHandler(IEventSender sender, bool outcome)
-        {
-            if (!outcome) return;
             if (outcome)
-                setTagsEvent?.RaiseEvent(this, setTags);
+            {
+                switchToNarrationStateEvent?.RaiseEvent(this, new DialogData(tutorialDialogContainer));
+                gameObject.SetActive(false);
+            }
         }
 
         protected virtual void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag("Player")) return;
-            checkTagsEvent?.RaiseEvent(this, checkTags);
-            switchToNarrationStateEvent?.RaiseEvent(this, new DialogData(tutorialDialogContainer));
-            gameObject.SetActive(false);
+            ResolveInteraction(puzzleManager?.TryUpdateTagsHandler(checkTags, setTags) ?? false);
+        }
+
+        void OnValidate()
+        {
+            if (puzzleManager == null)
+                puzzleManager = GameObject.FindWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
         }
     }
 }

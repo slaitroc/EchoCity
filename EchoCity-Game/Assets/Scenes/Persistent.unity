@@ -1045,7 +1045,7 @@ MonoBehaviour:
   enterLoadingScreenEvent: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
   exitLoadingScreenEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
   winMenuEvent: {fileID: 11400000, guid: e0ab9e27c717da84b861c44af9340683, type: 2}
-  canInteractStartEvent: {fileID: 0}
+  canInteractStartEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
   canInteractStopEvent: {fileID: 11400000, guid: 4ed842175d030460d88acc9d8d2a9d0e, type: 2}
   spawnWarningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
@@ -1130,9 +1130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeAreaInteractable: {fileID: 0}
-  enterInteractableAreaEvent: {fileID: 11400000, guid: a6e2482d70ecea44580e52c9eabf4c1b, type: 2}
-  exitInteractableAreaEvent: {fileID: 11400000, guid: 79fb4cf20b90a47459463aa370e09029, type: 2}
-  interactEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
 --- !u!114 &4608607052241992482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1220,7 +1217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a92586c69ee24907a3c7862cafe1dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInteractable: 0
 --- !u!114 &4790034666761535784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1796,9 +1792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18de0253b0ef1534db5be64f269cdb59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  echolocationManager: {fileID: 4608607052241992482}
 --- !u!1 &7432302075135863395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,8 +1840,6 @@ MonoBehaviour:
   reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 01fac51bbd864c94fac86741ad828f5a, type: 2}
   unloadCurrentLevelEvent: {fileID: 11400000, guid: 14e96d97e8c839d4994736cfd8f9c09f, type: 2}
-  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
-  setTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
   interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
   enableUIActionMapEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
   disableUIActionMapEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
@@ -1861,7 +1852,7 @@ MonoBehaviour:
   exitLoadingScreenEvent: {fileID: 11400000, guid: dc0c9f4f1ce5ffa46903455d79b0442a, type: 2}
   dialogMenuEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
   warningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
-  canInteractStartEvent: {fileID: 11400000, guid: 96d2037cf95b248c69bf68e590b210f4, type: 2}
+  canInteractStartEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
   canInteractStopEvent: {fileID: 11400000, guid: 4ed842175d030460d88acc9d8d2a9d0e, type: 2}
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
@@ -1905,7 +1896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  dropItemEvent: {fileID: 0}
+  dropItemEvent: {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
   deathEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
   playerEmittedSoundEvent: {fileID: 11400000, guid: a78e5a5464a5c024ab6288677e1da6da, type: 2}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
@@ -2005,7 +1996,7 @@ MonoBehaviour:
   switchToPauseStateEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
   switchToPlayingStateEvent: {fileID: 11400000, guid: 604eac6c025fec54498946183528062b, type: 2}
   switchToHudStateEvent: {fileID: 11400000, guid: 88306289db0a4814c9bd2906037a8d25, type: 2}
-  canInteractStartEvent: {fileID: 0}
+  canInteractStartEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
   canInteractStopEvent: {fileID: 11400000, guid: 4ed842175d030460d88acc9d8d2a9d0e, type: 2}
   materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
   areaInteractionEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
@@ -2188,10 +2179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8460cd2814f456b4287f66d9f4528181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
-  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
-  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
-  activePuzzleTags: []
+  puzzleTags: []
 --- !u!1 &8792939852616119554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,7 +2295,7 @@ GameObject:
   - component: {fileID: 8714278021380127983}
   m_Layer: 0
   m_Name: Puzzle Manager
-  m_TagString: Untagged
+  m_TagString: PuzzleManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

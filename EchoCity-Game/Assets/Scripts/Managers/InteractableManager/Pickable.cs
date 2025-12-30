@@ -16,9 +16,8 @@ namespace EchoCity
 
         protected bool _canBePicked = false;
 
-        public override void InteractionOutcomeHandler(IEventSender sender, bool outcome)
+        protected override void ResolveInteraction(bool outcome)
         {
-            if (!_waitForInteractionOutcome) return;
             if (outcome)
             {
                 _canBePicked = true;
@@ -36,16 +35,14 @@ namespace EchoCity
             _canBePicked = false;
         }
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             if (canBePickedEvent)
                 canBePickedEvent.OnEventRaised += InventoryHandler;
         }
 
-        protected override void OnDisable()
+        void OnDisable()
         {
-            base.OnDisable();
             if (canBePickedEvent)
                 canBePickedEvent.OnEventRaised -= InventoryHandler;
         }

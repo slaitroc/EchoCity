@@ -158,28 +158,6 @@ namespace EchoCity
         private void OnUnloadCurrentLevel(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Unload Current Level Event Raised", this);
         #endregion
 
-        #region Puzzle Manager
-        [Header("Puzzle Manager")]
-        //Interactables to PuzzleManager
-        [SerializeField] private SOPuzzleTagEnumArrayEvent checkTagsEvent;
-        [SerializeField] private SOPuzzleTagEnumArrayEvent setTagsEvent;
-
-        void RegisterPuzzleManager()
-        {
-            if (checkTagsEvent != null) checkTagsEvent.OnEventRaised += OnCheckTags;
-            if (setTagsEvent != null) setTagsEvent.OnEventRaised += OnSetTags;
-        }
-
-        void UnregisterPuzzleManager()
-        {
-            if (checkTagsEvent != null) checkTagsEvent.OnEventRaised -= OnCheckTags;
-            if (setTagsEvent != null) setTagsEvent.OnEventRaised -= OnSetTags;
-        }
-
-        private void OnCheckTags(IEventSender sender, PuzzleTagEnum[] tags) => Log.DLazy(() => $"{GetColoredName(sender)}: Check Tags Event Raised", this);
-        private void OnSetTags(IEventSender sender, PuzzleTagEnum[] tags) => Log.DLazy(() => $"{GetColoredName(sender)}: Set Tags Event Raised", this);
-        #endregion
-
         #region Interactables
         [Header("Interactables")]
         //PuzzleManager to Interactables
@@ -214,7 +192,7 @@ namespace EchoCity
         [SerializeField] private SODialogDataEvent dialogMenuEvent;
         [SerializeField] private SOStringColorEvent warningEvent;
         //Player to UI
-        [SerializeField] private SOEventVoid canInteractStartEvent;
+        [SerializeField] private SOBoolStringEvent canInteractStartEvent;
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOEventVoid inventoryChangedEvent;
 
@@ -265,7 +243,7 @@ namespace EchoCity
         private void OnExitLoadingScreen(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Exit Loading Screen Event Raised", this);
         private void OnDialogMenu(IEventSender sender, DialogData dialogData) => Log.DLazy(() => $"{GetColoredName(sender)}: Dialog Menu Event Raised", this);
         private void OnWarningEvent(IEventSender sender, string message, Color color) => Log.DLazy(() => $"{GetColoredName(sender)}: Warning Event Raised with Message: {message}, Color: {color}", this);
-        private void OnCanInteractStart(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Can Interact Start Event Raised", this);
+        private void OnCanInteractStart(IEventSender sender, bool canInteract, string description) => Log.DLazy(() => $"{GetColoredName(sender)}: Can Interact Start Event Raised with CanInteract: {canInteract}, Description: {description}", this);
         private void OnCanInteractStop(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Can Interact Stop Event Raised", this);
         private void OnInventoryChanged(IEventSender sender) => Log.DLazy(() => $"{GetColoredName(sender)}: Inventory Changed Event Raised", this);
         #endregion
@@ -400,7 +378,6 @@ namespace EchoCity
             RegisterGM();
             RegisterPlayer();
             RegisterSceneLoader();
-            RegisterPuzzleManager();
             RegisterInteractables();
             RegisterUI();
             RegisterEcholocationAndEnemyAI();
@@ -420,7 +397,6 @@ namespace EchoCity
             UnregisterGM();
             UnregisterPlayer();
             UnregisterSceneLoader();
-            UnregisterPuzzleManager();
             UnregisterInteractables();
             UnregisterUI();
             UnregisterEcholocationAndEnemyAI();

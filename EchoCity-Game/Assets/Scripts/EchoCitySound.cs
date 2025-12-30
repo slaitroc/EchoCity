@@ -50,7 +50,6 @@ namespace EchoCity
         private const string _LOG_TAG = "ECHO CITY SOUND";
         private static AudioMixer _mixer;
         public static AudioMixer Mixer => _mixer;
-
         static EchoCitySound()
         {
             _mixer = Resources.Load<AudioMixer>("EchoCity-AudioMixer");

@@ -33,7 +33,6 @@ namespace EchoCity
 
     public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem, IEventSender
     {
-
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
@@ -301,11 +300,12 @@ namespace EchoCity
             {
                 for (int i = 0; i < _attractionTargets.Length; i++)
                 {
-                    if (_attractionTargets[i].Transform == transform)
-                    {
-                        _attractionTargets[i] = null;
-                        break;
-                    }
+                    if (_attractionTargets[i] != null)
+                        if (_attractionTargets[i].Transform == transform)
+                        {
+                            _attractionTargets[i] = null;
+                            break;
+                        }
                 }
             }
         }
