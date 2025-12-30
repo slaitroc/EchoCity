@@ -2369,6 +2369,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1260807418337842, guid: 78c3f73ed790607479ab45a5f5f0d4e9, type: 3}
   m_PrefabInstance: {fileID: 518124341}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &78007161 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 190230, guid: 63633749430f21a4dac656d0769dc193, type: 3}
+  m_PrefabInstance: {fileID: 2142945400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &79397514 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 434298, guid: 9f9aec8bb90be4e4eb8f51f7731f3555, type: 3}
@@ -15441,6 +15446,42 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 449394, guid: 63633749430f21a4dac656d0769dc193, type: 3}
   m_PrefabInstance: {fileID: 2142945400}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &564105387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78007161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0938eef16cbbf48a59c5d16bdba256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  descriptionText: Very sad that you cannot pick it up
+--- !u!136 &564105388
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78007161}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.13608447
+  m_Height: 1.92
+  m_Direction: 2
+  m_Center: {x: -0.03, y: 0, z: 0.57}
 --- !u!1 &566826305 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 158398, guid: f3da6b63d6a6f394ca0ee54621774ca2, type: 3}
@@ -61591,6 +61632,10 @@ PrefabInstance:
       value: SA_Wep_baseballBat
       objectReference: {fileID: 0}
     - target: {fileID: 190230, guid: 63633749430f21a4dac656d0769dc193, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 190230, guid: 63633749430f21a4dac656d0769dc193, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -61653,7 +61698,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 190230, guid: 63633749430f21a4dac656d0769dc193, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 564105387}
+    - targetCorrespondingSourceObject: {fileID: 190230, guid: 63633749430f21a4dac656d0769dc193, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 564105388}
   m_SourcePrefab: {fileID: 100100000, guid: 63633749430f21a4dac656d0769dc193, type: 3}
 --- !u!4 &56796447711521387
 Transform:
