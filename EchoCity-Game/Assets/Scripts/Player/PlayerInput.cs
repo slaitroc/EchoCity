@@ -140,12 +140,12 @@ namespace EchoCity
             var direction = Camera.main.transform.forward;
             Ray ray = new Ray(origin, direction);
             Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
-            var interactable = hitInfo.collider?.GetComponent<Interactable>();
-            if (interactable != null)
+            var description = hitInfo.collider?.GetComponent<IHasDescription>();
+            if (description != null)
             {
                 if (!_canInteract)
                 {
-                    canInteractStartEvent.RaiseEvent(true, "Test interaction");
+                    canInteractStartEvent.RaiseEvent(description.isInteractable, description.Description);
                     _canInteract = true;
                 }
             }
@@ -156,6 +156,9 @@ namespace EchoCity
             }
             #endregion
         }
+
+
+
 
         private void OnMove(InputAction.CallbackContext context)
         {
