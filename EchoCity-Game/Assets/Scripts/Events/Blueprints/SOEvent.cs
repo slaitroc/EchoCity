@@ -4,9 +4,24 @@ using System;
 
 namespace EchoCity
 {
+    public enum EventSenderCategoriesEnum
+    {
+        None,
+        GameManager,
+        SceneLoader,
+        Interactable,
+        Echolocation,
+        Puzzle,
+        Player,
+        Enemy,
+        UI,
+        Emitter,
+        Utility,
+        Tutorial
+    }
     public class SOEvent<T> : ScriptableObject
     {
-        public event Action<T> OnEventRaised;
-        public void RaiseEvent(T value) => OnEventRaised?.Invoke(value);
+        public event Action<IEventSender, T> OnEventRaised;
+        public void RaiseEvent(IEventSender sender, T value) => OnEventRaised?.Invoke(sender, value);
     }
 }
