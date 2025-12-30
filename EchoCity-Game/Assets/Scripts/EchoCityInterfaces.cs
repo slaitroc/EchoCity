@@ -250,4 +250,13 @@ namespace EchoCity
         //<summary> Sets the given puzzle tags to active </summary>
         void SetTagsHandler(PuzzleTagEnum[] tagsToSet);
     }
+
+    //INTERACTABLE
+    public interface IHasDescription
+    {
+        //<summary> The description of the object </summary>
+        string Description { get; }
+        //<summary> Whether the object is interactable </summary>
+        bool isInteractable { get; }
+    }
 }

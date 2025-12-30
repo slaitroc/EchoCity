@@ -1,7 +1,7 @@
 using EchoCity;
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour, IHasDescription
 {
     [Header("Invoking Events")]
     [SerializeField] protected SOPuzzleTagEnumArrayEvent checkTagsEvent;
@@ -13,8 +13,15 @@ public abstract class Interactable : MonoBehaviour
     [Header("Interactable Settings")]
     [SerializeField] protected PuzzleTagEnum[] checkTags;
     [SerializeField] protected PuzzleTagEnum[] setTags;
+
     protected bool _waitForInteractionOutcome = false;
     protected AudioContext _audioContext;
+
+    [SerializeField] protected string _description;
+    private bool _isInteractable = true;
+
+    public string Description => _description;
+    public bool isInteractable => _isInteractable;
 
     protected virtual void OnEnable()
     {
