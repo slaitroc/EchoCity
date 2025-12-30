@@ -56,7 +56,7 @@ namespace EchoCity
         [SerializeField] private SOEventVoid winMenuEvent;
 
         [Header("Observed Events From Others")]
-        [SerializeField] private SOEventVoid canInteractStartEvent;
+        [SerializeField] private SOBoolStringEvent canInteractStartEvent;
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
@@ -108,8 +108,8 @@ namespace EchoCity
             if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised += CloseLoadingScreenHandler;
             if (winMenuEvent) winMenuEvent.OnEventRaised += OpenWinMenuHandler;
 
-            if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableHandler;
-            if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableHandler;
+            if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableStartHandler;
+            if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableStopHandler;
             if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
             if (itemEquippedEvent) itemEquippedEvent.OnEventRaised += ItemEquippedHandler;
             if (dropItemEvent) dropItemEvent.OnEventRaised += DropItemEventHandler;
@@ -226,7 +226,8 @@ namespace EchoCity
         private void OpenLoadingScreenHandler() => _loadingScreen.SetActive(true);
         private void CloseLoadingScreenHandler() => _loadingScreen.SetActive(false);
 
-        private void CrosshairInteractableHandler() => crosshairController.IsInteractable(!crosshairController.isInteractable);
+        private void CrosshairInteractableStartHandler(bool isInteractable, string text) => crosshairController.IsInteractable(true, isInteractable, text);
+        private void CrosshairInteractableStopHandler() => crosshairController.IsInteractable(false);
         private void SpawnWarningHandler(string warningText, Color color) => warningController.SpawnWarning(warningText, color);
 
         private void ItemEquippedHandler(int index, PickableData pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
@@ -244,8 +245,8 @@ namespace EchoCity
             if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised -= OpenLoadingScreenHandler;
             if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised -= CloseLoadingScreenHandler;
             if (winMenuEvent) winMenuEvent.OnEventRaised -= OpenWinMenuHandler;
-            if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= CrosshairInteractableHandler;
-            if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= CrosshairInteractableHandler;
+            if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= CrosshairInteractableStartHandler;
+            if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= CrosshairInteractableStopHandler;
             if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= SpawnWarningHandler;
             if (itemEquippedEvent) itemEquippedEvent.OnEventRaised -= ItemEquippedHandler;
             if (dropItemEvent) dropItemEvent.OnEventRaised -= DropItemEventHandler;

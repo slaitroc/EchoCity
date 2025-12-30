@@ -242,4 +242,13 @@ namespace EchoCity
         //<summary> The last perceived sound </summary>
         PerceivedSound LastPerceivedSound { get; }
     }
+
+    //INTERACTABLE
+    public interface IHasDescription
+    {
+        //<summary> The description of the object </summary>
+        string Description { get; }
+        //<summary> Whether the object is interactable </summary>
+        bool isInteractable { get; }
+    }
 }

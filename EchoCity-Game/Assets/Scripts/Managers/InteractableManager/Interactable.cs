@@ -1,7 +1,7 @@
 using EchoCity;
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour, IHasDescription
 {
     protected string _INTERACTABLE_LOG_TAG = "INTERACTABLE";
     protected abstract string _TYPE_LOG_TAG { get; }
@@ -19,6 +19,11 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected PuzzleTagEnum[] checkTags;
     [SerializeField] protected PuzzleTagEnum[] setTags;
     protected bool _waitForInteractionOutcome = false;
+    [SerializeField] protected string _description;
+    private bool _isInteractable = true;
+
+    public string Description => _description;
+    public bool isInteractable => _isInteractable;
 
     protected virtual void OnEnable()
     {
