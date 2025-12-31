@@ -10,6 +10,8 @@ namespace EchoCity
             // Register level specific quest event handlers
             _onAddQuest[(int)QuestsEnum.TestOne] = OnAddTestQuest;
             _onCompleteQuest[(int)QuestsEnum.TestOne] = OnTestQuestCompleted;
+            _onAddQuest[(int)QuestsEnum.TestTwo] = OnAddTestQuest;
+            _onCompleteQuest[(int)QuestsEnum.TestTwo] = OnTestQuestCompleted;
         }
 
         private void OnAddTestQuest(SOQuest quest)
@@ -32,6 +34,7 @@ namespace EchoCity
         private void OnTestQuestCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"FirstLevelQuestManager: OnTestQuestCompleted called for quest {quest.name}.", this);
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PhonePicked, false, 0) });
         }
 
     }
