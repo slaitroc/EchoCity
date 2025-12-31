@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using EchoCity;
 
-public class PlayerInventory : MonoBehaviour
+public class PlayerInventory : MonoBehaviour, IEventSender
 {
 
-    private const string LOG_TAG = "PLAYER INVENTORY";
-    private const string LOG_COLOR = "#39e8d1ff";
     [SerializeField] private PlayerController playerController;
     [Header("Invoking Events")]
     [SerializeField] private SOEventVoid inventoryChangedEvent;
     [SerializeField] private SOBoolEvent canBePickedEvent;
 
+    string IEventSender.SenderName => gameObject.name;
+    int IEventSender.SenderID => GetInstanceID();
+    bool IEventSender.IsManager => false;
+    EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
     [Header("Observing Events")]
     [SerializeField] private SOIntEvent dropItemEvent;
@@ -26,16 +28,14 @@ public class PlayerInventory : MonoBehaviour
     public IReadOnlyList<InventoryItem> Items => itemsArray;
     public IReadOnlyList<GameObject> Prefabs => prefabsArray;
 
+
     void Awake()
     {
         if (playerController == null)
         {
             playerController = GetComponentInChildren<PlayerController>();
         }
-        if (playerController == null)
-        {
-            Log.E("PlayerController not found in PlayerInventory", LOG_COLOR, LOG_TAG);
-        }
+        Debug.Assert(playerController != null, "PlayerInventory requires a PlayerController reference.");
 
         itemsArray = new InventoryItem[8];
         prefabsArray = new GameObject[itemsArray.Length];
@@ -60,7 +60,7 @@ public class PlayerInventory : MonoBehaviour
         if (switchToInitStateEvent) switchToInitStateEvent.OnEventRaised -= Clear;
     }
 
-    public void AddItemHandler(PickableData data, GameObject pickablePrefab)
+    public void AddItemHandler(IEventSender sender, PickableData data, GameObject pickablePrefab)
     {
         // For now it will be non-stacking: each item is a separate entry
         InventoryItem item = new InventoryItem(data);
@@ -75,18 +75,18 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
         }
-        if (added) inventoryChangedEvent?.RaiseEvent();
+        if (added) inventoryChangedEvent?.RaiseEvent(this);
         else playerController.EmitFullInventorySound();
-        canBePickedEvent?.RaiseEvent(added);
+        canBePickedEvent?.RaiseEvent(this, added);
     }
 
-    public void RemoveItemHandler(int itemIndex)
+    public void RemoveItemHandler(IEventSender sender, int itemIndex)
     {
         prefabsArray[itemIndex] = null;
         itemsArray[itemIndex] = null;
     }
 
-    public void Clear(EchoCity.SceneEnum scene)
+    public void Clear(IEventSender sender, EchoCity.SceneEnum scene)
     {
         itemsArray = new InventoryItem[8];
         prefabsArray = new GameObject[itemsArray.Length];
@@ -95,6 +95,6 @@ public class PlayerInventory : MonoBehaviour
             InventoryItem handsItem = new InventoryItem(new PickableData(handsSoundTool));
             itemsArray[0] = handsItem;
         }
-        inventoryChangedEvent?.RaiseEvent();
+        inventoryChangedEvent?.RaiseEvent(this);
     }
 }

@@ -5,15 +5,17 @@ using UnityEngine.SceneManagement;
 
 namespace EchoCity
 {
-    public class SceneLoader : MonoBehaviour
+    public class SceneLoader : MonoBehaviour, IEventSender
     {
-        private string _LOG_TAG = "SCENE LOADER";
-        private string _LOG_COLOR = "#ed600eff";
-
         [Header("Invoking Events")]
         [SerializeField] private SOEventVoid enterLoadingEvent;
         [SerializeField] private SOEventVoid exitLoadingEvent;
         // [SerializeField] private SOEventVoid unloadDoneEvent;
+
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => false;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.SceneLoader };
 
         [Header("Observed Events")]
         [SerializeField] private SOSceneEnumEvent loadLevelEvent;
@@ -35,7 +37,6 @@ namespace EchoCity
 
         private SceneEnum _currentLevelEnum = SceneEnum.None;
 
-
         private void OnEnable()
         {
             if (loadLevelEvent) loadLevelEvent.OnEventRaised += LoadLevelAdditiveHandler;
@@ -52,7 +53,7 @@ namespace EchoCity
             if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised -= PlacePlayerOnSpawn;
         }
 
-        public void PlacePlayerOnSpawn() //BUG
+        public void PlacePlayerOnSpawn(IEventSender sender) //BUG
         {
             if (_player == null)
                 _player = GameObject.FindWithTag("Player");
@@ -67,10 +68,10 @@ namespace EchoCity
                 pc.currentHealth = pc.maxHealth;
             }
         }
-        public void LoadLevelAdditiveHandler(SceneEnum scene) => StartCoroutine(LoadLevelAdditiveWithLoading(scene));
-        public void LoadSceneAdditiveNoActiveHandler(SceneEnum scene) => StartCoroutine(LoadSceneAdditiveNoActiveWithLoading(scene));
-        public void ReloadCurrentLevelHandler() => StartCoroutine(ReloadCurrentLevelWithLoading());
-        public void UnloadCurrentLevelHandler() => StartCoroutine(UnloadCurrentLevelWithLoading());
+        public void LoadLevelAdditiveHandler(IEventSender sender, SceneEnum scene) => StartCoroutine(LoadLevelAdditiveWithLoading(scene));
+        public void LoadSceneAdditiveNoActiveHandler(IEventSender sender, SceneEnum scene) => StartCoroutine(LoadSceneAdditiveNoActiveWithLoading(scene));
+        public void ReloadCurrentLevelHandler(IEventSender sender) => StartCoroutine(ReloadCurrentLevelWithLoading());
+        public void UnloadCurrentLevelHandler(IEventSender sender) => StartCoroutine(UnloadCurrentLevelWithLoading());
 
         public IEnumerator LoadLevelAdditive(SceneEnum scene)
         {
@@ -83,7 +84,7 @@ namespace EchoCity
                 _currentLevelEnum = scene;
                 SceneManager.SetActiveScene(existingScene);
                 yield return StartCoroutine(UnloadOtherLevels(scene));
-                Log.D("Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+                Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, this);
                 yield break;
             }
 #endif
@@ -104,7 +105,7 @@ namespace EchoCity
                 SceneManager.SetActiveScene(levelScene);
                 _currentLevelEnum = scene;
             }
-            Log.D("Loaded active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            Log.DLazy(() => "Loaded active scene: " + sceneName, this);
         }
 
         public IEnumerator LoadSceneAdditiveNoActive(SceneEnum scene)
@@ -114,7 +115,7 @@ namespace EchoCity
             Scene existingScene = SceneManager.GetSceneByName(sceneName);
             if (existingScene.IsValid() && existingScene.isLoaded)
             {
-                Log.D("Scene already loaded in editor, just activated: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+                Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, this);
                 yield break;
             }
 #endif
@@ -124,7 +125,7 @@ namespace EchoCity
                 yield return null;
             }
 
-            Log.D("Loaded non-active scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+            Log.DLazy(() => "Loaded non-active scene: " + sceneName, this);
         }
 
         public IEnumerator ReloadCurrentLevel()
@@ -158,7 +159,7 @@ namespace EchoCity
                         {
                             yield return null;
                         }
-                        Log.D("Unloaded scene: " + sceneName, $"{_LOG_COLOR}", $"{_LOG_TAG}");
+                        Log.DLazy(() => "Unloaded scene: " + sceneName, this);
                     }
                 }
             }
@@ -201,14 +202,14 @@ namespace EchoCity
 
         private IEnumerator StartLoading()
         {
-            enterLoadingEvent?.RaiseEvent();
+            enterLoadingEvent?.RaiseEvent(this);
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
         private IEnumerator StopLoading()
         {
             yield return new WaitForSecondsRealtime(0.5f);
-            exitLoadingEvent?.RaiseEvent();
+            exitLoadingEvent?.RaiseEvent(this);
         }
     }
 }

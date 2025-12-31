@@ -6,7 +6,7 @@ public class FindAssetByGUIDWindow : EditorWindow
 {
     private string guid = "";
 
-    [MenuItem("Tools/Find Asset by GUID %#g")] // Ctrl/Cmd + Shift + G
+    [MenuItem("Tools/EchoCity/Find Asset by GUID %#g")] // Ctrl/Cmd + Shift + G
     public static void OpenWindow()
     {
         GetWindow<FindAssetByGUIDWindow>("Find Asset by GUID");

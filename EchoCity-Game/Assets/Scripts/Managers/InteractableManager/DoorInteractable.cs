@@ -1,13 +1,11 @@
 using EchoCity;
 using UnityEngine;
+using static EchoCity.EchoCitySound;
 
 public class DoorInteractable : LinkableInteractable
 {
-    protected override string _LOG_TAG => "DOOR";
 
-    #region Private Fields
     [SerializeField] private Animator doorAnimator;
-    [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
     [SerializeField] private SOSoundSource openSound;
     [SerializeField] private SOSoundSource closeSound;
     private readonly int _hashIsOpen = Animator.StringToHash("isOpen");
@@ -21,19 +19,17 @@ public class DoorInteractable : LinkableInteractable
             if (doorAnimator.IsInTransition(0)) return;
             if (_isOpen)
             {
-                ECSound.PlayAtPosition(closeSound, transform.position, newAudioSphereEvent, "SFX");
+                PlayAtPosition(transform.position, closeSound, _audioContext, MixerGroupEnum.SFX);
             }
             else
             {
-                ECSound.PlayAtPosition(openSound, transform.position, newAudioSphereEvent, "SFX");
+                PlayAtPosition(transform.position, openSound, _audioContext, MixerGroupEnum.SFX);
             }
 
             _isOpen = value;
             doorAnimator?.SetBool(_hashIsOpen, _isOpen);
         }
     }
-    #endregion
-
 
     protected override void Awake()
     {
@@ -41,14 +37,13 @@ public class DoorInteractable : LinkableInteractable
         TryGetComponent(out doorAnimator);
     }
 
+    //skips puzzle interaction to just toggle door open/close
     public override void Interact()
     {
         isOpen = !isOpen;
     }
 
 
-    public override void InteractionOutcomeHandler(bool outcome)
-    {
-        throw new System.NotImplementedException();
-    }
+    protected override void ResolveInteraction(bool outcome) { }
+
 }

@@ -1,5 +1,6 @@
 using EchoCity;
 using UnityEngine;
+using static EchoCity.EchoCitySound;
 
 public class EnemyFootsteps : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class EnemyFootsteps : MonoBehaviour
 
     [Header("Invoking Events")]
     public SOSoundEmissionDataEvent newAudioSphereEvent;
+    private AudioContext _audioContext;
 
     [Header("Footstep Settings")]
     public GroundFootstep[] groundTypes;
@@ -30,7 +32,7 @@ public class EnemyFootsteps : MonoBehaviour
                 if ((groundTypes[i].layer.value & (1 << hitLayer)) != 0)
                 {
                     SOSoundSource soundSource = groundTypes[i].SoundSource;
-                    ECSound.PlayRandomAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                    PlayRandomAtPosition(transform.position, soundSource, _audioContext, MixerGroupEnum.SFX);
                     return;
                 }
             }

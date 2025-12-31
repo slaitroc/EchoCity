@@ -7,13 +7,9 @@ namespace EchoCity
     [RequireComponent(typeof(UIDocument))]
     public class TitleMenuController : MonoBehaviour
     {
-        private const string _LOG_TAG = "UI-TitleMenu";
-        private const string _LOG_COLOR = "#2600ffff";
-
         [Header("UI")]
         [SerializeField] private UIManager uiManager;
         [SerializeField] private UIDocument titleMenuDocument;
-
 
 #pragma warning disable CS0414
         [Header("Delays")]
@@ -161,7 +157,7 @@ namespace EchoCity
             uiManager.OpenSettingsMenu();
         }
 
-        private void QuitClickHandler() => Log.D("Quit button clicked", _LOG_COLOR, _LOG_TAG);
+        private void QuitClickHandler() => Log.DLazy(() => "Quit button clicked", this);
 
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
@@ -7,21 +8,11 @@ namespace EchoCity
 
     public class WallPanelSwitchInteractable : LinkableInteractable
     {
-        #region Constants
-        protected override string _LOG_TAG => "WALL_PANEL_SWITCH";
-        protected override string _TYPE_LOG_TAG => "GENERAL";
-        #endregion
-
-        #region Serialized Fields
-        [Header("Invoking Events")]
-        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [Header("Wall Panel Switch Settings")]
         [SerializeField] private GameObject switchLinkedObject;
         [SerializeField] private SOSoundSource switchOnSound;
         [SerializeField] private SOSoundSource switchOffSound;
-        #endregion
 
-        #region Private Fields
         [SerializeField] private Animator wallPanelSwitchAnimator;
         private readonly int _hashIsSwitchedOn = Animator.StringToHash("isSwitchedOn");
         [SerializeField] private bool _isSwitchedOn = true;
@@ -33,11 +24,11 @@ namespace EchoCity
                 if (wallPanelSwitchAnimator.IsInTransition(0)) return;
                 if (_isSwitchedOn)
                 {
-                    ECSound.PlayAtPosition(switchOnSound, transform.position, newAudioSphereEvent, "SFX");
+                    PlayAtPosition(transform.position, switchOnSound, _audioContext, MixerGroupEnum.SFX);
                 }
                 else
                 {
-                    ECSound.PlayAtPosition(switchOffSound, transform.position, newAudioSphereEvent, "SFX");
+                    PlayAtPosition(transform.position, switchOffSound, _audioContext, MixerGroupEnum.SFX);
                 }
                 if (switchLinkedObject)
                 {
@@ -48,8 +39,6 @@ namespace EchoCity
             }
         }
 
-        #endregion
-
         protected override void Awake()
         {
             base.Awake();
@@ -58,23 +47,13 @@ namespace EchoCity
             {
                 switchLinkedObject.SetActive(isSwitchedOn);
             }
-            else
-            {
-                Log.W($"No linked object assigned to WallPanelSwitchInteractable on {gameObject.name}", _LOG_COLOR, _LOG_TAG_FULL);
-            }
+            Debug.Assert(switchLinkedObject != null, $"WallPanelSwitchInteractable: No switchLinkedObject assigned on {gameObject.name}.");
         }
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        protected override void ResolveInteraction(bool outcome)
         {
-            if (_waitForInteractionOutcome)
-            {
-                if (!outcome)
-                {
-                    isSwitchedOn = !isSwitchedOn;
-                }
-
-            }
-            _waitForInteractionOutcome = false;
+            if (!outcome)
+                isSwitchedOn = !isSwitchedOn;
         }
     }
 }

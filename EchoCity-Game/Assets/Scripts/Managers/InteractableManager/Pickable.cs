@@ -1,17 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
     [RequireComponent(typeof(Collider))]
     public abstract class Pickable : Interactable
     {
-        protected override string _TYPE_LOG_TAG => "PICKABLE";
-        protected override string _LOG_TAG => pickableData != null ? pickableData.name : "NO_DATA";
-
         [Header("Invoking Events")]
         [SerializeField] protected SOPickableDataGameObjectEvent itemPickedEvent;
-        [SerializeField] protected SOSoundEmissionDataEvent newAudioSphereEvent;
         [Header("Observing Events")]
         [SerializeField] protected SOBoolEvent canBePickedEvent;
         [Header("Pickable Data")]
@@ -19,36 +16,33 @@ namespace EchoCity
 
         protected bool _canBePicked = false;
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        protected override void ResolveInteraction(bool outcome)
         {
-            if (!_waitForInteractionOutcome) return;
             if (outcome)
             {
                 _canBePicked = true;
-                itemPickedEvent?.RaiseEvent(new PickableData(pickableData), pickableData.PickablePrefab);
+                itemPickedEvent?.RaiseEvent(this, new PickableData(pickableData), pickableData.PickablePrefab);
             }
         }
 
-        public void InventoryHandler(bool canPickUp)
+        public void InventoryHandler(IEventSender sender, bool canPickUp)
         {
             if (canPickUp && _canBePicked)
             {
-                ECSound.PlayAtPosition(pickableData.PickUpSound, transform.position, newAudioSphereEvent, "SFX");
+                PlayAtPosition(transform.position, pickableData.PickUpSound, _audioContext, MixerGroupEnum.SFX);
                 Destroy(gameObject);
             }
             _canBePicked = false;
         }
 
-        protected override void OnEnable()
+        protected void OnEnable()
         {
-            base.OnEnable();
             if (canBePickedEvent)
                 canBePickedEvent.OnEventRaised += InventoryHandler;
         }
 
-        protected override void OnDisable()
+        void OnDisable()
         {
-            base.OnDisable();
             if (canBePickedEvent)
                 canBePickedEvent.OnEventRaised -= InventoryHandler;
         }

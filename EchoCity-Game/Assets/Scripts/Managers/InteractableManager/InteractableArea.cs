@@ -3,22 +3,18 @@ using UnityEngine;
 namespace EchoCity
 {
     [RequireComponent(typeof(Collider))]
-    public class InteractionArea : MonoBehaviour
+    public class InteractionArea : MonoBehaviour, IEventSender
     {
-        #region Constants
-        private string _LOG_TAG = "INTERACTABLE RANGE";
-        private string _LOG_COLOR = "#3399ffff";
-        #endregion
-
-        #region Serialized Fields
         [Header("Invoking Events")]
         [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
         [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
         [SerializeField] private AreaInteractable interactable;
-        #endregion
 
-        #region Private Fields
-        #endregion
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => false;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Interactable };
+
 
 #pragma warning disable CS0414
         #region Debug Fields
@@ -32,10 +28,7 @@ namespace EchoCity
 
         void Awake()
         {
-            if (!interactable)
-            {
-                Log.E($"No Interactable assigned to InteractableRange on {gameObject.name}", _LOG_COLOR, _LOG_TAG);
-            }
+            Debug.Assert(interactable, "No Interactable assigned to InteractableRange on {gameObject.name}", this);
         }
 
         protected virtual void OnTriggerEnter(Collider other)
@@ -43,7 +36,7 @@ namespace EchoCity
             if (!other.CompareTag("Player")) return;
             isPlayerInRange = true;
             interactable.OnEnteringRangeArea(other);
-            enterInteractableAreaEvent?.RaiseEvent(interactable);
+            enterInteractableAreaEvent?.RaiseEvent(this, interactable);
 
             //Log.D($"Player entered interactable range", _LOG_COLOR, _LOG_TAG);
         }
@@ -53,7 +46,7 @@ namespace EchoCity
             if (!other.CompareTag("Player")) return;
             isPlayerInRange = false;
             interactable.OnExitingRangeArea(other);
-            exitInteractableAreaEvent?.RaiseEvent(interactable);
+            exitInteractableAreaEvent?.RaiseEvent(this, interactable);
             //Log.D($"Player exited interactable range", _LOG_COLOR, _LOG_TAG);
         }
 

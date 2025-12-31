@@ -1,91 +1,120 @@
 using System;
-using System.Diagnostics; // needed for [Conditional]
+using System.Diagnostics;
+using UnityEngine;
 
-// All calls to methods marked with [Conditional("UNITY_EDITOR")]
-// or [Conditional("DEVELOPMENT_BUILD")] are compiled only if the code
-// is running in the Editor or in a Build marked as "Developer Build".
-// When not in the Unity Editor we avoid Unity rich-text color tags and use plain tags.
-
-public static class Log
+namespace EchoCity
 {
-    private const string TAG = "D_LOG";
-    private const string COLOR_INFO = "orange";
-
-    [Conditional("UNITY_EDITOR")]
-    [Conditional("DEVELOPMENT_BUILD")]
-    public static void D(object message)
+    /// <summary>
+    /// Logging system for EchoCity.
+    /// Uses Static Generic Caching to avoid Dictionary lookups and Reflection overhead at runtime.
+    /// Logs are automatically stripped from non-development builds via Conditional attributes.
+    /// </summary>
+    public static class Log
     {
-#if UNITY_EDITOR
-        UnityEngine.Debug.Log($"<color={COLOR_INFO}>{TAG}</color>-" + message);
-#else
-        UnityEngine.Debug.Log($"{TAG}-{message}");
-#endif
-    }
+        private enum LogTypeEnum
+        {
+            Default,
+            Warning,
+            Error
+        }
+        /// <summary>
+        /// Internal cache that stores type-specific metadata.
+        /// Creates a unique static instance of this class for every type T.
+        /// </summary>
+        private static class TypeData<T>
+        {
+            public static readonly string Name = typeof(T).Name;
+            public static readonly string Color = GenerateColorForType(typeof(T));
 
-    [Conditional("UNITY_EDITOR")]
-    [Conditional("DEVELOPMENT_BUILD")]
-    public static void D(object message, string color, string coloredMessage)
-    {
-#if UNITY_EDITOR
-        UnityEngine.Debug.Log($"<color={COLOR_INFO}>{TAG}</color>-<color={color}>{coloredMessage}</color>:{message}");
-#else
-        UnityEngine.Debug.Log($"{TAG}-{coloredMessage}:{message}");
-#endif
-    }
+            private static string GenerateColorForType(Type type)
+            {
+                // Generate a deterministic color based on the class name hash
+                int hash = type.Name.GetHashCode();
+                float r = (Mathf.Abs(hash & 0xFF0000) >> 16) / 255f;
+                float g = (Mathf.Abs(hash & 0x00FF00) >> 8) / 255f;
+                float b = Mathf.Abs(hash & 0x0000FF) / 255f;
 
-    [Conditional("UNITY_EDITOR")]
-    [Conditional("DEVELOPMENT_BUILD")]
-    public static void W(object message)
-    {
-#if UNITY_EDITOR
-        UnityEngine.Debug.LogWarning($"<color={COLOR_INFO}>W_{TAG}</color>-" + message);
-#else
-        UnityEngine.Debug.LogWarning($"W_{TAG}-{message}");
-#endif
-    }
+                // Brighten the color to ensure readability on dark Editor themes
+                Color c = UnityEngine.Color.Lerp(new Color(r, g, b), UnityEngine.Color.white, 0.4f);
+                return "#" + ColorUtility.ToHtmlStringRGB(c);
+            }
+        }
 
-    [Conditional("UNITY_EDITOR")]
-    [Conditional("DEVELOPMENT_BUILD")]
-    public static void W(object message, string color, string coloredMessage)
-    {
-#if UNITY_EDITOR
-        UnityEngine.Debug.LogWarning($"<color={COLOR_INFO}>W_{TAG}</color>-<color={color}>{coloredMessage}</color>:{message}");
-#else
-        UnityEngine.Debug.LogWarning($"W_{TAG}-{coloredMessage}:{message}");
-#endif
-    }
+        private const string DEFAULT_COLOR = "#ffffff";
 
-    [Conditional("UNITY_EDITOR")]
-    [Conditional("DEVELOPMENT_BUILD")]
-    public static void E(object message)
-    {
-#if UNITY_EDITOR
-        UnityEngine.Debug.LogError($"<color={COLOR_INFO}>E_{TAG}</color>-" + message);
-#else
-        UnityEngine.Debug.LogError($"E_{TAG}-{message}");
-#endif
-    }
+        // --- DEBUG LOGS (D) ---
 
-    [Conditional("UNITY_EDITOR")]
-    [Conditional("DEVELOPMENT_BUILD")]
-    public static void E(object message, string color, string coloredMessage)
-    {
-#if UNITY_EDITOR
-        UnityEngine.Debug.LogError($"<color={COLOR_INFO}>E_{TAG}</color>-<color={color}>{coloredMessage}</color>:{message}");
-#else
-        UnityEngine.Debug.LogError($"E_{TAG}-{coloredMessage}:{message}");
-#endif
-    }
+        /// <summary> Instance-based Lazy Log. Usage: Log.DLazy(() => "message", this); </summary>
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void DLazy<T>(Func<string> messageFactory, T sender) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Default, TypeData<T>.Color, $"{TypeData<T>.Name}");
 
-    // Lazy log: the lambda isn't evaluated at all if logging is disabled
-    [Conditional("UNITY_EDITOR")]
-    [Conditional("DEVELOPMENT_BUILD")]
-    public static void DLazy(Func<string> messageFactory)
-    {
+        /// <summary> Static-based Lazy Log. Usage: Log.DLazy<ClassName>(() => "message"); </summary>
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void DLazy<T>(Func<string> messageFactory) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Default, TypeData<T>.Color, $"{TypeData<T>.Name}");
+
+        /// <summary> Manual Log with custom tag and color. </summary>
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void D(object message, string contextTag, string customColor = DEFAULT_COLOR) =>
+            LogToUnity(message.ToString(), LogTypeEnum.Default, customColor, $"{contextTag}");
+
+        // --- WARNING LOGS (W) ---
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void WLazy<T>(Func<string> messageFactory, T sender) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Warning, TypeData<T>.Color, $"{TypeData<T>.Name}");
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void WLazy<T>(Func<string> messageFactory) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Warning, TypeData<T>.Color, $"{TypeData<T>.Name}");
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void W(object message, string contextTag, string customColor = DEFAULT_COLOR) =>
+            LogToUnity(message.ToString(), LogTypeEnum.Warning, customColor, $"{contextTag}");
+
+        // --- ERROR LOGS (E) ---
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void ELazy<T>(Func<string> messageFactory, T sender) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Error, TypeData<T>.Color, $"{TypeData<T>.Name}");
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void ELazy<T>(Func<string> messageFactory) =>
+            LogToUnity(messageFactory(), LogTypeEnum.Error, TypeData<T>.Color, $"{TypeData<T>.Name}");
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void E(object message, string contextTag, string customColor = DEFAULT_COLOR) =>
+            LogToUnity(message.ToString(), LogTypeEnum.Error, customColor, $"{contextTag}");
+
+        // --- INTERNAL CORE LOGIC ---
+
+        /// <summary>
+        /// Routes the formatted message to the appropriate Unity Debug method.
+        /// Rich-text colors are stripped automatically when not in the Unity Editor.
+        /// </summary>
+        private static void LogToUnity(string message, LogTypeEnum type, string tagColor, string tagText)
+        {
 #if UNITY_EDITOR
-        UnityEngine.Debug.Log($"<color={COLOR_INFO}>{TAG}</color>-" + messageFactory());
+            string formattedMsg = $"<color={tagColor}>[{tagText}]</color>-{message}";
 #else
-        UnityEngine.Debug.Log($"{TAG}-{messageFactory()}");
+            string formattedMsg = $"[{tagText}]-{message}";
 #endif
+            switch (type)
+            {
+                case LogTypeEnum.Warning: UnityEngine.Debug.LogWarning(formattedMsg); break;
+                case LogTypeEnum.Error: UnityEngine.Debug.LogError(formattedMsg); break;
+                default: UnityEngine.Debug.Log(formattedMsg); break;
+            }
+        }
     }
 }

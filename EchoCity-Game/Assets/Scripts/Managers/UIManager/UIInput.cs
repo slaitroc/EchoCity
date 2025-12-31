@@ -59,7 +59,7 @@ namespace EchoCity
             disableUIActionMapEvent.OnEventRaised += DisableUIActionMap;
         }
 
-        private void EnableUIActionMap() => _uiActionMap.Enable();
-        private void DisableUIActionMap() => _uiActionMap.Disable();
+        private void EnableUIActionMap(IEventSender sender) => _uiActionMap.Enable();
+        private void DisableUIActionMap(IEventSender sender) => _uiActionMap.Disable();
     }
 }

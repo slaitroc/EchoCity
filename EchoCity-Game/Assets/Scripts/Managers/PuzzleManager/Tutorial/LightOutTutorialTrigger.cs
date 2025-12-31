@@ -1,5 +1,6 @@
 using EchoCity;
 using UnityEngine;
+using static EchoCity.EchoCitySound;
 
 public class LightOutTutorialTrigger : TutorialTrigger
 {
@@ -8,10 +9,8 @@ public class LightOutTutorialTrigger : TutorialTrigger
     [SerializeField] private GameObject[] _lightsToTurnOff;
     [SerializeField] private SOEventVoid wearEcholocatorEvent;
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void ResolveInteraction(bool outcome)
     {
-        if (!other.CompareTag("Player")) return;
-
         foreach (var light in _lightsToTurnOff)
         {
             if (light != null)
@@ -19,11 +18,9 @@ public class LightOutTutorialTrigger : TutorialTrigger
                 light.SetActive(false);
             }
         }
-        checkTagsEvent?.RaiseEvent(checkTags);
-        wearEcholocatorEvent?.RaiseEvent();
-        ECSound.PlayAtPosition(audioClips[0], _audioPositions[0].position, 1f, "BackgroundMusic");
-        ECSound.PlayAtPosition(audioClips[1], _audioPositions[1].position, 1f, "BackgroundMusic");
-        switchToNarrationStateEvent?.RaiseEvent(new DialogData(tutorialDialogContainer));
-        gameObject.SetActive(false);
+        wearEcholocatorEvent?.RaiseEvent(this);
+        PlayAtPosition(audioClips[0], _audioPositions[0].position, 1f, MixerGroupEnum.SFX);
+        PlayAtPosition(audioClips[1], _audioPositions[1].position, 1f, MixerGroupEnum.SFX);
+        base.ResolveInteraction(outcome);
     }
 }

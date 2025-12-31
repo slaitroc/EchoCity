@@ -4,10 +4,15 @@ using System.Collections.Generic;
 namespace EchoCity
 {
     [RequireComponent(typeof(AudioSource))]
-    public class AudioEmitter : MonoBehaviour
+    public class AudioEmitter : MonoBehaviour, IEventSender
     {
         [Header("Invoking Events")]
         [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
+
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => false;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Emitter };
 
         [Header("Emitter Settings")]
         [SerializeField] private SOSoundSource soundSource;
@@ -17,6 +22,7 @@ namespace EchoCity
         private AudioSource audioSource;
         private float nextAutoEmit;
         private List<AudioClip> _validClips = new List<AudioClip>();
+
 
         void Awake() => RebuildValidClips();
 
@@ -51,7 +57,7 @@ namespace EchoCity
             AudioClip clipToPlay = GetAudioClip();
             if (!clipToPlay)
             {
-                Log.W("AudioEmitter has no AudioClip to play.");
+                Log.WLazy(() => "No AudioClip to play.", this);
                 return;
             }
             else
@@ -62,7 +68,7 @@ namespace EchoCity
                 audioSource.PlayOneShot(clipToPlay);
             }
 
-            newAudioSphereEvent?.RaiseEvent(new SoundEmissionData(transform.position, soundSource));
+            newAudioSphereEvent?.RaiseEvent(this, new SoundEmissionData(transform.position, soundSource));
         }
 
         // If randomAudioClips has valid clips, return one at random; otherwise return the main audioClip

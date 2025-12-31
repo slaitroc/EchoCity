@@ -1,14 +1,10 @@
-using EchoCity;
 using UnityEngine;
 
 namespace EchoCity
 {
-
     [RequireComponent(typeof(Collider))]
     public class InteractableFixDetector : Interactable
     {
-        protected override string _TYPE_LOG_TAG => "";
-        protected override string _LOG_TAG => "FIX DETECTOR";
         [SerializeField] private Interactable linkedInteractable;
 
         public override void Interact()
@@ -17,9 +13,6 @@ namespace EchoCity
             linkedInteractable?.Interact();
         }
 
-        public override void InteractionOutcomeHandler(bool outcome)
-        {
-            _waitForInteractionOutcome = false;
-        }
+        protected override void ResolveInteraction(bool outcome) { }
     }
 }

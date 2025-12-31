@@ -4,14 +4,8 @@ namespace EchoCity
 {
     public class EndDoorInteractable : Interactable
     {
-        #region Constants
-        protected override string _LOG_TAG => "CARD_READER";
-        protected override string _TYPE_LOG_TAG => "GENERAL";
-        #endregion
-
         [Header("End Game Event")]
         [SerializeField] SOEventVoid switchToWinStateEvent;
-
 
         [Header("Messages")]
         [SerializeField] SODialogContainer dialogContainerSuccess;
@@ -19,23 +13,19 @@ namespace EchoCity
         [SerializeField] SODialogDataEvent dialogDataEvent;
         [SerializeField] SOStringColorEvent spawnMessageEvent;
 
-        public override void InteractionOutcomeHandler(bool outcome)
+        protected override void ResolveInteraction(bool outcome)
         {
-            if (_waitForInteractionOutcome)
+            if (outcome)
             {
-                if (outcome)
-                {
-                    spawnMessageEvent?.RaiseEvent("Last door opened!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerSuccess));
-                    switchToWinStateEvent?.RaiseEvent();
-                }
-                else
-                {
-                    spawnMessageEvent?.RaiseEvent("Can not open door yet!", new Color(1f, 0.5f, 0f, 1f));
-                    dialogDataEvent?.RaiseEvent(new DialogData(dialogContainerFail));
-                }
+                spawnMessageEvent?.RaiseEvent(this, "Last door opened!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainerSuccess));
+                switchToWinStateEvent?.RaiseEvent(this);
             }
-            _waitForInteractionOutcome = false;
+            else
+            {
+                spawnMessageEvent?.RaiseEvent(this, "Can not open door yet!", new Color(1f, 0.5f, 0f, 1f));
+                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainerFail));
+            }
         }
     }
 }

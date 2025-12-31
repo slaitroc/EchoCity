@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
@@ -30,19 +31,19 @@ namespace EchoCity
         }
     }
 
-    public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem
+    public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem, IEventSender
     {
-
-        private const string LOG_TAG = "PLAYER CONTROLLER";
-        private const string LOG_COLOR = "#39e8d1ff";
-
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOIntEvent itemDroppedEvent;
+        [SerializeField] private SOIntEvent dropItemEvent;
         [SerializeField] private SOEventVoid deathEvent;
         [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
 
+        public string SenderName => gameObject.name;
+        public int SenderID => GetInstanceID();
+        public bool IsManager => false;
+        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observing Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
@@ -76,6 +77,8 @@ namespace EchoCity
 
         private float _lastTimeDamaged;
 
+        private AudioContext _audioContext;
+
         [Header("Audio")]
         private GameObject _playerToolsAudio;
         private AudioSource _playerAudioSource;
@@ -83,6 +86,7 @@ namespace EchoCity
         public bool Compute { get => _attractionCompute; set => _attractionCompute = value; }
         public float CurrentAttraction => attractionTarget != null ? attractionTarget.AttractionData.CurrentAttraction : _A;
         public PerceivedSound LastPerceivedSound { get => lastPS; set => lastPS = value; }
+
 
         void OnEnable()
         {
@@ -112,6 +116,8 @@ namespace EchoCity
         }
         void Start()
         {
+            _audioContext = new AudioContext(this, newAudioSphereEvent);
+
             currentHealth = maxHealth;
             _lastTimeDamaged = float.NegativeInfinity;
 
@@ -149,27 +155,27 @@ namespace EchoCity
 
         public void EmitFullInventorySound()
         {
-            ECSound.PlayAtPosition(fullInventorySound, transform.position, newAudioSphereEvent, "SFX");
+            EchoCitySound.PlayInAudioSource(fullInventorySound.AudioClip, fullInventorySound.Volume, _playerAudioSource, EchoCitySound.MixerGroupEnum.SFX);
         }
 
-        public void EquipItemHandler(int index, PickableData data, GameObject prefab)
+        public void EquipItemHandler(IEventSender sender, int index, PickableData data, GameObject prefab)
         {
-            Log.D($"Equipping item", LOG_COLOR, LOG_TAG);
+            Log.DLazy(() => "Equipping item", this);
             equippedItem = new EquippedItem(index, data, prefab);
             if (prefab == null)
-                Log.E($"EquipItem received null prefab for item '{data.Name}' (index {index})", LOG_COLOR, LOG_TAG);
+                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
 
         }
 
         public void TakeDamage(float damageAmount)
         {
-            Log.D($"Taking {damageAmount} damage.", LOG_COLOR, LOG_TAG);
+            Log.DLazy(() => $"Taking {damageAmount} damage.", this);
             currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, maxHealth);
             _lastTimeDamaged = Time.time;
             if (currentHealth <= 0)
             {
-                Log.W("YOU DIED", "red", LOG_TAG);
-                deathEvent?.RaiseEvent();
+                Log.W("YOU DIED", "-", "red");
+                deathEvent?.RaiseEvent(this);
             }
         }
 
@@ -179,8 +185,8 @@ namespace EchoCity
             {
                 if (equippedItem.Data.PickableType == PickableType.SoundTool)
                 {
-                    ECSound.PlayRandomInAudioSource(equippedItem.Data.ToolSound, newAudioSphereEvent, "SFX", _playerAudioSource);
-                    playerEmittedSoundEvent?.RaiseEvent(transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
+                    PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, MixerGroupEnum.SFX);
+                    playerEmittedSoundEvent?.RaiseEvent(this, transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }
                 else if (equippedItem.Data.PickableType == PickableType.Tool)
@@ -190,7 +196,7 @@ namespace EchoCity
             }
             else
             {
-                Log.D("No item equipped in the specified slot.", "#39e8d1ff", "PLAYER CONTROLLER");
+                Log.DLazy(() => "No item equipped in the specified slot.", this);
             }
         }
 
@@ -202,15 +208,15 @@ namespace EchoCity
             Vector3 dropPosition = dropPoint != null ? dropPoint.position : transform.position + transform.forward;
             if (equippedItem.Prefab == null)
             {
-                Log.E("Tried to drop an item but equipped prefab is null. Drop cancelled.", "#ff6666ff", "PLAYER CONTROLLER");
+                Log.ELazy(() => "Tried to drop an item but equipped prefab is null. Drop cancelled.", this);
             }
             else
             {
                 Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
             }
-            materialToggleEvent?.RaiseEvent();
-            materialToggleEvent?.RaiseEvent();
-            itemDroppedEvent?.RaiseEvent(equippedItem.Index);
+            materialToggleEvent?.RaiseEvent(this);
+            materialToggleEvent?.RaiseEvent(this);
+            dropItemEvent?.RaiseEvent(this, equippedItem.Index);
             equippedItem = null;
         }
 
@@ -261,7 +267,7 @@ namespace EchoCity
             _A = Mathf.Clamp(value, 0f, sampleEnemy.AtMAX);
         }
 
-        public void PerceivedSoundHandler(SoundEmissionData sound)
+        public void PerceivedSoundHandler(IEventSender sender, SoundEmissionData sound)
         {
             if (sound.SoundClass.IsEnemy == true) return; // ignore enemy sounds
             if (sound.IsEnvironmental == true) return; // ignore environmental sounds
@@ -277,7 +283,7 @@ namespace EchoCity
 
         }
 
-        private void UpdateActiveAttractionTargets(IAttraction attraction, Transform transform, bool isAboveThreshold)
+        private void UpdateActiveAttractionTargets(IEventSender sender, IAttraction attraction, Transform transform, bool isAboveThreshold)
         {
             if (isAboveThreshold)
             {
@@ -294,11 +300,12 @@ namespace EchoCity
             {
                 for (int i = 0; i < _attractionTargets.Length; i++)
                 {
-                    if (_attractionTargets[i].Transform == transform)
-                    {
-                        _attractionTargets[i] = null;
-                        break;
-                    }
+                    if (_attractionTargets[i] != null)
+                        if (_attractionTargets[i].Transform == transform)
+                        {
+                            _attractionTargets[i] = null;
+                            break;
+                        }
                 }
             }
         }

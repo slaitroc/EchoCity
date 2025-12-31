@@ -2,6 +2,7 @@ using EchoCity;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using static EchoCity.EchoCitySound;
 #endif
 
 namespace StarterAssets
@@ -10,7 +11,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
     //[RequireComponent(typeof(PlayerInput))]
 #endif
-    public class EC_FirstPersonController : MonoBehaviour
+    public class EC_FirstPersonController : MonoBehaviour, IEventSender
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -61,6 +62,12 @@ namespace StarterAssets
 
         [Header("Invoking Events")]
         public SOSoundEmissionDataEvent newAudioSphereEvent;
+        private AudioContext _audioContext;
+
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => false;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Sound Sources")]
         [Tooltip("Sound played when character lands on ground")]
@@ -121,6 +128,7 @@ namespace StarterAssets
 
         private void Start()
         {
+            _audioContext = new AudioContext(this, newAudioSphereEvent);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 
@@ -336,7 +344,7 @@ namespace StarterAssets
                     if ((footstepSounds[i].layer.value & (1 << hitLayer)) != 0)
                     {
                         SOSoundSource soundSource = footstepSounds[i].SoundSource;
-                        ECSound.PlayRandomAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                        PlayRandomAtPosition(transform.position, soundSource, _audioContext, MixerGroupEnum.SFX);
                         return;
                     }
                 }
@@ -356,7 +364,7 @@ namespace StarterAssets
                     if ((landingSounds[i].layer.value & (1 << hitLayer)) != 0)
                     {
                         SOSoundSource soundSource = landingSounds[i].SoundSource;
-                        ECSound.PlayAtPosition(soundSource, hit.point, newAudioSphereEvent, "SFX");
+                        PlayAtPosition(transform.position, soundSource, _audioContext, MixerGroupEnum.SFX);
                         return;
                     }
                 }

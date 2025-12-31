@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace EchoCity
 {
-    public class RadialMenuController : MonoBehaviour
+    public class RadialMenuController : MonoBehaviour, IEventSender
     {
         [Header("UI")]
         [SerializeField] private UIDocument hudDocument;
@@ -13,6 +13,11 @@ namespace EchoCity
 
         [Header("Invoking Events")]
         [SerializeField] private SOIntegerPickableDataGameObjectEvent equipItemEvent;
+
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => false;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.UI };
 
 
         #region Private Fields UI
@@ -38,7 +43,6 @@ namespace EchoCity
         private Camera _camera;
         private bool _isOpen;
 #pragma warning restore CS0414
-
         #endregion
 
         private void Awake()
@@ -106,7 +110,7 @@ namespace EchoCity
 
         public void OnDisable()
         {
-            if (_selectedIndex != -1) equipItemEvent.RaiseEvent(_selectedIndex, _selectedItem.Data, _selectedPrefab);
+            if (_selectedIndex != -1) equipItemEvent.RaiseEvent(this, _selectedIndex, _selectedItem.Data, _selectedPrefab);
 
             _isOpen = false;
             _radialRoot.RemoveFromClassList("active");
