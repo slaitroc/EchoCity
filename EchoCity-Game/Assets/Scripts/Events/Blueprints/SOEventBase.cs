@@ -57,6 +57,7 @@ namespace EchoCity
     public class SOEventBase : ScriptableObject
     {
         [SerializeField] private EchoCityEventsEnum eventType = EchoCityEventsEnum.None;
+        public EchoCityEventsEnum EventType => eventType;
 
         void OnValidate()
         {
