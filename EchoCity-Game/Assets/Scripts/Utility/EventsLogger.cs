@@ -38,8 +38,9 @@ namespace EchoCity
                 return (string)storageType.GetField("HexColor").GetValue(null);
             }
         }
-
+#pragma warning disable CS0414
         [TextArea(1, 2)][SerializeField] private string description = "Events are grouped under headers based on where their logic is executed";
+#pragma warning restore CS0414
 
         #region GM
         [Header("GM")]
