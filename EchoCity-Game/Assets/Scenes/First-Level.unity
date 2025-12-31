@@ -61958,6 +61958,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
 --- !u!114 &245479332745480907
 MonoBehaviour:
@@ -62097,6 +62098,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
   audioClips:
   - {fileID: 8300000, guid: f89d9b35269df57458946f04f4720d14, type: 3}
@@ -62477,6 +62479,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
 --- !u!4 &1084530219776944999
 Transform:
@@ -62662,9 +62665,11 @@ MonoBehaviour:
   checkTags:
   - _tag: 3
     _isActive: 0
+    _count: 0
   setTags:
   - _tag: 3
     _isActive: 1
+    _count: 0
   _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -63034,9 +63039,11 @@ MonoBehaviour:
   checkTags:
   - _tag: 2
     _isActive: 0
+    _count: 0
   setTags:
   - _tag: 2
     _isActive: 1
+    _count: 0
   _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -63062,6 +63069,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
   _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
@@ -63603,6 +63611,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
   _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
@@ -64224,7 +64233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!135 &4751633018157295732
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -64401,6 +64410,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
   _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
@@ -64551,6 +64561,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
 --- !u!4 &5685134293285620591
 Transform:
@@ -65126,9 +65137,11 @@ MonoBehaviour:
   checkTags:
   - _tag: 4
     _isActive: 0
+    _count: 0
   setTags:
   - _tag: 4
     _isActive: 1
+    _count: 0
   _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
@@ -65220,11 +65233,14 @@ MonoBehaviour:
   checkTags:
   - _tag: 4
     _isActive: 1
+    _count: 0
   - _tag: 6
     _isActive: 1
+    _count: 0
   setTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   _description: 
   materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
   useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
@@ -65860,6 +65876,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 7
     _isActive: 1
+    _count: 0
   setTags: []
   _description: 
   hasFixDetector: 0
@@ -65869,6 +65886,8 @@ MonoBehaviour:
   switchOffSound: {fileID: 11400000, guid: 84ef589eb69da9049864b213de88a162, type: 2}
   wallPanelSwitchAnimator: {fileID: 1713379282615632658}
   _isSwitchedOn: 1
+  triggeredQuest:
+  - {fileID: 11400000, guid: e2c3490172c7da743a3b452d6c9d7a19, type: 2}
 --- !u!1 &7985190276192349694
 GameObject:
   m_ObjectHideFlags: 0
