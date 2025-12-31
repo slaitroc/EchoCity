@@ -22,7 +22,7 @@ namespace EchoCity
 
         private void Awake()
         {
-            if (questContainer == null) Log.E("Task Container not found");
+            if (questContainer == null) Log.ELazy(() => "Task Container not found", this);
         }
 
         private void OnEnable()

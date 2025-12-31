@@ -4,11 +4,8 @@ using UnityEngine;
 
 namespace EchoCity
 {
-    public class QuestContainer : MonoBehaviour
+    public class QuestContainer : MonoBehaviour, IEventSender
     {
-
-
-
         [Header("Invoking Events")]
         [SerializeField] private SOEventVoid questListChangedEvent;
         [SerializeField] private SOStringEvent questCompletedEvent;
@@ -19,11 +16,15 @@ namespace EchoCity
 
         public IReadOnlyList<QuestEntry> Quests => quests;
 
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => false;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Puzzle };
 
         public void Clear()
         {
             quests.Clear();
-            questListChangedEvent?.RaiseEvent();
+            questListChangedEvent?.RaiseEvent(this);
         }
 
         public void AddOrUpdateTask(string id, string text)
@@ -40,7 +41,7 @@ namespace EchoCity
                 t.Text = text;
             }
 
-            questListChangedEvent?.RaiseEvent();
+            questListChangedEvent?.RaiseEvent(this);
         }
 
         public void CompleteTask(string id)
@@ -54,8 +55,8 @@ namespace EchoCity
             {
                 t.Completed = true;
                 t.PendingRemoval = true;
-                questCompletedEvent?.RaiseEvent(id);
-                questListChangedEvent?.RaiseEvent();
+                questCompletedEvent?.RaiseEvent(this, id);
+                questListChangedEvent?.RaiseEvent(this);
             }
         }
 
@@ -64,7 +65,7 @@ namespace EchoCity
             if (string.IsNullOrWhiteSpace(id)) return;
 
             quests.RemoveAll(x => x.Id == id);
-            questListChangedEvent?.RaiseEvent();
+            questListChangedEvent?.RaiseEvent(this);
         }
 
         public QuestEntry FindTask(string id)
