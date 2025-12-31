@@ -5,10 +5,8 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] protected SOSoundEmissionDataEvent newAudioSphereEvent;
-        [Header("Observing Events")]
-        [SerializeField] protected SOBoolEvent interactionOutcomeEvent;
         [Header("Interactable Settings")]
-        [SerializeField] private PuzzleManager puzzleManager;
+        [SerializeField] protected PuzzleManager puzzleManager;
         [SerializeField] protected PuzzleTagState[] checkTags;
         [SerializeField] protected PuzzleTagState[] setTags;
         protected AudioContext _audioContext;
