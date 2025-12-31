@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestTwoQuest
   m_EditorClassIdentifier: 
   questType: 1
-  quest: 0
+  quest: 1
   description: Test Quest Description
   questCompletedText: Test Quest COMPLETED
   tagsToCheck:
@@ -23,5 +23,4 @@ MonoBehaviour:
   countToComplete: 1
   subscribeToEvents:
   - {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
-  nextQuests:
-  - {fileID: 11400000}
+  nextQuests: []
