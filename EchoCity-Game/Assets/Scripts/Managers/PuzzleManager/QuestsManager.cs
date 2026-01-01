@@ -76,11 +76,17 @@ namespace EchoCity
 
         public void UpdateActiveQuests(IPuzzleManager puzzleManager)
         {
-            for (int i = 0; i < activeQuests.Length; i++)
+            for (int i = 0; i < questProgression.Length; i++)
             {
-                var quest = activeQuests[i];
-                if (quest != null)
+                var code = questProgression[i];
+                if (code != (int)QuestStateEnum.Inactive && code != (int)QuestStateEnum.Completed)
                 {
+                    var quest = activeQuests[i];
+                    if (quest == null)
+                        continue;
+                    if (quest.TagsToCheck == null || quest.TagsToCheck.Length == 0)
+                        continue;
+                    // Check if the quest conditions are met
                     if (puzzleManager.CheckTags(quest.TagsToCheck))
                         CompleteQuest(quest);
                 }
