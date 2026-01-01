@@ -1,0 +1,146 @@
+@startuml sequence-quest-and-puzzle-manager
+skinparam backgroundColor #151b23
+
+skinparam defaultFontName "MesloLGL Nerd Font"
+skinparam defaultFontSize 13
+skinparam titleFontColor #cececeff
+skinparam MaxMessageSize 200
+
+
+skinparam note {
+    BackgroundColor #404040ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam noteTextAlignment center
+
+skinparam sequenceLifeLineBorderColor #cececeff
+
+skinparam arrowColor #cececeff
+skinparam arrowFontColor #cececeff
+
+skinparam sequenceArrow {
+    FontColor #cececeff
+    Color #cececeff
+    Thickness 1
+}
+
+skinparam sequenceGroupFontColor #cececeff
+skinparam sequenceGroupBorderColor #cececeff
+skinparam sequenceGroupHeaderBackgroundColor #cececeff
+skinparam sequenceGroupBackgroundColor #ffffffff
+
+
+skinparam participant {
+    BackgroundColor #202020ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam control {
+    BackgroundColor #4d1841ff
+    BorderColor #f148cdff
+    FontColor #cececeff
+}
+
+title QuestManager & PuzzleManager
+
+participant Interactable
+participant IEventSender as sender
+participant PuzzleManager
+participant QuestManager
+
+
+
+
+QuestManager -> QuestManager : Awake()
+activate QuestManager #4173b6ff
+QuestManager -> QuestManager : initialize quests' add/complete <color:#b329c5ff>methods
+activate QuestManager #4173b6ff
+deactivate QuestManager #4173b6ff
+deactivate QuestManager #4173b6ff
+/ rnote over of QuestManager #404040ff 
+Add methods subscribe to
+relevant events for
+quest progression.
+end note
+
+/ rnote over Interactable #404040ff : ...
+-> Interactable : Interact()
+activate Interactable #4173b6ff
+Interactable -> PuzzleManager : TryUpdateTagsHandler\n(tagsToCheck, tagsToSet)
+activate PuzzleManager #4173b6ff
+PuzzleManager -> PuzzleManager : CheckTags(tagsToCheck)
+activate PuzzleManager #4173b6ff
+deactivate PuzzleManager #4173b6ff
+alt tags check passed
+    PuzzleManager --> Interactable : bool outcome = true
+    PuzzleManager -> PuzzleManager : SetTags(tagsToSet)
+    activate PuzzleManager #4173b6ff
+    PuzzleManager -> QuestManager : UpdateActiveQuests()
+    note right 
+    see UpdateActiveQuests flow below
+    end note
+    activate QuestManager #7300ffff
+    deactivate QuestManager #7300ffff
+    deactivate PuzzleManager #4173b6ff
+else tags check failed
+    PuzzleManager --> Interactable : bool outcome = false
+end
+    deactivate PuzzleManager #4173b6ff
+deactivate PuzzleManager #4173b6ff
+Interactable -> Interactable : ResolveInteraction\n(bool outcome)
+activate Interactable #4173b6ff
+
+/ rnote over of Interactable #404040ff : ...
+Interactable -> PuzzleManager : AddQuest(<color:#00F7FF>SOQuest</color>)
+activate PuzzleManager #4173b6ff
+PuzzleManager -> QuestManager : AddQuest(<color:#00F7FF>SOQuest</color>)
+activate QuestManager #4173b6ff
+QuestManager -> QuestManager : execute quest's\nadd method
+activate QuestManager #b329c5ff
+QuestManager -> QuestManager : subscribe <color:#78cc2fff>quest\n<color:#78cc2fff>handler</color> to events
+activate QuestManager #4173b6ff
+deactivate QuestManager #4173b6ff
+deactivate QuestManager #4173b6ff
+deactivate QuestManager #4173b6ff
+deactivate PuzzleManager #4173b6ff
+deactivate Interactable #4173b6ff
+deactivate Interactable #4173b6ff
+
+sender -> sender : TriggerLogic
+activate sender #4173b6ff
+sender ->> QuestManager : Raise <color : #e74d2fff>SOEventBase 
+deactivate sender #4173b6ff
+QuestManager -> QuestManager : execute\n<color:#78cc2fff>quest handlers
+activate QuestManager #b329c5ff
+
+QuestManager -> PuzzleManager : SetTags(tags)
+activate PuzzleManager #4173b6ff
+PuzzleManager -> QuestManager : UpdateActiveQuests() 
+activate QuestManager #7300ffff
+group #9f9f9f1a <color : #7300ffff> UpdateActiveQuests()
+    loop foreach active quest
+        alt quest conditions met
+            QuestManager -> QuestManager : execute quest's\ncomplete method
+            activate QuestManager #b329c5ff
+            QuestManager -> QuestManager : unsubscribe <color:#78cc2fff>quest\n<color:#78cc2fff>handler</color> from events
+            activate QuestManager #4173b6ff
+            deactivate QuestManager #4173b6ff
+            alt SOQuest.NextQuests not empty
+                loop foreach quest in SOQuest.NextQuests
+                    QuestManager -> QuestManager : AddQuest(<color:#00F7FF>SOQuest</color>)
+                    activate QuestManager #4173b6ff
+                    deactivate QuestManager #4173b6ff
+                end
+            end
+            deactivate QuestManager #b329c5ff
+        end
+    end
+end 
+deactivate QuestManager #7300ffff
+deactivate PuzzleManager #4173b6ff
+deactivate QuestManager #b329c5ff
+
+@enduml
