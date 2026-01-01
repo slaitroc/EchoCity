@@ -8,15 +8,17 @@ namespace EchoCity
         {
             base.Awake();
             // Register level specific quest event handlers
-            _onAddQuest[(int)QuestsEnum.TestOne] = OnAddTestQuest;
-            _onCompleteQuest[(int)QuestsEnum.TestOne] = OnTestQuestCompleted;
-            _onAddQuest[(int)QuestsEnum.TestTwo] = OnAddTestQuest;
-            _onCompleteQuest[(int)QuestsEnum.TestTwo] = OnTestQuestCompleted;
+            _onAddQuest[(int)QuestsEnum.TestOne] = OnTestOneAdded;
+            _onCompleteQuest[(int)QuestsEnum.TestOne] = OnTestOneCompleted;
+
+            _onAddQuest[(int)QuestsEnum.TestTwo] = OnTestTwoAdded;
+            _onCompleteQuest[(int)QuestsEnum.TestTwo] = OnTestTwoCompleted;
         }
 
-        private void OnAddTestQuest(SOQuest quest)
+        //####################################################################
+        private void OnTestOneAdded(SOQuest quest)
         {
-            Log.DLazy(() => $"FirstLevelQuestManager: OnAddTestQuest called for quest {quest.name}.", this);
+            Log.DLazy(() => $"Quest {quest.name} added.", this);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
                 if (eventBase.EventType == EchoCityEventsEnum.DropItem)
@@ -26,16 +28,56 @@ namespace EchoCity
 
         private void TestQuestHandler(IEventSender sender, int value)
         {
-            Log.DLazy(() => $"FirstLevelQuestManager: TestQuestHandler called from sender {sender.SenderName} with value {value}.", this);
+            Log.DLazy(() => $"TestQuestHandler called from sender {sender.SenderName} with value {value}.", this);
+            IncrementQuestProgress(QuestsEnum.TestOne);
+            if (questProgression[(int)QuestsEnum.TestOne] < activeQuests[(int)QuestsEnum.TestOne].CountToComplete)
+                return;
+
             puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PhonePicked, true) });
-            puzzleManager.IncrementTagCount(PuzzleTagEnum.PhonePicked);
         }
 
-        private void OnTestQuestCompleted(SOQuest quest)
+        private void OnTestOneCompleted(SOQuest quest)
         {
-            Log.DLazy(() => $"FirstLevelQuestManager: OnTestQuestCompleted called for quest {quest.name}.", this);
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PhonePicked, false, 0) });
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.DropItem)
+                    ((SOIntEvent)eventBase).OnEventRaised -= TestQuestHandler;
+            }
         }
+
+        //####################################################################
+
+        private void OnTestTwoAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.DropItem)
+                    ((SOIntEvent)eventBase).OnEventRaised += TestTwoQuestHandler;
+            }
+        }
+
+        private void TestTwoQuestHandler(IEventSender sender, int value)
+        {
+            Log.DLazy(() => $"TestTwoQuestHandler called from sender {sender.SenderName} with value {value}.", this);
+            IncrementQuestProgress(QuestsEnum.TestTwo);
+            if (questProgression[(int)QuestsEnum.TestTwo] < activeQuests[(int)QuestsEnum.TestTwo].CountToComplete)
+                return;
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.BunkerDoorKeyPicked, true) });
+        }
+
+        private void OnTestTwoCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.DropItem)
+                    ((SOIntEvent)eventBase).OnEventRaised -= TestTwoQuestHandler;
+            }
+        }
+
+        //####################################################################
 
     }
 }

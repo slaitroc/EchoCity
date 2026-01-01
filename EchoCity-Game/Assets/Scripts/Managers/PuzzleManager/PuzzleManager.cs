@@ -41,11 +41,12 @@ namespace EchoCity
         public bool IsManager => true;
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Puzzle };
 
+
         [Header("Quests Management")]
         [SerializeField] private QuestsManager questManager;
+        public IQuestsManager QuestsManager => questManager;
         [Header("Puzzle Tags")]
         [SerializeField] private PuzzleTagState[] puzzleTags;
-
 
         void Awake()
         {
@@ -61,6 +62,7 @@ namespace EchoCity
                 SetTags(tagsToSet);
             return outcome;
         }
+
         public void AddQuest(SOQuest quest)
         {
             questManager?.AddQuest(quest);
@@ -117,8 +119,6 @@ namespace EchoCity
             }
             questManager?.UpdateActiveQuests(this);
         }
-
-
     }
 
 }

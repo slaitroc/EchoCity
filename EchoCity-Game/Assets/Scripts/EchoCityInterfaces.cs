@@ -271,11 +271,18 @@ namespace EchoCity
 
     public interface IPuzzleManager
     {
+        IQuestsManager QuestsManager { get; }
         //<summary> Adds a quest to the quest manager </summary>
         bool CheckTags(PuzzleTagState[] tagsToCheck);
         //<summary> Sets specific puzzle tags </summary>
         void SetTags(PuzzleTagState[] tagsToSet);
         //<summary> Increments the count of a specific puzzle tag </summary>
         void IncrementTagCount(PuzzleTagEnum tag);
+    }
+
+    public interface IQuestsManager
+    {
+        SOQuest[] ActiveQuests { get; }
+        int[] QuestProgression { get; }
     }
 }
