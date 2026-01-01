@@ -230,6 +230,9 @@ namespace EchoCity
         [SerializeField] private bool logCanInteractStop = true;
         [SerializeField] private SOEventVoid inventoryChangedEvent;
         [SerializeField] private bool logInventoryChanged = true;
+        //QuestManager to UI
+        [SerializeField] private SOIntIntEvent questsUpdatedEvent;
+        [SerializeField] private bool logQuestsUpdated = true;
 
         void RegisterUI()
         {
@@ -247,6 +250,7 @@ namespace EchoCity
             if (canInteractStartEvent != null) canInteractStartEvent.OnEventRaised += OnCanInteractStart;
             if (canInteractStopEvent != null) canInteractStopEvent.OnEventRaised += OnCanInteractStop;
             if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised += OnInventoryChanged;
+            if (questsUpdatedEvent != null) questsUpdatedEvent.OnEventRaised += OnQuestsUpdated;
         }
 
         void UnregisterUI()
@@ -265,6 +269,7 @@ namespace EchoCity
             if (canInteractStartEvent != null) canInteractStartEvent.OnEventRaised -= OnCanInteractStart;
             if (canInteractStopEvent != null) canInteractStopEvent.OnEventRaised -= OnCanInteractStop;
             if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised -= OnInventoryChanged;
+            if (questsUpdatedEvent != null) questsUpdatedEvent.OnEventRaised -= OnQuestsUpdated;
         }
 
         private void OnEnableUIActionMap(IEventSender sender) { if (logEnableUIActionMap) Log.DLazy(() => $"{GetColoredName(sender)}: Enable UI Action Map Event Raised", this); }
@@ -281,6 +286,7 @@ namespace EchoCity
         private void OnCanInteractStart(IEventSender sender, bool canInteract, string description) { if (logCanInteractStart) Log.DLazy(() => $"{GetColoredName(sender)}: Can Interact Start Event Raised with CanInteract: {canInteract}, Description: {description}", this); }
         private void OnCanInteractStop(IEventSender sender) { if (logCanInteractStop) Log.DLazy(() => $"{GetColoredName(sender)}: Can Interact Stop Event Raised", this); }
         private void OnInventoryChanged(IEventSender sender) { if (logInventoryChanged) Log.DLazy(() => $"{GetColoredName(sender)}: Inventory Changed Event Raised", this); }
+        private void OnQuestsUpdated(IEventSender sender, int index, int code) { if (logQuestsUpdated) Log.DLazy(() => $"{GetColoredName(sender)}: Quests Updated Event Raised. Quest's index: {index}, Quest's code: {code}", this); }
         #endregion
 
         #region Echolocation & Enemy AI
