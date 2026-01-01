@@ -36,6 +36,7 @@ namespace EchoCity
         NewAudioSphere,
         PauseMenu,
         PlayerEmittedSound,
+        QuestsUpdated,
         ReloadLevel,
         SetPlayerOnSpawn,
         SwitchLevel,
