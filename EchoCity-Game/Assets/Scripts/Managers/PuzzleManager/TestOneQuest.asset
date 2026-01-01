@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
   m_Name: TestOneQuest
   m_EditorClassIdentifier: 
-  questType: 1
+  questType: 0
   quest: 0
   description: Test Quest Description
   questCompletedText: Test Quest COMPLETED
   tagsToCheck:
   - _tag: 1
     _isActive: 1
-    _count: 1
-  countToComplete: 1
+    _count: 0
+  countToComplete: 2
   subscribeToEvents:
   - {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
   nextQuests:
