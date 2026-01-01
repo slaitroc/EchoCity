@@ -4,6 +4,21 @@ using UnityEngine;
 
 namespace EchoCity
 {
+    public enum EventSenderCategoriesEnum
+    {
+        None,
+        GameManager,
+        SceneLoader,
+        Interactable,
+        Echolocation,
+        Puzzle,
+        Player,
+        Enemy,
+        UI,
+        Emitter,
+        Utility,
+        Tutorial
+    }
     //Name must match exactly with the SOEventBase asset names (without the "Event" suffix)
     public enum EchoCityEventsEnum
     {
