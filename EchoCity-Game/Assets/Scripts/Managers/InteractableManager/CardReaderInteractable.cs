@@ -3,7 +3,7 @@ using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
-    public class CardReaderInteractable : Interactable
+    public class CardReaderInteractable : PlainInteractable
     {
         [Header("Invoking Events")]
         [SerializeField] protected SOEventVoid materialToggleEvent;

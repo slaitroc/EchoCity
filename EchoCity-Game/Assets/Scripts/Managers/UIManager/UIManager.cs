@@ -60,7 +60,7 @@ namespace EchoCity
         [SerializeField] private SOBoolStringEvent canInteractStartEvent;
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
-        [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
+        [SerializeField] private SOEquipItemEvent itemEquippedEvent;
         [SerializeField] private SOIntEvent dropItemEvent;
 
         [Header("External References")]
@@ -231,7 +231,7 @@ namespace EchoCity
         private void CrosshairInteractableStopHandler(IEventSender sender) => crosshairController.IsInteractable(false);
         private void SpawnWarningHandler(IEventSender sender, string warningText, Color color) => warningController.SpawnWarning(warningText, color);
 
-        private void ItemEquippedHandler(IEventSender sender, int index, PickableData pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
+        private void ItemEquippedHandler(IEventSender sender, int index, SOPickable pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
         private void DropItemEventHandler(IEventSender sender, int index) => equippedPanelController.ClearEquipped();
 
 

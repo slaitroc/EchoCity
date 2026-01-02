@@ -21,14 +21,16 @@ namespace EchoCity
             Log.DLazy(() => $"Quest {quest.name} added.", this);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
-                if (eventBase.EventType == EchoCityEventsEnum.DropItem)
-                    ((SOIntEvent)eventBase).OnEventRaised += TestQuestHandler;
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += TestQuestHandler;
             }
         }
 
-        private void TestQuestHandler(IEventSender sender, int value)
+        private void TestQuestHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
         {
-            Log.DLazy(() => $"TestQuestHandler called from sender {sender.SenderName} with value {value}.", this);
+            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.CannedFood)
+                return;
+
             IncrementQuestProgress(QuestsEnum.TestOne);
             if (questProgression[(int)QuestsEnum.TestOne] < activeQuests[(int)QuestsEnum.TestOne].CountToComplete)
                 return;
@@ -41,8 +43,8 @@ namespace EchoCity
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
-                if (eventBase.EventType == EchoCityEventsEnum.DropItem)
-                    ((SOIntEvent)eventBase).OnEventRaised -= TestQuestHandler;
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= TestQuestHandler;
             }
         }
 
@@ -53,7 +55,7 @@ namespace EchoCity
             Log.DLazy(() => $"Quest {quest.name} added.", this);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
-                if (eventBase.EventType == EchoCityEventsEnum.DropItem)
+                if (eventBase.EventType == EchoCityEventsEnum.ItemDropped)
                     ((SOIntEvent)eventBase).OnEventRaised += TestTwoQuestHandler;
             }
         }
@@ -72,7 +74,7 @@ namespace EchoCity
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
-                if (eventBase.EventType == EchoCityEventsEnum.DropItem)
+                if (eventBase.EventType == EchoCityEventsEnum.ItemDropped)
                     ((SOIntEvent)eventBase).OnEventRaised -= TestTwoQuestHandler;
             }
         }

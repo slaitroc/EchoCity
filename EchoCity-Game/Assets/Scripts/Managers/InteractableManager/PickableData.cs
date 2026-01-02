@@ -4,39 +4,36 @@ namespace EchoCity
 {
     public struct PickableData
     {
-        private PickableType pickableType;
-        private string name;
-        private string description;
-        private int maxStackQuantity;
-        private Sprite icon;
-        private SOSoundSource pickUpSound;
-        private SOSoundSource toolSound;
-        private SOSoundSource dropSound;
+        private readonly PickablesEnum _pickableEnum;
+        private readonly PickableTypeEnum _pickableType;
+        private readonly string _name;
+        private readonly string _description;
+        private readonly int _maxStackQuantity;
+        private readonly Sprite _icon;
+        private readonly SOSoundSource _pickUpSound;
+        private readonly SOSoundSource _toolSound;
+        private readonly SOSoundSource _dropSound;
 
-        public PickableType PickableType => pickableType;
-        public string Name => name;
-        public string Description => description;
-        public int MaxStackQuantity => maxStackQuantity;
-        public Sprite Icon => icon;
-        public SOSoundSource PickUpSound => pickUpSound;
-        public SOSoundSource ToolSound => toolSound;
-        public SOSoundSource DropSound => dropSound;
-
+        public readonly PickablesEnum PickableEnum => _pickableEnum;
+        public readonly PickableTypeEnum PickableType => _pickableType;
+        public readonly string Name => _name;
+        public readonly string Description => _description;
+        public readonly int MaxStackQuantity => _maxStackQuantity;
+        public readonly Sprite Icon => _icon;
+        public readonly SOSoundSource PickUpSound => _pickUpSound;
+        public readonly SOSoundSource ToolSound => _toolSound;
+        public readonly SOSoundSource DropSound => _dropSound;
         public PickableData(SOPickable pickableSO)
         {
-            pickableType = pickableSO.PickableType;
-            name = pickableSO.PickableName;
-            description = pickableSO.PickableDescription;
-            maxStackQuantity = pickableSO.MaxStackQuantity;
-            icon = pickableSO.PickableIcon;
-            pickUpSound = pickableSO.PickUpSound;
-            toolSound = pickableSO.ToolSound;
-            dropSound = pickableSO.DropSound;
+            _pickableEnum = pickableSO.PickableEnum;
+            _pickableType = pickableSO.PickableType;
+            _name = pickableSO.Name;
+            _description = pickableSO.Description;
+            _maxStackQuantity = pickableSO.MaxStackQuantity;
+            _icon = pickableSO.Icon;
+            _pickUpSound = pickableSO.PickUpSound;
+            _toolSound = pickableSO.ToolSound;
+            _dropSound = pickableSO.DropSound;
         }
-    }
-    public enum PickableType
-    {
-        Tool,
-        SoundTool,
     }
 }

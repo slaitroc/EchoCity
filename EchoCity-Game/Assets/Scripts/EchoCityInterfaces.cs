@@ -265,8 +265,10 @@ namespace EchoCity
     {
         //<summary> The description of the object </summary>
         string Description { get; }
+        //<summary> Whether the object has a description that can be shown via raycast </summary>
+        bool HasRaycastDescription { get; }
         //<summary> Whether the object is interactable </summary>
-        bool isInteractable { get; }
+        bool IsInteractable { get; }
     }
 
     public interface IPuzzleManager

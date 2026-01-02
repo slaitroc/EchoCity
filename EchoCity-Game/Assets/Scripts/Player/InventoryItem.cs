@@ -1,16 +1,15 @@
 using UnityEngine;
-using EchoCity;
-
-[System.Serializable]
-public class InventoryItem
+namespace EchoCity
 {
-    [SerializeField] private PickableData data;
-
-    public PickableData Data => data;
-
-    public InventoryItem(PickableData data)
+    [System.Serializable]
+    public class InventoryItem
     {
-        this.data = data;
-    }
+        [SerializeField] private readonly SOPickable _data;
+        public SOPickable Data => _data;
 
+        public InventoryItem(SOPickable data)
+        {
+            _data = data;
+        }
+    }
 }

@@ -366,7 +366,7 @@ namespace EchoCity
         [SerializeField] private SOIntEvent dropItemEvent;
         [SerializeField] private bool logDropItem = true;
         //RadialMenu to PlayerController
-        [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
+        [SerializeField] private SOEquipItemEvent itemEquippedEvent;
         [SerializeField] private bool logItemEquipped = true;
         //From Player Controller to Enemy to update the position of a continuous sound
         [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
@@ -405,7 +405,7 @@ namespace EchoCity
         private void OnItemPicked(IEventSender sender, PickableData data, GameObject prefab) { if (logItemPicked) Log.DLazy(() => $"{GetColoredName(sender)}: Item Picked Event Raised for Pickable Data: {data.Name}", this); }
         private void OnCanBePicked(IEventSender sender, bool canBePicked) { if (logCanBePicked) Log.DLazy(() => $"{GetColoredName(sender)}: Can Be Picked Event Raised, CanBePicked: {canBePicked}", this); }
         private void OnDropItem(IEventSender sender, int itemIndex) { if (logDropItem) Log.DLazy(() => $"{GetColoredName(sender)}: Drop Item Event Raised for Item Index: {itemIndex}", this); }
-        private void OnItemEquipped(IEventSender sender, int itemIndex, PickableData data, GameObject prefab) { if (logItemEquipped) Log.DLazy(() => $"{GetColoredName(sender)}: Item Equipped Event Raised for Item Index: {itemIndex}, Data: {data.Name}", this); }
+        private void OnItemEquipped(IEventSender sender, int itemIndex, SOPickable data, GameObject prefab) { if (logItemEquipped) Log.DLazy(() => $"{GetColoredName(sender)}: Item Equipped Event Raised for Item Index: {itemIndex}, Data: {data.Name}", this); }
         private void OnPlayerEmittedSound(IEventSender sender, Vector3 position, SoundEmissionData soundData) { if (logPlayerEmittedSound) Log.DLazy(() => $"{GetColoredName(sender)}: Player Emitted Sound Event Raised at Position: {position}", this); }
         #endregion
 

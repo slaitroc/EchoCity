@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EchoCity
 {
-    public class EndDoorInteractable : Interactable
+    public class EndDoorInteractable : PlainInteractable
     {
         [Header("End Game Event")]
         [SerializeField] SOEventVoid switchToWinStateEvent;

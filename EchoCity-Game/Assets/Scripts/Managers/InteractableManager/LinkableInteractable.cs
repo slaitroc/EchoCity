@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EchoCity
 {
-    public abstract class LinkableInteractable : Interactable
+    public abstract class LinkableInteractable : PlainInteractable
     {
         [SerializeField] protected bool hasFixDetector = false;
         [SerializeField] protected InteractableFixDetector detector;

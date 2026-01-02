@@ -61,6 +61,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "AreaInteract",
+                    "type": "Button",
+                    "id": "1e52ef11-4598-4677-ac7f-df5ce3e3e0fb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "WearEcholocator",
                     "type": "Button",
                     "id": "eda9670e-5c52-44db-9ee4-288758e18f42",
@@ -347,6 +356,17 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3efee4db-764a-4ff6-a4dd-95ad902f1234",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "AreaInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

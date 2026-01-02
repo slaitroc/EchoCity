@@ -3,16 +3,16 @@ using UnityEngine;
 namespace EchoCity
 {
     [RequireComponent(typeof(Collider))]
-    public class InteractableFixDetector : Interactable
+    public class InteractableFixDetector : PlainInteractable
     {
         [SerializeField] private Interactable linkedInteractable;
 
-        public override void Interact()
+        protected override void ResolveInteraction(bool outcome)
         {
-            base.Interact();
-            linkedInteractable?.Interact();
+            if (outcome)
+            {
+                linkedInteractable.Interact();
+            }
         }
-
-        protected override void ResolveInteraction(bool outcome) { }
     }
 }

@@ -46,12 +46,13 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observing Events")]
-        [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
+        [SerializeField] private SOEquipItemEvent itemEquippedEvent;
         [SerializeField] private SOIAttractionEvent enemyAttractionEvent;
         [SerializeField] private SOSoundEmissionDataEvent perceivedSoundEvent;
 
 
         [Header("Inventory")]
+        public PlayerInventory playerInventory;
         public SOSoundSource fullInventorySound;
         public EquippedItem equippedItem = null;
         [SerializeField] private Transform dropPoint;
@@ -87,11 +88,8 @@ namespace EchoCity
         public float CurrentAttraction => attractionTarget != null ? attractionTarget.AttractionData.CurrentAttraction : _A;
         public PerceivedSound LastPerceivedSound { get => lastPS; set => lastPS = value; }
 
-
         void OnEnable()
         {
-            if (itemEquippedEvent)
-                itemEquippedEvent.OnEventRaised += EquipItemHandler;
             if (enemyAttractionEvent != null)
                 enemyAttractionEvent.OnEventRaised += UpdateActiveAttractionTargets;
             if (perceivedSoundEvent != null)
@@ -100,20 +98,18 @@ namespace EchoCity
 
         void OnDisable()
         {
-            if (itemEquippedEvent)
-                itemEquippedEvent.OnEventRaised -= EquipItemHandler;
             if (enemyAttractionEvent != null)
                 enemyAttractionEvent.OnEventRaised -= UpdateActiveAttractionTargets;
             if (perceivedSoundEvent != null)
                 perceivedSoundEvent.OnEventRaised -= PerceivedSoundHandler;
         }
 
-
         void Awake()
         {
             _attractionTargets = new AttractionTarget[3];
             lastPS = new PerceivedSound(0f);
         }
+
         void Start()
         {
             _audioContext = new AudioContext(this, newAudioSphereEvent);
@@ -127,7 +123,6 @@ namespace EchoCity
             _playerAudioSource = _playerToolsAudio.AddComponent<AudioSource>();
             _playerAudioSource.spatialBlend = 1.0f; // 3D sound
         }
-
 
         void Update()
         {
@@ -152,19 +147,9 @@ namespace EchoCity
             }
         }
 
-
         public void EmitFullInventorySound()
         {
-            EchoCitySound.PlayInAudioSource(fullInventorySound.AudioClip, fullInventorySound.Volume, _playerAudioSource, EchoCitySound.MixerGroupEnum.SFX);
-        }
-
-        public void EquipItemHandler(IEventSender sender, int index, PickableData data, GameObject prefab)
-        {
-            Log.DLazy(() => "Equipping item", this);
-            equippedItem = new EquippedItem(index, data, prefab);
-            if (prefab == null)
-                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
-
+            PlayInAudioSource(fullInventorySound.AudioClip, fullInventorySound.Volume, _playerAudioSource, MixerGroupEnum.SFX);
         }
 
         public void TakeDamage(float damageAmount)
@@ -179,17 +164,25 @@ namespace EchoCity
             }
         }
 
+        public void EquipItem(int index, PickableData data, GameObject prefab)
+        {
+            Log.DLazy(() => "Equipping item", this);
+            equippedItem = new EquippedItem(index, data, prefab);
+            if (prefab == null)
+                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
+        }
+
         public void UseTool()
         {
             if (equippedItem != null)
             {
-                if (equippedItem.Data.PickableType == PickableType.SoundTool)
+                if (equippedItem.Data.PickableType == PickableTypeEnum.SoundTool)
                 {
                     PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, MixerGroupEnum.SFX);
                     playerEmittedSoundEvent?.RaiseEvent(this, transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }
-                else if (equippedItem.Data.PickableType == PickableType.Tool)
+                else if (equippedItem.Data.PickableType == PickableTypeEnum.Tool)
                 {
                     //use tool only when pointing interacting objects
                 }
@@ -214,9 +207,10 @@ namespace EchoCity
             {
                 Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
             }
-            materialToggleEvent?.RaiseEvent(this);
-            materialToggleEvent?.RaiseEvent(this);
+            playerInventory.DropItem(equippedItem.Index);
             dropItemEvent?.RaiseEvent(this, equippedItem.Index);
+            materialToggleEvent?.RaiseEvent(this);
+            materialToggleEvent?.RaiseEvent(this);
             equippedItem = null;
         }
 

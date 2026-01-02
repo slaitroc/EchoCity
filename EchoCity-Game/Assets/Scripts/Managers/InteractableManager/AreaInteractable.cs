@@ -5,8 +5,11 @@ namespace EchoCity
     public abstract class AreaInteractable : Interactable
     {
         [SerializeField] protected InteractionArea interactableArea;
+        public Vector3 AreaCenter => _rangeCollider.bounds.center;
         [SerializeField] protected Collider _playerInRange;
         private Collider _rangeCollider;
+        public override bool HasRaycastDescription => false;
+
 
         protected override void Awake()
         {

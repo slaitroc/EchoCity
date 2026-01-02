@@ -12,7 +12,7 @@ namespace EchoCity
         [SerializeField] private PlayerInventory playerInventory;
 
         [Header("Invoking Events")]
-        [SerializeField] private SOIntegerPickableDataGameObjectEvent equipItemEvent;
+        [SerializeField] private SOEquipItemEvent equipItemEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
@@ -189,7 +189,7 @@ namespace EchoCity
             }
             else
             {
-                PickableData data = invItem.Data;
+                SOPickable data = invItem.Data;
                 itemButton.userData = invItem;
 
                 if (data.Icon != null)

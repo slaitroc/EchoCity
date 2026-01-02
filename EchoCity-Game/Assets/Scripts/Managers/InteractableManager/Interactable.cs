@@ -17,9 +17,9 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Interactable };
 
         [SerializeField] protected string _description;
-        private bool _isInteractable = true;
-        string IHasDescription.Description => _description;
-        bool IHasDescription.isInteractable => _isInteractable;
+        public string Description => _description;
+        public virtual bool HasRaycastDescription => true;
+        public bool IsInteractable => true;
 
         protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
 
