@@ -1023,6 +1023,7 @@ MonoBehaviour:
   radialMenuController: {fileID: 4790034666761535784}
   warningController: {fileID: 7854739263412934793}
   equippedPanelController: {fileID: 1181520305264546771}
+  questController: {fileID: 8243044582833020492}
   pauseMenuController: {fileID: 8660582204158062874}
   settingsMenuController: {fileID: 959638427431380207}
   dialogController: {fileID: 782783970492582696}
@@ -1046,6 +1047,7 @@ MonoBehaviour:
   spawnWarningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
   dropItemEvent: {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
+  questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
   _playerInventory: {fileID: 2751710482949066772}
 --- !u!114 &3973722456610610598
 MonoBehaviour:
@@ -1336,6 +1338,7 @@ GameObject:
   - component: {fileID: 8243044582833020489}
   - component: {fileID: 1181520305264546771}
   - component: {fileID: 8243044582833020490}
+  - component: {fileID: 8243044582833020492}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -2126,6 +2129,22 @@ MonoBehaviour:
   maxAttraction: 2
   highAttractionThreshold: 1
   mediumAttractionThreshold: 0.5
+--- !u!114 &8243044582833020492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5354991708404271185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccdb33eb313d492a90859f90eed0620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudDocument: {fileID: 557246910997754761}
+  questsManager: {fileID: 8861211339865653366}
+  completedVisibleSeconds: 5
+  fadeOutSeconds: 2
 --- !u!1 &8271982753614926909
 GameObject:
   m_ObjectHideFlags: 0
