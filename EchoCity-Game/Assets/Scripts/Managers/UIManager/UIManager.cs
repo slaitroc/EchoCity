@@ -57,9 +57,10 @@ namespace EchoCity
         [Header("Events")]
 
         [Header("Invoking Events for GM")]
-        [SerializeField] private SOEventVoid switchToTitleStateEvent;
-        [SerializeField] private SOEventVoid switchToPlayStateEvent;
-        [SerializeField] private SOSceneEnumEvent switchToInitLevelEvent;
+        // [SerializeField] private SOEventVoid switchToTitleStateEvent;
+        // [SerializeField] private SOEventVoid switchToPlayStateEvent;
+        // [SerializeField] private SOSceneEnumEvent switchToInitLevelEvent;
+        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -67,25 +68,27 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.UI };
 
         [Header("Observed Events From GM")]
-        [SerializeField] private SOEventVoid titleMenuEvent;
-        [SerializeField] private SOHudEnumEvent hudMenuEvent;
-        [SerializeField] private SOEventVoid pauseMenuEvent;
-        [SerializeField] private SOShowDialogEvent dialogMenuEvent;
-        [SerializeField] private SOEventVoid deathMenuEvent;
-        [SerializeField] private SOEventVoid enterLoadingScreenEvent;
-        [SerializeField] private SOEventVoid exitLoadingScreenEvent;
-        [SerializeField] private SOEventVoid winMenuEvent;
+        // [SerializeField] private SOEventVoid titleMenuEvent;
+        // [SerializeField] private SOHudEnumEvent hudMenuEvent;
+        // [SerializeField] private SOEventVoid pauseMenuEvent;
+        // [SerializeField] private SOShowDialogEvent dialogMenuEvent;
+        // [SerializeField] private SOEventVoid deathMenuEvent;
+        // [SerializeField] private SOEventVoid enterLoadingScreenEvent;
+        // [SerializeField] private SOEventVoid exitLoadingScreenEvent;
+        // [SerializeField] private SOEventVoid winMenuEvent;
+        [SerializeField] private SOShowUIEvent showUIEvent;
+
 
         [Header("Observed Events From Others")]
-        [SerializeField] private SOShowInteractionEvent canInteractStartEvent;
-        [SerializeField] private SOEventVoid canInteractStopEvent;
-        [SerializeField] private SOStringColorEvent spawnWarningEvent;
-        [SerializeField] private SOEquipItemEvent itemEquippedEvent;
+        // [SerializeField] private SOShowInteractionEvent canInteractStartEvent;
+        // [SerializeField] private SOEventVoid canInteractStopEvent;
+        // [SerializeField] private SOStringColorEvent spawnWarningEvent;
+        [SerializeField] private SOEventVoid itemEquippedEvent;
         [SerializeField] private SOIntEvent dropItemEvent;
-        [SerializeField] private SOIntIntEvent questsUpdatedEvent;
+        // [SerializeField] private SOIntIntEvent questsUpdatedEvent;
 
         [Header("External References")]
-        [SerializeField] private PlayerController _playerController;
+        [SerializeField] private PlayerController playerController;
 
         #region Private Fields
         private GameObject _titleMenu;
@@ -97,6 +100,7 @@ namespace EchoCity
         private GameObject _loadingScreen;
         private GameObject _feedbackMenu;
         private GameObject _winMenu;
+
         #endregion
 
 
@@ -113,66 +117,54 @@ namespace EchoCity
             _feedbackMenu = feedbackMenuController.gameObject;
             _winMenu = winMenuController.gameObject;
 
-            if (_playerController == null)
+
+            if (playerController == null)
             {
                 Log.ELazy(() => "PlayerController reference is missing in UIManager!", this);
             }
+
         }
 
         private void OnEnable()
         {
-            if (titleMenuEvent) titleMenuEvent.OnEventRaised += OpenTitleMenuHandler;
-            if (hudMenuEvent) hudMenuEvent.OnEventRaised += OpenHUDMenuHandler;
-            if (pauseMenuEvent) pauseMenuEvent.OnEventRaised += OpenPauseMenuHandler;
-            if (dialogMenuEvent) dialogMenuEvent.OnEventRaised += OpenDialogMenuHandler;
-            if (deathMenuEvent) deathMenuEvent.OnEventRaised += OpenDeathMenuHandler;
-            if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised += OpenLoadingScreenHandler;
-            if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised += CloseLoadingScreenHandler;
-            if (winMenuEvent) winMenuEvent.OnEventRaised += OpenWinMenuHandler;
+            // if (titleMenuEvent) titleMenuEvent.OnEventRaised += OpenTitleMenuHandler;
+            // if (hudMenuEvent) hudMenuEvent.OnEventRaised += OpenHUDMenuHandler;
+            // if (pauseMenuEvent) pauseMenuEvent.OnEventRaised += OpenPauseMenuHandler;
+            // if (dialogMenuEvent) dialogMenuEvent.OnEventRaised += OpenDialogMenuHandler;
+            // if (deathMenuEvent) deathMenuEvent.OnEventRaised += OpenDeathMenuHandler;
+            // if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised += OpenLoadingScreenHandler;
+            // if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised += CloseLoadingScreenHandler;
+            // if (winMenuEvent) winMenuEvent.OnEventRaised += OpenWinMenuHandler;
+            if (showUIEvent) showUIEvent.OnEventRaised += ShowUIHandler;
 
-            if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableStartHandler;
-            if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableStopHandler;
-            if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
+            // if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableStartHandler;
+            // if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableStopHandler;
+            // if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
             if (itemEquippedEvent) itemEquippedEvent.OnEventRaised += ItemEquippedHandler;
             if (dropItemEvent) dropItemEvent.OnEventRaised += DropItemEventHandler;
-            if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised += QuestsUpdatedEventHandler;
+            // if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised += QuestsUpdatedEventHandler;
         }
 
         #region Public Methods - State Switching
         public void SwitchToPlayState()
         {
-            _titleMenu.SetActive(false);
-            _pauseMenu.SetActive(false);
-            _dialog.SetActive(false);
-            _deathMenu.SetActive(false);
-            _winMenu.SetActive(false);
-
+            HideAllElements();
             _hud.SetActive(true);
-            switchToPlayStateEvent?.RaiseEvent(this);
+            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
         }
 
         public void SwitchToTitleState()
         {
-            _hud.SetActive(false);
-            _pauseMenu.SetActive(false);
-            _dialog.SetActive(false);
-            _deathMenu.SetActive(false);
-            _winMenu.SetActive(false);
-
+            HideAllElements();
             _titleMenu.SetActive(true);
-            switchToTitleStateEvent?.RaiseEvent(this);
+            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Title, null);
         }
 
         public void SwitchToInitLevel(SceneEnum scene)
         {
-            _titleMenu.SetActive(false);
-            _pauseMenu.SetActive(false);
-            _dialog.SetActive(false);
-            _deathMenu.SetActive(false);
-            _winMenu.SetActive(false);
-
+            HideAllElements();
             _hud.SetActive(true);
-            switchToInitLevelEvent?.RaiseEvent(this, scene);
+            // switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.InitLevel, new ToInitLevelParams(scene));
         }
 
 
@@ -180,7 +172,7 @@ namespace EchoCity
         public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
         public void OpenFeedbackMenu() => _feedbackMenu.SetActive(true);
         public void CloseFeedbackMenu() => _feedbackMenu.SetActive(false);
-        public void EquipItem(int index, SOPickable pickableData, GameObject obj) => _playerController.EquipItem(index, pickableData, obj);
+        public void EquipItem(int index, SOPickable pickableData, GameObject obj) => playerController.EquipItem(index, pickableData, obj);
         #endregion
 
 
@@ -247,13 +239,62 @@ namespace EchoCity
             _winMenu.SetActive(true);
         }
 
+        private void ShowUIHandler(IEventSender sender, ShowableUIEnum uiElement, EventParams eventParams)
+        {
+            switch (uiElement)
+            {
+                case ShowableUIEnum.TitleMenu:
+                    HideAllElements();
+                    _titleMenu.SetActive(true);
+                    break;
+                case ShowableUIEnum.HUD:
+                    var hudParams = eventParams as HudParams; // currently not used
+                    radialMenuController.enabled = !radialMenuController.enabled;
+                    crosshairController.enabled = !crosshairController.enabled;
+                    break;
+                case ShowableUIEnum.PauseMenu:
+                    HideAllElements();
+                    _pauseMenu.SetActive(true);
+                    break;
+                case ShowableUIEnum.Dialogs:
+                    HideAllElements();
+                    _dialog.SetActive(true);
+                    break;
+                case ShowableUIEnum.DeathMenu:
+                    HideAllElements();
+                    _deathMenu.SetActive(true);
+                    break;
+                case ShowableUIEnum.LoadingScreen:
+                    var loadingParams = eventParams as LoadingParams;
+                    _loadingScreen.SetActive(loadingParams != null && loadingParams.IsLoading);
+                    break;
+                case ShowableUIEnum.WinMenu:
+                    HideAllElements();
+                    _winMenu.SetActive(true);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void HideAllElements()
+        {
+            _titleMenu.SetActive(false);
+            _hud.SetActive(false);
+            _pauseMenu.SetActive(false);
+            _dialog.SetActive(false);
+            _deathMenu.SetActive(false);
+            _loadingScreen.SetActive(false);
+            _winMenu.SetActive(false);
+        }
+
         private void OpenLoadingScreenHandler(IEventSender sender) => _loadingScreen.SetActive(true);
         private void CloseLoadingScreenHandler(IEventSender sender) => _loadingScreen.SetActive(false);
 
         private void CrosshairInteractableStartHandler(IEventSender sender, bool isInteractable, string text) => crosshairController.IsInteractable(true, isInteractable, text);
         private void CrosshairInteractableStopHandler(IEventSender sender) => crosshairController.IsInteractable(false);
         private void SpawnWarningHandler(IEventSender sender, string warningText, Color color) => warningController.SpawnWarning(warningText, color);
-        private void ItemEquippedHandler(IEventSender sender, int index, SOPickable pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
+        private void ItemEquippedHandler(IEventSender sender) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
         private void DropItemEventHandler(IEventSender sender, int index) => equippedPanelController.ClearEquipped();
         private void QuestsUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
 
@@ -261,20 +302,20 @@ namespace EchoCity
         #endregion
         private void OnDisable()
         {
-            if (titleMenuEvent) titleMenuEvent.OnEventRaised -= OpenTitleMenuHandler;
-            if (hudMenuEvent) hudMenuEvent.OnEventRaised -= OpenHUDMenuHandler;
-            if (pauseMenuEvent) pauseMenuEvent.OnEventRaised -= OpenPauseMenuHandler;
-            if (dialogMenuEvent) dialogMenuEvent.OnEventRaised -= OpenDialogMenuHandler;
-            if (deathMenuEvent) deathMenuEvent.OnEventRaised -= OpenDeathMenuHandler;
-            if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised -= OpenLoadingScreenHandler;
-            if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised -= CloseLoadingScreenHandler;
-            if (winMenuEvent) winMenuEvent.OnEventRaised -= OpenWinMenuHandler;
-            if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= CrosshairInteractableStartHandler;
-            if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= CrosshairInteractableStopHandler;
-            if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= SpawnWarningHandler;
+            // if (titleMenuEvent) titleMenuEvent.OnEventRaised -= OpenTitleMenuHandler;
+            // if (hudMenuEvent) hudMenuEvent.OnEventRaised -= OpenHUDMenuHandler;
+            // if (pauseMenuEvent) pauseMenuEvent.OnEventRaised -= OpenPauseMenuHandler;
+            // if (dialogMenuEvent) dialogMenuEvent.OnEventRaised -= OpenDialogMenuHandler;
+            // if (deathMenuEvent) deathMenuEvent.OnEventRaised -= OpenDeathMenuHandler;
+            // if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised -= OpenLoadingScreenHandler;
+            // if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised -= CloseLoadingScreenHandler;
+            // if (winMenuEvent) winMenuEvent.OnEventRaised -= OpenWinMenuHandler;
+            // if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= CrosshairInteractableStartHandler;
+            // if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= CrosshairInteractableStopHandler;
+            // if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= SpawnWarningHandler;
             if (itemEquippedEvent) itemEquippedEvent.OnEventRaised -= ItemEquippedHandler;
             if (dropItemEvent) dropItemEvent.OnEventRaised -= DropItemEventHandler;
-            if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised -= QuestsUpdatedEventHandler;
+            // if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised -= QuestsUpdatedEventHandler;
         }
 
     }

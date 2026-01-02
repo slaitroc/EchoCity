@@ -14,9 +14,6 @@ namespace EchoCity
         [SerializeField] private UIManager uiManager;
         [SerializeField] private InputActionAsset inputActionAsset;
 
-        [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
-
 
         [Header("Observing Events")]
         [SerializeField] private SOEventVoid enableUIActionMapEvent;
