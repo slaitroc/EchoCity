@@ -3,6 +3,24 @@ using UnityEngine;
 
 namespace EchoCity
 {
+    [System.Serializable]
+    public enum ShowableUIEnum
+    {
+        TitleMenu,
+        HUD,
+        PauseMenu,
+        Dialogs,
+        DeathMenu,
+        LoadingScreen,
+        WinMenu
+    }
+
+    [System.Serializable]
+    public enum HudEnum
+    {
+        None = 0,
+        Inventory = 1
+    }
     public class UIManager : MonoBehaviour, IEventSender
     {
         [Header("UI Controllers")]
@@ -52,14 +70,14 @@ namespace EchoCity
         [SerializeField] private SOEventVoid titleMenuEvent;
         [SerializeField] private SOHudEnumEvent hudMenuEvent;
         [SerializeField] private SOEventVoid pauseMenuEvent;
-        [SerializeField] private SODialogDataEvent dialogMenuEvent;
+        [SerializeField] private SOShowDialogEvent dialogMenuEvent;
         [SerializeField] private SOEventVoid deathMenuEvent;
         [SerializeField] private SOEventVoid enterLoadingScreenEvent;
         [SerializeField] private SOEventVoid exitLoadingScreenEvent;
         [SerializeField] private SOEventVoid winMenuEvent;
 
         [Header("Observed Events From Others")]
-        [SerializeField] private SOBoolStringEvent canInteractStartEvent;
+        [SerializeField] private SOShowInteractionEvent canInteractStartEvent;
         [SerializeField] private SOEventVoid canInteractStopEvent;
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
         [SerializeField] private SOEquipItemEvent itemEquippedEvent;
