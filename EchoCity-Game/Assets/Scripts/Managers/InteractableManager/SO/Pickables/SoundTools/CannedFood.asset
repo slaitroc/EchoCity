@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4b98f3c75003574c8a53e0aec249253, type: 3}
-  m_Name: HandsSoundTool
+  m_Name: CannedFood
   m_EditorClassIdentifier: 
-  pickableName: Your Hands
-  pickableDescription: ...you may want to clap
-  maxStackQuantity: 1
-  pickableIcon: {fileID: 21300000, guid: 014cd7c251dcf4ff1a1ef87d04a647dc, type: 3}
-  pickUpSound: {fileID: 0}
-  toolSound: {fileID: 11400000, guid: 41ea6475ede3fd7429c6f1c3165efc05, type: 2}
-  dropSound: {fileID: 0}
-  pickablePrefab: {fileID: 0}
+  _pickableEnum: 3
+  _pickableType: 2
+  _name: CannedFood
+  _description: 
+  _maxStackQuantity: 1
+  _icon: {fileID: 0}
+  _pickUpSound: {fileID: 0}
+  _toolSound: {fileID: 0}
+  _dropSound: {fileID: 0}
+  _prefab: {fileID: 1217014582648217325, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
