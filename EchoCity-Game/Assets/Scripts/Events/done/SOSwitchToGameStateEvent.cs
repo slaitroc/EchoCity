@@ -32,4 +32,15 @@ namespace EchoCity
             _dialogData = dialogData;
         }
     }
+
+    public class ToLoadingStateParams : EventParams
+    {
+        private readonly bool _isLoading;
+        public bool IsLoading => _isLoading;
+
+        public ToLoadingStateParams(bool isLoading)
+        {
+            _isLoading = isLoading;
+        }
+    }
 }

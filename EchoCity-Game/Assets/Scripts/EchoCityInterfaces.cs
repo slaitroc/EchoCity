@@ -68,14 +68,7 @@ namespace EchoCity
         SOEventVoid DisableUIInputEvent { get; }
 
         // UI MANAGER EVENTS
-        SOEventVoid TitleMenuEvent { get; }
-        SOEventVoid PauseMenuEvent { get; }
-        SOHudEnumEvent HudMenuEvent { get; }
-        SODialogDataEvent DialogDataEvent { get; }
-        SOEventVoid DeathMenuEvent { get; }
-        SOEventVoid WinMenuEvent { get; }
-        SOEventVoid EnterLoadingScreenEvent { get; }
-        SOEventVoid ExitLoadingScreenEvent { get; }
+        SOShowUIEvent ShowUIEvent { get; }
 
         // SCENE MANAGEMENT EVENTS
         SOEventVoid SetPlayerOnSpawnEvent { get; }

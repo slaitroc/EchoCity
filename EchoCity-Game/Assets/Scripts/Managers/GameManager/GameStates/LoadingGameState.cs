@@ -8,12 +8,12 @@ namespace EchoCity
 
         public override void Enter()
         {
-            _context.EnterLoadingScreenEvent.RaiseEvent(_context);
+            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.LoadingScreen, new LoadingParams(true));
             _context.DisablePlayerInputEvent.RaiseEvent(_context);
             _context.DisableUIInputEvent.RaiseEvent(_context);
         }
         public override void Update() { }
-        public override void Exit() => _context.ExitLoadingScreenEvent.RaiseEvent(_context);
+        public override void Exit() => _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.LoadingScreen, new LoadingParams(false));
 
         public override GameStatesEnum GetEnum() => GameStatesEnum.Loading;
     }

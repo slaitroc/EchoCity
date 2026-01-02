@@ -14,7 +14,7 @@ namespace EchoCity
             switch (hud)
             {
                 case HudEnum.Inventory:
-                    _context.HudMenuEvent.RaiseEvent(_context, HudEnum.Inventory);
+                    _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.HUD, new HudParams(HudEnum.Inventory));
                     _currentHud = HudEnum.Inventory;
                     break;
                 //TODO other HUDs
@@ -29,7 +29,7 @@ namespace EchoCity
             switch (_currentHud)
             {
                 case HudEnum.Inventory:
-                    _context.HudMenuEvent.RaiseEvent(_context, HudEnum.None);
+                    _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.HUD, new HudParams(HudEnum.Inventory));
                     break;
                 //TODO other HUDs
                 default:

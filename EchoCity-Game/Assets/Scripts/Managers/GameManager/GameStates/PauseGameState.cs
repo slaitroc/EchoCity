@@ -15,7 +15,7 @@ namespace EchoCity
             Time.timeScale = 0;
             _context.DisablePlayerInputEvent.RaiseEvent(_context);
             _context.EnableUIInputEvent.RaiseEvent(_context);
-            _context.PauseMenuEvent.RaiseEvent(_context);
+            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.PauseMenu, null);
         }
         public override void Update() { }
         public override void Exit()

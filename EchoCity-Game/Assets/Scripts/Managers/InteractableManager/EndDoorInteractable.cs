@@ -10,7 +10,7 @@ namespace EchoCity
         [Header("Messages")]
         [SerializeField] SODialogContainer dialogContainerSuccess;
         [SerializeField] SODialogContainer dialogContainerFail;
-        [SerializeField] SODialogDataEvent dialogDataEvent;
+        [SerializeField] SOShowDialogEvent dialogDataEvent;
         [SerializeField] SOStringColorEvent spawnMessageEvent;
 
         protected override void ResolveInteraction(bool outcome)

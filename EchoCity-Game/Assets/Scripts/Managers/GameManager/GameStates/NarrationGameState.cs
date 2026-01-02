@@ -17,7 +17,7 @@ namespace EchoCity
         public void EnterNarration(DialogData data)
         {
             Enter();
-            _context.DialogDataEvent.RaiseEvent(_context, data);
+            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.Dialogs, new DialogParams(data));
         }
         public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
         public override void SwitchToWinHandler() => _fsm.SwitchState(_fsm.WinState);

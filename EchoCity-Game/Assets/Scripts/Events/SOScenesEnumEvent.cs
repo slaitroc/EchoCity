@@ -14,6 +14,6 @@ namespace EchoCity
     }
 
     [CreateAssetMenu(fileName = "SceneEnumEventSO", menuName = "ECHO CITY/Events/SceneEnumEventSO")]
-    public class SOSceneEnumEvent : SOEvent<SceneEnum> { }
+    public class SOSceneEnumEvent : SOSigleParamEvent<SceneEnum> { }
 
 }

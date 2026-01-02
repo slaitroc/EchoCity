@@ -12,9 +12,6 @@ namespace EchoCity
         [SerializeField] UIManager uiManager;
         [SerializeField] private PlayerInventory playerInventory;
 
-        [Header("Invoking Events")]
-        [SerializeField] private SOEquipItemEvent equipItemEvent;
-
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
         bool IEventSender.IsManager => false;
