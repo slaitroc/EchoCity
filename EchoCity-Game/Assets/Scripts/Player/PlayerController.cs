@@ -7,15 +7,19 @@ namespace EchoCity
     [System.Serializable]
     public class EquippedItem
     {
-        public int Index;
-        public PickableData Data;
-        public GameObject Prefab;
+        private int _index;
+        private SOPickable _data;
+        private GameObject _prefab;
 
-        public EquippedItem(int index, PickableData data, GameObject prefab)
+        public int Index => _index;
+        public SOPickable Data => _data;
+        public GameObject Prefab => _prefab;
+
+        public EquippedItem(int index, SOPickable data, GameObject prefab)
         {
-            Index = index;
-            Data = data;
-            Prefab = prefab;
+            _index = index;
+            _data = data;
+            _prefab = prefab;
         }
     }
 
@@ -164,12 +168,16 @@ namespace EchoCity
             }
         }
 
-        public void EquipItem(int index, PickableData data, GameObject prefab)
+        public void EquipItem(int index, SOPickable data, GameObject prefab)
         {
             Log.DLazy(() => "Equipping item", this);
             equippedItem = new EquippedItem(index, data, prefab);
+            if (data == null)
+                Log.ELazy(() => $"EquipItem received null data for item at index {index}", this);
             if (prefab == null)
                 Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
+
+            itemEquippedEvent?.RaiseEvent(this, index, data, prefab);
         }
 
         public void UseTool()
