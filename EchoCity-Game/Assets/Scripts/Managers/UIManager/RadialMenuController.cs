@@ -9,6 +9,7 @@ namespace EchoCity
     {
         [Header("UI")]
         [SerializeField] private UIDocument hudDocument;
+        [SerializeField] UIManager uiManager;
         [SerializeField] private PlayerInventory playerInventory;
 
         [Header("Invoking Events")]
@@ -90,7 +91,7 @@ namespace EchoCity
         }
 
 
-        public void OnEnable()
+        private void OnEnable()
         {
             _root = hudDocument.rootVisualElement;
             _inventoryItems = playerInventory.Items.ToArray();
@@ -108,17 +109,7 @@ namespace EchoCity
             _crosshair.style.display = DisplayStyle.None;
         }
 
-        public void OnDisable()
-        {
-            if (_selectedIndex != -1) equipItemEvent.RaiseEvent(this, _selectedIndex, _selectedItem.Data, _selectedPrefab);
 
-            _isOpen = false;
-            _radialRoot.RemoveFromClassList("active");
-            _radialRoot.style.display = DisplayStyle.None;
-            _infoPanel.style.display = DisplayStyle.None;
-            _crosshair.style.display = DisplayStyle.Flex;
-            MethodsUI.HideCursor();
-        }
 
 
         void Update()
@@ -200,6 +191,19 @@ namespace EchoCity
 
                 itemButton.style.display = DisplayStyle.Flex;
             }
+        }
+
+
+        private void OnDisable()
+        {
+            if (_selectedIndex != -1) uiManager.EquipItem(_selectedIndex, _selectedItem.Data, _selectedPrefab);
+
+            _isOpen = false;
+            _radialRoot.RemoveFromClassList("active");
+            _radialRoot.style.display = DisplayStyle.None;
+            _infoPanel.style.display = DisplayStyle.None;
+            _crosshair.style.display = DisplayStyle.Flex;
+            MethodsUI.HideCursor();
         }
 
     }

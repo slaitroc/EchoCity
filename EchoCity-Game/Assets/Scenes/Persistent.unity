@@ -1048,7 +1048,7 @@ MonoBehaviour:
   itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
   dropItemEvent: {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
   questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
-  _playerInventory: {fileID: 2751710482949066772}
+  _playerController: {fileID: 7823492532663271078}
 --- !u!114 &3973722456610610598
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1228,6 +1228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudDocument: {fileID: 557246910997754761}
+  uiManager: {fileID: 3969561829711415350}
   playerInventory: {fileID: 2751710482949066772}
   equipItemEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
 --- !u!114 &4905452698654866209
@@ -1940,9 +1941,6 @@ MonoBehaviour:
   perceivedSoundEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   playerInventory: {fileID: 2751710482949066772}
   fullInventorySound: {fileID: 11400000, guid: d2cef0896b5120044ac451ee4dcda5c6, type: 2}
-  equippedItem:
-    Index: 0
-    Prefab: {fileID: 0}
   dropPoint: {fileID: 2678203716146919588}
   fixedDistanceEstimation: 10
   sampleEnemy: {fileID: 11400000, guid: aec0be87e710dc342a58f16b7e34ffad, type: 2}

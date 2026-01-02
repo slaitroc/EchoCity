@@ -67,7 +67,7 @@ namespace EchoCity
         [SerializeField] private SOIntIntEvent questsUpdatedEvent;
 
         [Header("External References")]
-        [SerializeField] private PlayerInventory _playerInventory;
+        [SerializeField] private PlayerController _playerController;
 
         #region Private Fields
         private GameObject _titleMenu;
@@ -95,9 +95,9 @@ namespace EchoCity
             _feedbackMenu = feedbackMenuController.gameObject;
             _winMenu = winMenuController.gameObject;
 
-            if (_playerInventory == null)
+            if (_playerController == null)
             {
-                Log.ELazy(() => "PlayerInventory reference is missing in UIManager!", this);
+                Log.ELazy(() => "PlayerController reference is missing in UIManager!", this);
             }
         }
 
@@ -162,6 +162,7 @@ namespace EchoCity
         public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
         public void OpenFeedbackMenu() => _feedbackMenu.SetActive(true);
         public void CloseFeedbackMenu() => _feedbackMenu.SetActive(false);
+        public void EquipItem(int index, SOPickable pickableData, GameObject obj) => _playerController.EquipItem(index, pickableData, obj);
         #endregion
 
 
@@ -234,12 +235,7 @@ namespace EchoCity
         private void CrosshairInteractableStartHandler(IEventSender sender, bool isInteractable, string text) => crosshairController.IsInteractable(true, isInteractable, text);
         private void CrosshairInteractableStopHandler(IEventSender sender) => crosshairController.IsInteractable(false);
         private void SpawnWarningHandler(IEventSender sender, string warningText, Color color) => warningController.SpawnWarning(warningText, color);
-
-        private void ItemEquippedHandler(IEventSender sender, int index, SOPickable pickableData, GameObject obj)
-        {
-            equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
-            // playerController.EquipItem(index, pickableData, obj);
-        }
+        private void ItemEquippedHandler(IEventSender sender, int index, SOPickable pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
         private void DropItemEventHandler(IEventSender sender, int index) => equippedPanelController.ClearEquipped();
         private void QuestsUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
 
