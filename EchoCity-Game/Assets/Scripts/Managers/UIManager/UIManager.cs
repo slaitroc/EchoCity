@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace EchoCity
@@ -14,6 +15,7 @@ namespace EchoCity
         [SerializeField] private RadialMenuController radialMenuController;
         [SerializeField] private WarningController warningController;
         [SerializeField] private EquippedPanelController equippedPanelController;
+        [SerializeField] private QuestController questController;
 
         [Header("Pause Menu")]
         [SerializeField] private PauseMenuController pauseMenuController;
@@ -62,6 +64,7 @@ namespace EchoCity
         [SerializeField] private SOStringColorEvent spawnWarningEvent;
         [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
         [SerializeField] private SOIntEvent dropItemEvent;
+        [SerializeField] private SOIntIntEvent questsUpdatedEvent;
 
         [Header("External References")]
         [SerializeField] private PlayerInventory _playerInventory;
@@ -114,6 +117,7 @@ namespace EchoCity
             if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
             if (itemEquippedEvent) itemEquippedEvent.OnEventRaised += ItemEquippedHandler;
             if (dropItemEvent) dropItemEvent.OnEventRaised += DropItemEventHandler;
+            if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised += QuestsUpdatedEventHandler;
         }
 
         #region Public Methods - State Switching
@@ -231,8 +235,13 @@ namespace EchoCity
         private void CrosshairInteractableStopHandler(IEventSender sender) => crosshairController.IsInteractable(false);
         private void SpawnWarningHandler(IEventSender sender, string warningText, Color color) => warningController.SpawnWarning(warningText, color);
 
-        private void ItemEquippedHandler(IEventSender sender, int index, PickableData pickableData, GameObject obj) => equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
+        private void ItemEquippedHandler(IEventSender sender, int index, PickableData pickableData, GameObject obj)
+        {
+            equippedPanelController.SetEquippedItem(pickableData.Icon, pickableData.Name);
+            // playerController.EquipItem(index, pickableData, obj);
+        }
         private void DropItemEventHandler(IEventSender sender, int index) => equippedPanelController.ClearEquipped();
+        private void QuestsUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
 
 
         #endregion
@@ -251,6 +260,7 @@ namespace EchoCity
             if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= SpawnWarningHandler;
             if (itemEquippedEvent) itemEquippedEvent.OnEventRaised -= ItemEquippedHandler;
             if (dropItemEvent) dropItemEvent.OnEventRaised -= DropItemEventHandler;
+            if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised -= QuestsUpdatedEventHandler;
         }
 
     }

@@ -25,10 +25,11 @@
         <!-- QUEST LOGGER PANEL -->
         <ui:VisualElement name="QuestLoggerPanel" class="quest-logger-panel">
             <ui:Label name="QuestLoggerTitle" class="quest-logger-title" text="Objectives" />
-            <ui:VisualElement name="QuestLoggerList" class="quest-logger-list" />
-            <ui:VisualElement class="quest-item">
-                <ui:VisualElement class="quest-check" />
-                <ui:Label class="quest-text" text="Find the key" />
+            <ui:VisualElement name="QuestLoggerList" class="quest-logger-list" >
+                <ui:VisualElement class="quest-item">
+                    <ui:VisualElement class="quest-check" />
+                    <ui:Label class="quest-text" text="Find the key" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
 
