@@ -209,7 +209,8 @@ namespace EchoCity
             }
             else
             {
-                Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
+                var dropped = Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
+                dropped.AddComponent<Rigidbody>();
             }
             playerInventory.DropItem(equippedItem.Index);
             toggleMaterialEvent?.RaiseEvent(this);
