@@ -22,25 +22,31 @@ namespace EchoCity
     {
         [SerializeField] private PuzzleTagEnum _tag;
         [SerializeField] private bool _isActive;
+        [SerializeField] private int _count;
         public PuzzleTagEnum Tag => _tag;
         public bool IsActive { get => _isActive; set => _isActive = value; }
+        public int Count { get => _count; set => _count = value; }
 
-        public PuzzleTagState(PuzzleTagEnum tag, bool isActive)
+        public PuzzleTagState(PuzzleTagEnum tag, bool isActive, int count = 0)
         {
             _tag = tag;
             _isActive = isActive;
+            _count = count;
         }
     }
-    public class PuzzleManager : MonoBehaviour, IEventSender
+    public class PuzzleManager : MonoBehaviour, IEventSender, IPuzzleManager
     {
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
         public bool IsManager => true;
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Puzzle };
 
+
+        [Header("Quests Management")]
+        [SerializeField] private QuestsManager questManager;
+        public IQuestsManager QuestsManager => questManager;
         [Header("Puzzle Tags")]
         [SerializeField] private PuzzleTagState[] puzzleTags;
-
 
         void Awake()
         {
@@ -57,6 +63,18 @@ namespace EchoCity
             return outcome;
         }
 
+        public void AddQuest(SOQuest quest)
+        {
+            questManager?.AddQuest(quest);
+        }
+
+        public void IncrementTagCount(PuzzleTagEnum tag)
+        {
+            if (tag == PuzzleTagEnum.NONE || tag == PuzzleTagEnum.MAX) return;
+            puzzleTags[(int)tag].Count = puzzleTags[(int)tag].Count + 1;
+            questManager?.UpdateActiveQuests(this);
+        }
+
         private void InitializeTags()
         {
             // Initialize all tags to inactive
@@ -70,7 +88,7 @@ namespace EchoCity
         // if tagsToCheck is null or empty, return false
         // the NONE tag is used as a terminator, so if encountered, the check stops there
         // return true only if all tags in tagsToCheck match the current puzzleTags state
-        private bool CheckTags(PuzzleTagState[] tagsToCheck)
+        public bool CheckTags(PuzzleTagState[] tagsToCheck)
         {
             if (tagsToCheck == null || tagsToCheck.Length == 0)
                 return false;
@@ -80,7 +98,8 @@ namespace EchoCity
             {
                 if (tagsToCheck[i].Tag == PuzzleTagEnum.NONE)
                     break;
-                if (puzzleTags[(int)tagsToCheck[i].Tag].IsActive != tagsToCheck[i].IsActive)
+                if (puzzleTags[(int)tagsToCheck[i].Tag].IsActive != tagsToCheck[i].IsActive ||
+                    (tagsToCheck[i].Count > 0 && puzzleTags[(int)tagsToCheck[i].Tag].Count < tagsToCheck[i].Count))
                 {
                     allTagsActive = false;
                     break;
@@ -89,17 +108,17 @@ namespace EchoCity
             return allTagsActive;
         }
 
-        private void SetTags(PuzzleTagState[] tagsToSet)
+        public void SetTags(PuzzleTagState[] tagsToSet)
         {
             if (tagsToSet == null || tagsToSet.Length == 0) return;
             for (int i = 0; i < tagsToSet.Length; i++)
             {
                 if (tagsToSet[i].Tag == PuzzleTagEnum.NONE) return;
                 puzzleTags[(int)tagsToSet[i].Tag].IsActive = tagsToSet[i].IsActive;
+                puzzleTags[(int)tagsToSet[i].Tag].Count = tagsToSet[i].Count;
             }
+            questManager?.UpdateActiveQuests(this);
         }
-
-
     }
 
 }

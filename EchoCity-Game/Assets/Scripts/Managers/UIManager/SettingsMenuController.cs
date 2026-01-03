@@ -11,8 +11,6 @@ namespace EchoCity
         [SerializeField] private UIManager uiManager;
         [SerializeField] private UIDocument settingsDocument;
 
-        [Header("Invoked Events")]
-        [SerializeField] private SOEventVoid closeSettingsMenuEvent;
 
         [Header("Music Sliders")]
         [SerializeField] private AudioMixer masterMixer;

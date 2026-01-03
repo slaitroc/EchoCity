@@ -39,13 +39,13 @@ namespace EchoCity
         {
             CurrentState = TitleState;
             CurrentState.Enter();
-            _context.SwitchGameStateEvent.RaiseEvent(_context, GameStatesEnum.None, GameStatesEnum.Title);
+            _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.None, GameStatesEnum.Title);
         }
         public void Initialize(GameState state)
         {
             CurrentState = state;
             CurrentState.Enter();
-            _context.SwitchGameStateEvent.RaiseEvent(_context, GameStatesEnum.None, state.GetEnum());
+            _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.None, state.GetEnum());
         }
 
 
@@ -55,14 +55,14 @@ namespace EchoCity
             PreviousState = CurrentState;
             CurrentState = state;
             CurrentState.Enter();
-            _context.SwitchGameStateEvent.RaiseEvent(_context, PreviousState.GetEnum(), state.GetEnum());
+            _context.GameStateTransitionEvent.RaiseEvent(_context, PreviousState.GetEnum(), state.GetEnum());
         }
 
         public void SwitchStateUpdateOnly(GameState state)
         {
             PreviousState = CurrentState;
             CurrentState = state;
-            _context.SwitchGameStateEvent.RaiseEvent(_context, PreviousState.GetEnum(), state.GetEnum());
+            _context.GameStateTransitionEvent.RaiseEvent(_context, PreviousState.GetEnum(), state.GetEnum());
         }
 
         public void EnterLoading()
@@ -72,7 +72,7 @@ namespace EchoCity
             _inLoadingState = CurrentState;
             CurrentState = LoadingState;
             LoadingState.Enter();
-            _context.SwitchGameStateEvent.RaiseEvent(_context, _inLoadingState.GetEnum(), LoadingState.GetEnum());
+            _context.GameStateTransitionEvent.RaiseEvent(_context, _inLoadingState.GetEnum(), LoadingState.GetEnum());
         }
 
         public void ExitLoading()
@@ -82,7 +82,7 @@ namespace EchoCity
             CurrentState = _inLoadingState;
             _inLoadingState.ExitLoading();
             _inLoadingState = null;
-            _context.SwitchGameStateEvent.RaiseEvent(_context, GameStatesEnum.Loading, CurrentState.GetEnum());
+            _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.Loading, CurrentState.GetEnum());
         }
 
         public void SwitchToNarration(DialogData data)

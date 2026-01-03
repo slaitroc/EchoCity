@@ -27,7 +27,7 @@ namespace EchoCity
     {
         [SerializeField] SOGoogleFormSettings settings;
         [Header("Observing Events")]
-        [SerializeField] SOIntStringEvent feedbackSubmittedEvent;
+        [SerializeField] SOSubmitFeedbackEvent submitFeedbackEvent;
 
         private GoogleFormData[] formData;
 
@@ -38,14 +38,14 @@ namespace EchoCity
 
         void OnEnable()
         {
-            if (feedbackSubmittedEvent)
-                feedbackSubmittedEvent.OnEventRaised += FeedbackSubmit;
+            if (submitFeedbackEvent)
+                submitFeedbackEvent.OnEventRaised += FeedbackSubmit;
         }
 
         void OnDisable()
         {
-            if (feedbackSubmittedEvent)
-                feedbackSubmittedEvent.OnEventRaised -= FeedbackSubmit;
+            if (submitFeedbackEvent)
+                submitFeedbackEvent.OnEventRaised -= FeedbackSubmit;
         }
 
         private void FeedbackSubmit(IEventSender sender, int rating, string suggestions)

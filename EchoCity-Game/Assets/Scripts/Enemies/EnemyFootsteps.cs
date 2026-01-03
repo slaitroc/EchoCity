@@ -2,7 +2,7 @@ using EchoCity;
 using UnityEngine;
 using static EchoCity.EchoCitySound;
 
-public class EnemyFootsteps : MonoBehaviour
+public class EnemyFootsteps : MonoBehaviour, IEventSender
 {
     [System.Serializable]
     public class GroundFootstep
@@ -12,12 +12,22 @@ public class EnemyFootsteps : MonoBehaviour
     }
 
     [Header("Invoking Events")]
-    public SOSoundEmissionDataEvent newAudioSphereEvent;
+    public SOSoundEmittedEvent soundEmittedEvent;
+    string IEventSender.SenderName => gameObject.name;
+    int IEventSender.SenderID => GetInstanceID();
+    bool IEventSender.IsManager => false;
+    EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Enemy };
     private AudioContext _audioContext;
 
     [Header("Footstep Settings")]
     public GroundFootstep[] groundTypes;
     public float rayDistance = 1.5f;
+
+
+    private void Start()
+    {
+        _audioContext = new AudioContext(this, soundEmittedEvent);
+    }
 
     private void PlayFootstepSound()
     {

@@ -39,6 +39,7 @@ namespace EchoCity
             }
         }
 
+        [SerializeField] private SOQuest[] triggeredQuest;
         protected override void Awake()
         {
             base.Awake();
@@ -52,8 +53,15 @@ namespace EchoCity
 
         protected override void ResolveInteraction(bool outcome)
         {
-            if (!outcome)
+            if (outcome)
+            {
                 isSwitchedOn = !isSwitchedOn;
+                foreach (var quest in triggeredQuest)
+                {
+                    puzzleManager?.AddQuest(quest);
+                }
+            }
+
         }
     }
 }

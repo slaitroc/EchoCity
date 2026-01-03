@@ -10,14 +10,14 @@ namespace EchoCity
         public override GameStatesEnum GetEnum() => GameStatesEnum.Narration;
         public override void Enter()
         {
-            _context.DisablePlayerInputEvent.RaiseEvent(_context);
-            _context.EnableUIInputEvent.RaiseEvent(_context);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, false);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
             Time.timeScale = 0;
         }
         public void EnterNarration(DialogData data)
         {
             Enter();
-            _context.DialogDataEvent.RaiseEvent(_context, data);
+            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.Dialog, new DialogParams(data));
         }
         public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
         public override void SwitchToWinHandler() => _fsm.SwitchState(_fsm.WinState);

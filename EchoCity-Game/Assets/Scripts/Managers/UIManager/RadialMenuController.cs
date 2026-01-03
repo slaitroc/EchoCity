@@ -9,10 +9,8 @@ namespace EchoCity
     {
         [Header("UI")]
         [SerializeField] private UIDocument hudDocument;
+        [SerializeField] UIManager uiManager;
         [SerializeField] private PlayerInventory playerInventory;
-
-        [Header("Invoking Events")]
-        [SerializeField] private SOIntegerPickableDataGameObjectEvent equipItemEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
@@ -90,7 +88,7 @@ namespace EchoCity
         }
 
 
-        public void OnEnable()
+        private void OnEnable()
         {
             _root = hudDocument.rootVisualElement;
             _inventoryItems = playerInventory.Items.ToArray();
@@ -108,17 +106,7 @@ namespace EchoCity
             _crosshair.style.display = DisplayStyle.None;
         }
 
-        public void OnDisable()
-        {
-            if (_selectedIndex != -1) equipItemEvent.RaiseEvent(this, _selectedIndex, _selectedItem.Data, _selectedPrefab);
 
-            _isOpen = false;
-            _radialRoot.RemoveFromClassList("active");
-            _radialRoot.style.display = DisplayStyle.None;
-            _infoPanel.style.display = DisplayStyle.None;
-            _crosshair.style.display = DisplayStyle.Flex;
-            MethodsUI.HideCursor();
-        }
 
 
         void Update()
@@ -189,7 +177,7 @@ namespace EchoCity
             }
             else
             {
-                PickableData data = invItem.Data;
+                SOPickable data = invItem.Data;
                 itemButton.userData = invItem;
 
                 if (data.Icon != null)
@@ -200,6 +188,19 @@ namespace EchoCity
 
                 itemButton.style.display = DisplayStyle.Flex;
             }
+        }
+
+
+        private void OnDisable()
+        {
+            if (_selectedIndex != -1) uiManager.EquipItem(_selectedIndex, _selectedItem.Data, _selectedPrefab);
+
+            _isOpen = false;
+            _radialRoot.RemoveFromClassList("active");
+            _radialRoot.style.display = DisplayStyle.None;
+            _infoPanel.style.display = DisplayStyle.None;
+            _crosshair.style.display = DisplayStyle.Flex;
+            MethodsUI.HideCursor();
         }
 
     }

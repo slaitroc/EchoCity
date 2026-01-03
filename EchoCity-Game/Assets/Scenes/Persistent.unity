@@ -263,12 +263,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052e1c07648e9c5478b87e3324f11f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterLoadingEvent: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
-  exitLoadingEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  unloadCurrentLevelEvent: {fileID: 11400000, guid: 14e96d97e8c839d4994736cfd8f9c09f, type: 2}
-  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
-  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 01fac51bbd864c94fac86741ad828f5a, type: 2}
+  unloadCurrentLevelEvent: {fileID: 11400000, guid: e8e412d71be09d549a69feb477ac0d81, type: 2}
+  reloadLevelEvent: {fileID: 11400000, guid: ec12d6802d3451d4a9ce6612f7976a0d, type: 2}
+  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   scenesNames:
   - None
   - Persistent
@@ -337,7 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: ac6a80f374d00c845998a05aaaf4f9fa, type: 2}
-  feedbackSubmittedEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
+  submitFeedbackEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
 --- !u!114 &459615655157302000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,7 +471,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 3969561829711415350}
   settingsDocument: {fileID: 8476635053685324187}
-  closeSettingsMenuEvent: {fileID: 11400000, guid: b7be2bb134d5f4b2180d91019f0ef242, type: 2}
   masterMixer: {fileID: 24100000, guid: 49c8d33095b4e28429d22107f4aa5bbd, type: 2}
   _mixerGroupsVolumes:
   - Master
@@ -512,21 +510,6 @@ MonoBehaviour:
   uiManager: {fileID: 3969561829711415350}
   hudDocument: {fileID: 557246910997754761}
   noItemText: No Item Equipped
---- !u!4 &1252172354319572086
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8792939852616119554}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -676.1249}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1377890122804237309
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +540,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
@@ -812,12 +795,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8ee35e27a14db43a4b82e8358934b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 7823492532663271078}
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  dropItemEvent: {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
-  pickItemEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  switchToInitStateEvent: {fileID: 11400000, guid: aa9ebbb1f63295843af7c950c50a2a7a, type: 2}
+  switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
   itemsArray: []
   handsSoundTool: {fileID: 11400000, guid: ee9b2fceb94035846b01d1e6ffd4676b, type: 2}
 --- !u!4 &3005479713171637389
@@ -1075,6 +1054,7 @@ MonoBehaviour:
   radialMenuController: {fileID: 4790034666761535784}
   warningController: {fileID: 7854739263412934793}
   equippedPanelController: {fileID: 1181520305264546771}
+  questController: {fileID: 8243044582833020492}
   pauseMenuController: {fileID: 8660582204158062874}
   settingsMenuController: {fileID: 959638427431380207}
   dialogController: {fileID: 782783970492582696}
@@ -1082,23 +1062,14 @@ MonoBehaviour:
   loadingScreenController: {fileID: 7018564923397504573}
   feedbackMenuController: {fileID: 459615655157302000}
   winMenuController: {fileID: 6300054402507737188}
-  switchToTitleStateEvent: {fileID: 11400000, guid: f44d028295cfcdd43b734edcd9fea362, type: 2}
-  switchToPlayStateEvent: {fileID: 11400000, guid: 604eac6c025fec54498946183528062b, type: 2}
-  switchToInitLevelEvent: {fileID: 11400000, guid: aa9ebbb1f63295843af7c950c50a2a7a, type: 2}
-  titleMenuEvent: {fileID: 11400000, guid: adc0531a0eb174fc3bc0336a6a52e416, type: 2}
-  hudMenuEvent: {fileID: 11400000, guid: f44a8af08b5f17948911ec5e427f8305, type: 2}
-  pauseMenuEvent: {fileID: 11400000, guid: b7be2bb134d5f4b2180d91019f0ef242, type: 2}
-  dialogMenuEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
-  deathMenuEvent: {fileID: 11400000, guid: 4ec8849b76f374e5fac88cf410a49595, type: 2}
-  enterLoadingScreenEvent: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
-  exitLoadingScreenEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
-  winMenuEvent: {fileID: 11400000, guid: e0ab9e27c717da84b861c44af9340683, type: 2}
-  canInteractStartEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
-  canInteractStopEvent: {fileID: 11400000, guid: 4ed842175d030460d88acc9d8d2a9d0e, type: 2}
-  spawnWarningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
-  itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
-  dropItemEvent: {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
-  _playerInventory: {fileID: 2751710482949066772}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
+  switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
+  equippedItemChanged: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
+  inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
+  questUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  playerController: {fileID: 7823492532663271078}
 --- !u!114 &3973722456610610598
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1165,19 +1136,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4388262947200221652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8792939852616119554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02efa1d811c2e5840a9d04a61badcf40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeAreaInteractable: {fileID: 0}
 --- !u!114 &4608607052241992482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1190,8 +1148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4a3e05e1ba9ae1dbb0d3af9fa47fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 0}
-  materialToggleEvent: {fileID: 0}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
   useEcholocationMaterial: 0
   echolocationMaterial: {fileID: 2100000, guid: 93540b57ea56d16978865b3e9bfbed51, type: 2}
   visualizationMode: 0
@@ -1232,9 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 3969561829711415350}
   inputActionAsset: {fileID: -944628639613478452, guid: 8e55a5efac2955f4a882d461d594a197, type: 3}
-  switchToPlayingStateEvent: {fileID: 11400000, guid: 604eac6c025fec54498946183528062b, type: 2}
-  enableUIActionMapEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
-  disableUIActionMapEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
 --- !u!1 &4759543299592736681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,8 +1234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudDocument: {fileID: 557246910997754761}
+  uiManager: {fileID: 3969561829711415350}
   playerInventory: {fileID: 2751710482949066772}
-  equipItemEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
 --- !u!114 &4905452698654866209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,6 +1344,7 @@ GameObject:
   - component: {fileID: 8243044582833020489}
   - component: {fileID: 1181520305264546771}
   - component: {fileID: 8243044582833020490}
+  - component: {fileID: 8243044582833020492}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -1828,18 +1785,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &7430527163874768502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9100686688702831156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18de0253b0ef1534db5be64f269cdb59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7432302075135863395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1870,52 +1815,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: Events are grouped under headers based on where their logic is executed
-  switchGameStateEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
-  switchToTitleStateEvent: {fileID: 11400000, guid: f44d028295cfcdd43b734edcd9fea362, type: 2}
-  switchLevelEvent: {fileID: 11400000, guid: aa9ebbb1f63295843af7c950c50a2a7a, type: 2}
-  switchToPlayingStateEvent: {fileID: 11400000, guid: 604eac6c025fec54498946183528062b, type: 2}
-  switchToPauseStateEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
-  switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
-  switchToDeathStateEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  switchToHudStateEvent: {fileID: 11400000, guid: 88306289db0a4814c9bd2906037a8d25, type: 2}
-  enterLoadingEvent: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
-  exitLoadingEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
-  enablePlayerActionMapEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
-  disablePlayerActionMapEvent: {fileID: 11400000, guid: 724e4739b1e766149aa1e28897dc63c7, type: 2}
-  updatePlayerAttractionTargetEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
-  loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
-  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 01fac51bbd864c94fac86741ad828f5a, type: 2}
-  unloadCurrentLevelEvent: {fileID: 11400000, guid: 14e96d97e8c839d4994736cfd8f9c09f, type: 2}
-  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
-  enableUIActionMapEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
-  disableUIActionMapEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
-  titleMenuEvent: {fileID: 11400000, guid: adc0531a0eb174fc3bc0336a6a52e416, type: 2}
-  hudMenuEvent: {fileID: 11400000, guid: f44a8af08b5f17948911ec5e427f8305, type: 2}
-  pauseMenuEvent: {fileID: 11400000, guid: b7be2bb134d5f4b2180d91019f0ef242, type: 2}
-  deathMenuEvent: {fileID: 11400000, guid: 4ec8849b76f374e5fac88cf410a49595, type: 2}
-  winMenuEvent: {fileID: 11400000, guid: e0ab9e27c717da84b861c44af9340683, type: 2}
-  enterLoadingScreenEvent: {fileID: 11400000, guid: 30485bc99ecc35141a1507d360e95ce8, type: 2}
-  exitLoadingScreenEvent: {fileID: 11400000, guid: dc0c9f4f1ce5ffa46903455d79b0442a, type: 2}
-  dialogMenuEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
-  warningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
-  canInteractStartEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
-  canInteractStopEvent: {fileID: 11400000, guid: 4ed842175d030460d88acc9d8d2a9d0e, type: 2}
+  gameManagerStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
+  logGameManagerStateTransition: 1
+  equippedItemChangedEvent: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
+  logEquippedItemChanged: 1
+  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
+  logSetPlayerOnSpawn: 1
+  reloadSceneEvent: {fileID: 11400000, guid: ec12d6802d3451d4a9ce6612f7976a0d, type: 2}
+  logReloadScene: 1
+  questUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  logQuestUpdated: 1
+  showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
+  logShowInteraction: 1
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
+  logPlayerInput: 1
+  loadSceneEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
+  logLoadScene: 1
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  logShowUI: 1
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  feedbackSubmittedEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
-  interactEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
-  wearEcholocatorEvent: {fileID: 11400000, guid: 0b9e4a9f6f91cd5498833b5e61a0d38c, type: 2}
-  enterInteractionAreaEvent: {fileID: 11400000, guid: a6e2482d70ecea44580e52c9eabf4c1b, type: 2}
-  exitInteractionAreaEvent: {fileID: 11400000, guid: 79fb4cf20b90a47459463aa370e09029, type: 2}
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  dropItemEvent: {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
-  itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
-  playerEmittedSoundEvent: {fileID: 11400000, guid: a78e5a5464a5c024ab6288677e1da6da, type: 2}
-  voidEventExample: {fileID: 11400000, guid: fb2f9442456b7f446826059c40857b54, type: 2}
+  logInventoryChanged: 1
+  attractionInfoEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
+  logAttractionInfo: 1
+  unloadCurrentSceneEvent: {fileID: 11400000, guid: e8e412d71be09d549a69feb477ac0d81, type: 2}
+  logUnloadCurrentScene: 1
+  toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
+  logToggleMaterial: 1
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
+  logSwitchToGameState: 1
+  switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
+  logSwitchLevel: 1
+  submitFeedbackEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
+  logSubmitFeedback: 1
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  logSoundEmitted: 0
+  activateDeactivateAll: 0
 --- !u!114 &7814997904437534686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1942,18 +1876,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ae16e212dfda942ae9d0129584f588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  dropItemEvent: {fileID: 11400000, guid: a6fde0efd91714c2e9f7084e9a8b6bd5, type: 2}
-  deathEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
-  playerEmittedSoundEvent: {fileID: 11400000, guid: a78e5a5464a5c024ab6288677e1da6da, type: 2}
-  itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
+  equippedItemChanged: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
   enemyAttractionEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
-  perceivedSoundEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  perceivedSoundEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  playerInventory: {fileID: 2751710482949066772}
   fullInventorySound: {fileID: 11400000, guid: d2cef0896b5120044ac451ee4dcda5c6, type: 2}
-  equippedItem:
-    Index: 0
-    Prefab: {fileID: 0}
   dropPoint: {fileID: 2678203716146919588}
   fixedDistanceEstimation: 10
   sampleEnemy: {fileID: 11400000, guid: aec0be87e710dc342a58f16b7e34ffad, type: 2}
@@ -2041,27 +1971,13 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: f24b24b4444f04457a7a21a9f6824076, type: 3}
   starterAssetsInputs: {fileID: 3541583348788456790}
   playerController: {fileID: 7823492532663271078}
-  switchToPauseStateEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
-  switchToPlayingStateEvent: {fileID: 11400000, guid: 604eac6c025fec54498946183528062b, type: 2}
-  switchToHudStateEvent: {fileID: 11400000, guid: 88306289db0a4814c9bd2906037a8d25, type: 2}
-  canInteractStartEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
-  canInteractStopEvent: {fileID: 11400000, guid: 4ed842175d030460d88acc9d8d2a9d0e, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  areaInteractionEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
-  enterInteractableAreaEvent: {fileID: 11400000, guid: a6e2482d70ecea44580e52c9eabf4c1b, type: 2}
-  exitInteractableAreaEvent: {fileID: 11400000, guid: 79fb4cf20b90a47459463aa370e09029, type: 2}
-  enablePlayerActionMapEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
-  disablePlayerActionMapEvent: {fileID: 11400000, guid: 724e4739b1e766149aa1e28897dc63c7, type: 2}
-  wearEcholocatorEvent: {fileID: 11400000, guid: 0b9e4a9f6f91cd5498833b5e61a0d38c, type: 2}
-  inInteractionRange: 1
-  inRangeInteractable: {fileID: 0}
-  itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
-  examplePickable: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
-  spawnWarningEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
-  switchToDeathStateEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
-  switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  exampleDialogData: {fileID: 11400000, guid: c3ab2b4e980ee4d0f84e2f9c0b0fb561, type: 2}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
+  toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
+  inRangeInteractables: []
+  closestAreaInteractable: {fileID: 0}
 --- !u!114 &8154248175691653929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2074,33 +1990,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8562a1eedd0854ead0e684802f9dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchGameStateEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
-  enablePlayerInputEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
-  disablePlayerInputEvent: {fileID: 11400000, guid: 724e4739b1e766149aa1e28897dc63c7, type: 2}
-  enableUIInputEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
-  disableUIInputEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
-  titleMenuEvent: {fileID: 11400000, guid: adc0531a0eb174fc3bc0336a6a52e416, type: 2}
-  pauseMenuEvent: {fileID: 11400000, guid: b7be2bb134d5f4b2180d91019f0ef242, type: 2}
-  hudMenuEvent: {fileID: 11400000, guid: f44a8af08b5f17948911ec5e427f8305, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: d7db983a8a8114b9583a4e46bb411591, type: 2}
-  deathMenuEvent: {fileID: 11400000, guid: 4ec8849b76f374e5fac88cf410a49595, type: 2}
-  winMenuEvent: {fileID: 11400000, guid: e0ab9e27c717da84b861c44af9340683, type: 2}
-  enterLoadingScreenEvent: {fileID: 11400000, guid: 30485bc99ecc35141a1507d360e95ce8, type: 2}
-  exitLoadingScreenEvent: {fileID: 11400000, guid: dc0c9f4f1ce5ffa46903455d79b0442a, type: 2}
-  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 01fac51bbd864c94fac86741ad828f5a, type: 2}
-  loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  unloadCurrentLevelEvent: {fileID: 11400000, guid: 14e96d97e8c839d4994736cfd8f9c09f, type: 2}
-  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
-  switchToTitleStateEvent: {fileID: 11400000, guid: f44d028295cfcdd43b734edcd9fea362, type: 2}
-  switchLevelEvent: {fileID: 11400000, guid: aa9ebbb1f63295843af7c950c50a2a7a, type: 2}
-  switchToPlayingStateEvent: {fileID: 11400000, guid: 604eac6c025fec54498946183528062b, type: 2}
-  switchToPauseStateEvent: {fileID: 11400000, guid: 4b1a37aa039340940bdd407d0d3048e2, type: 2}
-  switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
-  switchToDeathStateEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  switchToHudStateEvent: {fileID: 11400000, guid: 88306289db0a4814c9bd2906037a8d25, type: 2}
-  enterLoadingEvent: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
-  exitLoadingEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  gameStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
+  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
+  loadSceneEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
+  unloadCurrentSceneEvent: {fileID: 11400000, guid: e8e412d71be09d549a69feb477ac0d81, type: 2}
+  reloadSceneEvent: {fileID: 11400000, guid: ec12d6802d3451d4a9ce6612f7976a0d, type: 2}
+  switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   currentState: 0
 --- !u!114 &8243044582833020489
 MonoBehaviour:
@@ -2141,6 +2039,22 @@ MonoBehaviour:
   maxAttraction: 2
   highAttractionThreshold: 1
   mediumAttractionThreshold: 0.5
+--- !u!114 &8243044582833020492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5354991708404271185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccdb33eb313d492a90859f90eed0620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudDocument: {fileID: 557246910997754761}
+  questsManager: {fileID: 8861211339865653366}
+  completedVisibleSeconds: 5
+  fadeOutSeconds: 2
 --- !u!1 &8271982753614926909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,24 +2141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8460cd2814f456b4287f66d9f4528181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questManager: {fileID: 8861211339865653366}
   puzzleTags: []
---- !u!1 &8792939852616119554
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1252172354319572086}
-  - component: {fileID: 4388262947200221652}
-  m_Layer: 0
-  m_Name: Interactable Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &8848908594851159227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,7 +2216,7 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 1940418657335968769}
   TopClamp: 90
   BottomClamp: -90
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   landingSounds:
   - layer:
       serializedVersion: 2
@@ -2341,6 +2239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3005479713171637389}
   - component: {fileID: 8714278021380127983}
+  - component: {fileID: 8861211339865653366}
   m_Layer: 0
   m_Name: Puzzle Manager
   m_TagString: PuzzleManager
@@ -2348,6 +2247,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8861211339865653366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861211339865653365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6c3b97acd46e745add336fa6be8438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  puzzleManager: {fileID: 8714278021380127983}
+  activeQuests: []
+  questProgression: 
 --- !u!224 &8960212836923983852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2377,7 +2292,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3601835976632961267}
   - component: {fileID: 4608607052241992482}
-  - component: {fileID: 7430527163874768502}
   m_Layer: 0
   m_Name: Echolocation Manager
   m_TagString: Untagged
@@ -2397,6 +2311,5 @@ SceneRoots:
   - {fileID: 5469955104527065999}
   - {fileID: 3005479713171637389}
   - {fileID: 3601835976632961267}
-  - {fileID: 1252172354319572086}
   - {fileID: 5054039297036936703}
   - {fileID: 1758418714}
