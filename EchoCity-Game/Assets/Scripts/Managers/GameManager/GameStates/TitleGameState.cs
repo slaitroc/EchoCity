@@ -16,7 +16,7 @@ namespace EchoCity
         public override void Update() { }
         public override void Exit() => _context.SetPlayerOnSpawnEvent.RaiseEvent(_context);
         public override GameStatesEnum GetEnum() => GameStatesEnum.Title;
-        public override void InitLevelHandler(SceneEnum scene) => _context.LoadLevelEvent.RaiseEvent(_context, scene);
+        public override void InitLevelHandler(SceneEnum scene) => _context.LoadSceneEvent.RaiseEvent(_context, scene);
         public override void EnterLoading() { }
         public override void ExitLoading()
         {

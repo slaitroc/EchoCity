@@ -14,6 +14,12 @@ namespace EchoCity
     }
 
     [CreateAssetMenu(fileName = "SceneEnumEventSO", menuName = "ECHO CITY/Events/SceneEnumEventSO")]
-    public class SOSceneEnumEvent : SOSigleParamEvent<SceneEnum> { }
+    public class SOLoadSceneEvent : SOSigleParamEvent<SceneEnum>
+    {
+        public override void RaiseEvent(IEventSender sender, SceneEnum scene)
+        {
+            base.RaiseEvent(sender, scene);
+        }
+    }
 
 }

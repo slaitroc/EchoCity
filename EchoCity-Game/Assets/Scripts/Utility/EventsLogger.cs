@@ -49,7 +49,7 @@ namespace EchoCity
         [SerializeField] private SOEventDoubleParam<GameStatesEnum, GameStatesEnum> switchGameStateEvent;
         [SerializeField] private bool logSwitchGameState = true;
         //Player & UI to GM
-        [SerializeField] private SOSceneEnumEvent switchLevelEvent;
+        [SerializeField] private SOLoadSceneEvent switchLevelEvent;
         [SerializeField] private bool logSwitchLevel = true;
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private bool logSwitchToGameState = true;
@@ -117,7 +117,7 @@ namespace EchoCity
         #region Scene Loader
         [Header("Scene Loader")]
         //GM to SceneLoader
-        [SerializeField] private SOSceneEnumEvent loadLevelEvent;
+        [SerializeField] private SOLoadSceneEvent loadLevelEvent;
         [SerializeField] private bool logLoadLevel = true;
         [SerializeField] private SOEventVoid reloadLevelEvent;
         [SerializeField] private bool logReloadLevel = true;
@@ -162,10 +162,8 @@ namespace EchoCity
         [SerializeField] private SOShowUIEvent showUIEvent;
         [SerializeField] private bool logShowUI = true;
         //Player to UI
-        [SerializeField] private SOShowInteractionEvent canInteractStartEvent;
-        [SerializeField] private bool logCanInteractStart = true;
-        [SerializeField] private SOEventVoid canInteractStopEvent;
-        [SerializeField] private bool logCanInteractStop = true;
+        [SerializeField] private SOShowInteractionEvent showInteractionEvent;
+        [SerializeField] private bool logShowInteraction = true;
         [SerializeField] private SOEventVoid inventoryChangedEvent;
         [SerializeField] private bool logInventoryChanged = true;
         //QuestManager to UI
@@ -177,8 +175,7 @@ namespace EchoCity
             if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised += OnEnableUIActionMap;
             if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised += OnDisableUIActionMap;
             if (showUIEvent != null) showUIEvent.OnEventRaised += OnShowUI;
-            if (canInteractStartEvent != null) canInteractStartEvent.OnEventRaised += OnCanInteractStart;
-            if (canInteractStopEvent != null) canInteractStopEvent.OnEventRaised += OnCanInteractStop;
+            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised += OnShowInteraction;
             if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised += OnInventoryChanged;
             if (questsUpdatedEvent != null) questsUpdatedEvent.OnEventRaised += OnQuestsUpdated;
         }
@@ -188,8 +185,7 @@ namespace EchoCity
             if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised -= OnEnableUIActionMap;
             if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised -= OnDisableUIActionMap;
             if (showUIEvent != null) showUIEvent.OnEventRaised -= OnShowUI;
-            if (canInteractStartEvent != null) canInteractStartEvent.OnEventRaised -= OnCanInteractStart;
-            if (canInteractStopEvent != null) canInteractStopEvent.OnEventRaised -= OnCanInteractStop;
+            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised -= OnShowInteraction;
             if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised -= OnInventoryChanged;
             if (questsUpdatedEvent != null) questsUpdatedEvent.OnEventRaised -= OnQuestsUpdated;
         }
@@ -197,8 +193,7 @@ namespace EchoCity
         private void OnEnableUIActionMap(IEventSender sender) { if (logEnableUIActionMap) Log.DLazy(() => $"{GetColoredName(sender)}: Enable UI Action Map Event Raised", this); }
         private void OnDisableUIActionMap(IEventSender sender) { if (logDisableUIActionMap) Log.DLazy(() => $"{GetColoredName(sender)}: Disable UI Action Map Event Raised", this); }
         private void OnShowUI(IEventSender sender, ShowableUIEnum ui, EventParams eventParams) { if (logShowUI) Log.DLazy(() => $"{GetColoredName(sender)}: Show UI Event Raised for UI: {ui}", this); }
-        private void OnCanInteractStart(IEventSender sender, bool canInteract, string description) { if (logCanInteractStart) Log.DLazy(() => $"{GetColoredName(sender)}: Can Interact Start Event Raised with CanInteract: {canInteract}, Description: {description}", this); }
-        private void OnCanInteractStop(IEventSender sender) { if (logCanInteractStop) Log.DLazy(() => $"{GetColoredName(sender)}: Can Interact Stop Event Raised", this); }
+        private void OnShowInteraction(IEventSender sender, bool isRaycastInteractable, bool showDescription, string description) { if (logShowInteraction) Log.DLazy(() => $"{GetColoredName(sender)}: Show Interaction Event Raised with Text: {description}", this); }
         private void OnInventoryChanged(IEventSender sender) { if (logInventoryChanged) Log.DLazy(() => $"{GetColoredName(sender)}: Inventory Changed Event Raised", this); }
         private void OnQuestsUpdated(IEventSender sender, int index, int code) { if (logQuestsUpdated) Log.DLazy(() => $"{GetColoredName(sender)}: Quests Updated Event Raised. Quest's index: {index}, Quest's code: {code}", this); }
         #endregion
@@ -241,20 +236,20 @@ namespace EchoCity
 
         #region Misc
         [Header("Misc")]
-        [SerializeField] private SOIntStringEvent feedbackSubmittedEvent;
-        [SerializeField] private bool logFeedbackSubmitted = true;
+        [SerializeField] private SOSubmitFeedbackEvent submitFeedbackEvent;
+        [SerializeField] private bool logSubmitFeedback = true;
 
         void RegisterMisc()
         {
-            if (feedbackSubmittedEvent != null) feedbackSubmittedEvent.OnEventRaised += OnFeedbackSubmitted;
+            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised += OnFeedbackSubmitted;
         }
 
         void UnregisterMisc()
         {
-            if (feedbackSubmittedEvent != null) feedbackSubmittedEvent.OnEventRaised -= OnFeedbackSubmitted;
+            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised -= OnFeedbackSubmitted;
         }
 
-        private void OnFeedbackSubmitted(IEventSender sender, int rating, string feedback) { if (logFeedbackSubmitted) Log.DLazy(() => $"{GetColoredName(sender)}: Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", this); }
+        private void OnFeedbackSubmitted(IEventSender sender, int rating, string feedback) { if (logSubmitFeedback) Log.DLazy(() => $"{GetColoredName(sender)}: Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", this); }
         #endregion
 
         #region To be classified
@@ -268,9 +263,6 @@ namespace EchoCity
         // Pickable to PlayerInventory
         [SerializeField] private SOPickableDataGameObjectEvent itemPickedEvent;
         [SerializeField] private bool logItemPicked = true;
-        // PlayerController to PlayerInventory
-        [SerializeField] private SOIntEvent itemDroppedEvent;
-        [SerializeField] private bool logItemDropped = true;
         //RadialMenu to PlayerController
         [SerializeField] private SOEventVoid itemEquippedEvent;
         [SerializeField] private bool logItemEquipped = true;
@@ -283,7 +275,6 @@ namespace EchoCity
             if (interactEvent != null) interactEvent.OnEventRaised += OnInteractEvent;
             if (wearEcholocatorEvent != null) wearEcholocatorEvent.OnEventRaised += OnWearEcholocator;
             if (itemPickedEvent != null) itemPickedEvent.OnEventRaised += OnItemPicked;
-            if (itemDroppedEvent != null) itemDroppedEvent.OnEventRaised += OnItemDropped;
             if (itemEquippedEvent != null) itemEquippedEvent.OnEventRaised += OnItemEquipped;
             if (playerEmittedSoundEvent != null) playerEmittedSoundEvent.OnEventRaised += OnPlayerEmittedSound;
         }
@@ -293,7 +284,6 @@ namespace EchoCity
             if (interactEvent != null) interactEvent.OnEventRaised -= OnInteractEvent;
             if (wearEcholocatorEvent != null) wearEcholocatorEvent.OnEventRaised -= OnWearEcholocator;
             if (itemPickedEvent != null) itemPickedEvent.OnEventRaised -= OnItemPicked;
-            if (itemDroppedEvent != null) itemDroppedEvent.OnEventRaised -= OnItemDropped;
             if (itemEquippedEvent != null) itemEquippedEvent.OnEventRaised -= OnItemEquipped;
             if (playerEmittedSoundEvent != null) playerEmittedSoundEvent.OnEventRaised -= OnPlayerEmittedSound;
         }
@@ -301,7 +291,6 @@ namespace EchoCity
         private void OnInteractEvent(IEventSender sender) { if (logInteractEvent) Log.DLazy(() => $"{GetColoredName(sender)}: Interact Event Raised", this); }
         private void OnWearEcholocator(IEventSender sender) { if (logWearEcholocator) Log.DLazy(() => $"{GetColoredName(sender)}: Wear Echolocator Event Raised", this); }
         private void OnItemPicked(IEventSender sender, PickableData data, GameObject prefab) { if (logItemPicked) Log.DLazy(() => $"{GetColoredName(sender)}: Item Picked Event Raised for Pickable Data: {data.Name}", this); }
-        private void OnItemDropped(IEventSender sender, int itemIndex) { if (logItemDropped) Log.DLazy(() => $"{GetColoredName(sender)}: Drop Item Event Raised for Item Index: {itemIndex}", this); }
         private void OnItemEquipped(IEventSender sender) { if (logItemEquipped) Log.DLazy(() => $"{GetColoredName(sender)}: Item Equipped Event Raised", this); }
         private void OnPlayerEmittedSound(IEventSender sender, Vector3 position, SoundEmissionData soundData) { if (logPlayerEmittedSound) Log.DLazy(() => $"{GetColoredName(sender)}: Player Emitted Sound Event Raised at Position: {position}", this); }
         #endregion
@@ -382,20 +371,19 @@ namespace EchoCity
                 logEnableUIActionMap = newValue;
                 logDisableUIActionMap = newValue;
                 logShowUI = newValue;
-                logCanInteractStart = newValue;
-                logCanInteractStop = newValue;
+                logShowInteraction = newValue;
+                logQuestsUpdated = newValue;
                 logInventoryChanged = newValue;
                 //Echolocation & Enemy AI
                 logNewAudioSphere = newValue;
                 //Echolocation
                 logMaterialToggle = newValue;
                 //Misc
-                logFeedbackSubmitted = newValue;
+                logSubmitFeedback = newValue;
                 //To be classified
                 logInteractEvent = newValue;
                 logWearEcholocator = newValue;
                 logItemPicked = newValue;
-                logItemDropped = newValue;
                 logItemEquipped = newValue;
                 logPlayerEmittedSound = newValue;
                 //Test events here

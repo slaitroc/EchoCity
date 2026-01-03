@@ -20,7 +20,7 @@ namespace EchoCity
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observing Events")]
-        [SerializeField] private SOSceneEnumEvent switchToInitStateEvent;
+        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
 
         [Header("Inventory")]
         [SerializeField] private InventoryItem[] itemsArray;
@@ -39,12 +39,12 @@ namespace EchoCity
 
         void OnEnable()
         {
-            if (switchToInitStateEvent) switchToInitStateEvent.OnEventRaised += ClearHandler;
+            if (switchLevelEvent) switchLevelEvent.OnEventRaised += ClearHandler;
         }
 
         void OnDisable()
         {
-            if (switchToInitStateEvent) switchToInitStateEvent.OnEventRaised -= ClearHandler;
+            if (switchLevelEvent) switchLevelEvent.OnEventRaised -= ClearHandler;
         }
 
         public bool AddItem(SOPickable data, GameObject pickablePrefab)
@@ -83,7 +83,7 @@ namespace EchoCity
             inventoryChangedEvent?.RaiseEvent(this, PickablesEnum.None, PickableTypeEnum.None, InventoryCodesEnum.Cleared);
         }
 
-        public void ClearHandler(IEventSender sender, EchoCity.SceneEnum scene) => Clear();
+        public void ClearHandler(IEventSender sender, SceneEnum scene, EventParams @params) => Clear();
 
     }
 }

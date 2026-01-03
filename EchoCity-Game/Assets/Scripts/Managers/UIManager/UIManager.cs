@@ -7,12 +7,13 @@ namespace EchoCity
     public enum ShowableUIEnum
     {
         TitleMenu,
+        LoadingScreen,
         HUD,
         PauseMenu,
-        Dialogs,
         DeathMenu,
-        LoadingScreen,
-        WinMenu
+        WinMenu,
+        Dialog,
+        Warning
     }
 
     [System.Serializable]
@@ -21,6 +22,7 @@ namespace EchoCity
         None = 0,
         Inventory = 1
     }
+
     public class UIManager : MonoBehaviour, IEventSender
     {
         [Header("UI Controllers")]
@@ -59,7 +61,7 @@ namespace EchoCity
         [Header("Invoking Events for GM")]
         // [SerializeField] private SOEventVoid switchToTitleStateEvent;
         // [SerializeField] private SOEventVoid switchToPlayStateEvent;
-        // [SerializeField] private SOSceneEnumEvent switchToInitLevelEvent;
+        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
 
         public string SenderName => gameObject.name;
@@ -84,7 +86,7 @@ namespace EchoCity
         // [SerializeField] private SOEventVoid canInteractStopEvent;
         // [SerializeField] private SOStringColorEvent spawnWarningEvent;
         [SerializeField] private SOEventVoid itemEquippedEvent;
-        [SerializeField] private SOIntEvent dropItemEvent;
+        [SerializeField] private SOInventoryChangedEvent inventoryChangedEvent;
         // [SerializeField] private SOIntIntEvent questsUpdatedEvent;
 
         [Header("External References")]
@@ -141,7 +143,7 @@ namespace EchoCity
             // if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableStopHandler;
             // if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
             if (itemEquippedEvent) itemEquippedEvent.OnEventRaised += ItemEquippedHandler;
-            if (dropItemEvent) dropItemEvent.OnEventRaised += DropItemEventHandler;
+            if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised += DropItemEventHandler;
             // if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised += QuestsUpdatedEventHandler;
         }
 
@@ -164,7 +166,7 @@ namespace EchoCity
         {
             HideAllElements();
             _hud.SetActive(true);
-            // switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.InitLevel, new ToInitLevelParams(scene));
+            switchLevelEvent?.RaiseEvent(this, scene, null);
         }
 
 
@@ -256,7 +258,7 @@ namespace EchoCity
                     HideAllElements();
                     _pauseMenu.SetActive(true);
                     break;
-                case ShowableUIEnum.Dialogs:
+                case ShowableUIEnum.Dialog:
                     HideAllElements();
                     _dialog.SetActive(true);
                     break;
@@ -295,7 +297,11 @@ namespace EchoCity
         private void CrosshairInteractableStopHandler(IEventSender sender) => crosshairController.IsInteractable(false);
         private void SpawnWarningHandler(IEventSender sender, string warningText, Color color) => warningController.SpawnWarning(warningText, color);
         private void ItemEquippedHandler(IEventSender sender) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
-        private void DropItemEventHandler(IEventSender sender, int index) => equippedPanelController.ClearEquipped();
+        private void DropItemEventHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum code)
+        {
+            if (code == InventoryCodesEnum.ItemDropped && playerController.equippedItem != null && playerController.equippedItem.Data.PickableEnum == pickable)
+                equippedPanelController.ClearEquipped();
+        }
         private void QuestsUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
 
 
@@ -314,7 +320,7 @@ namespace EchoCity
             // if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= CrosshairInteractableStopHandler;
             // if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= SpawnWarningHandler;
             if (itemEquippedEvent) itemEquippedEvent.OnEventRaised -= ItemEquippedHandler;
-            if (dropItemEvent) dropItemEvent.OnEventRaised -= DropItemEventHandler;
+            if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised -= DropItemEventHandler;
             // if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised -= QuestsUpdatedEventHandler;
         }
 

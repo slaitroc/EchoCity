@@ -40,7 +40,6 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOIntEvent dropItemEvent;
         [SerializeField] private SOEventVoid deathEvent;
         [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
 
@@ -50,7 +49,7 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observing Events")]
-        [SerializeField] private SOEquipItemEvent itemEquippedEvent;
+        [SerializeField] private SOEventVoid itemEquippedEvent;
         [SerializeField] private SOIAttractionEvent enemyAttractionEvent;
         [SerializeField] private SOSoundEmissionDataEvent perceivedSoundEvent;
 
@@ -177,7 +176,7 @@ namespace EchoCity
             if (prefab == null)
                 Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
 
-            itemEquippedEvent?.RaiseEvent(this, index, data, prefab);
+            itemEquippedEvent?.RaiseEvent(this);
         }
 
         public void UseTool()
@@ -216,7 +215,6 @@ namespace EchoCity
                 Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
             }
             playerInventory.DropItem(equippedItem.Index);
-            dropItemEvent?.RaiseEvent(this, equippedItem.Index);
             materialToggleEvent?.RaiseEvent(this);
             materialToggleEvent?.RaiseEvent(this);
             equippedItem = null;

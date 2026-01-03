@@ -38515,11 +38515,10 @@ MonoBehaviour:
   checkTags: []
   setTags: []
   _description: 
+  showUIEvent: {fileID: 0}
   switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
   dialogContainerSuccess: {fileID: 11400000, guid: 497d0dcff38e244fbbc4da4c7828f067, type: 2}
   dialogContainerFail: {fileID: 11400000, guid: b564213884a29483a8dc86a9bfe98fad, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!4 &1381520158 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 447094, guid: 9af229873282516419f931d3f246a594, type: 3}
@@ -62165,7 +62164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialDialogContainer: {fileID: 11400000, guid: 00ca6e6856df8446fa9a760e40f892fe, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
+  switchToNarrationStateEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
@@ -62239,7 +62238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialDialogContainer: {fileID: 11400000, guid: dedaf29724f3947f2a5f771d96c8acd7, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
+  switchToNarrationStateEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
@@ -62433,6 +62432,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 5644014969841194383, guid: b79829801f668a441a8418f0ad0d0ad4, type: 3}
+      propertyPath: showUIEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -62559,7 +62562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialDialogContainer: {fileID: 11400000, guid: 966a108269fbb421294261e2b494f211, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
+  switchToNarrationStateEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
@@ -62699,10 +62702,9 @@ MonoBehaviour:
     _count: 0
   _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  PickableData: {fileID: 0}
+  PickableData: {fileID: 11400000, guid: 39a6fbb27c8f5c94eb0507387ae4cca4, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   dialogContainer: {fileID: 11400000, guid: 97e74a292ad7946da84e750fc3360aa4, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!1 &1980192768735814432
 GameObject:
   m_ObjectHideFlags: 0
@@ -62961,10 +62963,9 @@ MonoBehaviour:
     _count: 0
   _description: 
   itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  PickableData: {fileID: 0}
+  PickableData: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   dialogContainer: {fileID: 11400000, guid: 34163aab2457843ea8925c9c6556bb99, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!65 &3416490070019654811
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -63800,7 +63801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialDialogContainer: {fileID: 11400000, guid: 105ec83c002644b01a253a9b517b1aa3, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
+  switchToNarrationStateEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0

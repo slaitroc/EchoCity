@@ -4,18 +4,18 @@ namespace EchoCity
 {
     public class CablePickable : Pickable
     {
+        [Header("Invoking Events")]
+        [SerializeField] private SOShowUIEvent showUIEvent;
         [Header("Messages")]
-        [SerializeField] SODialogContainer dialogContainer;
-        [SerializeField] SOShowDialogEvent dialogDataEvent;
-        [SerializeField] SOStringColorEvent spawnMessageEvent;
+        [SerializeField] private SODialogContainer dialogContainer;
 
         protected override void ResolveInteraction(bool outcome)
         {
             base.ResolveInteraction(outcome);
             if (outcome)
             {
-                spawnMessageEvent?.RaiseEvent(this, "Cable Picked Up!", new Color(1f, 0.5f, 0f, 1f));
-                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainer));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("Cable Picked Up!", new Color(1f, 0.5f, 0f, 1f)));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainer)));
             }
         }
     }

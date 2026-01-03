@@ -8,9 +8,7 @@ namespace EchoCity
     public class SceneLoader : MonoBehaviour, IEventSender
     {
         [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid enterLoadingEvent;
-        [SerializeField] private SOEventVoid exitLoadingEvent;
-        // [SerializeField] private SOEventVoid unloadDoneEvent;
+        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
@@ -18,10 +16,10 @@ namespace EchoCity
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.SceneLoader };
 
         [Header("Observed Events")]
-        [SerializeField] private SOSceneEnumEvent loadLevelEvent;
-        [SerializeField] private SOEventVoid unloadCurrentLevelEvent;
-        [SerializeField] private SOEventVoid reloadLevelEvent;
-        [SerializeField] private SOEventVoid setPlayerOnSpawnEvent;
+        [SerializeField] private SOLoadSceneEvent loadLevelEvent;
+        [SerializeField] private SOUnloadCurrentSceneEvent unloadCurrentLevelEvent;
+        [SerializeField] private SOReloadSceneEvent reloadLevelEvent;
+        [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
 
         [Header("Settings")]
         [SerializeField]
@@ -202,14 +200,14 @@ namespace EchoCity
 
         private IEnumerator StartLoading()
         {
-            enterLoadingEvent?.RaiseEvent(this);
+            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Loading, new ToLoadingStateParams(true));
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
         private IEnumerator StopLoading()
         {
             yield return new WaitForSecondsRealtime(0.5f);
-            exitLoadingEvent?.RaiseEvent(this);
+            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, new ToLoadingStateParams(false));
         }
     }
 }

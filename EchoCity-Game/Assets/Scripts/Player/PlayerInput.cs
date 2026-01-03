@@ -14,14 +14,11 @@ namespace EchoCity
         [SerializeField] private PlayerController playerController;
 
         [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid switchToPauseStateEvent;
-        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
-        [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
-        [SerializeField] private SOBoolStringEvent canInteractStartEvent;
-        [SerializeField] private SOEventVoid canInteractStopEvent;
+        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOShowUIEvent showUIEvent;
+        [SerializeField] private SOShowInteractionEvent showInteractionEvent;
         [SerializeField] private SOEventVoid materialToggleEvent;
         [SerializeField] private SOEventVoid areaInteractionEvent;
-        [SerializeField] private SOEventVoid itemPickedEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -37,19 +34,14 @@ namespace EchoCity
         [SerializeField] private List<AreaInteractable> inRangeInteractables;
         [SerializeField] private AreaInteractable closestAreaInteractable;
         private bool _isShowingAreaDescription = false;
-        private bool _isShowingDescription;
+        private bool _isShowingDescription = false;
 
 
         [Header("Test Events")]
         [Header("Invoking")]
-        [SerializeField] private SOEquipItemEvent itemEquippedEvent;
-        [SerializeField] private SOPickable examplePickable;
-        [SerializeField] private SOStringColorEvent spawnWarningEvent;
-        [SerializeField] private SOEventVoid switchToDeathStateEvent;
-        [SerializeField] private SOEventVoid switchToWinStateEvent;
+        [SerializeField] private SOEventVoid itemEquippedEvent;
 
         [Header("Dialog")]
-        [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
         [SerializeField] private SODialogContainer exampleDialogData;
 
 
@@ -119,7 +111,7 @@ namespace EchoCity
             {
                 if (!_isShowingDescription)
                 {
-                    canInteractStartEvent.RaiseEvent(this, description.IsInteractable, description.Description);
+                    showInteractionEvent.RaiseEvent(this, description.IsInteractable, true, description.Description);
                     _isShowingDescription = true;
                 }
             }
@@ -127,7 +119,7 @@ namespace EchoCity
             {
                 if (_isShowingDescription)
                 {
-                    canInteractStopEvent.RaiseEvent(this);
+                    showInteractionEvent.RaiseEvent(this, false, false, null);
                     _isShowingDescription = false;
                 }
             }
@@ -148,13 +140,13 @@ namespace EchoCity
                         }
                     }
                     _isShowingAreaDescription = true;
-                    canInteractStartEvent.RaiseEvent(this, false, closestAreaInteractable.Description);
+                    showInteractionEvent.RaiseEvent(this, false, true, closestAreaInteractable.Description);
                 }
                 else
                 {
                     if (_isShowingAreaDescription)
                     {
-                        canInteractStopEvent.RaiseEvent(this);
+                        showInteractionEvent.RaiseEvent(this, false, false, null);
                         _isShowingAreaDescription = false;
                     }
                 }
@@ -238,6 +230,7 @@ namespace EchoCity
             {
                 Log.DLazy(() => $"Interacting with AreaInteractable: {closestAreaInteractable.name}", this);
                 closestAreaInteractable.Interact();
+                areaInteractionEvent.RaiseEvent(this);
             }
 
         }
@@ -262,7 +255,7 @@ namespace EchoCity
         private void OnEnterPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            switchToPauseStateEvent.RaiseEvent(this);
+            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Pause, null);
         }
 
         private void OnOpenInventory(InputAction.CallbackContext context)
@@ -273,14 +266,14 @@ namespace EchoCity
             _playerActionMap["DropItem"].performed -= OnDropItem;
             _playerActionMap["UseTool"].performed -= OnUseTool;
 
-            switchToHudStateEvent.RaiseEvent(this, HudEnum.Inventory);
+            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Hud, new ToHUDStateParams(HudEnum.Inventory));
 
         }
 
         private void OnCloseInventory(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            switchToPlayingStateEvent.RaiseEvent(this);
+            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Playing, null);
             _playerActionMap["Look"].performed += OnLook;
             _playerActionMap["Interact"].performed += OnInteract;
             _playerActionMap["DropItem"].performed += OnDropItem;
@@ -299,28 +292,28 @@ namespace EchoCity
 
         private void OnTest1(InputAction.CallbackContext context)
         {
-            //TESTS HERE
+            //DEATH Menu TEST
             if (context.performed)
             {
-                switchToDeathStateEvent?.RaiseEvent(this);
+                switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Death, null);
             }
         }
 
         private void OnTest2(InputAction.CallbackContext context)
         {
-            //EQUIP ITEM TEST
+            //WARNING TEST
             if (context.performed)
             {
-                spawnWarningEvent?.RaiseEvent(this, "Warning: Enemy Approaching!", Color.red);
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("This is a test warning message!", Color.red));
             }
         }
 
         private void OnTest3(InputAction.CallbackContext context)
         {
-            //EQUIP ITEM TEST
+            //WIN Menu TEST
             if (context.performed)
             {
-                switchToWinStateEvent?.RaiseEvent(this);
+                switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Win, null);
             }
         }
 
@@ -333,15 +326,7 @@ namespace EchoCity
             }
         }
 
-        private void OnTest4(InputAction.CallbackContext context)
-        {
-            // SPAWN DIALOG TEST
-            if (context.performed)
-            {
-                switchToNarrationStateEvent.RaiseEvent(this, new DialogData(exampleDialogData.DialogLines));
-            }
-        }
-
+        private void OnTest4(InputAction.CallbackContext context) { }
         #endregion
 
         private void EnablePlayerActionMapHandler(IEventSender sender)

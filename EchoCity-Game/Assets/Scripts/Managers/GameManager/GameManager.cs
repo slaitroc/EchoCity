@@ -8,12 +8,6 @@ namespace EchoCity
     {
         #region fields and properties
         [Header("Invoking Events")]
-        [SerializeField] private SOGameManagerStateTransitionEvent switchGameStateEvent;
-        string IEventSender.SenderName => gameObject.name;
-        int IEventSender.SenderID => GetInstanceID();
-        bool IEventSender.IsManager => true;
-        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.GameManager };
-
         // INPUT
         [SerializeField] private SOEventVoid enablePlayerInputEvent;
         [SerializeField] private SOEventVoid disablePlayerInputEvent;
@@ -23,11 +17,19 @@ namespace EchoCity
         // UI MANAGER EVENTS
         [SerializeField] private SOShowUIEvent showUIEvent;
 
+        // TRANSITIONS
+        [SerializeField] private SOGameManagerStateTransitionEvent gameStateTransitionEvent;
+
         // SCENE MANAGEMENT
-        [SerializeField] private SOEventVoid setPlayerOnSpawnEvent;
-        [SerializeField] private SOSceneEnumEvent loadLevelEvent;
-        [SerializeField] private SOEventVoid unloadCurrentLevelEvent;
-        [SerializeField] private SOEventVoid reloadLevelEvent;
+        [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
+        [SerializeField] private SOLoadSceneEvent loadSceneEvent;
+        [SerializeField] private SOUnloadCurrentSceneEvent unloadCurrentSceneEvent;
+        [SerializeField] private SOReloadSceneEvent reloadSceneEvent;
+
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => true;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.GameManager };
 
         [Header("Observed Events")]
         [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
@@ -49,12 +51,11 @@ namespace EchoCity
         SOEventVoid IGMContext.EnableUIInputEvent => enableUIInputEvent;
         SOEventVoid IGMContext.DisableUIInputEvent => disableUIInputEvent;
         SOShowUIEvent IGMContext.ShowUIEvent => showUIEvent;
-        SOEventVoid IGMContext.SetPlayerOnSpawnEvent => setPlayerOnSpawnEvent;
-        SOSceneEnumEvent IGMContext.LoadLevelEvent => loadLevelEvent;
-        SOEventVoid IGMContext.UnloadCurrentLevelEvent => unloadCurrentLevelEvent;
-        SOEventVoid IGMContext.ReloadLevelEvent => reloadLevelEvent;
-        SOGameManagerStateTransitionEvent IGMContext.SwitchGameStateEvent => switchGameStateEvent;
-
+        SOSetPlayerOnSpawnEvent IGMContext.SetPlayerOnSpawnEvent => setPlayerOnSpawnEvent;
+        SOLoadSceneEvent IGMContext.LoadSceneEvent => loadSceneEvent;
+        SOUnloadCurrentSceneEvent IGMContext.UnloadCurrentSceneEvent => unloadCurrentSceneEvent;
+        SOReloadSceneEvent IGMContext.ReloadSceneEvent => reloadSceneEvent;
+        SOGameManagerStateTransitionEvent IGMContext.GameStateTransitionEvent => gameStateTransitionEvent;
         #endregion
 
         void Start()
@@ -76,12 +77,14 @@ namespace EchoCity
             if (switchLevelEvent != null) switchLevelEvent.OnEventRaised -= InitLevelHandler;
         }
 
+        void Update() => _fsm.Update();
+
         private void SwitchToGameStateHandler(IEventSender sender, GameStatesEnum @enum, EventParams @params)
         {
             switch (@enum)
             {
                 case GameStatesEnum.None:
-                    Debug.LogError("GameManager: SwitchToGameStateHandler - Cannot switch to None state.");
+                    Log.ELazy(() => "SwitchToGameStateHandler - Cannot switch to None state.", this);
                     break;
                 case GameStatesEnum.Title:
                     _fsm.CurrentState.SwitchToTitleHandler();
@@ -102,13 +105,13 @@ namespace EchoCity
                     if (@params is ToDialogueStateParams dialogParams)
                         _fsm.CurrentState.SwitchToNarrationHandler(dialogParams.DialogData);
                     else
-                        Debug.LogError("GameManager: SwitchToGameStateHandler - Missing DialogParams for Narration state.");
+                        Log.ELazy(() => "GameManager: SwitchToGameStateHandler - Missing DialogData for Narration state.", this);
                     break;
                 case GameStatesEnum.Hud:
                     if (@params is ToHUDStateParams hudParams)
                         _fsm.CurrentState.SwitchToHudHandler(hudParams.HudState);
                     else
-                        Debug.LogError("GameManager: SwitchToGameStateHandler - Missing HudParams for Hud state.");
+                        Log.ELazy(() => "GameManager: SwitchToGameStateHandler - Missing HudParams for Hud state.", this);
                     break;
                 case GameStatesEnum.Loading:
                     if (@params is ToLoadingStateParams loadingParams)
@@ -118,12 +121,11 @@ namespace EchoCity
                             _fsm.ExitLoading();
                     break;
                 default:
-                    Debug.LogError("GameManager: SwitchToGameStateHandler - Unhandled GameStatesEnum " + @enum);
+                    Log.ELazy(() => "GameManager: SwitchToGameStateHandler - Unhandled GameStatesEnum " + @enum, this);
                     break;
             }
         }
 
-        void Update() => _fsm.Update();
         public void InitLevelHandler(IEventSender sender, SceneEnum scene, EventParams @params) => _fsm.CurrentState.InitLevelHandler(scene);
     }
 }

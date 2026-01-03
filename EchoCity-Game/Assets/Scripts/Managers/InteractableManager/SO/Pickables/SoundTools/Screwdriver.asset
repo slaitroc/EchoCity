@@ -1,24 +1,34 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
+---
+!u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_CorrespondingSourceObject: { fileID: 0 }
+  m_PrefabInstance: { fileID: 0 }
+  m_PrefabAsset: { fileID: 0 }
+  m_GameObject: { fileID: 0 }
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4b98f3c75003574c8a53e0aec249253, type: 3}
+  m_Script:
+    { fileID: 11500000, guid: f4b98f3c75003574c8a53e0aec249253, type: 3 }
   m_Name: Screwdriver
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   _pickableEnum: 1
   _pickableType: 2
   _name: Screwdriver
-  _description: 
+  _description:
   _maxStackQuantity: 1
-  _icon: {fileID: 21300000, guid: 9cb75a8a87e9e4ff8bcbb5a0ec1fd760, type: 3}
-  _pickUpSound: {fileID: 11400000, guid: ecfcd06a0d0e5eb4e8ab18f074fc11ca, type: 2}
-  _toolSound: {fileID: 11400000, guid: c94e27df7f505dc44b8a032b14dd97dd, type: 2}
-  _dropSound: {fileID: 11400000, guid: 69f207545e668f8438544fc5c55b6a48, type: 2}
-  _prefab: {fileID: 2787324953342941381, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
+  _icon: { fileID: 21300000, guid: 9cb75a8a87e9e4ff8bcbb5a0ec1fd760, type: 3 }
+  _pickUpSound:
+    { fileID: 11400000, guid: ecfcd06a0d0e5eb4e8ab18f074fc11ca, type: 2 }
+  _toolSound:
+    { fileID: 11400000, guid: c94e27df7f505dc44b8a032b14dd97dd, type: 2 }
+  _dropSound:
+    { fileID: 11400000, guid: 69f207545e668f8438544fc5c55b6a48, type: 2 }
+  _prefab:
+    {
+      fileID: 2787324953342941381,
+      guid: 456d2bb393af8d443a1b9aaeb570467d,
+      type: 3,
+    }

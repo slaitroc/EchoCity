@@ -59,7 +59,7 @@ namespace EchoCity
         // <summary> FSM current state </summary>
         GameStatesEnum CurrentStateEnum { get; set; }
 
-        SOGameManagerStateTransitionEvent SwitchGameStateEvent { get; }
+        SOGameManagerStateTransitionEvent GameStateTransitionEvent { get; }
 
         // INPUT EVENTS
         SOEventVoid EnablePlayerInputEvent { get; }
@@ -71,10 +71,10 @@ namespace EchoCity
         SOShowUIEvent ShowUIEvent { get; }
 
         // SCENE MANAGEMENT EVENTS
-        SOEventVoid SetPlayerOnSpawnEvent { get; }
-        SOSceneEnumEvent LoadLevelEvent { get; }
-        SOEventVoid UnloadCurrentLevelEvent { get; }
-        SOEventVoid ReloadLevelEvent { get; }
+        SOSetPlayerOnSpawnEvent SetPlayerOnSpawnEvent { get; }
+        SOLoadSceneEvent LoadSceneEvent { get; }
+        SOUnloadCurrentSceneEvent UnloadCurrentSceneEvent { get; }
+        SOReloadSceneEvent ReloadSceneEvent { get; }
 
 
     }

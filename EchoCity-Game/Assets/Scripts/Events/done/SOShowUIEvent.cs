@@ -43,4 +43,18 @@ namespace EchoCity
             _hudState = hudState;
         }
     }
+
+    public class WarningParams : EventParams
+    {
+        private readonly string _message;
+        private readonly Color _color;
+        public string Message => _message;
+        public Color Color => _color;
+
+        public WarningParams(string message, Color color)
+        {
+            _message = message;
+            _color = color;
+        }
+    }
 }

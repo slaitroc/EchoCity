@@ -34,12 +34,12 @@ namespace EchoCity
         public override void SwitchToTitleHandler()
         {
             _toTitle = true;
-            _context.UnloadCurrentLevelEvent.RaiseEvent(_context);
+            _context.UnloadCurrentSceneEvent.RaiseEvent(_context);
         }
         public override void InitLevelHandler(SceneEnum scene)
         {
             _restart = true;
-            _context.LoadLevelEvent.RaiseEvent(_context, scene);
+            _context.LoadSceneEvent.RaiseEvent(_context, scene);
         }
     }
 }
