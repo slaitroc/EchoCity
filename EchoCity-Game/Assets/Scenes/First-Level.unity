@@ -16845,19 +16845,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e78cc734cfab946a4391eaba1e0c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
-  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
-  checkTags: 00000000
-  setTags: 04000000
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: b7bd79ad65fc56449a3822c9158f169c, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags: []
+  setTags: []
+  _description: 
+  PickableData: {fileID: 0}
+  showUIEvent: {fileID: 0}
   dialogContainer: {fileID: 11400000, guid: a9c25fc8f979844ea9f4dbd9d8d9e889, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!114 &540597410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18791,16 +18786,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e678db85a445b4e969d25af3218c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkTagsEvent: {fileID: 0}
-  setPuzzleTagsEvent: {fileID: 0}
-  materialToggleEvent: {fileID: 0}
-  interactionOutcomeEvent: {fileID: 0}
-  checkTags: 
-  setTags: 
+  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags: []
+  setTags: []
+  _description: 
   hasFixDetector: 1
   detector: {fileID: 1091529101}
   doorAnimator: {fileID: 0}
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   openSound: {fileID: 11400000, guid: 7b8f46bc19fdaad4b9d786240093af2b, type: 2}
   closeSound: {fileID: 11400000, guid: cd9b1aa808ca0a047ac4760e331e46fa, type: 2}
   _isOpen: 0
@@ -26167,66 +26160,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 845077175}
     m_Modifications:
-    - target: {fileID: 1874813570440632, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Name
-      value: SM_Prop_Cord_Desk_01_Mid
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 42.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.2580001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.2289999
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 64127203487632410, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -26243,25 +26176,89 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1592942470777406, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_Name
+      value: Interactable-CordBoard-Empty_Mid
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 42.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.2580001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.2289999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 64978691957319536, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1874813570440632, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 1592942470777406, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 796376927}
-    - targetCorrespondingSourceObject: {fileID: 1874813570440632, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 1592942470777406, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 796376926}
-  m_SourcePrefab: {fileID: 100100000, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
 --- !u!4 &796376924 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4643719022618702, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4136578542745716, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
   m_PrefabInstance: {fileID: 796376923}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &796376925 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1874813570440632, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1592942470777406, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
   m_PrefabInstance: {fileID: 796376923}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &796376926
@@ -28163,6 +28160,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 447094, guid: 9af229873282516419f931d3f246a594, type: 3}
   m_PrefabInstance: {fileID: 1113707150}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &839821227 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 442881692552996386, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+  m_PrefabInstance: {fileID: 1866460453}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &840038391
 PrefabInstance:
@@ -36804,12 +36806,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8d5097618a2e64bbaa820bb1beb363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkTagsEvent: {fileID: 0}
-  setPuzzleTagsEvent: {fileID: 0}
-  materialToggleEvent: {fileID: 0}
-  interactionOutcomeEvent: {fileID: 0}
-  checkTags: 
-  setTags: 
+  newAudioSphereEvent: {fileID: 0}
+  puzzleManager: {fileID: 0}
+  checkTags: []
+  setTags: []
+  _description: 
   linkedInteractable: {fileID: 596940939}
 --- !u!1001 &1092658424
 PrefabInstance:
@@ -45638,16 +45639,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 0}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
   _description: 
+  showUIEvent: {fileID: 0}
   switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
   dialogContainerSuccess: {fileID: 11400000, guid: 497d0dcff38e244fbbc4da4c7828f067, type: 2}
   dialogContainerFail: {fileID: 11400000, guid: b564213884a29483a8dc86a9bfe98fad, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!4 &1381520158 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 447094, guid: 9af229873282516419f931d3f246a594, type: 3}
@@ -46371,16 +46370,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
-  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
-  checkTags: 00000000
-  setTags: 
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags: []
+  setTags: []
+  _description: 
+  PickableData: {fileID: 0}
 --- !u!114 &1400720590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63398,34 +63393,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5337908310112159342, guid: 51debe0fffea83c42a170d912244593e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1866460456}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51debe0fffea83c42a170d912244593e, type: 3}
---- !u!4 &1866460454 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8884299772005818300, guid: 51debe0fffea83c42a170d912244593e, type: 3}
-  m_PrefabInstance: {fileID: 1866460453}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1866460455 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5337908310112159342, guid: 51debe0fffea83c42a170d912244593e, type: 3}
-  m_PrefabInstance: {fileID: 1866460453}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1866460456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1866460455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectFrequency: 1
 --- !u!1001 &1867289883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -73862,6 +73831,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
 --- !u!114 &245479332745480907
 MonoBehaviour:
@@ -73985,6 +73955,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
   audioClips:
   - {fileID: 8300000, guid: f89d9b35269df57458946f04f4720d14, type: 3}
@@ -74045,7 +74016,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
@@ -74238,26 +74208,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialDialogContainer: {fileID: 11400000, guid: 966a108269fbb421294261e2b494f211, type: 2}
   switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
-  setTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
-  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
-  checkTags: 00000000
-  setTags: 
---- !u!4 &1084530219776944999
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838666319279783335}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -155.203, y: -0.32, z: 7.007}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3775048676811478646}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  puzzleManager: {fileID: 0}
+  checkTags: []
+  setTags: []
 --- !u!65 &1182739319914526291
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74407,21 +74360,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 3
     _isActive: 0
+    _count: 0
   setTags:
   - _tag: 3
     _isActive: 1
+    _count: 0
   _description: 
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: ab854fcb9fe6d6e44a261e4d431af3f9, type: 2}
+  PickableData: {fileID: 0}
+  showUIEvent: {fileID: 0}
   dialogContainer: {fileID: 11400000, guid: 97e74a292ad7946da84e750fc3360aa4, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!33 &1899360680149629840
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -74476,21 +74427,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 2
     _isActive: 0
+    _count: 0
   setTags:
   - _tag: 2
     _isActive: 1
+    _count: 0
   _description: 
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: 40184c959aa726441a5ddacec8f80f4f, type: 2}
+  PickableData: {fileID: 0}
+  showUIEvent: {fileID: 0}
   dialogContainer: {fileID: 11400000, guid: 34163aab2457843ea8925c9c6556bb99, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!114 &3024418317742625102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74504,16 +74453,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
   _description: 
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: b0d27fab71d05e449919984589991233, type: 2}
+  PickableData: {fileID: 0}
 --- !u!23 &3284762204528175142
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -74572,7 +74519,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 0}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
@@ -74676,70 +74622,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!4 &3775048676811478646
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377451367914196900}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99288815, z: -0, w: 0.119051054}
-  m_LocalPosition: {x: 2.6000032, y: 0.501, z: -0.516}
-  m_LocalScale: {x: 0.26, y: 0.26, z: 0.26}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 8179161022549435158}
-  - {fileID: 5259398427081941964}
-  - {fileID: 1456200351351757807}
-  - {fileID: 1084530219776944999}
-  - {fileID: 2136642019035054718}
-  - {fileID: 1024115059255813732}
-  m_Father: {fileID: 5595003298818426895}
-  m_LocalEulerAnglesHint: {x: 0, y: 166.325, z: 0}
---- !u!114 &3775048676811478647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377451367914196900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
-  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
-  checkTags: 00000000
-  setTags: 
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: ed686a97e9a2ee04c956828f8a62fbb2, type: 2}
---- !u!65 &3775048676811478648
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 377451367914196900}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &3925862721221016585
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -75240,16 +75122,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
   _description: 
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
+  PickableData: {fileID: 0}
 --- !u!1 &5303303342563162106
 GameObject:
   m_ObjectHideFlags: 0
@@ -75343,7 +75223,7 @@ Transform:
   - {fileID: 1322470773750439094}
   - {fileID: 4116886197767410836}
   - {fileID: 1400720587}
-  - {fileID: 1866460454}
+  - {fileID: 839821227}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5602306004617204830
@@ -75364,6 +75244,7 @@ MonoBehaviour:
   checkTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   setTags: []
 --- !u!4 &5685134293285620591
 Transform:
@@ -75660,21 +75541,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 4
     _isActive: 0
+    _count: 0
   setTags:
   - _tag: 4
     _isActive: 1
+    _count: 0
   _description: 
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: b7bd79ad65fc56449a3822c9158f169c, type: 2}
+  PickableData: {fileID: 0}
+  showUIEvent: {fileID: 0}
   dialogContainer: {fileID: 11400000, guid: a9c25fc8f979844ea9f4dbd9d8d9e889, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!23 &6963345565383586175
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -75754,25 +75633,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 4
     _isActive: 1
+    _count: 0
   - _tag: 6
     _isActive: 1
+    _count: 0
   setTags:
   - _tag: 0
     _isActive: 0
+    _count: 0
   _description: 
   materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
+  showUIEvent: {fileID: 0}
   useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
   cardPrefab: {fileID: 2224368390549605647, guid: f16ddeba5edac764da33972634453b46, type: 3}
   cardSpawnPoint: {fileID: 8052765108740458615}
   dialogContainerSuccess: {fileID: 11400000, guid: d655277bb95a044298af0252e627d062, type: 2}
   dialogContainerFail: {fileID: 11400000, guid: 588cbaac87d82400880f434fb0dd7c96, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!4 &7089483879322350375
 Transform:
   m_ObjectHideFlags: 0
@@ -76038,21 +75918,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  interactionOutcomeEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 7
     _isActive: 1
+    _count: 0
   setTags: []
   _description: 
   hasFixDetector: 0
   detector: {fileID: 0}
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   switchLinkedObject: {fileID: 235136907}
   switchOnSound: {fileID: 11400000, guid: d2cef0896b5120044ac451ee4dcda5c6, type: 2}
   switchOffSound: {fileID: 11400000, guid: 84ef589eb69da9049864b213de88a162, type: 2}
   wallPanelSwitchAnimator: {fileID: 1713379282615632658}
   _isSwitchedOn: 1
+  triggeredQuest: []
 --- !u!1 &7985190276192349694
 GameObject:
   m_ObjectHideFlags: 0
