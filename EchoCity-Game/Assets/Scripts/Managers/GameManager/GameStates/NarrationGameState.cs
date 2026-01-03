@@ -10,8 +10,8 @@ namespace EchoCity
         public override GameStatesEnum GetEnum() => GameStatesEnum.Narration;
         public override void Enter()
         {
-            _context.DisablePlayerInputEvent.RaiseEvent(_context);
-            _context.EnableUIInputEvent.RaiseEvent(_context);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, false);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
             Time.timeScale = 0;
         }
         public void EnterNarration(DialogData data)

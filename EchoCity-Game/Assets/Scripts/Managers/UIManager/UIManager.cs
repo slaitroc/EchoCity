@@ -85,7 +85,7 @@ namespace EchoCity
         // [SerializeField] private SOShowInteractionEvent canInteractStartEvent;
         // [SerializeField] private SOEventVoid canInteractStopEvent;
         // [SerializeField] private SOStringColorEvent spawnWarningEvent;
-        [SerializeField] private SOEventVoid itemEquippedEvent;
+        [SerializeField] private SOEquippedItemChanged equippedItemChanged;
         [SerializeField] private SOInventoryChangedEvent inventoryChangedEvent;
         // [SerializeField] private SOIntIntEvent questsUpdatedEvent;
 
@@ -142,7 +142,7 @@ namespace EchoCity
             // if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableStartHandler;
             // if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableStopHandler;
             // if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
-            if (itemEquippedEvent) itemEquippedEvent.OnEventRaised += ItemEquippedHandler;
+            if (equippedItemChanged) equippedItemChanged.OnEventRaised += ItemEquippedHandler;
             if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised += DropItemEventHandler;
             // if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised += QuestsUpdatedEventHandler;
         }
@@ -319,7 +319,7 @@ namespace EchoCity
             // if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= CrosshairInteractableStartHandler;
             // if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= CrosshairInteractableStopHandler;
             // if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= SpawnWarningHandler;
-            if (itemEquippedEvent) itemEquippedEvent.OnEventRaised -= ItemEquippedHandler;
+            if (equippedItemChanged) equippedItemChanged.OnEventRaised -= ItemEquippedHandler;
             if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised -= DropItemEventHandler;
             // if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised -= QuestsUpdatedEventHandler;
         }

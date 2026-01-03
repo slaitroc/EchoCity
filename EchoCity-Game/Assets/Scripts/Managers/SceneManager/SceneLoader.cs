@@ -207,7 +207,7 @@ namespace EchoCity
         private IEnumerator StopLoading()
         {
             yield return new WaitForSecondsRealtime(0.5f);
-            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, new ToLoadingStateParams(false));
+            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Loading, new ToLoadingStateParams(false));
         }
     }
 }

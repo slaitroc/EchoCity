@@ -9,10 +9,7 @@ namespace EchoCity
         #region fields and properties
         [Header("Invoking Events")]
         // INPUT
-        [SerializeField] private SOEventVoid enablePlayerInputEvent;
-        [SerializeField] private SOEventVoid disablePlayerInputEvent;
-        [SerializeField] private SOEventVoid enableUIInputEvent;
-        [SerializeField] private SOEventVoid disableUIInputEvent;
+        [SerializeField] private SOPlayerInputEvent playerInputEvent;
 
         // UI MANAGER EVENTS
         [SerializeField] private SOShowUIEvent showUIEvent;
@@ -46,10 +43,7 @@ namespace EchoCity
         // GM Context
         IFSMOwner IGMContext.Owner => this;
         GameStatesEnum IGMContext.CurrentStateEnum { get => currentState; set => currentState = value; }
-        SOEventVoid IGMContext.EnablePlayerInputEvent => enablePlayerInputEvent;
-        SOEventVoid IGMContext.DisablePlayerInputEvent => disablePlayerInputEvent;
-        SOEventVoid IGMContext.EnableUIInputEvent => enableUIInputEvent;
-        SOEventVoid IGMContext.DisableUIInputEvent => disableUIInputEvent;
+        SOPlayerInputEvent IGMContext.PlayerInputEvent => playerInputEvent;
         SOShowUIEvent IGMContext.ShowUIEvent => showUIEvent;
         SOSetPlayerOnSpawnEvent IGMContext.SetPlayerOnSpawnEvent => setPlayerOnSpawnEvent;
         SOLoadSceneEvent IGMContext.LoadSceneEvent => loadSceneEvent;

@@ -4,7 +4,7 @@ namespace EchoCity
     public abstract class Interactable : MonoBehaviour, IEventSender, IInteractable, IHasDescription
     {
         [Header("Invoking Events")]
-        [SerializeField] protected SOSoundEmissionDataEvent newAudioSphereEvent;
+        [SerializeField] protected SOSoundEmittedEvent newAudioSphereEvent;
         [Header("Interactable Settings")]
         [SerializeField] protected PuzzleManager puzzleManager;
         [SerializeField] protected PuzzleTagState[] checkTags;

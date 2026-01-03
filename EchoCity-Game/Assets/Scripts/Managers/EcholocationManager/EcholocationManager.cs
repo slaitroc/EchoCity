@@ -15,8 +15,8 @@ namespace EchoCity
         private const int MAX_AUDIO_SPHERES = 64;
 
         [Header("Observed Events")]
-        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
-        [SerializeField] private SOEventVoid materialToggleEvent;
+        [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
+        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
 
 
         [Header("Echolocation Settings")]
@@ -70,15 +70,15 @@ namespace EchoCity
 
         void OnEnable()
         {
-            if (newAudioSphereEvent) newAudioSphereEvent.OnEventRaised += AddAudioSphereHandler;
-            if (materialToggleEvent) materialToggleEvent.OnEventRaised += MaterialSwitcherHandler;
+            if (soundEmittedEvent) soundEmittedEvent.OnEventRaised += AddAudioSphereHandler;
+            if (toggleMaterialEvent) toggleMaterialEvent.OnEventRaised += MaterialSwitcherHandler;
 
         }
 
         void OnDisable()
         {
-            if (newAudioSphereEvent) newAudioSphereEvent.OnEventRaised -= AddAudioSphereHandler;
-            if (materialToggleEvent) materialToggleEvent.OnEventRaised -= MaterialSwitcherHandler;
+            if (soundEmittedEvent) soundEmittedEvent.OnEventRaised -= AddAudioSphereHandler;
+            if (toggleMaterialEvent) toggleMaterialEvent.OnEventRaised -= MaterialSwitcherHandler;
         }
 
         private void OnValidate()

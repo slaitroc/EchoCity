@@ -17,8 +17,7 @@ namespace EchoCity
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private SOShowUIEvent showUIEvent;
         [SerializeField] private SOShowInteractionEvent showInteractionEvent;
-        [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOEventVoid areaInteractionEvent;
+        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -26,9 +25,7 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observed Events")]
-        [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
-        [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
-        [SerializeField] private SOEventVoid wearEcholocatorEvent;
+        [SerializeField] private SOPlayerInputEvent playerInputEvent;
 
         [Header("Interaction")]
         [SerializeField] private List<AreaInteractable> inRangeInteractables;
@@ -36,14 +33,7 @@ namespace EchoCity
         private bool _isShowingAreaDescription = false;
         private bool _isShowingDescription = false;
 
-
-        [Header("Test Events")]
-        [Header("Invoking")]
-        [SerializeField] private SOEventVoid itemEquippedEvent;
-
-        [Header("Dialog")]
-        [SerializeField] private SODialogContainer exampleDialogData;
-
+        // [Header("Test Parameters")]
 
         void Awake()
         {
@@ -88,15 +78,11 @@ namespace EchoCity
 
         private void SubscribeToEvents()
         {
-            if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised += EnablePlayerActionMapHandler;
-            if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised += DisablePlayerActionMapHandler;
-            if (wearEcholocatorEvent) wearEcholocatorEvent.OnEventRaised += WearEcholocatorHandler;
+            if (playerInputEvent) playerInputEvent.OnEventRaised += PlayerInputHandler;
         }
         private void UnsubscribeFromEvents()
         {
-            if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMapHandler;
-            if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMapHandler;
-            if (wearEcholocatorEvent) wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
+            if (playerInputEvent) playerInputEvent.OnEventRaised -= PlayerInputHandler;
         }
 
         void Update()
@@ -230,7 +216,6 @@ namespace EchoCity
             {
                 Log.DLazy(() => $"Interacting with AreaInteractable: {closestAreaInteractable.name}", this);
                 closestAreaInteractable.Interact();
-                areaInteractionEvent.RaiseEvent(this);
             }
 
         }
@@ -279,14 +264,13 @@ namespace EchoCity
             _playerActionMap["DropItem"].performed += OnDropItem;
             _playerActionMap["UseTool"].performed += OnUseTool;
         }
-
         #endregion
 
         #region Test Input Actions
         private void OnWearEcholocator(InputAction.CallbackContext context)
         {
             if (context.performed)
-                materialToggleEvent?.RaiseEvent(this);
+                toggleMaterialEvent?.RaiseEvent(this);
         }
 
 
@@ -329,15 +313,18 @@ namespace EchoCity
         private void OnTest4(InputAction.CallbackContext context) { }
         #endregion
 
-        private void EnablePlayerActionMapHandler(IEventSender sender)
+        private void PlayerInputHandler(IEventSender sender, InputEnum input, bool activate)
         {
-            _playerActionMap.Enable();
-            MethodsUI.HideCursor();
-        }
-
-        private void DisablePlayerActionMapHandler(IEventSender sender)
-        {
-            _playerActionMap.Disable();
+            if (input != InputEnum.Player) return;
+            if (activate)
+            {
+                _playerActionMap.Enable();
+                MethodsUI.HideCursor();
+            }
+            else
+            {
+                _playerActionMap.Disable();
+            }
         }
 
         public void AddAreaInteractable(AreaInteractable interactable)
@@ -352,11 +339,6 @@ namespace EchoCity
         {
             if (inRangeInteractables.Contains(interactable))
                 inRangeInteractables.Remove(interactable);
-        }
-
-        private void WearEcholocatorHandler(IEventSender sender)
-        {
-            materialToggleEvent?.RaiseEvent(this);
         }
     }
 }

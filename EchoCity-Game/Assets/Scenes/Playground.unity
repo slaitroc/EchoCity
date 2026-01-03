@@ -190,7 +190,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
 --- !u!4 &30952696 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 2667195472508060426, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3294617499260425376, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
   m_PrefabInstance: {fileID: 30952695}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &77009656
@@ -400,7 +400,7 @@ Transform:
   - {fileID: 115805294}
   - {fileID: 30952696}
   - {fileID: 426741261}
-  - {fileID: 1130861420}
+  - {fileID: 971625131}
   m_Father: {fileID: 587452153}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &426741260
@@ -478,7 +478,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
 --- !u!4 &426741261 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5291375441621292832, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3952836284584442148, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
   m_PrefabInstance: {fileID: 426741260}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &437873666
@@ -1113,6 +1113,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+--- !u!4 &971625131 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 442881692552996386, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+  m_PrefabInstance: {fileID: 971625130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &977615718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,11 +1325,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 957846950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1130861420 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8884299772005818300, guid: 51debe0fffea83c42a170d912244593e, type: 3}
-  m_PrefabInstance: {fileID: 971625130}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1180357283
 GameObject:
   m_ObjectHideFlags: 0
@@ -3169,16 +3169,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0de813f7c7c046219848cad612cfa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  enemyAttractionEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
-  enemyPerceivedSoundEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  attractionInfoEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
+  perceivedSoundEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   enemyData: {fileID: 11400000, guid: aec0be87e710dc342a58f16b7e34ffad, type: 2}
   fov: {fileID: 2126383526}
   hitDetector: {fileID: 6086960229466930306}
   agent: {fileID: 4078091062578297317}
   animator: {fileID: 5033251669108520399}
   audioSource: {fileID: 9029115697583543171}
-  CurrentState: 0
+  currentState: 0
   currentPatrolArea:
     name: 
     waypoints: []
@@ -5895,7 +5895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad07c6b1b37f1ed4f8669cb80335127f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   groundTypes:
   - layer:
       serializedVersion: 2

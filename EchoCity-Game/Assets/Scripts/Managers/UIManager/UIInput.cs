@@ -5,19 +5,13 @@ namespace EchoCity
 {
     public class UIInput : MonoBehaviour
     {
-#pragma warning disable CS0414
-        private const string _LOG_TAG = "UI INPUT";
-        private const string _LOG_COLOR = "#39e8d1ff";
-#pragma warning restore CS0414
-
         [Header("UI")]
         [SerializeField] private UIManager uiManager;
         [SerializeField] private InputActionAsset inputActionAsset;
 
 
         [Header("Observing Events")]
-        [SerializeField] private SOEventVoid enableUIActionMapEvent;
-        [SerializeField] private SOEventVoid disableUIActionMapEvent;
+        [SerializeField] private SOPlayerInputEvent playerInputEvent;
 
         private InputActionMap _uiActionMap;
 
@@ -29,7 +23,7 @@ namespace EchoCity
 
             //Error Logs
             if (inputActionAsset == null)
-                Log.E("InputActionAsset is not assigned in UIInputManager", _LOG_COLOR, _LOG_TAG);
+                Log.ELazy(() => $"Input Action Asset is not assigned!", this);
         }
 
         private void InitializeUIBinding()
@@ -49,14 +43,21 @@ namespace EchoCity
 
         private void OnEnable()
         {
-            enableUIActionMapEvent.OnEventRaised -= EnableUIActionMap;
-            enableUIActionMapEvent.OnEventRaised += EnableUIActionMap;
-
-            disableUIActionMapEvent.OnEventRaised -= DisableUIActionMap;
-            disableUIActionMapEvent.OnEventRaised += DisableUIActionMap;
+            playerInputEvent.OnEventRaised += PlayerInputHandler;
         }
 
-        private void EnableUIActionMap(IEventSender sender) => _uiActionMap.Enable();
-        private void DisableUIActionMap(IEventSender sender) => _uiActionMap.Disable();
+        private void OnDisable()
+        {
+            playerInputEvent.OnEventRaised -= PlayerInputHandler;
+        }
+
+        private void PlayerInputHandler(IEventSender sender, InputEnum input, bool activate)
+        {
+            if (input == InputEnum.UI)
+                if (activate)
+                    _uiActionMap.Enable();
+                else
+                    _uiActionMap.Disable();
+        }
     }
 }

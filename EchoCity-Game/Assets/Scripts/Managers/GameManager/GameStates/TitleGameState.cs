@@ -9,8 +9,8 @@ namespace EchoCity
         public override void Enter()
         {//TODO audio
             Time.timeScale = 0;
-            _context.DisablePlayerInputEvent.RaiseEvent(_context);
-            _context.EnableUIInputEvent.RaiseEvent(_context);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, false);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
             _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.TitleMenu, null);
         }
         public override void Update() { }
@@ -20,8 +20,8 @@ namespace EchoCity
         public override void EnterLoading() { }
         public override void ExitLoading()
         {
-            _context.DisablePlayerInputEvent.RaiseEvent(_context);
-            _context.EnableUIInputEvent.RaiseEvent(_context);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, false);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
             _fsm.SwitchState(_fsm.PlayingState);
         }
     }

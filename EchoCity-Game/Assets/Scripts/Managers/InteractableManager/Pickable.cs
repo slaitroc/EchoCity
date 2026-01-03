@@ -7,8 +7,6 @@ namespace EchoCity
     [RequireComponent(typeof(Collider))]
     public abstract class Pickable : PlainInteractable
     {
-        [Header("Invoking Events")]
-        [SerializeField] protected SOPickableDataGameObjectEvent itemPickedEvent;
         [Header("Pickable Data")]
         [SerializeField] public SOPickable PickableData;
 

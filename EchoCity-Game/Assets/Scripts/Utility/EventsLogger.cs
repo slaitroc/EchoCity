@@ -10,7 +10,6 @@ namespace EchoCity
 #if UNITY_EDITOR
         public static class SenderColorCache
         {
-            // Classe interna generica: la vera "magia" della cache
             private static class Storage<T>
             {
                 public static readonly string HexColor = GenerateColor(typeof(T).Name);
@@ -20,375 +19,343 @@ namespace EchoCity
                     int hash = name.GetHashCode();
                     float r = (Mathf.Abs(hash & 0xFF0000) >> 16) / 255f;
                     float g = (Mathf.Abs(hash & 0x00FF00) >> 8) / 255f;
-                    float b = Mathf.Abs(hash & 0x0000FF) / 255f;
+                    float b = (Mathf.Abs(hash & 0x0000FF) >> 0) / 255f;
 
-                    // Mix con il bianco per la leggibilità (0.4f = 40% bianco)
                     UnityEngine.Color c = UnityEngine.Color.Lerp(new UnityEngine.Color(r, g, b), UnityEngine.Color.white, 0.4f);
                     return "#" + ColorUtility.ToHtmlStringRGB(c);
                 }
             }
 
-            // Metodo pubblico per ottenere il colore
-            // Nota: qui usiamo un po' di Reflection (MakeGenericType) solo la PRIMA volta 
-            // che un tipo viene loggato. Poi diventa un accesso diretto alla memoria.
             public static string GetColor(object sender)
             {
                 Type type = sender.GetType();
-                // Recuperiamo il campo statico 'HexColor' dalla classe Storage<IlTuoTipo>
                 var storageType = typeof(Storage<>).MakeGenericType(type);
                 return (string)storageType.GetField("HexColor").GetValue(null);
             }
         }
+
 #pragma warning disable CS0414
-        [TextArea(1, 2)][SerializeField] private string description = "Events are grouped under headers based on where their logic is executed";
+        [TextArea(1, 2)][SerializeField] private string description = "Logs all concrete events with their payloads";
 #pragma warning restore CS0414
 
-        #region GM
-        [Header("GM")]
-        //GM to any
-        [SerializeField] private SOEventDoubleParam<GameStatesEnum, GameStatesEnum> switchGameStateEvent;
-        [SerializeField] private bool logSwitchGameState = true;
-        //Player & UI to GM
-        [SerializeField] private SOLoadSceneEvent switchLevelEvent;
-        [SerializeField] private bool logSwitchLevel = true;
-        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
-        [SerializeField] private bool logSwitchToGameState = true;
-        // SceneLoader to GM
-        [SerializeField] private SOEventVoid enterLoadingEvent;
-        [SerializeField] private bool logEnterLoading = true;
-        [SerializeField] private SOEventVoid exitLoadingEvent;
-        [SerializeField] private bool logExitLoading = true;
+        [Header("Events")]
+        [SerializeField] private SOGameManagerStateTransitionEvent gameManagerStateTransitionEvent;
+        [SerializeField] private bool logGameManagerStateTransition = true;
 
-        void RegisterGM()
-        {
-            if (switchGameStateEvent != null) switchGameStateEvent.OnEventRaised += OnSwitchGameState;
-            if (switchLevelEvent != null) switchLevelEvent.OnEventRaised += OnSwitchLevel;
-            if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised += OnSwitchToGameState;
-            if (enterLoadingEvent != null) enterLoadingEvent.OnEventRaised += OnEnterLoading;
-            if (exitLoadingEvent != null) exitLoadingEvent.OnEventRaised += OnExitLoading;
-        }
+        [SerializeField] private SOEquippedItemChanged equippedItemChangedEvent;
+        [SerializeField] private bool logEquippedItemChanged = true;
 
-        void UnregisterGM()
-        {
-            if (switchGameStateEvent != null) switchGameStateEvent.OnEventRaised -= OnSwitchGameState;
-            if (switchLevelEvent != null) switchLevelEvent.OnEventRaised -= OnSwitchLevel;
-            if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised -= OnSwitchToGameState;
-            if (enterLoadingEvent != null) enterLoadingEvent.OnEventRaised -= OnEnterLoading;
-            if (exitLoadingEvent != null) exitLoadingEvent.OnEventRaised -= OnExitLoading;
-        }
-
-        private void OnSwitchGameState(IEventSender sender, GameStatesEnum from, GameStatesEnum to) { if (logSwitchGameState) Log.DLazy(() => $"{GetColoredName(sender)}: Switch Game State Event Raised from {from} to {to}", this); }
-        private void OnSwitchLevel(IEventSender sender, SceneEnum scene) { if (logSwitchLevel) Log.DLazy(() => $"{GetColoredName(sender)}: Switch Level Event Raised for Scene: {scene}", this); }
-        private void OnSwitchToGameState(IEventSender sender, GameStatesEnum to, EventParams @params) { if (logSwitchToGameState) Log.DLazy(() => $"{GetColoredName(sender)}: Switch to Game State Event Raised to {to}", this); }
-        private void OnEnterLoading(IEventSender sender) { if (logEnterLoading) Log.DLazy(() => $"{GetColoredName(sender)}: Enter Loading Event Raised", this); }
-        private void OnExitLoading(IEventSender sender) { if (logExitLoading) Log.DLazy(() => $"{GetColoredName(sender)}: Exit Loading Event Raised", this); }
-        #endregion
-
-        #region Player
-        [Header("Player")]
-        //GM to Player
-        [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
-        [SerializeField] private bool logEnablePlayerActionMap = true;
-        [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
-        [SerializeField] private bool logDisablePlayerActionMap = true;
-        //Enemies to Player
-        [SerializeField] private SOIAttractionEvent updatePlayerAttractionTargetEvent;
-        [SerializeField] private bool logUpdatePlayerAttractionTarget = true;
-
-        void RegisterPlayer()
-        {
-            if (enablePlayerActionMapEvent != null) enablePlayerActionMapEvent.OnEventRaised += OnEnablePlayerActionMap;
-            if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised += OnDisablePlayerActionMap;
-            if (updatePlayerAttractionTargetEvent != null) updatePlayerAttractionTargetEvent.OnEventRaised += OnUpdatePlayerAttractionTarget;
-        }
-
-        void UnregisterPlayer()
-        {
-            if (enablePlayerActionMapEvent != null) enablePlayerActionMapEvent.OnEventRaised -= OnEnablePlayerActionMap;
-            if (disablePlayerActionMapEvent != null) disablePlayerActionMapEvent.OnEventRaised -= OnDisablePlayerActionMap;
-            if (updatePlayerAttractionTargetEvent != null) updatePlayerAttractionTargetEvent.OnEventRaised -= OnUpdatePlayerAttractionTarget;
-        }
-
-        private void OnEnablePlayerActionMap(IEventSender sender) { if (logEnablePlayerActionMap) Log.DLazy(() => $"{GetColoredName(sender)}: Enable Player Action Map Event Raised", this); }
-        private void OnDisablePlayerActionMap(IEventSender sender) { if (logDisablePlayerActionMap) Log.DLazy(() => $"{GetColoredName(sender)}: Disable Player Action Map Event Raised", this); }
-        private void OnUpdatePlayerAttractionTarget(IEventSender sender, IAttraction attraction, Transform transform, bool isActive) { if (logUpdatePlayerAttractionTarget) Log.DLazy(() => $"{GetColoredName(sender)}: Update Player Attraction Target Event Raised, Position: {transform.position}, IsActive: {isActive}", this); }
-        #endregion
-
-        #region Scene Loader
-        [Header("Scene Loader")]
-        //GM to SceneLoader
-        [SerializeField] private SOLoadSceneEvent loadLevelEvent;
-        [SerializeField] private bool logLoadLevel = true;
-        [SerializeField] private SOEventVoid reloadLevelEvent;
-        [SerializeField] private bool logReloadLevel = true;
-        [SerializeField] private SOEventVoid setPlayerOnSpawnEvent;
+        [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
         [SerializeField] private bool logSetPlayerOnSpawn = true;
-        [SerializeField] private SOEventVoid unloadCurrentLevelEvent;
-        [SerializeField] private bool logUnloadCurrentLevel = true;
 
-        void RegisterSceneLoader()
-        {
-            if (loadLevelEvent != null) loadLevelEvent.OnEventRaised += OnLoadLevel;
-            if (reloadLevelEvent != null) reloadLevelEvent.OnEventRaised += OnReloadLevel;
-            if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised += OnSetPlayerOnSpawn;
-            if (unloadCurrentLevelEvent != null) unloadCurrentLevelEvent.OnEventRaised += OnUnloadCurrentLevel;
-        }
+        [SerializeField] private SOReloadSceneEvent reloadSceneEvent;
+        [SerializeField] private bool logReloadScene = true;
 
-        void UnregisterSceneLoader()
-        {
-            if (loadLevelEvent != null) loadLevelEvent.OnEventRaised -= OnLoadLevel;
-            if (reloadLevelEvent != null) reloadLevelEvent.OnEventRaised -= OnReloadLevel;
-            if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised -= OnSetPlayerOnSpawn;
-            if (unloadCurrentLevelEvent != null) unloadCurrentLevelEvent.OnEventRaised -= OnUnloadCurrentLevel;
-        }
+        [SerializeField] private SOQuestUpdatedEvent questUpdatedEvent;
+        [SerializeField] private bool logQuestUpdated = true;
 
-        private void OnLoadLevel(IEventSender sender, SceneEnum scene) { if (logLoadLevel) Log.DLazy(() => $"{GetColoredName(sender)}: Load Level Event Raised for Scene: {scene}", this); }
-        private void OnReloadLevel(IEventSender sender) { if (logReloadLevel) Log.DLazy(() => $"{GetColoredName(sender)}: Reload Level Event Raised", this); }
-        private void OnSetPlayerOnSpawn(IEventSender sender) { if (logSetPlayerOnSpawn) Log.DLazy(() => $"{GetColoredName(sender)}: Set Player On Spawn Event Raised", this); }
-        private void OnUnloadCurrentLevel(IEventSender sender) { if (logUnloadCurrentLevel) Log.DLazy(() => $"{GetColoredName(sender)}: Unload Current Level Event Raised", this); }
-        #endregion
-
-        #region Interactables
-        [Header("Interactables")]
-        #endregion
-
-        #region UI
-        [Header("UI")]
-        //GM to UI
-        [SerializeField] private SOEventVoid enableUIActionMapEvent;
-        [SerializeField] private bool logEnableUIActionMap = true;
-        [SerializeField] private SOEventVoid disableUIActionMapEvent;
-        [SerializeField] private bool logDisableUIActionMap = true;
-        [SerializeField] private SOShowUIEvent showUIEvent;
-        [SerializeField] private bool logShowUI = true;
-        //Player to UI
         [SerializeField] private SOShowInteractionEvent showInteractionEvent;
         [SerializeField] private bool logShowInteraction = true;
-        [SerializeField] private SOEventVoid inventoryChangedEvent;
+
+        [SerializeField] private SOPlayerInputEvent playerInputEvent;
+        [SerializeField] private bool logPlayerInput = true;
+
+        [SerializeField] private SOLoadSceneEvent loadSceneEvent;
+        [SerializeField] private bool logLoadScene = true;
+
+        [SerializeField] private SOShowUIEvent showUIEvent;
+        [SerializeField] private bool logShowUI = true;
+
+        [SerializeField] private SOInventoryChangedEvent inventoryChangedEvent;
         [SerializeField] private bool logInventoryChanged = true;
-        //QuestManager to UI
-        [SerializeField] private SOIntIntEvent questsUpdatedEvent;
-        [SerializeField] private bool logQuestsUpdated = true;
 
-        void RegisterUI()
-        {
-            if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised += OnEnableUIActionMap;
-            if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised += OnDisableUIActionMap;
-            if (showUIEvent != null) showUIEvent.OnEventRaised += OnShowUI;
-            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised += OnShowInteraction;
-            if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised += OnInventoryChanged;
-            if (questsUpdatedEvent != null) questsUpdatedEvent.OnEventRaised += OnQuestsUpdated;
-        }
+        [SerializeField] private SOAttractionInfoEvent attractionInfoEvent;
+        [SerializeField] private bool logAttractionInfo = true;
 
-        void UnregisterUI()
-        {
-            if (enableUIActionMapEvent != null) enableUIActionMapEvent.OnEventRaised -= OnEnableUIActionMap;
-            if (disableUIActionMapEvent != null) disableUIActionMapEvent.OnEventRaised -= OnDisableUIActionMap;
-            if (showUIEvent != null) showUIEvent.OnEventRaised -= OnShowUI;
-            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised -= OnShowInteraction;
-            if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised -= OnInventoryChanged;
-            if (questsUpdatedEvent != null) questsUpdatedEvent.OnEventRaised -= OnQuestsUpdated;
-        }
+        [SerializeField] private SOUnloadCurrentSceneEvent unloadCurrentSceneEvent;
+        [SerializeField] private bool logUnloadCurrentScene = true;
 
-        private void OnEnableUIActionMap(IEventSender sender) { if (logEnableUIActionMap) Log.DLazy(() => $"{GetColoredName(sender)}: Enable UI Action Map Event Raised", this); }
-        private void OnDisableUIActionMap(IEventSender sender) { if (logDisableUIActionMap) Log.DLazy(() => $"{GetColoredName(sender)}: Disable UI Action Map Event Raised", this); }
-        private void OnShowUI(IEventSender sender, ShowableUIEnum ui, EventParams eventParams) { if (logShowUI) Log.DLazy(() => $"{GetColoredName(sender)}: Show UI Event Raised for UI: {ui}", this); }
-        private void OnShowInteraction(IEventSender sender, bool isRaycastInteractable, bool showDescription, string description) { if (logShowInteraction) Log.DLazy(() => $"{GetColoredName(sender)}: Show Interaction Event Raised with Text: {description}", this); }
-        private void OnInventoryChanged(IEventSender sender) { if (logInventoryChanged) Log.DLazy(() => $"{GetColoredName(sender)}: Inventory Changed Event Raised", this); }
-        private void OnQuestsUpdated(IEventSender sender, int index, int code) { if (logQuestsUpdated) Log.DLazy(() => $"{GetColoredName(sender)}: Quests Updated Event Raised. Quest's index: {index}, Quest's code: {code}", this); }
-        #endregion
+        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
+        [SerializeField] private bool logToggleMaterial = true;
 
-        #region Echolocation & Enemy AI
-        [Header("Echolocation & Enemy AI")]
-        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
-        [SerializeField] private bool logNewAudioSphere = true;
+        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private bool logSwitchToGameState = true;
 
-        void RegisterEcholocationAndEnemyAI()
-        {
-            if (newAudioSphereEvent != null) newAudioSphereEvent.OnEventRaised += OnNewAudioSphere;
-        }
+        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
+        [SerializeField] private bool logSwitchLevel = true;
 
-        void UnregisterEcholocationAndEnemyAI()
-        {
-            if (newAudioSphereEvent != null) newAudioSphereEvent.OnEventRaised -= OnNewAudioSphere;
-        }
-
-        private void OnNewAudioSphere(IEventSender sender, SoundEmissionData soundEmissionData) { if (logNewAudioSphere) Log.DLazy(() => $"{GetColoredName(sender)}: New Audio Sphere Event Raised at Position: {soundEmissionData.Position}, Radius: {soundEmissionData.Radius}, Intensity: {soundEmissionData.Intensity}", this); }
-        #endregion
-
-        #region Echolocation
-        [Header("Echolocation")]
-        [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private bool logMaterialToggle = true;
-
-        void RegisterEcholocation()
-        {
-            if (materialToggleEvent != null) materialToggleEvent.OnEventRaised += OnMaterialToggle;
-        }
-
-        void UnregisterEcholocation()
-        {
-            if (materialToggleEvent != null) materialToggleEvent.OnEventRaised -= OnMaterialToggle;
-        }
-
-        private void OnMaterialToggle(IEventSender sender) { if (logMaterialToggle) Log.DLazy(() => $"{GetColoredName(sender)}: Material Toggle Event Raised", this); }
-        #endregion
-
-        #region Misc
-        [Header("Misc")]
         [SerializeField] private SOSubmitFeedbackEvent submitFeedbackEvent;
         [SerializeField] private bool logSubmitFeedback = true;
 
-        void RegisterMisc()
-        {
-            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised += OnFeedbackSubmitted;
-        }
+        [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
+        [SerializeField] private bool logSoundEmitted = true;
 
-        void UnregisterMisc()
-        {
-            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised -= OnFeedbackSubmitted;
-        }
-
-        private void OnFeedbackSubmitted(IEventSender sender, int rating, string feedback) { if (logSubmitFeedback) Log.DLazy(() => $"{GetColoredName(sender)}: Feedback Submitted Event Raised with Rating: {rating}, Feedback: {feedback}", this); }
-        #endregion
-
-        #region To be classified
-        [Header("To be classified")]
-        //PlayerInput to every InteractableManager for Area Interactables 
-        [SerializeField] private SOEventVoid interactEvent;
-        [SerializeField] private bool logInteractEvent = true;
-        //IDK from who to PlayerInput
-        [SerializeField] private SOEventVoid wearEcholocatorEvent;
-        [SerializeField] private bool logWearEcholocator = true;
-        // Pickable to PlayerInventory
-        [SerializeField] private SOPickableDataGameObjectEvent itemPickedEvent;
-        [SerializeField] private bool logItemPicked = true;
-        //RadialMenu to PlayerController
-        [SerializeField] private SOEventVoid itemEquippedEvent;
-        [SerializeField] private bool logItemEquipped = true;
-        //From Player Controller to Enemy to update the position of a continuous sound
-        [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
-        [SerializeField] private bool logPlayerEmittedSound = true;
-
-        void RegisterToBeClassified()
-        {
-            if (interactEvent != null) interactEvent.OnEventRaised += OnInteractEvent;
-            if (wearEcholocatorEvent != null) wearEcholocatorEvent.OnEventRaised += OnWearEcholocator;
-            if (itemPickedEvent != null) itemPickedEvent.OnEventRaised += OnItemPicked;
-            if (itemEquippedEvent != null) itemEquippedEvent.OnEventRaised += OnItemEquipped;
-            if (playerEmittedSoundEvent != null) playerEmittedSoundEvent.OnEventRaised += OnPlayerEmittedSound;
-        }
-
-        void UnregisterToBeClassified()
-        {
-            if (interactEvent != null) interactEvent.OnEventRaised -= OnInteractEvent;
-            if (wearEcholocatorEvent != null) wearEcholocatorEvent.OnEventRaised -= OnWearEcholocator;
-            if (itemPickedEvent != null) itemPickedEvent.OnEventRaised -= OnItemPicked;
-            if (itemEquippedEvent != null) itemEquippedEvent.OnEventRaised -= OnItemEquipped;
-            if (playerEmittedSoundEvent != null) playerEmittedSoundEvent.OnEventRaised -= OnPlayerEmittedSound;
-        }
-
-        private void OnInteractEvent(IEventSender sender) { if (logInteractEvent) Log.DLazy(() => $"{GetColoredName(sender)}: Interact Event Raised", this); }
-        private void OnWearEcholocator(IEventSender sender) { if (logWearEcholocator) Log.DLazy(() => $"{GetColoredName(sender)}: Wear Echolocator Event Raised", this); }
-        private void OnItemPicked(IEventSender sender, PickableData data, GameObject prefab) { if (logItemPicked) Log.DLazy(() => $"{GetColoredName(sender)}: Item Picked Event Raised for Pickable Data: {data.Name}", this); }
-        private void OnItemEquipped(IEventSender sender) { if (logItemEquipped) Log.DLazy(() => $"{GetColoredName(sender)}: Item Equipped Event Raised", this); }
-        private void OnPlayerEmittedSound(IEventSender sender, Vector3 position, SoundEmissionData soundData) { if (logPlayerEmittedSound) Log.DLazy(() => $"{GetColoredName(sender)}: Player Emitted Sound Event Raised at Position: {position}", this); }
-        #endregion
-
-        #region Test events here
-        [Header("Test events here")]
-        [SerializeField] private SOEventVoid voidEventExample;
-        [SerializeField] private bool logVoidEventExample = true;
-
-        void RegisterTestEvents()
-        {
-            if (voidEventExample != null) voidEventExample.OnEventRaised += OnVoidEventExample;
-        }
-
-        void UnregisterTestEvents()
-        {
-            if (voidEventExample != null) voidEventExample.OnEventRaised -= OnVoidEventExample;
-        }
-
-        private void OnVoidEventExample(IEventSender sender) { if (logVoidEventExample) Log.DLazy(() => $"{GetColoredName(sender)}: Void Event Example Raised", this); }
-        #endregion
+        [SerializeField] private bool activateDeactivateAll = true;
 
         void OnEnable()
         {
-            RegisterGM();
-            RegisterPlayer();
-            RegisterSceneLoader();
-            RegisterUI();
-            RegisterEcholocationAndEnemyAI();
-            RegisterEcholocation();
-            RegisterMisc();
-            RegisterToBeClassified();
-            RegisterTestEvents();
+            RegisterEvents();
+        }
+
+        void OnDisable()
+        {
+            UnregisterEvents();
+        }
+
+        private void RegisterEvents()
+        {
+            if (gameManagerStateTransitionEvent != null) gameManagerStateTransitionEvent.OnEventRaised += OnGameManagerStateTransition;
+            if (equippedItemChangedEvent != null) equippedItemChangedEvent.OnEventRaised += OnEquippedItemChanged;
+            if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised += OnSetPlayerOnSpawn;
+            if (reloadSceneEvent != null) reloadSceneEvent.OnEventRaised += OnReloadScene;
+            if (questUpdatedEvent != null) questUpdatedEvent.OnEventRaised += OnQuestUpdated;
+            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised += OnShowInteraction;
+            if (playerInputEvent != null) playerInputEvent.OnEventRaised += OnPlayerInput;
+            if (loadSceneEvent != null) loadSceneEvent.OnEventRaised += OnLoadScene;
+            if (showUIEvent != null) showUIEvent.OnEventRaised += OnShowUI;
+            if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised += OnInventoryChanged;
+            if (attractionInfoEvent != null) attractionInfoEvent.OnEventRaised += OnAttractionInfo;
+            if (unloadCurrentSceneEvent != null) unloadCurrentSceneEvent.OnEventRaised += OnUnloadCurrentScene;
+            if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised += OnToggleMaterial;
+            if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised += OnSwitchToGameState;
+            if (switchLevelEvent != null) switchLevelEvent.OnEventRaised += OnSwitchLevel;
+            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised += OnSubmitFeedback;
+            if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised += OnSoundEmitted;
+        }
+
+        private void UnregisterEvents()
+        {
+            if (gameManagerStateTransitionEvent != null) gameManagerStateTransitionEvent.OnEventRaised -= OnGameManagerStateTransition;
+            if (equippedItemChangedEvent != null) equippedItemChangedEvent.OnEventRaised -= OnEquippedItemChanged;
+            if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised -= OnSetPlayerOnSpawn;
+            if (reloadSceneEvent != null) reloadSceneEvent.OnEventRaised -= OnReloadScene;
+            if (questUpdatedEvent != null) questUpdatedEvent.OnEventRaised -= OnQuestUpdated;
+            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised -= OnShowInteraction;
+            if (playerInputEvent != null) playerInputEvent.OnEventRaised -= OnPlayerInput;
+            if (loadSceneEvent != null) loadSceneEvent.OnEventRaised -= OnLoadScene;
+            if (showUIEvent != null) showUIEvent.OnEventRaised -= OnShowUI;
+            if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised -= OnInventoryChanged;
+            if (attractionInfoEvent != null) attractionInfoEvent.OnEventRaised -= OnAttractionInfo;
+            if (unloadCurrentSceneEvent != null) unloadCurrentSceneEvent.OnEventRaised -= OnUnloadCurrentScene;
+            if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised -= OnToggleMaterial;
+            if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised -= OnSwitchToGameState;
+            if (switchLevelEvent != null) switchLevelEvent.OnEventRaised -= OnSwitchLevel;
+            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised -= OnSubmitFeedback;
+            if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised -= OnSoundEmitted;
+        }
+
+        private void OnGameManagerStateTransition(IEventSender sender, GameStatesEnum from, GameStatesEnum to)
+        {
+            if (!logGameManagerStateTransition) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: GameManager state transition {from} -> {to}", this);
+        }
+
+        private void OnEquippedItemChanged(IEventSender sender)
+        {
+            if (!logEquippedItemChanged) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Equipped item changed", this);
+        }
+
+        private void OnSetPlayerOnSpawn(IEventSender sender)
+        {
+            if (!logSetPlayerOnSpawn) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Set player on spawn", this);
+        }
+
+        private void OnReloadScene(IEventSender sender)
+        {
+            if (!logReloadScene) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Reload scene", this);
+        }
+
+        private void OnQuestUpdated(IEventSender sender, int questIndex, int code)
+        {
+            if (!logQuestUpdated) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Quest updated (index: {questIndex}, code: {code})", this);
+        }
+
+        private void OnShowInteraction(IEventSender sender, bool isRaycastInteractable, bool showDescription, string description)
+        {
+            if (!logShowInteraction) return;
+            string desc = string.IsNullOrEmpty(description) ? "<empty>" : description;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Show interaction | raycast: {isRaycastInteractable} | showDescription: {showDescription} | text: {desc}", this);
+        }
+
+        private void OnPlayerInput(IEventSender sender, InputEnum inputType, bool activate)
+        {
+            if (!logPlayerInput) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Player input | type: {inputType} | activate: {activate}", this);
+        }
+
+        private void OnLoadScene(IEventSender sender, SceneEnum scene)
+        {
+            if (!logLoadScene) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Load scene | target: {scene}", this);
+        }
+
+        private void OnShowUI(IEventSender sender, ShowableUIEnum ui, EventParams eventParams)
+        {
+            if (!logShowUI) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Show UI | ui: {ui} | params: {DescribeEventParams(eventParams)}", this);
+        }
+
+        private void OnInventoryChanged(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (!logInventoryChanged) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Inventory changed | pickable: {pickable} ({pickableType}) | code: {inventoryCodes}", this);
+        }
+
+        private void OnAttractionInfo(IEventSender sender, IAttraction attraction, Transform targetTransform, bool aboveThreshold)
+        {
+            if (!logAttractionInfo) return;
+            string attractionInfo = attraction != null ? attraction.ToString() : "null";
+            string transformInfo = DescribeTransform(targetTransform);
+            Log.DLazy(() => $"{GetColoredName(sender)}: Attraction info | attraction: {attractionInfo} | target: {transformInfo} | aboveThreshold: {aboveThreshold}", this);
+        }
+
+        private void OnUnloadCurrentScene(IEventSender sender)
+        {
+            if (!logUnloadCurrentScene) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Unload current scene", this);
+        }
+
+        private void OnToggleMaterial(IEventSender sender)
+        {
+            if (!logToggleMaterial) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Toggle material", this);
+        }
+
+        private void OnSwitchToGameState(IEventSender sender, GameStatesEnum gameState, EventParams eventParams)
+        {
+            if (!logSwitchToGameState) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Switch to game state | state: {gameState} | params: {DescribeEventParams(eventParams)}", this);
+        }
+
+        private void OnSwitchLevel(IEventSender sender, SceneEnum level, EventParams @params)
+        {
+            if (!logSwitchLevel) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Switch level | level: {level} | params: {DescribeEventParams(@params)}", this);
+        }
+
+        private void OnSubmitFeedback(IEventSender sender, int rating, string feedback)
+        {
+            if (!logSubmitFeedback) return;
+            string text = string.IsNullOrEmpty(feedback) ? "<empty>" : feedback;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Submit feedback | rating: {rating} | feedback: {text}", this);
+        }
+
+        private void OnSoundEmitted(IEventSender sender, SoundEmissionData soundData)
+        {
+            if (!logSoundEmitted) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Sound emitted | {DescribeSoundEmissionData(soundData)}", this);
         }
 
         private string GetColoredName(IEventSender sender)
         {
-            string color = SenderColorCache.GetColor(sender);
-            return $"<color={color}>[{sender.SenderName}]</color>";
-        }
-        void OnDisable()
-        {
-            UnregisterGM();
-            UnregisterPlayer();
-            UnregisterSceneLoader();
-            UnregisterUI();
-            UnregisterEcholocationAndEnemyAI();
-            UnregisterEcholocation();
-            UnregisterMisc();
-            UnregisterToBeClassified();
-            UnregisterTestEvents();
+            string color = sender != null ? SenderColorCache.GetColor(sender) : "#FFFFFF";
+            string name = sender != null ? sender.SenderName : "<null sender>";
+            return $"<color={color}>[{name}]</color>";
         }
 
-        [SerializeField] private bool activateDeactivateAll = true;
+        private string DescribeEventParams(EventParams eventParams)
+        {
+            if (eventParams == null) return "null";
+
+            if (eventParams is LoadingParams loadingParams)
+            {
+                return $"LoadingParams(isLoading: {loadingParams.IsLoading})";
+            }
+
+            if (eventParams is DialogParams dialogParams)
+            {
+                DialogLines[] lines = dialogParams.DialogData.DialogLines;
+                int count = lines != null ? lines.Length : 0;
+                return $"DialogParams(lines: {count})";
+            }
+
+            if (eventParams is HudParams hudParams)
+            {
+                return $"HudParams(state: {hudParams.HudState})";
+            }
+
+            if (eventParams is WarningParams warningParams)
+            {
+                return $"WarningParams(message: {warningParams.Message}, color: {warningParams.Color})";
+            }
+
+            if (eventParams is ToHUDStateParams toHudStateParams)
+            {
+                return $"ToHUDStateParams(state: {toHudStateParams.HudState})";
+            }
+
+            if (eventParams is ToDialogueStateParams toDialogueStateParams)
+            {
+                DialogLines[] lines = toDialogueStateParams.DialogData.DialogLines;
+                int count = lines != null ? lines.Length : 0;
+                return $"ToDialogueStateParams(lines: {count})";
+            }
+
+            if (eventParams is ToLoadingStateParams toLoadingStateParams)
+            {
+                return $"ToLoadingStateParams(isLoading: {toLoadingStateParams.IsLoading})";
+            }
+
+            if (eventParams is ToLevelParams)
+            {
+                return "ToLevelParams";
+            }
+
+            return eventParams.GetType().Name;
+        }
+
+        private string DescribeSoundEmissionData(SoundEmissionData data)
+        {
+            SoundClass soundClass = data.SoundClass;
+            return $"pos: {data.Position}, radius: {data.Radius}, intensity: {data.Intensity}, duration: {data.Duration}, freq: {soundClass.Frequency}, env: {data.IsEnvironmental}";
+        }
+
+        private string DescribePickableData(PickableData data)
+        {
+            return $"pickable: {data.Name} ({data.PickableEnum}/{data.PickableType})";
+        }
+
+        private string DescribeTransform(Transform targetTransform)
+        {
+            if (targetTransform == null)
+            {
+                return "null";
+            }
+
+            return $"pos: {targetTransform.position}";
+        }
+
         void OnValidate()
         {
-            if (activateDeactivateAll)
+            if (!activateDeactivateAll)
             {
-                activateDeactivateAll = false;
-                bool newValue = !logSwitchGameState;
-                //GM
-                logSwitchGameState = newValue;
-                logSwitchLevel = newValue;
-                logSwitchToGameState = newValue;
-                logEnterLoading = newValue;
-                logExitLoading = newValue;
-                //Player
-                logEnablePlayerActionMap = newValue;
-                logDisablePlayerActionMap = newValue;
-                logUpdatePlayerAttractionTarget = newValue;
-                //SceneLoader
-                logLoadLevel = newValue;
-                logReloadLevel = newValue;
-                logSetPlayerOnSpawn = newValue;
-                logUnloadCurrentLevel = newValue;
-                //Interactables
-                //UI
-                logEnableUIActionMap = newValue;
-                logDisableUIActionMap = newValue;
-                logShowUI = newValue;
-                logShowInteraction = newValue;
-                logQuestsUpdated = newValue;
-                logInventoryChanged = newValue;
-                //Echolocation & Enemy AI
-                logNewAudioSphere = newValue;
-                //Echolocation
-                logMaterialToggle = newValue;
-                //Misc
-                logSubmitFeedback = newValue;
-                //To be classified
-                logInteractEvent = newValue;
-                logWearEcholocator = newValue;
-                logItemPicked = newValue;
-                logItemEquipped = newValue;
-                logPlayerEmittedSound = newValue;
-                //Test events here
-                logVoidEventExample = newValue;
+                return;
             }
+
+            activateDeactivateAll = false;
+            bool newValue = !logGameManagerStateTransition;
+
+            logGameManagerStateTransition = newValue;
+            logEquippedItemChanged = newValue;
+            logSetPlayerOnSpawn = newValue;
+            logReloadScene = newValue;
+            logQuestUpdated = newValue;
+            logShowInteraction = newValue;
+            logPlayerInput = newValue;
+            logLoadScene = newValue;
+            logShowUI = newValue;
+            logInventoryChanged = newValue;
+            logAttractionInfo = newValue;
+            logUnloadCurrentScene = newValue;
+            logToggleMaterial = newValue;
+            logSwitchToGameState = newValue;
+            logSwitchLevel = newValue;
+            logSubmitFeedback = newValue;
+            logSoundEmitted = newValue;
         }
 
 #endif

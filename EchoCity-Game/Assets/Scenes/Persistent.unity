@@ -1018,7 +1018,7 @@ MonoBehaviour:
   switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
+  equippedItemChanged: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
   playerController: {fileID: 7823492532663271078}
 --- !u!114 &3973722456610610598
@@ -1099,8 +1099,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4a3e05e1ba9ae1dbb0d3af9fa47fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
   useEcholocationMaterial: 0
   echolocationMaterial: {fileID: 2100000, guid: 93540b57ea56d16978865b3e9bfbed51, type: 2}
   visualizationMode: 0
@@ -1141,8 +1141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 3969561829711415350}
   inputActionAsset: {fileID: -944628639613478452, guid: 8e55a5efac2955f4a882d461d594a197, type: 3}
-  enableUIActionMapEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
-  disableUIActionMapEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
 --- !u!1 &4759543299592736681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,60 +1766,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   description: Events are grouped under headers based on where their logic is executed
-  switchGameStateEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
-  logSwitchGameState: 0
-  switchLevelEvent: {fileID: 0}
-  logSwitchLevel: 0
-  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
-  logSwitchToGameState: 1
-  enterLoadingEvent: {fileID: 11400000, guid: ae1d2b4c52049d9409caaeb614b9773a, type: 2}
-  logEnterLoading: 0
-  exitLoadingEvent: {fileID: 11400000, guid: bc6bf29e9675a7940b1a6542586c6f2c, type: 2}
-  logExitLoading: 0
-  enablePlayerActionMapEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
-  logEnablePlayerActionMap: 0
-  disablePlayerActionMapEvent: {fileID: 11400000, guid: 724e4739b1e766149aa1e28897dc63c7, type: 2}
-  logDisablePlayerActionMap: 0
-  updatePlayerAttractionTargetEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
-  logUpdatePlayerAttractionTarget: 0
-  loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  logLoadLevel: 0
-  reloadLevelEvent: {fileID: 11400000, guid: e03793e4485f594d6a60b3e70d502680, type: 2}
-  logReloadLevel: 0
-  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 01fac51bbd864c94fac86741ad828f5a, type: 2}
-  logSetPlayerOnSpawn: 0
-  unloadCurrentLevelEvent: {fileID: 11400000, guid: 14e96d97e8c839d4994736cfd8f9c09f, type: 2}
-  logUnloadCurrentLevel: 0
-  enableUIActionMapEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
-  logEnableUIActionMap: 0
-  disableUIActionMapEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
-  logDisableUIActionMap: 0
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  logShowUI: 1
+  gameManagerStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
+  logGameManagerStateTransition: 1
+  equippedItemChangedEvent: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
+  logEquippedItemChanged: 1
+  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
+  logSetPlayerOnSpawn: 1
+  reloadSceneEvent: {fileID: 11400000, guid: ec12d6802d3451d4a9ce6612f7976a0d, type: 2}
+  logReloadScene: 1
+  questUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  logQuestUpdated: 1
   showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
   logShowInteraction: 1
-  inventoryChangedEvent: {fileID: 0}
-  logInventoryChanged: 0
-  questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
-  logQuestsUpdated: 1
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  logNewAudioSphere: 0
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  logMaterialToggle: 0
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
+  logPlayerInput: 1
+  loadSceneEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
+  logLoadScene: 1
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  logShowUI: 1
+  inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
+  logInventoryChanged: 1
+  attractionInfoEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
+  logAttractionInfo: 1
+  unloadCurrentSceneEvent: {fileID: 11400000, guid: e8e412d71be09d549a69feb477ac0d81, type: 2}
+  logUnloadCurrentScene: 1
+  toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
+  logToggleMaterial: 1
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
+  logSwitchToGameState: 1
+  switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
+  logSwitchLevel: 1
   submitFeedbackEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
   logSubmitFeedback: 1
-  interactEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
-  logInteractEvent: 0
-  wearEcholocatorEvent: {fileID: 11400000, guid: 0b9e4a9f6f91cd5498833b5e61a0d38c, type: 2}
-  logWearEcholocator: 0
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  logItemPicked: 0
-  itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
-  logItemEquipped: 0
-  playerEmittedSoundEvent: {fileID: 11400000, guid: a78e5a5464a5c024ab6288677e1da6da, type: 2}
-  logPlayerEmittedSound: 0
-  voidEventExample: {fileID: 11400000, guid: fb2f9442456b7f446826059c40857b54, type: 2}
-  logVoidEventExample: 0
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  logSoundEmitted: 0
   activateDeactivateAll: 0
 --- !u!114 &7814997904437534686
 MonoBehaviour:
@@ -1848,13 +1827,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ae16e212dfda942ae9d0129584f588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  deathEvent: {fileID: 11400000, guid: 7aa3e1d41bcdd724c984d76fad7a6e7c, type: 2}
-  playerEmittedSoundEvent: {fileID: 11400000, guid: a78e5a5464a5c024ab6288677e1da6da, type: 2}
-  itemEquippedEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
+  equippedItemChanged: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
   enemyAttractionEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
-  perceivedSoundEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  perceivedSoundEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   playerInventory: {fileID: 2751710482949066772}
   fullInventorySound: {fileID: 11400000, guid: d2cef0896b5120044ac451ee4dcda5c6, type: 2}
   dropPoint: {fileID: 2678203716146919588}
@@ -1947,15 +1925,10 @@ MonoBehaviour:
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  areaInteractionEvent: {fileID: 11400000, guid: fe7d8d89174c665498e518894f10fbf3, type: 2}
-  enablePlayerActionMapEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
-  disablePlayerActionMapEvent: {fileID: 11400000, guid: 724e4739b1e766149aa1e28897dc63c7, type: 2}
-  wearEcholocatorEvent: {fileID: 11400000, guid: 0b9e4a9f6f91cd5498833b5e61a0d38c, type: 2}
+  toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
   inRangeInteractables: []
   closestAreaInteractable: {fileID: 0}
-  itemEquippedEvent: {fileID: 11400000, guid: 2da279d896661954980a43e9fd3cc5ac, type: 2}
-  exampleDialogData: {fileID: 11400000, guid: c3ab2b4e980ee4d0f84e2f9c0b0fb561, type: 2}
 --- !u!114 &8154248175691653929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1968,10 +1941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8562a1eedd0854ead0e684802f9dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enablePlayerInputEvent: {fileID: 11400000, guid: 0a27b1de7911ea44fbb6b6a7b2a7d432, type: 2}
-  disablePlayerInputEvent: {fileID: 11400000, guid: 724e4739b1e766149aa1e28897dc63c7, type: 2}
-  enableUIInputEvent: {fileID: 11400000, guid: 19a5028126d9e5c4489116ee5260bff4, type: 2}
-  disableUIInputEvent: {fileID: 11400000, guid: b8137152ef7a9fc4e857ea156f6f2176, type: 2}
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   gameStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
@@ -2197,7 +2167,7 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 1940418657335968769}
   TopClamp: 90
   BottomClamp: -90
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   landingSounds:
   - layer:
       serializedVersion: 2

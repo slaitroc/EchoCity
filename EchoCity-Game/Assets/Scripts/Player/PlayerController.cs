@@ -38,10 +38,10 @@ namespace EchoCity
     public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem, IEventSender
     {
         [Header("Invoking Events")]
-        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
-        [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOEventVoid deathEvent;
-        [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
+        [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
+        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
+        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOEquippedItemChanged equippedItemChanged;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -49,9 +49,8 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observing Events")]
-        [SerializeField] private SOEventVoid itemEquippedEvent;
-        [SerializeField] private SOIAttractionEvent enemyAttractionEvent;
-        [SerializeField] private SOSoundEmissionDataEvent perceivedSoundEvent;
+        [SerializeField] private SOAttractionInfoEvent enemyAttractionEvent;
+        [SerializeField] private SOSoundEmittedEvent perceivedSoundEvent;
 
 
         [Header("Inventory")]
@@ -115,7 +114,7 @@ namespace EchoCity
 
         void Start()
         {
-            _audioContext = new AudioContext(this, newAudioSphereEvent);
+            _audioContext = new AudioContext(this, soundEmittedEvent);
 
             currentHealth = maxHealth;
             _lastTimeDamaged = float.NegativeInfinity;
@@ -163,7 +162,7 @@ namespace EchoCity
             if (currentHealth <= 0)
             {
                 Log.W("YOU DIED", "-", "red");
-                deathEvent?.RaiseEvent(this);
+                switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Death, null);
             }
         }
 
@@ -175,8 +174,7 @@ namespace EchoCity
                 Log.ELazy(() => $"EquipItem received null data for item at index {index}", this);
             if (prefab == null)
                 Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
-
-            itemEquippedEvent?.RaiseEvent(this);
+            equippedItemChanged?.RaiseEvent(this);
         }
 
         public void UseTool()
@@ -186,7 +184,6 @@ namespace EchoCity
                 if (equippedItem.Data.PickableType == PickableTypeEnum.SoundTool)
                 {
                     PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, MixerGroupEnum.SFX);
-                    playerEmittedSoundEvent?.RaiseEvent(this, transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }
                 else if (equippedItem.Data.PickableType == PickableTypeEnum.Tool)
@@ -215,8 +212,8 @@ namespace EchoCity
                 Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
             }
             playerInventory.DropItem(equippedItem.Index);
-            materialToggleEvent?.RaiseEvent(this);
-            materialToggleEvent?.RaiseEvent(this);
+            toggleMaterialEvent?.RaiseEvent(this);
+            toggleMaterialEvent?.RaiseEvent(this);
             equippedItem = null;
         }
 

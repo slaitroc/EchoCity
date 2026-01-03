@@ -62,10 +62,7 @@ namespace EchoCity
         SOGameManagerStateTransitionEvent GameStateTransitionEvent { get; }
 
         // INPUT EVENTS
-        SOEventVoid EnablePlayerInputEvent { get; }
-        SOEventVoid DisablePlayerInputEvent { get; }
-        SOEventVoid EnableUIInputEvent { get; }
-        SOEventVoid DisableUIInputEvent { get; }
+        SOPlayerInputEvent PlayerInputEvent { get; }
 
         // UI MANAGER EVENTS
         SOShowUIEvent ShowUIEvent { get; }
@@ -131,9 +128,9 @@ namespace EchoCity
         // <summary> The enemy's confusion system</summary>
         IConfusionSystem ConfusionSystem { get; }
         // <summary> Echolocation enemy's events </summary>
-        SOSoundEmissionDataEvent NewAudioSphereEvent { get; }
+        SOSoundEmittedEvent SoundEmittedEvent { get; }
         // <summary> enemyAttraction event </summary>
-        SOIAttractionEvent EnemyAttractionEvent { get; }
+        SOAttractionInfoEvent AttractionInfoEvent { get; }
     }
 
     public interface IEnemyState : IState, IDamageDealer //TODO

@@ -19,7 +19,7 @@ namespace StarterAssets
 
         [Header("ECHO CITY")]
         [Header("Invoking Events")]
-        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
+        [SerializeField] private SOSoundEmittedEvent newAudioSphereEvent;
         private AudioContext _audioContext;
 
         string IEventSender.SenderName => gameObject.name;

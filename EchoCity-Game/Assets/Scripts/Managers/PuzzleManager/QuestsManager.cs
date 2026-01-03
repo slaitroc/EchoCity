@@ -13,7 +13,7 @@ namespace EchoCity
     public abstract class QuestsManager : MonoBehaviour, IEventSender, IQuestsManager
     {
         [Header("Invoking Events")]
-        [SerializeField] private SOIntIntEvent questsUpdatedEvent;
+        [SerializeField] private SOQuestUpdatedEvent questsUpdatedEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
