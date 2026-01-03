@@ -7,7 +7,7 @@ namespace EchoCity
     public class TutorialTrigger : MonoBehaviour, IEventSender
     {
         [SerializeField] protected SODialogContainer tutorialDialogContainer;
-        [SerializeField] protected SODialogDataEvent switchToNarrationStateEvent;
+        [SerializeField] protected SOSwitchToGameStateEvent switchToNarrationStateEvent;
         [Header("Puzzle Tags")]
         [SerializeField] protected PuzzleManager puzzleManager;
         [SerializeField] protected PuzzleTagState[] checkTags;
@@ -31,7 +31,7 @@ namespace EchoCity
         {
             if (outcome)
             {
-                switchToNarrationStateEvent?.RaiseEvent(this, new DialogData(tutorialDialogContainer));
+                switchToNarrationStateEvent?.RaiseEvent(this, GameStatesEnum.Narration, new ToDialogueStateParams(new DialogData(tutorialDialogContainer.DialogLines)));
                 gameObject.SetActive(false);
             }
         }

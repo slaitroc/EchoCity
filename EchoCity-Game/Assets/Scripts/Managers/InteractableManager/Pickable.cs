@@ -5,46 +5,23 @@ using static EchoCity.EchoCitySound;
 namespace EchoCity
 {
     [RequireComponent(typeof(Collider))]
-    public abstract class Pickable : Interactable
+    public abstract class Pickable : PlainInteractable
     {
-        [Header("Invoking Events")]
-        [SerializeField] protected SOPickableDataGameObjectEvent itemPickedEvent;
-        [Header("Observing Events")]
-        [SerializeField] protected SOBoolEvent canBePickedEvent;
         [Header("Pickable Data")]
-        [SerializeField] protected SOPickable pickableData;
+        [SerializeField] public SOPickable PickableData;
 
-        protected bool _canBePicked = false;
+        protected override void Awake() => gameObject.layer = 9; // Set to Pickable layer
 
         protected override void ResolveInteraction(bool outcome)
         {
             if (outcome)
-            {
-                _canBePicked = true;
-                itemPickedEvent?.RaiseEvent(this, new PickableData(pickableData), pickableData.PickablePrefab);
-            }
+                PickUp();
         }
 
-        public void InventoryHandler(IEventSender sender, bool canPickUp)
+        public void PickUp()
         {
-            if (canPickUp && _canBePicked)
-            {
-                PlayAtPosition(transform.position, pickableData.PickUpSound, _audioContext, MixerGroupEnum.SFX);
-                Destroy(gameObject);
-            }
-            _canBePicked = false;
-        }
-
-        protected void OnEnable()
-        {
-            if (canBePickedEvent)
-                canBePickedEvent.OnEventRaised += InventoryHandler;
-        }
-
-        void OnDisable()
-        {
-            if (canBePickedEvent)
-                canBePickedEvent.OnEventRaised -= InventoryHandler;
+            PlayAtPosition(transform.position, PickableData.PickUpSound, _audioContext, MixerGroupEnum.SFX);
+            Destroy(gameObject);
         }
     }
 }

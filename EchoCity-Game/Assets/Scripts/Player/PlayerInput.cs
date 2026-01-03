@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,13 +14,10 @@ namespace EchoCity
         [SerializeField] private PlayerController playerController;
 
         [Header("Invoking Events")]
-        [SerializeField] private SOEventVoid switchToPauseStateEvent;
-        [SerializeField] private SOEventVoid switchToPlayingStateEvent;
-        [SerializeField] private SOHudEnumEvent switchToHudStateEvent;
-        [SerializeField] private SOBoolStringEvent canInteractStartEvent;
-        [SerializeField] private SOEventVoid canInteractStopEvent;
-        [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOEventVoid areaInteractionEvent;
+        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOShowUIEvent showUIEvent;
+        [SerializeField] private SOShowInteractionEvent showInteractionEvent;
+        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -27,33 +25,19 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observed Events")]
-        [SerializeField] private SOAreaInteractableEvent enterInteractableAreaEvent;
-        [SerializeField] private SOAreaInteractableEvent exitInteractableAreaEvent;
-        [SerializeField] private SOEventVoid enablePlayerActionMapEvent;
-        [SerializeField] private SOEventVoid disablePlayerActionMapEvent;
-        [SerializeField] private SOEventVoid wearEcholocatorEvent;
+        [SerializeField] private SOPlayerInputEvent playerInputEvent;
 
-        [Header("Interaction Range Colliders")]
-        [SerializeField] private bool inInteractionRange = false;
-        [SerializeField] private Interactable inRangeInteractable;
+        [Header("Interaction")]
+        [SerializeField] private List<AreaInteractable> inRangeInteractables;
+        [SerializeField] private AreaInteractable closestAreaInteractable;
+        private bool _isShowingAreaDescription = false;
+        private bool _isShowingDescription = false;
 
-
-        [Header("Test Events")]
-        [Header("Invoking")]
-        [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
-        [SerializeField] private SOPickable examplePickable;
-        [SerializeField] private SOStringColorEvent spawnWarningEvent;
-        [SerializeField] private SOEventVoid switchToDeathStateEvent;
-        [SerializeField] private SOEventVoid switchToWinStateEvent;
-
-        [Header("Dialog")]
-        [SerializeField] private SODialogDataEvent switchToNarrationStateEvent;
-        [SerializeField] private SODialogContainer exampleDialogData;
-
-        private bool _canInteract;
+        // [Header("Test Parameters")]
 
         void Awake()
         {
+            inRangeInteractables = new List<AreaInteractable>();
             _playerActionMap = inputActionAsset.FindActionMap("Player");
             if (_playerActionMap != null)
             {
@@ -65,6 +49,7 @@ namespace EchoCity
                 _playerActionMap["Jump"].performed += OnJump;
                 _playerActionMap["Sprint"].performed += OnSprint;
                 _playerActionMap["Interact"].performed += OnInteract;
+                _playerActionMap["AreaInteract"].performed += OnAreaInteract;
                 _playerActionMap["DropItem"].performed += OnDropItem;
                 _playerActionMap["UseTool"].performed += OnUseTool;
 
@@ -93,19 +78,11 @@ namespace EchoCity
 
         private void SubscribeToEvents()
         {
-            if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised += EnterInteractionRangeHandler;
-            if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised += ExitInteractionRangeHandler;
-            if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised += EnablePlayerActionMapHandler;
-            if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised += DisablePlayerActionMapHandler;
-            if (wearEcholocatorEvent) wearEcholocatorEvent.OnEventRaised += WearEcholocatorHandler;
+            if (playerInputEvent) playerInputEvent.OnEventRaised += PlayerInputHandler;
         }
         private void UnsubscribeFromEvents()
         {
-            if (enterInteractableAreaEvent) enterInteractableAreaEvent.OnEventRaised -= EnterInteractionRangeHandler;
-            if (exitInteractableAreaEvent) exitInteractableAreaEvent.OnEventRaised -= ExitInteractionRangeHandler;
-            if (enablePlayerActionMapEvent) enablePlayerActionMapEvent.OnEventRaised -= EnablePlayerActionMapHandler;
-            if (disablePlayerActionMapEvent) disablePlayerActionMapEvent.OnEventRaised -= DisablePlayerActionMapHandler;
-            if (wearEcholocatorEvent) wearEcholocatorEvent.OnEventRaised -= WearEcholocatorHandler;
+            if (playerInputEvent) playerInputEvent.OnEventRaised -= PlayerInputHandler;
         }
 
         void Update()
@@ -114,20 +91,51 @@ namespace EchoCity
             var origin = Camera.main.transform.position;
             var direction = Camera.main.transform.forward;
             Ray ray = new Ray(origin, direction);
-            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, (1 << 6) | (1 << 8), QueryTriggerInteraction.Collide);
+            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, (1 << 6) | (1 << 8) | (1 << 9), QueryTriggerInteraction.Collide);
             var description = hitInfo.collider?.GetComponent<IHasDescription>();
-            if (description != null)
+            if (description != null && description.HasRaycastDescription)
             {
-                if (!_canInteract)
+                if (!_isShowingDescription)
                 {
-                    canInteractStartEvent.RaiseEvent(this, description.isInteractable, description.Description);
-                    _canInteract = true;
+                    showInteractionEvent.RaiseEvent(this, description.IsInteractable, true, description.Description);
+                    _isShowingDescription = true;
                 }
             }
-            else if (_canInteract)
+            else
             {
-                canInteractStopEvent.RaiseEvent(this);
-                _canInteract = false;
+                if (_isShowingDescription)
+                {
+                    showInteractionEvent.RaiseEvent(this, false, false, null);
+                    _isShowingDescription = false;
+                }
+            }
+            #endregion
+            #region area interactables check
+            if (!_isShowingDescription)
+            {
+                if (inRangeInteractables.Count != 0)
+                {
+                    float closestDistance = Vector3.Distance(origin, closestAreaInteractable.AreaCenter);
+                    foreach (var areaInteractable in inRangeInteractables)
+                    {
+                        float distance = Vector3.Distance(origin, areaInteractable.AreaCenter);
+                        if (distance < closestDistance)
+                        {
+                            closestDistance = distance;
+                            closestAreaInteractable = areaInteractable;
+                        }
+                    }
+                    _isShowingAreaDescription = true;
+                    showInteractionEvent.RaiseEvent(this, false, true, closestAreaInteractable.Description);
+                }
+                else
+                {
+                    if (_isShowingAreaDescription)
+                    {
+                        showInteractionEvent.RaiseEvent(this, false, false, null);
+                        _isShowingAreaDescription = false;
+                    }
+                }
             }
             #endregion
         }
@@ -179,13 +187,23 @@ namespace EchoCity
                 var direction = Camera.main.transform.forward;
                 Ray ray = new Ray(origin, direction);
                 Debug.DrawRay(origin, direction * 10f, Color.red, 4f);
-                if (_canInteract)
+                if (_isShowingDescription)
                 {
-                    Physics.Raycast(ray, out RaycastHit hitInfo, 10f, 1 << 6, QueryTriggerInteraction.Collide);
-                    var interactable = hitInfo.collider?.GetComponent<Interactable>();
-                    if (interactable != null)
+                    Physics.Raycast(ray, out RaycastHit hitInfo, 10f, (1 << 6) | (1 << 9), QueryTriggerInteraction.Collide);
+                    var pickable = hitInfo.collider?.GetComponent<Pickable>();
+                    if (pickable != null)
                     {
-                        interactable.Interact();
+                        Log.DLazy(() => $"Interacting with Pickable: {pickable.name}", this);
+                        if (playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab))
+                            pickable.Interact();
+                        else playerController.EmitFullInventorySound();
+                    }
+                    else
+                    {
+                        var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
+                        if (interactable != null)
+                            interactable.Interact();
+
                     }
                 }
             }
@@ -194,8 +212,11 @@ namespace EchoCity
         private void OnAreaInteract(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            if (inInteractionRange && inRangeInteractable != null)
-                areaInteractionEvent.RaiseEvent(this);
+            if (inRangeInteractables.Count > 0)
+            {
+                Log.DLazy(() => $"Interacting with AreaInteractable: {closestAreaInteractable.name}", this);
+                closestAreaInteractable.Interact();
+            }
 
         }
 
@@ -219,7 +240,7 @@ namespace EchoCity
         private void OnEnterPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            switchToPauseStateEvent.RaiseEvent(this);
+            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Pause, null);
         }
 
         private void OnOpenInventory(InputAction.CallbackContext context)
@@ -230,54 +251,53 @@ namespace EchoCity
             _playerActionMap["DropItem"].performed -= OnDropItem;
             _playerActionMap["UseTool"].performed -= OnUseTool;
 
-            switchToHudStateEvent.RaiseEvent(this, HudEnum.Inventory);
+            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Hud, new ToHUDStateParams(HudEnum.Inventory));
 
         }
 
         private void OnCloseInventory(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            switchToPlayingStateEvent.RaiseEvent(this);
+            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Playing, null);
             _playerActionMap["Look"].performed += OnLook;
             _playerActionMap["Interact"].performed += OnInteract;
             _playerActionMap["DropItem"].performed += OnDropItem;
             _playerActionMap["UseTool"].performed += OnUseTool;
         }
-
         #endregion
 
         #region Test Input Actions
         private void OnWearEcholocator(InputAction.CallbackContext context)
         {
             if (context.performed)
-                materialToggleEvent?.RaiseEvent(this);
+                toggleMaterialEvent?.RaiseEvent(this);
         }
 
 
         private void OnTest1(InputAction.CallbackContext context)
         {
-            //TESTS HERE
+            //DEATH Menu TEST
             if (context.performed)
             {
-                switchToDeathStateEvent?.RaiseEvent(this);
+                switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Death, null);
             }
         }
 
         private void OnTest2(InputAction.CallbackContext context)
         {
-            //EQUIP ITEM TEST
+            //WARNING TEST
             if (context.performed)
             {
-                spawnWarningEvent?.RaiseEvent(this, "Warning: Enemy Approaching!", Color.red);
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("This is a test warning message!", Color.red));
             }
         }
 
         private void OnTest3(InputAction.CallbackContext context)
         {
-            //EQUIP ITEM TEST
+            //WIN Menu TEST
             if (context.performed)
             {
-                switchToWinStateEvent?.RaiseEvent(this);
+                switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Win, null);
             }
         }
 
@@ -290,44 +310,35 @@ namespace EchoCity
             }
         }
 
-        private void OnTest4(InputAction.CallbackContext context)
+        private void OnTest4(InputAction.CallbackContext context) { }
+        #endregion
+
+        private void PlayerInputHandler(IEventSender sender, InputEnum input, bool activate)
         {
-            // SPAWN DIALOG TEST
-            if (context.performed)
+            if (input != InputEnum.Player) return;
+            if (activate)
             {
-                switchToNarrationStateEvent.RaiseEvent(this, new DialogData(exampleDialogData.DialogLines));
+                _playerActionMap.Enable();
+                MethodsUI.HideCursor();
+            }
+            else
+            {
+                _playerActionMap.Disable();
             }
         }
 
-        #endregion
-
-        private void EnablePlayerActionMapHandler(IEventSender sender)
+        public void AddAreaInteractable(AreaInteractable interactable)
         {
-            _playerActionMap.Enable();
-            MethodsUI.HideCursor();
+            if (closestAreaInteractable == null)
+                closestAreaInteractable = interactable;
+            if (!inRangeInteractables.Contains(interactable))
+                inRangeInteractables.Add(interactable);
         }
 
-        private void DisablePlayerActionMapHandler(IEventSender sender)
+        public void RemoveAreaInteractable(AreaInteractable interactable)
         {
-            _playerActionMap.Disable();
-        }
-
-
-        //DANGER distinct InteractableArea's colliders MUST NOT intersect otherwise this implementation WILL NOT WORK as expected!
-        public void EnterInteractionRangeHandler(IEventSender sender, Interactable interactable)
-        {
-            inInteractionRange = true;
-            inRangeInteractable = interactable;
-        }
-        public void ExitInteractionRangeHandler(IEventSender sender, Interactable interactable)
-        {
-            inInteractionRange = false;
-            inRangeInteractable = null;
-        }
-
-        private void WearEcholocatorHandler(IEventSender sender)
-        {
-            materialToggleEvent?.RaiseEvent(this);
+            if (inRangeInteractables.Contains(interactable))
+                inRangeInteractables.Remove(interactable);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace EchoCity
     public class AudioEmitter : MonoBehaviour, IEventSender
     {
         [Header("Invoking Events")]
-        [SerializeField] SOSoundEmissionDataEvent newAudioSphereEvent;
+        [SerializeField] SOSoundEmittedEvent newAudioSphereEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();

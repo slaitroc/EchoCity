@@ -7,15 +7,19 @@ namespace EchoCity
     [System.Serializable]
     public class EquippedItem
     {
-        public int Index;
-        public PickableData Data;
-        public GameObject Prefab;
+        private int _index;
+        private SOPickable _data;
+        private GameObject _prefab;
 
-        public EquippedItem(int index, PickableData data, GameObject prefab)
+        public int Index => _index;
+        public SOPickable Data => _data;
+        public GameObject Prefab => _prefab;
+
+        public EquippedItem(int index, SOPickable data, GameObject prefab)
         {
-            Index = index;
-            Data = data;
-            Prefab = prefab;
+            _index = index;
+            _data = data;
+            _prefab = prefab;
         }
     }
 
@@ -34,11 +38,10 @@ namespace EchoCity
     public class PlayerController : MonoBehaviour, IDamageable, ISoundPerceiver, IAttractionSystem, IEventSender
     {
         [Header("Invoking Events")]
-        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
-        [SerializeField] private SOEventVoid materialToggleEvent;
-        [SerializeField] private SOIntEvent dropItemEvent;
-        [SerializeField] private SOEventVoid deathEvent;
-        [SerializeField] private SOSoundEmissionDataVector3 playerEmittedSoundEvent;
+        [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
+        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
+        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOEquippedItemChanged equippedItemChanged;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -46,12 +49,12 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Player };
 
         [Header("Observing Events")]
-        [SerializeField] private SOIntegerPickableDataGameObjectEvent itemEquippedEvent;
-        [SerializeField] private SOIAttractionEvent enemyAttractionEvent;
-        [SerializeField] private SOSoundEmissionDataEvent perceivedSoundEvent;
+        [SerializeField] private SOAttractionInfoEvent enemyAttractionEvent;
+        [SerializeField] private SOSoundEmittedEvent perceivedSoundEvent;
 
 
         [Header("Inventory")]
+        public PlayerInventory playerInventory;
         public SOSoundSource fullInventorySound;
         public EquippedItem equippedItem = null;
         [SerializeField] private Transform dropPoint;
@@ -87,11 +90,8 @@ namespace EchoCity
         public float CurrentAttraction => attractionTarget != null ? attractionTarget.AttractionData.CurrentAttraction : _A;
         public PerceivedSound LastPerceivedSound { get => lastPS; set => lastPS = value; }
 
-
         void OnEnable()
         {
-            if (itemEquippedEvent)
-                itemEquippedEvent.OnEventRaised += EquipItemHandler;
             if (enemyAttractionEvent != null)
                 enemyAttractionEvent.OnEventRaised += UpdateActiveAttractionTargets;
             if (perceivedSoundEvent != null)
@@ -100,23 +100,21 @@ namespace EchoCity
 
         void OnDisable()
         {
-            if (itemEquippedEvent)
-                itemEquippedEvent.OnEventRaised -= EquipItemHandler;
             if (enemyAttractionEvent != null)
                 enemyAttractionEvent.OnEventRaised -= UpdateActiveAttractionTargets;
             if (perceivedSoundEvent != null)
                 perceivedSoundEvent.OnEventRaised -= PerceivedSoundHandler;
         }
 
-
         void Awake()
         {
             _attractionTargets = new AttractionTarget[3];
             lastPS = new PerceivedSound(0f);
         }
+
         void Start()
         {
-            _audioContext = new AudioContext(this, newAudioSphereEvent);
+            _audioContext = new AudioContext(this, soundEmittedEvent);
 
             currentHealth = maxHealth;
             _lastTimeDamaged = float.NegativeInfinity;
@@ -127,7 +125,6 @@ namespace EchoCity
             _playerAudioSource = _playerToolsAudio.AddComponent<AudioSource>();
             _playerAudioSource.spatialBlend = 1.0f; // 3D sound
         }
-
 
         void Update()
         {
@@ -152,19 +149,9 @@ namespace EchoCity
             }
         }
 
-
         public void EmitFullInventorySound()
         {
-            EchoCitySound.PlayInAudioSource(fullInventorySound.AudioClip, fullInventorySound.Volume, _playerAudioSource, EchoCitySound.MixerGroupEnum.SFX);
-        }
-
-        public void EquipItemHandler(IEventSender sender, int index, PickableData data, GameObject prefab)
-        {
-            Log.DLazy(() => "Equipping item", this);
-            equippedItem = new EquippedItem(index, data, prefab);
-            if (prefab == null)
-                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
-
+            PlayInAudioSource(fullInventorySound.AudioClip, fullInventorySound.Volume, _playerAudioSource, MixerGroupEnum.SFX);
         }
 
         public void TakeDamage(float damageAmount)
@@ -175,21 +162,31 @@ namespace EchoCity
             if (currentHealth <= 0)
             {
                 Log.W("YOU DIED", "-", "red");
-                deathEvent?.RaiseEvent(this);
+                switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Death, null);
             }
+        }
+
+        public void EquipItem(int index, SOPickable data, GameObject prefab)
+        {
+            Log.DLazy(() => "Equipping item", this);
+            equippedItem = new EquippedItem(index, data, prefab);
+            if (data == null)
+                Log.ELazy(() => $"EquipItem received null data for item at index {index}", this);
+            if (prefab == null)
+                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
+            equippedItemChanged?.RaiseEvent(this);
         }
 
         public void UseTool()
         {
             if (equippedItem != null)
             {
-                if (equippedItem.Data.PickableType == PickableType.SoundTool)
+                if (equippedItem.Data.PickableType == PickableTypeEnum.SoundTool)
                 {
                     PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, MixerGroupEnum.SFX);
-                    playerEmittedSoundEvent?.RaiseEvent(this, transform.position, new SoundEmissionData(transform.position, equippedItem.Data.ToolSound));
                     return;
                 }
-                else if (equippedItem.Data.PickableType == PickableType.Tool)
+                else if (equippedItem.Data.PickableType == PickableTypeEnum.Tool)
                 {
                     //use tool only when pointing interacting objects
                 }
@@ -212,11 +209,12 @@ namespace EchoCity
             }
             else
             {
-                Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
+                var dropped = Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
+                dropped.AddComponent<Rigidbody>();
             }
-            materialToggleEvent?.RaiseEvent(this);
-            materialToggleEvent?.RaiseEvent(this);
-            dropItemEvent?.RaiseEvent(this, equippedItem.Index);
+            playerInventory.DropItem(equippedItem.Index);
+            toggleMaterialEvent?.RaiseEvent(this);
+            toggleMaterialEvent?.RaiseEvent(this);
             equippedItem = null;
         }
 

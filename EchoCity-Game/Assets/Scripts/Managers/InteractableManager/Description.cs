@@ -7,10 +7,10 @@ namespace EchoCity
     {
         [TextArea]
         [SerializeField] private string descriptionText;
-        private bool _interactable = false;
 
         string IHasDescription.Description => descriptionText;
-        public bool isInteractable => _interactable;
+        bool IHasDescription.HasRaycastDescription => true;
+        bool IHasDescription.IsInteractable => false;
 
     }
 }

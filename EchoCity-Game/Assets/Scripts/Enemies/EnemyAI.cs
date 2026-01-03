@@ -115,8 +115,8 @@ namespace EchoCity
     {
         #region fields and properties
         [Header("Invoking Events")]
-        [SerializeField] private SOSoundEmissionDataEvent newAudioSphereEvent;
-        [SerializeField] private SOIAttractionEvent enemyAttractionEvent;
+        [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
+        [SerializeField] private SOAttractionInfoEvent attractionInfoEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -124,7 +124,7 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Enemy };
 
         [Header("Observed Events")]
-        [SerializeField] private SOSoundEmissionDataEvent enemyPerceivedSoundEvent;
+        [SerializeField] private SOSoundEmittedEvent perceivedSoundEvent;
 
         [Header("Enemy Configuration")]
         [SerializeField] private SOEnemyData enemyData;
@@ -164,8 +164,8 @@ namespace EchoCity
         public PerceivedSound TargetSound => targetSound;
         public IAttractionSystem AttractionSystem => this;
         public IConfusionSystem ConfusionSystem => this;
-        public SOSoundEmissionDataEvent NewAudioSphereEvent => newAudioSphereEvent;
-        public SOIAttractionEvent EnemyAttractionEvent => enemyAttractionEvent;
+        public SOSoundEmittedEvent SoundEmittedEvent => soundEmittedEvent;
+        public SOAttractionInfoEvent AttractionInfoEvent => attractionInfoEvent;
 
         // ATTRACTION System
         [SerializeField] private float _A = 0f; //attraction
@@ -199,12 +199,12 @@ namespace EchoCity
 
         void OnEnable()
         {
-            if (enemyPerceivedSoundEvent != null) enemyPerceivedSoundEvent.OnEventRaised += PerceivedSoundHandler;
+            if (perceivedSoundEvent != null) perceivedSoundEvent.OnEventRaised += PerceivedSoundHandler;
         }
 
         void OnDisable()
         {
-            if (enemyPerceivedSoundEvent != null) enemyPerceivedSoundEvent.OnEventRaised -= PerceivedSoundHandler;
+            if (perceivedSoundEvent != null) perceivedSoundEvent.OnEventRaised -= PerceivedSoundHandler;
         }
 
         void Start()

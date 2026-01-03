@@ -3,38 +3,36 @@ using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
-    public class CardReaderInteractable : Interactable
+    public class CardReaderInteractable : PlainInteractable
     {
         [Header("Invoking Events")]
         [SerializeField] protected SOEventVoid materialToggleEvent;
+        [SerializeField] private SOShowUIEvent showUIEvent;
         [Header("Sound")]
-        [SerializeField] SOSoundSource useSoundSource;
+        [SerializeField] private SOSoundSource useSoundSource;
 
         [Header("Prefabs")]
-        [SerializeField] GameObject cardPrefab;
-        [SerializeField] Transform cardSpawnPoint;
-
+        [SerializeField] private GameObject cardPrefab;
+        [SerializeField] private Transform cardSpawnPoint;
         [Header("Messages")]
-        [SerializeField] SODialogContainer dialogContainerSuccess;
-        [SerializeField] SODialogContainer dialogContainerFail;
-        [SerializeField] SODialogDataEvent dialogDataEvent;
-        [SerializeField] SOStringColorEvent spawnMessageEvent;
+        [SerializeField] private SODialogContainer dialogContainerSuccess;
+        [SerializeField] private SODialogContainer dialogContainerFail;
 
         protected override void ResolveInteraction(bool outcome)
         {
             if (outcome)
             {
-                spawnMessageEvent?.RaiseEvent(this, "CardReader Used!", new Color(1f, 0.5f, 0f, 1f));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("CardReader Used!", new Color(1f, 0.5f, 0f, 1f)));
                 PlayAtPosition(transform.position, useSoundSource, _audioContext, MixerGroupEnum.SFX);
                 Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
                 materialToggleEvent?.RaiseEvent(this);
                 materialToggleEvent?.RaiseEvent(this);
-                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainerSuccess));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainerSuccess)));
             }
             else
             {
-                spawnMessageEvent?.RaiseEvent(this, "CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f));
-                dialogDataEvent?.RaiseEvent(this, new DialogData(dialogContainerFail));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f)));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainerFail)));
             }
         }
     }

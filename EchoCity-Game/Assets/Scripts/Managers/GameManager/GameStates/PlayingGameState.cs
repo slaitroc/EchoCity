@@ -9,8 +9,8 @@ namespace EchoCity
         public override void Enter()
         {
             Time.timeScale = 1;
-            _context.DisableUIInputEvent.RaiseEvent(_context);
-            _context.EnablePlayerInputEvent.RaiseEvent(_context);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, false);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, true);
         }
         public override void Update() { }
         public override void Exit() { }

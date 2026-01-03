@@ -11,9 +11,9 @@ namespace EchoCity
         public override void Enter()
         {
             Time.timeScale = 0;
-            _context.DisablePlayerInputEvent.RaiseEvent(_context);
-            _context.EnableUIInputEvent.RaiseEvent(_context);
-            _context.WinMenuEvent.RaiseEvent(_context);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, false);
+            _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
+            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.WinMenu, null);
         }
         public override void Update() { }
         public override void Exit()
@@ -34,12 +34,12 @@ namespace EchoCity
         public override void SwitchToTitleHandler()
         {
             _toTitle = true;
-            _context.UnloadCurrentLevelEvent.RaiseEvent(_context);
+            _context.UnloadCurrentSceneEvent.RaiseEvent(_context);
         }
         public override void InitLevelHandler(SceneEnum scene)
         {
             _restart = true;
-            _context.LoadLevelEvent.RaiseEvent(_context, scene);
+            _context.LoadSceneEvent.RaiseEvent(_context, scene);
         }
     }
 }

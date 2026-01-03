@@ -61,7 +61,7 @@ namespace StarterAssets
         }
 
         [Header("Invoking Events")]
-        public SOSoundEmissionDataEvent newAudioSphereEvent;
+        public SOSoundEmittedEvent newAudioSphereEvent;
         private AudioContext _audioContext;
 
         string IEventSender.SenderName => gameObject.name;

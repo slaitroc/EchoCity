@@ -15,7 +15,7 @@ namespace EchoCity
         [SerializeField] private UIDocument feedbackDocument;
 
         [Header("Invoking events")]
-        [SerializeField] private SOIntStringEvent feedbackSubmittedEvent;
+        [SerializeField] private SOSubmitFeedbackEvent feedbackSubmittedEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();

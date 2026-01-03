@@ -5,9 +5,9 @@ namespace EchoCity
 {
     public class AudioContext
     {
-        public readonly SOSoundEmissionDataEvent NewAudioSphereEvent;
+        public readonly SOSoundEmittedEvent NewAudioSphereEvent;
         public readonly IEventSender Sender;
-        public AudioContext(IEventSender sender, SOSoundEmissionDataEvent newAudioSphereEvent)
+        public AudioContext(IEventSender sender, SOSoundEmittedEvent newAudioSphereEvent)
         {
             Sender = sender;
             NewAudioSphereEvent = newAudioSphereEvent;

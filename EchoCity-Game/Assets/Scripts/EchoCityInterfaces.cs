@@ -59,29 +59,19 @@ namespace EchoCity
         // <summary> FSM current state </summary>
         GameStatesEnum CurrentStateEnum { get; set; }
 
-        SOGameManagerStateTransitionEvent SwitchGameStateEvent { get; }
+        SOGameManagerStateTransitionEvent GameStateTransitionEvent { get; }
 
         // INPUT EVENTS
-        SOEventVoid EnablePlayerInputEvent { get; }
-        SOEventVoid DisablePlayerInputEvent { get; }
-        SOEventVoid EnableUIInputEvent { get; }
-        SOEventVoid DisableUIInputEvent { get; }
+        SOPlayerInputEvent PlayerInputEvent { get; }
 
         // UI MANAGER EVENTS
-        SOEventVoid TitleMenuEvent { get; }
-        SOEventVoid PauseMenuEvent { get; }
-        SOHudEnumEvent HudMenuEvent { get; }
-        SODialogDataEvent DialogDataEvent { get; }
-        SOEventVoid DeathMenuEvent { get; }
-        SOEventVoid WinMenuEvent { get; }
-        SOEventVoid EnterLoadingScreenEvent { get; }
-        SOEventVoid ExitLoadingScreenEvent { get; }
+        SOShowUIEvent ShowUIEvent { get; }
 
         // SCENE MANAGEMENT EVENTS
-        SOEventVoid SetPlayerOnSpawnEvent { get; }
-        SOSceneEnumEvent LoadLevelEvent { get; }
-        SOEventVoid UnloadCurrentLevelEvent { get; }
-        SOEventVoid ReloadLevelEvent { get; }
+        SOSetPlayerOnSpawnEvent SetPlayerOnSpawnEvent { get; }
+        SOLoadSceneEvent LoadSceneEvent { get; }
+        SOUnloadCurrentSceneEvent UnloadCurrentSceneEvent { get; }
+        SOReloadSceneEvent ReloadSceneEvent { get; }
 
 
     }
@@ -138,9 +128,9 @@ namespace EchoCity
         // <summary> The enemy's confusion system</summary>
         IConfusionSystem ConfusionSystem { get; }
         // <summary> Echolocation enemy's events </summary>
-        SOSoundEmissionDataEvent NewAudioSphereEvent { get; }
+        SOSoundEmittedEvent SoundEmittedEvent { get; }
         // <summary> enemyAttraction event </summary>
-        SOIAttractionEvent EnemyAttractionEvent { get; }
+        SOAttractionInfoEvent AttractionInfoEvent { get; }
     }
 
     public interface IEnemyState : IState, IDamageDealer //TODO
@@ -265,7 +255,26 @@ namespace EchoCity
     {
         //<summary> The description of the object </summary>
         string Description { get; }
+        //<summary> Whether the object has a description that can be shown via raycast </summary>
+        bool HasRaycastDescription { get; }
         //<summary> Whether the object is interactable </summary>
-        bool isInteractable { get; }
+        bool IsInteractable { get; }
+    }
+
+    public interface IPuzzleManager
+    {
+        IQuestsManager QuestsManager { get; }
+        //<summary> Adds a quest to the quest manager </summary>
+        bool CheckTags(PuzzleTagState[] tagsToCheck);
+        //<summary> Sets specific puzzle tags </summary>
+        void SetTags(PuzzleTagState[] tagsToSet);
+        //<summary> Increments the count of a specific puzzle tag </summary>
+        void IncrementTagCount(PuzzleTagEnum tag);
+    }
+
+    public interface IQuestsManager
+    {
+        SOQuest[] ActiveQuests { get; }
+        int[] QuestProgression { get; }
     }
 }
