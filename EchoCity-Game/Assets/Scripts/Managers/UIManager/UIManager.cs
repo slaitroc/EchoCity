@@ -59,10 +59,8 @@ namespace EchoCity
         [Header("Events")]
 
         [Header("Invoking Events for GM")]
-        // [SerializeField] private SOEventVoid switchToTitleStateEvent;
-        // [SerializeField] private SOEventVoid switchToPlayStateEvent;
-        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -70,24 +68,14 @@ namespace EchoCity
         public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.UI };
 
         [Header("Observed Events From GM")]
-        // [SerializeField] private SOEventVoid titleMenuEvent;
-        // [SerializeField] private SOHudEnumEvent hudMenuEvent;
-        // [SerializeField] private SOEventVoid pauseMenuEvent;
-        // [SerializeField] private SOShowDialogEvent dialogMenuEvent;
-        // [SerializeField] private SOEventVoid deathMenuEvent;
-        // [SerializeField] private SOEventVoid enterLoadingScreenEvent;
-        // [SerializeField] private SOEventVoid exitLoadingScreenEvent;
-        // [SerializeField] private SOEventVoid winMenuEvent;
         [SerializeField] private SOShowUIEvent showUIEvent;
 
 
         [Header("Observed Events From Others")]
-        // [SerializeField] private SOShowInteractionEvent canInteractStartEvent;
-        // [SerializeField] private SOEventVoid canInteractStopEvent;
-        // [SerializeField] private SOStringColorEvent spawnWarningEvent;
+        [SerializeField] private SOShowInteractionEvent showInteractionEvent;
         [SerializeField] private SOEquippedItemChanged equippedItemChanged;
         [SerializeField] private SOInventoryChangedEvent inventoryChangedEvent;
-        // [SerializeField] private SOIntIntEvent questsUpdatedEvent;
+        [SerializeField] private SOQuestUpdatedEvent questUpdatedEvent;
 
         [Header("External References")]
         [SerializeField] private PlayerController playerController;
@@ -105,9 +93,7 @@ namespace EchoCity
 
         #endregion
 
-
-
-        void Awake()
+        private void Awake()
         {
             _titleMenu = titleMenuController.gameObject;
             _hud = crosshairController.gameObject;
@@ -129,22 +115,12 @@ namespace EchoCity
 
         private void OnEnable()
         {
-            // if (titleMenuEvent) titleMenuEvent.OnEventRaised += OpenTitleMenuHandler;
-            // if (hudMenuEvent) hudMenuEvent.OnEventRaised += OpenHUDMenuHandler;
-            // if (pauseMenuEvent) pauseMenuEvent.OnEventRaised += OpenPauseMenuHandler;
-            // if (dialogMenuEvent) dialogMenuEvent.OnEventRaised += OpenDialogMenuHandler;
-            // if (deathMenuEvent) deathMenuEvent.OnEventRaised += OpenDeathMenuHandler;
-            // if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised += OpenLoadingScreenHandler;
-            // if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised += CloseLoadingScreenHandler;
-            // if (winMenuEvent) winMenuEvent.OnEventRaised += OpenWinMenuHandler;
             if (showUIEvent) showUIEvent.OnEventRaised += ShowUIHandler;
 
-            // if (canInteractStartEvent) canInteractStartEvent.OnEventRaised += CrosshairInteractableStartHandler;
-            // if (canInteractStopEvent) canInteractStopEvent.OnEventRaised += CrosshairInteractableStopHandler;
-            // if (spawnWarningEvent) spawnWarningEvent.OnEventRaised += SpawnWarningHandler;
-            if (equippedItemChanged) equippedItemChanged.OnEventRaised += ItemEquippedHandler;
-            if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised += DropItemEventHandler;
-            // if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised += QuestsUpdatedEventHandler;
+            if (showInteractionEvent) showInteractionEvent.OnEventRaised += ShowInteractionHandler;
+            if (equippedItemChanged) equippedItemChanged.OnEventRaised += EquippedItemHandler;
+            if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised += InventoryChangedHandler;
+            if (questUpdatedEvent) questUpdatedEvent.OnEventRaised += QuestUpdatedEventHandler;
         }
 
         #region Public Methods - State Switching
@@ -179,67 +155,6 @@ namespace EchoCity
 
 
         #region Private Event Handlers
-        private void OpenTitleMenuHandler(IEventSender sender)
-        {
-            _hud.SetActive(false);
-            _pauseMenu.SetActive(false);
-            _dialog.SetActive(false);
-            _deathMenu.SetActive(false);
-            _winMenu.SetActive(false);
-
-            _titleMenu.SetActive(true);
-        }
-
-        private void OpenHUDMenuHandler(IEventSender sender, HudEnum hud)
-        {
-            radialMenuController.enabled = !radialMenuController.enabled;
-            crosshairController.enabled = !crosshairController.enabled;
-        }
-
-        private void OpenPauseMenuHandler(IEventSender sender)
-        {
-            _hud.SetActive(false);
-            _titleMenu.SetActive(false);
-            _dialog.SetActive(false);
-            _deathMenu.SetActive(false);
-            _winMenu.SetActive(false);
-
-            _pauseMenu.SetActive(true);
-        }
-
-        private void OpenDialogMenuHandler(IEventSender sender, DialogData dialogData)
-        {
-            _hud.SetActive(false);
-            _pauseMenu.SetActive(false);
-            _titleMenu.SetActive(false);
-            _deathMenu.SetActive(false);
-            _winMenu.SetActive(false);
-
-            _dialog.SetActive(true);
-            dialogController.SpawnDialogHandler(dialogData);
-        }
-
-        private void OpenDeathMenuHandler(IEventSender sender)
-        {
-            _hud.SetActive(false);
-            _pauseMenu.SetActive(false);
-            _dialog.SetActive(false);
-            _titleMenu.SetActive(false);
-            _winMenu.SetActive(false);
-
-            _deathMenu.SetActive(true);
-        }
-
-        private void OpenWinMenuHandler(IEventSender sender)
-        {
-            _hud.SetActive(false);
-            _pauseMenu.SetActive(false);
-            _dialog.SetActive(false);
-            _titleMenu.SetActive(false);
-            _deathMenu.SetActive(false);
-
-            _winMenu.SetActive(true);
-        }
 
         private void ShowUIHandler(IEventSender sender, ShowableUIEnum uiElement, EventParams eventParams)
         {
@@ -274,6 +189,10 @@ namespace EchoCity
                     HideAllElements();
                     _winMenu.SetActive(true);
                     break;
+                case ShowableUIEnum.Warning:
+                    var warningParams = eventParams as WarningParams;
+                    warningController.SpawnWarning(warningParams.Message, warningParams.Color);
+                    break;
                 default:
                     break;
             }
@@ -290,38 +209,25 @@ namespace EchoCity
             _winMenu.SetActive(false);
         }
 
-        private void OpenLoadingScreenHandler(IEventSender sender) => _loadingScreen.SetActive(true);
-        private void CloseLoadingScreenHandler(IEventSender sender) => _loadingScreen.SetActive(false);
 
-        private void CrosshairInteractableStartHandler(IEventSender sender, bool isInteractable, string text) => crosshairController.IsInteractable(true, isInteractable, text);
-        private void CrosshairInteractableStopHandler(IEventSender sender) => crosshairController.IsInteractable(false);
-        private void SpawnWarningHandler(IEventSender sender, string warningText, Color color) => warningController.SpawnWarning(warningText, color);
-        private void ItemEquippedHandler(IEventSender sender) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
-        private void DropItemEventHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum code)
+        private void ShowInteractionHandler(IEventSender sender, bool isInteractable, bool showDescription, string text) => crosshairController.IsInteractable(showDescription, isInteractable, text);
+        private void EquippedItemHandler(IEventSender sender) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
+        private void InventoryChangedHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum code)
         {
-            if (code == InventoryCodesEnum.ItemDropped && playerController.equippedItem != null && playerController.equippedItem.Data.PickableEnum == pickable)
-                equippedPanelController.ClearEquipped();
+            if (code == InventoryCodesEnum.ItemDropped) equippedPanelController.ClearEquipped();
         }
-        private void QuestsUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
-
+        private void QuestUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
 
         #endregion
+
         private void OnDisable()
         {
-            // if (titleMenuEvent) titleMenuEvent.OnEventRaised -= OpenTitleMenuHandler;
-            // if (hudMenuEvent) hudMenuEvent.OnEventRaised -= OpenHUDMenuHandler;
-            // if (pauseMenuEvent) pauseMenuEvent.OnEventRaised -= OpenPauseMenuHandler;
-            // if (dialogMenuEvent) dialogMenuEvent.OnEventRaised -= OpenDialogMenuHandler;
-            // if (deathMenuEvent) deathMenuEvent.OnEventRaised -= OpenDeathMenuHandler;
-            // if (enterLoadingScreenEvent) enterLoadingScreenEvent.OnEventRaised -= OpenLoadingScreenHandler;
-            // if (exitLoadingScreenEvent) exitLoadingScreenEvent.OnEventRaised -= CloseLoadingScreenHandler;
-            // if (winMenuEvent) winMenuEvent.OnEventRaised -= OpenWinMenuHandler;
-            // if (canInteractStartEvent) canInteractStartEvent.OnEventRaised -= CrosshairInteractableStartHandler;
-            // if (canInteractStopEvent) canInteractStopEvent.OnEventRaised -= CrosshairInteractableStopHandler;
-            // if (spawnWarningEvent) spawnWarningEvent.OnEventRaised -= SpawnWarningHandler;
-            if (equippedItemChanged) equippedItemChanged.OnEventRaised -= ItemEquippedHandler;
-            if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised -= DropItemEventHandler;
-            // if (questsUpdatedEvent) questsUpdatedEvent.OnEventRaised -= QuestsUpdatedEventHandler;
+            if (showUIEvent) showUIEvent.OnEventRaised -= ShowUIHandler;
+
+            if (showInteractionEvent) showInteractionEvent.OnEventRaised -= ShowInteractionHandler;
+            if (equippedItemChanged) equippedItemChanged.OnEventRaised -= EquippedItemHandler;
+            if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised -= InventoryChangedHandler;
+            if (questUpdatedEvent) questUpdatedEvent.OnEventRaised -= QuestUpdatedEventHandler;
         }
 
     }
