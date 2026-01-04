@@ -17,10 +17,11 @@ namespace EchoCity
         [Header("Observed Events")]
         [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
         [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
+        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
 
         [Header("Echolocation Settings")]
-        [SerializeField] private bool useEcholocationMaterial = true;
+        [SerializeField] private bool useEcholocationMaterial = false;
         [SerializeField] private Material echolocationMaterial;
 
         [SerializeField] private VisualizationMode visualizationMode = VisualizationMode.GridLines;
@@ -71,14 +72,16 @@ namespace EchoCity
         void OnEnable()
         {
             if (soundEmittedEvent) soundEmittedEvent.OnEventRaised += AddAudioSphereHandler;
-            if (toggleMaterialEvent) toggleMaterialEvent.OnEventRaised += MaterialSwitcherHandler;
+            if (toggleMaterialEvent) toggleMaterialEvent.OnEventRaised += ToggleMaterialHandler;
+            if (setMaterialEvent) setMaterialEvent.OnEventRaised += SetMaterialHandler;
 
         }
 
         void OnDisable()
         {
             if (soundEmittedEvent) soundEmittedEvent.OnEventRaised -= AddAudioSphereHandler;
-            if (toggleMaterialEvent) toggleMaterialEvent.OnEventRaised -= MaterialSwitcherHandler;
+            if (toggleMaterialEvent) toggleMaterialEvent.OnEventRaised -= ToggleMaterialHandler;
+            if (setMaterialEvent) setMaterialEvent.OnEventRaised -= SetMaterialHandler;
         }
 
         private void OnValidate()
@@ -175,7 +178,7 @@ namespace EchoCity
             activeSpheres.Add(newSphere);
         }
 
-        public void MaterialSwitcherHandler(IEventSender sender)
+        public void ToggleMaterialHandler(IEventSender sender)
         {
             useEcholocationMaterial = !useEcholocationMaterial;
 
@@ -189,6 +192,24 @@ namespace EchoCity
                 MaterialSwitcher.RestoreOriginalMaterials();
                 Log.DLazy(() => "Restored Original Materials", this);
             }
+        }
+
+        public void SetMaterialHandler(IEventSender sender, bool enableEcholocationMaterial)
+        {
+            if (useEcholocationMaterial == enableEcholocationMaterial) return;
+
+            if (enableEcholocationMaterial && echolocationMaterial != null)
+            {
+                MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
+                Log.DLazy(() => "Switched to Echolocation Material", this);
+            }
+            else
+            {
+                MaterialSwitcher.RestoreOriginalMaterials();
+                Log.DLazy(() => "Restored Original Materials", this);
+            }
+
+            useEcholocationMaterial = enableEcholocationMaterial;
         }
     }
 }
