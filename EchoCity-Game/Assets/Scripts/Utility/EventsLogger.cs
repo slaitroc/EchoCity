@@ -48,9 +48,6 @@ namespace EchoCity
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
         [SerializeField] private bool logSetPlayerOnSpawn = true;
 
-        [SerializeField] private SOReloadSceneEvent reloadSceneEvent;
-        [SerializeField] private bool logReloadScene = true;
-
         [SerializeField] private SOQuestUpdatedEvent questUpdatedEvent;
         [SerializeField] private bool logQuestUpdated = true;
 
@@ -60,8 +57,8 @@ namespace EchoCity
         [SerializeField] private SOPlayerInputEvent playerInputEvent;
         [SerializeField] private bool logPlayerInput = true;
 
-        [SerializeField] private SOLoadSceneEvent loadSceneEvent;
-        [SerializeField] private bool logLoadScene = true;
+        [SerializeField] private SOLevelActionEvent levelActionEvent;
+        [SerializeField] private bool logLevelAction = true;
 
         [SerializeField] private SOShowUIEvent showUIEvent;
         [SerializeField] private bool logShowUI = true;
@@ -71,9 +68,6 @@ namespace EchoCity
 
         [SerializeField] private SOAttractionInfoEvent attractionInfoEvent;
         [SerializeField] private bool logAttractionInfo = true;
-
-        [SerializeField] private SOUnloadCurrentSceneEvent unloadCurrentSceneEvent;
-        [SerializeField] private bool logUnloadCurrentScene = true;
 
         [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
         [SerializeField] private bool logToggleMaterial = true;
@@ -107,15 +101,13 @@ namespace EchoCity
             if (gameManagerStateTransitionEvent != null) gameManagerStateTransitionEvent.OnEventRaised += OnGameManagerStateTransition;
             if (equippedItemChangedEvent != null) equippedItemChangedEvent.OnEventRaised += OnEquippedItemChanged;
             if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised += OnSetPlayerOnSpawn;
-            if (reloadSceneEvent != null) reloadSceneEvent.OnEventRaised += OnReloadScene;
             if (questUpdatedEvent != null) questUpdatedEvent.OnEventRaised += OnQuestUpdated;
             if (showInteractionEvent != null) showInteractionEvent.OnEventRaised += OnShowInteraction;
             if (playerInputEvent != null) playerInputEvent.OnEventRaised += OnPlayerInput;
-            if (loadSceneEvent != null) loadSceneEvent.OnEventRaised += OnLoadScene;
+            if (levelActionEvent != null) levelActionEvent.OnEventRaised += OnLevelAction;
             if (showUIEvent != null) showUIEvent.OnEventRaised += OnShowUI;
             if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised += OnInventoryChanged;
             if (attractionInfoEvent != null) attractionInfoEvent.OnEventRaised += OnAttractionInfo;
-            if (unloadCurrentSceneEvent != null) unloadCurrentSceneEvent.OnEventRaised += OnUnloadCurrentScene;
             if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised += OnToggleMaterial;
             if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised += OnSwitchToGameState;
             if (switchLevelEvent != null) switchLevelEvent.OnEventRaised += OnSwitchLevel;
@@ -128,15 +120,13 @@ namespace EchoCity
             if (gameManagerStateTransitionEvent != null) gameManagerStateTransitionEvent.OnEventRaised -= OnGameManagerStateTransition;
             if (equippedItemChangedEvent != null) equippedItemChangedEvent.OnEventRaised -= OnEquippedItemChanged;
             if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised -= OnSetPlayerOnSpawn;
-            if (reloadSceneEvent != null) reloadSceneEvent.OnEventRaised -= OnReloadScene;
             if (questUpdatedEvent != null) questUpdatedEvent.OnEventRaised -= OnQuestUpdated;
             if (showInteractionEvent != null) showInteractionEvent.OnEventRaised -= OnShowInteraction;
             if (playerInputEvent != null) playerInputEvent.OnEventRaised -= OnPlayerInput;
-            if (loadSceneEvent != null) loadSceneEvent.OnEventRaised -= OnLoadScene;
+            if (levelActionEvent != null) levelActionEvent.OnEventRaised -= OnLevelAction;
             if (showUIEvent != null) showUIEvent.OnEventRaised -= OnShowUI;
             if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised -= OnInventoryChanged;
             if (attractionInfoEvent != null) attractionInfoEvent.OnEventRaised -= OnAttractionInfo;
-            if (unloadCurrentSceneEvent != null) unloadCurrentSceneEvent.OnEventRaised -= OnUnloadCurrentScene;
             if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised -= OnToggleMaterial;
             if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised -= OnSwitchToGameState;
             if (switchLevelEvent != null) switchLevelEvent.OnEventRaised -= OnSwitchLevel;
@@ -162,12 +152,6 @@ namespace EchoCity
             Log.DLazy(() => $"{GetColoredName(sender)}: Set player on spawn", this);
         }
 
-        private void OnReloadScene(IEventSender sender)
-        {
-            if (!logReloadScene) return;
-            Log.DLazy(() => $"{GetColoredName(sender)}: Reload scene", this);
-        }
-
         private void OnQuestUpdated(IEventSender sender, int questIndex, int code)
         {
             if (!logQuestUpdated) return;
@@ -187,10 +171,10 @@ namespace EchoCity
             Log.DLazy(() => $"{GetColoredName(sender)}: Player input | type: {inputType} | activate: {activate}", this);
         }
 
-        private void OnLoadScene(IEventSender sender, SceneEnum scene)
+        private void OnLevelAction(IEventSender sender, LevelActionCodeEnum code, SceneEnum scene)
         {
-            if (!logLoadScene) return;
-            Log.DLazy(() => $"{GetColoredName(sender)}: Load scene | target: {scene}", this);
+            if (!logLevelAction) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Level action | code: {code} | scene: {scene}", this);
         }
 
         private void OnShowUI(IEventSender sender, ShowableUIEnum ui, EventParams eventParams)
@@ -211,12 +195,6 @@ namespace EchoCity
             string attractionInfo = attraction != null ? attraction.ToString() : "null";
             string transformInfo = DescribeTransform(targetTransform);
             Log.DLazy(() => $"{GetColoredName(sender)}: Attraction info | attraction: {attractionInfo} | target: {transformInfo} | aboveThreshold: {aboveThreshold}", this);
-        }
-
-        private void OnUnloadCurrentScene(IEventSender sender)
-        {
-            if (!logUnloadCurrentScene) return;
-            Log.DLazy(() => $"{GetColoredName(sender)}: Unload current scene", this);
         }
 
         private void OnToggleMaterial(IEventSender sender)
@@ -342,15 +320,13 @@ namespace EchoCity
             logGameManagerStateTransition = newValue;
             logEquippedItemChanged = newValue;
             logSetPlayerOnSpawn = newValue;
-            logReloadScene = newValue;
             logQuestUpdated = newValue;
             logShowInteraction = newValue;
             logPlayerInput = newValue;
-            logLoadScene = newValue;
+            logLevelAction = newValue;
             logShowUI = newValue;
             logInventoryChanged = newValue;
             logAttractionInfo = newValue;
-            logUnloadCurrentScene = newValue;
             logToggleMaterial = newValue;
             logSwitchToGameState = newValue;
             logSwitchLevel = newValue;

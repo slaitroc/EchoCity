@@ -19,9 +19,7 @@ namespace EchoCity
 
         // SCENE MANAGEMENT
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
-        [SerializeField] private SOLoadSceneEvent loadSceneEvent;
-        [SerializeField] private SOUnloadCurrentSceneEvent unloadCurrentSceneEvent;
-        [SerializeField] private SOReloadSceneEvent reloadSceneEvent;
+        [SerializeField] private SOLevelActionEvent loadSceneEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
@@ -46,9 +44,7 @@ namespace EchoCity
         SOPlayerInputEvent IGMContext.PlayerInputEvent => playerInputEvent;
         SOShowUIEvent IGMContext.ShowUIEvent => showUIEvent;
         SOSetPlayerOnSpawnEvent IGMContext.SetPlayerOnSpawnEvent => setPlayerOnSpawnEvent;
-        SOLoadSceneEvent IGMContext.LoadSceneEvent => loadSceneEvent;
-        SOUnloadCurrentSceneEvent IGMContext.UnloadCurrentSceneEvent => unloadCurrentSceneEvent;
-        SOReloadSceneEvent IGMContext.ReloadSceneEvent => reloadSceneEvent;
+        SOLevelActionEvent IGMContext.LevelActionEvent => loadSceneEvent;
         SOGameManagerStateTransitionEvent IGMContext.GameStateTransitionEvent => gameStateTransitionEvent;
         #endregion
 

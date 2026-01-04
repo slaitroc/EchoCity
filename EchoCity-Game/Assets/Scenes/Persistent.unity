@@ -265,8 +265,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  unloadCurrentLevelEvent: {fileID: 11400000, guid: e8e412d71be09d549a69feb477ac0d81, type: 2}
-  reloadLevelEvent: {fileID: 11400000, guid: ec12d6802d3451d4a9ce6612f7976a0d, type: 2}
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   scenesNames:
   - None
@@ -627,7 +625,7 @@ GameObject:
   - component: {fileID: 7260351832011955517}
   - component: {fileID: 3541583348788456790}
   - component: {fileID: 7823492532663271078}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PlayerCapsule
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1770,35 +1768,31 @@ MonoBehaviour:
   gameManagerStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
   logGameManagerStateTransition: 1
   equippedItemChangedEvent: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
-  logEquippedItemChanged: 1
+  logEquippedItemChanged: 0
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   logSetPlayerOnSpawn: 1
-  reloadSceneEvent: {fileID: 11400000, guid: ec12d6802d3451d4a9ce6612f7976a0d, type: 2}
-  logReloadScene: 1
   questUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
-  logQuestUpdated: 1
+  logQuestUpdated: 0
   showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
-  logShowInteraction: 1
+  logShowInteraction: 0
   playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
-  logPlayerInput: 1
-  loadSceneEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  logLoadScene: 1
+  logPlayerInput: 0
+  levelActionEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
+  logLevelAction: 1
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  logShowUI: 1
+  logShowUI: 0
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
-  logInventoryChanged: 1
+  logInventoryChanged: 0
   attractionInfoEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
-  logAttractionInfo: 1
-  unloadCurrentSceneEvent: {fileID: 11400000, guid: e8e412d71be09d549a69feb477ac0d81, type: 2}
-  logUnloadCurrentScene: 1
+  logAttractionInfo: 0
   toggleMaterialEvent: {fileID: 11400000, guid: a1414a311b45e5e45817f7f3a5199ba5, type: 2}
-  logToggleMaterial: 1
+  logToggleMaterial: 0
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   logSwitchToGameState: 1
   switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
   logSwitchLevel: 1
   submitFeedbackEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
-  logSubmitFeedback: 1
+  logSubmitFeedback: 0
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   logSoundEmitted: 0
   activateDeactivateAll: 0
@@ -1946,8 +1940,6 @@ MonoBehaviour:
   gameStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   loadSceneEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  unloadCurrentSceneEvent: {fileID: 11400000, guid: e8e412d71be09d549a69feb477ac0d81, type: 2}
-  reloadSceneEvent: {fileID: 11400000, guid: ec12d6802d3451d4a9ce6612f7976a0d, type: 2}
   switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   currentState: 0

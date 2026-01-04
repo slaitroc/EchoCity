@@ -72,17 +72,17 @@ namespace EchoCity
             _inLoadingState = CurrentState;
             CurrentState = LoadingState;
             LoadingState.Enter();
-            _context.GameStateTransitionEvent.RaiseEvent(_context, _inLoadingState.GetEnum(), LoadingState.GetEnum());
+            _context.GameStateTransitionEvent.RaiseEvent(_context, _inLoadingState.GetEnum(), GameStatesEnum.Loading);
         }
 
         public void ExitLoading()
         {
             if (CurrentState != LoadingState) return;
+            _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.Loading, _inLoadingState.GetEnum());
             LoadingState.Exit();
             CurrentState = _inLoadingState;
             _inLoadingState.ExitLoading();
             _inLoadingState = null;
-            _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.Loading, CurrentState.GetEnum());
         }
 
         public void SwitchToNarration(DialogData data)

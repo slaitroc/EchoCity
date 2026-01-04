@@ -16,30 +16,32 @@ namespace EchoCity
             _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.WinMenu, null);
         }
         public override void Update() { }
-        public override void Exit()
-        {
-            if (_restart)
-                _context.SetPlayerOnSpawnEvent.RaiseEvent(_context);
-            _toTitle = false;
-            _restart = false;
-        }
+        public override void Exit() { }
+
         public override void ExitLoading()
         {
             if (_toTitle)
+            {
                 _fsm.SwitchState(_fsm.TitleState);
+                _toTitle = false;
+            }
             if (_restart)
+            {
+                _context.SetPlayerOnSpawnEvent.RaiseEvent(_context);
                 _fsm.SwitchState(_fsm.PlayingState);
+                _restart = false;
+            }
         }
         public override GameStatesEnum GetEnum() => GameStatesEnum.Win;
         public override void SwitchToTitleHandler()
         {
             _toTitle = true;
-            _context.UnloadCurrentSceneEvent.RaiseEvent(_context);
+            _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.UnloadLevel);
         }
         public override void InitLevelHandler(SceneEnum scene)
         {
             _restart = true;
-            _context.LoadSceneEvent.RaiseEvent(_context, scene);
+            _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.LoadActiveLevel, scene);
         }
     }
 }
