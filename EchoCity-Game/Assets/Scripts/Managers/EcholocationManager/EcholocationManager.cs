@@ -189,6 +189,7 @@ namespace EchoCity
                 MaterialSwitcher.RestoreOriginalMaterials();
                 Log.DLazy(() => "Toggle: Restored Original Materials", this);
             }
+
         }
 
         public void SetMaterialHandler(IEventSender sender, EchoMaterialCodeEnum code)
@@ -214,12 +215,14 @@ namespace EchoCity
                     }
                     break;
                 case EchoMaterialCodeEnum.ReApply:
-                    if (echolocationMaterial)
+                    if (useEcholocationMaterial && echolocationMaterial != null)
                     {
+                        MaterialSwitcher.RestoreOriginalMaterials(); //FIXME
                         MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
                         Log.DLazy(() => "Reapplied Echolocation Material", this);
                     }
-                    else
+
+                    if (!useEcholocationMaterial)
                     {
                         MaterialSwitcher.RestoreOriginalMaterials();
                         Log.DLazy(() => "Restored Original Materials", this);
