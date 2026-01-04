@@ -26,9 +26,9 @@ namespace EchoCity
         private string[] scenesNames ={
         "None",
         "Persistent",
+        "Playground",
         "First-Level",
-        "Second-Level",
-        "Third-Level"
+        "Second-Level"
     };
         private GameObject _player;
         private Transform _spawnPoint;
