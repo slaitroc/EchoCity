@@ -17,7 +17,7 @@ namespace EchoCity
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private SOShowUIEvent showUIEvent;
         [SerializeField] private SOShowInteractionEvent showInteractionEvent;
-        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
+        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -300,7 +300,7 @@ namespace EchoCity
         private void OnWearEcholocator(InputAction.CallbackContext context)
         {
             if (context.performed)
-                toggleMaterialEvent?.RaiseEvent(this);
+                setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Toggle);
         }
 
 

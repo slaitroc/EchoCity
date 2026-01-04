@@ -73467,9 +73467,21 @@ PrefabInstance:
       value: Interactable-CardReader
       objectReference: {fileID: 0}
     - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
+      propertyPath: showUIEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
       propertyPath: puzzleManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
+      propertyPath: materialSetEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
+    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

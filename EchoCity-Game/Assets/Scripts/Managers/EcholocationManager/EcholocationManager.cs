@@ -16,7 +16,6 @@ namespace EchoCity
 
         [Header("Observed Events")]
         [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
-        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
         [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
 
@@ -72,7 +71,6 @@ namespace EchoCity
         void OnEnable()
         {
             if (soundEmittedEvent) soundEmittedEvent.OnEventRaised += AddAudioSphereHandler;
-            if (toggleMaterialEvent) toggleMaterialEvent.OnEventRaised += ToggleMaterialHandler;
             if (setMaterialEvent) setMaterialEvent.OnEventRaised += SetMaterialHandler;
 
         }
@@ -80,7 +78,6 @@ namespace EchoCity
         void OnDisable()
         {
             if (soundEmittedEvent) soundEmittedEvent.OnEventRaised -= AddAudioSphereHandler;
-            if (toggleMaterialEvent) toggleMaterialEvent.OnEventRaised -= ToggleMaterialHandler;
             if (setMaterialEvent) setMaterialEvent.OnEventRaised -= SetMaterialHandler;
         }
 
@@ -185,31 +182,56 @@ namespace EchoCity
             if (useEcholocationMaterial && echolocationMaterial != null)
             {
                 MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
-                Log.DLazy(() => "Switched to Echolocation Material", this);
+                Log.DLazy(() => "Toggle: Switched to Echolocation Material", this);
             }
             else
             {
                 MaterialSwitcher.RestoreOriginalMaterials();
-                Log.DLazy(() => "Restored Original Materials", this);
+                Log.DLazy(() => "Toggle: Restored Original Materials", this);
             }
         }
 
-        public void SetMaterialHandler(IEventSender sender, bool enableEcholocationMaterial)
+        public void SetMaterialHandler(IEventSender sender, EchoMaterialCodeEnum code)
         {
-            if (useEcholocationMaterial == enableEcholocationMaterial) return;
-
-            if (enableEcholocationMaterial && echolocationMaterial != null)
+            switch (code)
             {
-                MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
-                Log.DLazy(() => "Switched to Echolocation Material", this);
+                case EchoMaterialCodeEnum.Active:
+                    if (useEcholocationMaterial == true) return;
+                    if (echolocationMaterial)
+                    {
+                        MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
+                        Log.DLazy(() => "Switched to Echolocation Material", this);
+                        useEcholocationMaterial = true;
+                    }
+                    break;
+                case EchoMaterialCodeEnum.Inactive:
+                    if (useEcholocationMaterial == false) return;
+                    if (echolocationMaterial)
+                    {
+                        MaterialSwitcher.RestoreOriginalMaterials();
+                        Log.DLazy(() => "Restored Original Materials", this);
+                        useEcholocationMaterial = false;
+                    }
+                    break;
+                case EchoMaterialCodeEnum.ReApply:
+                    if (echolocationMaterial)
+                    {
+                        MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
+                        Log.DLazy(() => "Reapplied Echolocation Material", this);
+                    }
+                    else
+                    {
+                        MaterialSwitcher.RestoreOriginalMaterials();
+                        Log.DLazy(() => "Restored Original Materials", this);
+                    }
+                    break;
+                case EchoMaterialCodeEnum.Toggle:
+                    ToggleMaterialHandler(sender);
+                    break;
+                default:
+                    Log.ELazy(() => "SetMaterialHandler received wrong code", this);
+                    break;
             }
-            else
-            {
-                MaterialSwitcher.RestoreOriginalMaterials();
-                Log.DLazy(() => "Restored Original Materials", this);
-            }
-
-            useEcholocationMaterial = enableEcholocationMaterial;
         }
     }
 }

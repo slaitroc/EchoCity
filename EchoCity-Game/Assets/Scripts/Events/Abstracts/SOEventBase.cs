@@ -37,7 +37,6 @@ namespace EchoCity
         SubmitFeedback,
         SwitchLevel,
         SwitchToGameState,
-        ToggleMaterial,
         SetMaterial,
     }
 
