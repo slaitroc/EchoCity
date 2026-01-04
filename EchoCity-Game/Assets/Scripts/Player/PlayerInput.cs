@@ -17,7 +17,7 @@ namespace EchoCity
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private SOShowUIEvent showUIEvent;
         [SerializeField] private SOShowInteractionEvent showInteractionEvent;
-        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
+        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -86,15 +86,15 @@ namespace EchoCity
             if (playerInputEvent) playerInputEvent.OnEventRaised -= PlayerInputHandler;
         }
 
-        private bool IsTargetVisible(Transform target)
+        private bool IsTargetVisible(Transform target) //BUG
         {
             Vector3 startPoint = Camera.main.transform.position;
-            Vector3 endPoint = target.position;
-            Vector3 direction = (endPoint - startPoint).normalized;
+            Vector3 direction = Camera.main.transform.forward;
+            Ray ray = new Ray(startPoint, direction);
             // Raycast on all layers, ignore triggers to check only solid colliders (walls block interaction)
             // Debug.DrawRay(startPoint, direction * raycastDistance, Color.blue, 4f);
-            int layerMask = ~(1 << 9); // Ignore Player layer
-            if (Physics.Raycast(startPoint, direction, out RaycastHit hit, raycastDistance + 0.5f, layerMask, QueryTriggerInteraction.Collide))
+            int layerMask = ~((1 << 9) | (1 << 2)); // Ignore Player layer
+            if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance + 0.5f, layerMask, QueryTriggerInteraction.Collide))
             {
                 if (hit.transform == target || hit.transform.IsChildOf(target))
                     return true;
@@ -110,8 +110,8 @@ namespace EchoCity
             var direction = Camera.main.transform.forward;
             Ray ray = new Ray(origin, direction);
             // Debug.DrawRay(origin, direction * raycastDistance, Color.yellow, 4f);
-            Physics.Raycast(ray, out RaycastHit hitInfo, raycastDistance + 0.5f, (1 << 6) | (1 << 8) | (1 << 9), QueryTriggerInteraction.Collide);
-            if (hitInfo.collider != null && IsTargetVisible(hitInfo.collider.transform))
+            Physics.Raycast(ray, out RaycastHit hitInfo, raycastDistance + 0.5f, ~((1 << 2) | (1 << 10)), QueryTriggerInteraction.Collide);
+            if (hitInfo.collider != null)
             {
                 var description = hitInfo.collider?.GetComponent<IHasDescription>();
                 if (description != null && description.HasRaycastDescription)
@@ -122,14 +122,11 @@ namespace EchoCity
                         _isShowingDescription = true;
                     }
                 }
-                // else
-                // {
-                //     if (_isShowingDescription)
-                //     {
-                //         showInteractionEvent.RaiseEvent(this, false, false, null);
-                //         _isShowingDescription = false;
-                //     }
-                // }
+                else if (_isShowingDescription)
+                {
+                    showInteractionEvent.RaiseEvent(this, false, false, null);
+                    _isShowingDescription = false;
+                }
             }
             else
             {
@@ -300,7 +297,7 @@ namespace EchoCity
         private void OnWearEcholocator(InputAction.CallbackContext context)
         {
             if (context.performed)
-                toggleMaterialEvent?.RaiseEvent(this);
+                setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Toggle);
         }
 
 

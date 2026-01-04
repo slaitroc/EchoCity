@@ -39,7 +39,7 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
-        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
+        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private SOEquippedItemChanged equippedItemChanged;
 
@@ -213,8 +213,7 @@ namespace EchoCity
                 dropped.AddComponent<Rigidbody>();
             }
             playerInventory.DropItem(equippedItem.Index);
-            toggleMaterialEvent?.RaiseEvent(this);
-            toggleMaterialEvent?.RaiseEvent(this);
+            setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.ReApply);
             equippedItem = null;
         }
 

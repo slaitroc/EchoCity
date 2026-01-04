@@ -59,7 +59,7 @@ namespace EchoCity
             var cc = _player?.GetComponent<CharacterController>();
 
             // FIXME: Will always disable ecolocation material when respawning
-            setMaterialEvent?.RaiseEvent(this, false);
+            setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Inactive);
 
             if (_spawnPoint != null && _player != null && pc != null)
             {

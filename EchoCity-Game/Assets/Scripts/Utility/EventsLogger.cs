@@ -69,8 +69,6 @@ namespace EchoCity
         [SerializeField] private SOAttractionInfoEvent attractionInfoEvent;
         [SerializeField] private bool logAttractionInfo = true;
 
-        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
-        [SerializeField] private bool logToggleMaterial = true;
         [SerializeField] private SOSetMaterialEvent setMaterialEvent;
         [SerializeField] private bool logSetMaterial = true;
 
@@ -110,7 +108,6 @@ namespace EchoCity
             if (showUIEvent != null) showUIEvent.OnEventRaised += OnShowUI;
             if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised += OnInventoryChanged;
             if (attractionInfoEvent != null) attractionInfoEvent.OnEventRaised += OnAttractionInfo;
-            if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised += OnToggleMaterial;
             if (setMaterialEvent != null) setMaterialEvent.OnEventRaised += OnSetMaterial;
             if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised += OnSwitchToGameState;
             if (switchLevelEvent != null) switchLevelEvent.OnEventRaised += OnSwitchLevel;
@@ -130,7 +127,6 @@ namespace EchoCity
             if (showUIEvent != null) showUIEvent.OnEventRaised -= OnShowUI;
             if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised -= OnInventoryChanged;
             if (attractionInfoEvent != null) attractionInfoEvent.OnEventRaised -= OnAttractionInfo;
-            if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised -= OnToggleMaterial;
             if (setMaterialEvent != null) setMaterialEvent.OnEventRaised -= OnSetMaterial;
             if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised -= OnSwitchToGameState;
             if (switchLevelEvent != null) switchLevelEvent.OnEventRaised -= OnSwitchLevel;
@@ -201,16 +197,10 @@ namespace EchoCity
             Log.DLazy(() => $"{GetColoredName(sender)}: Attraction info | attraction: {attractionInfo} | target: {transformInfo} | aboveThreshold: {aboveThreshold}", this);
         }
 
-        private void OnToggleMaterial(IEventSender sender)
-        {
-            if (!logToggleMaterial) return;
-            Log.DLazy(() => $"{GetColoredName(sender)}: Toggle material", this);
-        }
-
-        private void OnSetMaterial(IEventSender sender, bool enableEcholocationMaterial)
+        private void OnSetMaterial(IEventSender sender, EchoMaterialCodeEnum code)
         {
             if (!logSetMaterial) return;
-            Log.DLazy(() => $"{GetColoredName(sender)}: Set material | enableEcholocationMaterial: {enableEcholocationMaterial}", this);
+            Log.DLazy(() => $"{GetColoredName(sender)}: Set material | code: {code}", this);
         }
 
         private void OnSwitchToGameState(IEventSender sender, GameStatesEnum gameState, EventParams eventParams)
@@ -337,7 +327,6 @@ namespace EchoCity
             logShowUI = newValue;
             logInventoryChanged = newValue;
             logAttractionInfo = newValue;
-            logToggleMaterial = newValue;
             logSetMaterial = newValue;
             logSwitchToGameState = newValue;
             logSwitchLevel = newValue;
