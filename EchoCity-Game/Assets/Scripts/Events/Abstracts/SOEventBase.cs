@@ -38,6 +38,7 @@ namespace EchoCity
         SwitchLevel,
         SwitchToGameState,
         ToggleMaterial,
+        SetMaterial,
     }
 
     public abstract class SOEventBase : ScriptableObject

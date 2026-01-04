@@ -9,6 +9,7 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
@@ -56,6 +57,9 @@ namespace EchoCity
             var _spawnPoint = GameObject.FindWithTag("Respawn")?.transform;
             var pc = _player?.GetComponent<PlayerController>();
             var cc = _player?.GetComponent<CharacterController>();
+
+            // FIXME: Will always disable ecolocation material when respawning
+            setMaterialEvent?.RaiseEvent(this, false);
 
             if (_spawnPoint != null && _player != null && pc != null)
             {
