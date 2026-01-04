@@ -200,9 +200,7 @@ namespace EchoCity
             Vector3 startPoint = transform.position;
             // player height offset
             Vector3 endPoint = target.position + Vector3.up * 1f;
-
             Vector3 direction = (endPoint - startPoint).normalized;
-            float distance = Vector3.Distance(startPoint, endPoint);
 
             int layerMask = ~(1 << LayerMask.NameToLayer("Enemy"));
 
