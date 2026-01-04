@@ -32,6 +32,7 @@ namespace EchoCity
         [SerializeField] private AreaInteractable closestAreaInteractable;
         private bool _isShowingAreaDescription = false;
         private bool _isShowingDescription = false;
+        [SerializeField] private float raycastDistance;
 
         // [Header("Test Parameters")]
 
@@ -85,21 +86,50 @@ namespace EchoCity
             if (playerInputEvent) playerInputEvent.OnEventRaised -= PlayerInputHandler;
         }
 
+        private bool IsTargetVisible(Transform target)
+        {
+            Vector3 startPoint = Camera.main.transform.position;
+            Vector3 endPoint = target.position;
+            Vector3 direction = (endPoint - startPoint).normalized;
+            // Raycast on all layers, ignore triggers to check only solid colliders (walls block interaction)
+            // Debug.DrawRay(startPoint, direction * raycastDistance, Color.blue, 4f);
+            int layerMask = ~(1 << 9); // Ignore Player layer
+            if (Physics.Raycast(startPoint, direction, out RaycastHit hit, raycastDistance + 0.5f, layerMask, QueryTriggerInteraction.Collide))
+            {
+                if (hit.transform == target || hit.transform.IsChildOf(target))
+                    return true;
+            }
+
+            return false;
+        }
+
         void Update()
         {
             #region raycast always active
             var origin = Camera.main.transform.position;
             var direction = Camera.main.transform.forward;
             Ray ray = new Ray(origin, direction);
-            Physics.Raycast(ray, out RaycastHit hitInfo, 10f, (1 << 6) | (1 << 8) | (1 << 9), QueryTriggerInteraction.Collide);
-            var description = hitInfo.collider?.GetComponent<IHasDescription>();
-            if (description != null && description.HasRaycastDescription)
+            // Debug.DrawRay(origin, direction * raycastDistance, Color.yellow, 4f);
+            Physics.Raycast(ray, out RaycastHit hitInfo, raycastDistance + 0.5f, (1 << 6) | (1 << 8) | (1 << 9), QueryTriggerInteraction.Collide);
+            if (hitInfo.collider != null && IsTargetVisible(hitInfo.collider.transform))
             {
-                if (!_isShowingDescription)
+                var description = hitInfo.collider?.GetComponent<IHasDescription>();
+                if (description != null && description.HasRaycastDescription)
                 {
-                    showInteractionEvent.RaiseEvent(this, description.IsInteractable, true, description.Description);
-                    _isShowingDescription = true;
+                    if (!_isShowingDescription)
+                    {
+                        showInteractionEvent.RaiseEvent(this, description.IsInteractable, true, description.Description);
+                        _isShowingDescription = true;
+                    }
                 }
+                // else
+                // {
+                //     if (_isShowingDescription)
+                //     {
+                //         showInteractionEvent.RaiseEvent(this, false, false, null);
+                //         _isShowingDescription = false;
+                //     }
+                // }
             }
             else
             {
@@ -186,10 +216,10 @@ namespace EchoCity
                 var origin = Camera.main.transform.position;
                 var direction = Camera.main.transform.forward;
                 Ray ray = new Ray(origin, direction);
-                Debug.DrawRay(origin, direction * 10f, Color.red, 4f);
+                Debug.DrawRay(origin, direction * raycastDistance, Color.red, 4f);
                 if (_isShowingDescription)
                 {
-                    Physics.Raycast(ray, out RaycastHit hitInfo, 10f, (1 << 6) | (1 << 9), QueryTriggerInteraction.Collide);
+                    Physics.Raycast(ray, out RaycastHit hitInfo, raycastDistance, (1 << 6) | (1 << 9), QueryTriggerInteraction.Collide);
                     var pickable = hitInfo.collider?.GetComponent<Pickable>();
                     if (pickable != null)
                     {
