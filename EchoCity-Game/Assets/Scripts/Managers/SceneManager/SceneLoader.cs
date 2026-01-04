@@ -24,9 +24,9 @@ namespace EchoCity
         private string[] scenesNames ={
         "None",
         "Persistent",
+        "Playground",
         "First-Level",
-        "Second-Level",
-        "Third-Level"
+        "Second-Level"
     };
         private SceneEnum _currentLevelEnum = SceneEnum.None;
 
