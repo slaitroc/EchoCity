@@ -69,11 +69,7 @@ namespace EchoCity
 
         // SCENE MANAGEMENT EVENTS
         SOSetPlayerOnSpawnEvent SetPlayerOnSpawnEvent { get; }
-        SOLoadSceneEvent LoadSceneEvent { get; }
-        SOUnloadCurrentSceneEvent UnloadCurrentSceneEvent { get; }
-        SOReloadSceneEvent ReloadSceneEvent { get; }
-
-
+        SOLevelActionEvent LevelActionEvent { get; }
     }
     public interface IGameState : IStateWithLoading
     {

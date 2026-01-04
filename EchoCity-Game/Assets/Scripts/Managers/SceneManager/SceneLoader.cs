@@ -16,9 +16,7 @@ namespace EchoCity
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.SceneLoader };
 
         [Header("Observed Events")]
-        [SerializeField] private SOLoadSceneEvent loadLevelEvent;
-        [SerializeField] private SOUnloadCurrentSceneEvent unloadCurrentLevelEvent;
-        [SerializeField] private SOReloadSceneEvent reloadLevelEvent;
+        [SerializeField] private SOLevelActionEvent loadLevelEvent;
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
 
         [Header("Settings")]
@@ -30,46 +28,74 @@ namespace EchoCity
         "Second-Level",
         "Third-Level"
     };
-        private GameObject _player;
-        private Transform _spawnPoint;
-
         private SceneEnum _currentLevelEnum = SceneEnum.None;
 
         private void OnEnable()
         {
-            if (loadLevelEvent) loadLevelEvent.OnEventRaised += LoadLevelAdditiveHandler;
-            if (unloadCurrentLevelEvent) unloadCurrentLevelEvent.OnEventRaised += UnloadCurrentLevelHandler;
-            if (reloadLevelEvent) reloadLevelEvent.OnEventRaised += ReloadCurrentLevelHandler;
-            if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised += PlacePlayerOnSpawn;
+            if (loadLevelEvent) loadLevelEvent.OnEventRaised += LevelActionHandler;
+            if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised += SetPlayerOnSpawnHandler;
         }
 
         private void OnDisable()
         {
-            if (loadLevelEvent) loadLevelEvent.OnEventRaised -= LoadLevelAdditiveHandler;
-            if (unloadCurrentLevelEvent) unloadCurrentLevelEvent.OnEventRaised -= UnloadCurrentLevelHandler;
-            if (reloadLevelEvent) reloadLevelEvent.OnEventRaised -= ReloadCurrentLevelHandler;
-            if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised -= PlacePlayerOnSpawn;
+            if (loadLevelEvent) loadLevelEvent.OnEventRaised -= LevelActionHandler;
+            if (setPlayerOnSpawnEvent) setPlayerOnSpawnEvent.OnEventRaised -= SetPlayerOnSpawnHandler;
         }
 
-        public void PlacePlayerOnSpawn(IEventSender sender) //BUG
+        public void SetPlayerOnSpawnHandler(IEventSender sender)
         {
-            if (_player == null)
-                _player = GameObject.FindWithTag("Player");
-            if (_spawnPoint == null)
-                _spawnPoint = GameObject.FindWithTag("Respawn")?.transform;
-            PlayerController pc = _player?.GetComponent<PlayerController>();
+            StartCoroutine(SetPlayerOnSpawnCoroutine());
+        }
+
+        private IEnumerator SetPlayerOnSpawnCoroutine()
+        {
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+
+            var _player = GameObject.FindWithTag("Player");
+            var _spawnPoint = GameObject.FindWithTag("Respawn")?.transform;
+            var pc = _player?.GetComponent<PlayerController>();
+            var cc = _player?.GetComponent<CharacterController>();
 
             if (_spawnPoint != null && _player != null && pc != null)
             {
-                _player.transform.position = _spawnPoint.position;
-                _player.transform.rotation = _spawnPoint.rotation;
+                if (cc != null) cc.enabled = false;
+
+                _player.transform.SetPositionAndRotation(_spawnPoint.position, _spawnPoint.rotation);
                 pc.currentHealth = pc.maxHealth;
+
+                yield return null;
+
+                if (cc != null) cc.enabled = true;
+
+                Log.DLazy(() => $"Player respawned at {_spawnPoint.position}", this);
+            }
+            else
+            {
+                Log.WLazy(() => "Failed to find Player or Respawn point", this);
             }
         }
-        public void LoadLevelAdditiveHandler(IEventSender sender, SceneEnum scene) => StartCoroutine(LoadLevelAdditiveWithLoading(scene));
-        public void LoadSceneAdditiveNoActiveHandler(IEventSender sender, SceneEnum scene) => StartCoroutine(LoadSceneAdditiveNoActiveWithLoading(scene));
-        public void ReloadCurrentLevelHandler(IEventSender sender) => StartCoroutine(ReloadCurrentLevelWithLoading());
-        public void UnloadCurrentLevelHandler(IEventSender sender) => StartCoroutine(UnloadCurrentLevelWithLoading());
+
+        private void LevelActionHandler(IEventSender sender, LevelActionCodeEnum code, SceneEnum scene)
+        {
+            switch (code)
+            {
+                case LevelActionCodeEnum.LoadActiveLevel:
+                    StartCoroutine(LoadLevelAdditiveWithLoading(scene));
+                    break;
+                case LevelActionCodeEnum.LoadLevel:
+                    StartCoroutine(LoadSceneAdditiveNoActiveWithLoading(scene));
+                    break;
+                case LevelActionCodeEnum.UnloadLevel:
+                    StartCoroutine(UnloadCurrentLevelWithLoading());
+                    break;
+                case LevelActionCodeEnum.ReloadLevel:
+                    StartCoroutine(ReloadCurrentLevelWithLoading());
+                    break;
+                default:
+                    break;
+            }
+        }
 
         public IEnumerator LoadLevelAdditive(SceneEnum scene)
         {
@@ -189,6 +215,7 @@ namespace EchoCity
             yield return StartCoroutine(StartLoading());
             yield return StartCoroutine(ReloadCurrentLevel());
             yield return StartCoroutine(StopLoading());
+            SetPlayerOnSpawnHandler(this);
         }
 
         private IEnumerator UnloadCurrentLevelWithLoading()

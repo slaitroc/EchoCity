@@ -27,10 +27,9 @@ namespace EchoCity
         EquippedItemChanged,
         GameStateTransition,
         InventoryChanged,
-        LoadScene,
+        LevelAction,
         PlayerInput,
         QuestUpdated,
-        ReloadScene,
         SetPlayerOnSpawn,
         ShowInteraction,
         ShowUI,
@@ -38,7 +37,6 @@ namespace EchoCity
         SubmitFeedback,
         SwitchLevel,
         SwitchToGameState,
-        UnloadCurrentScene,
         ToggleMaterial,
     }
 

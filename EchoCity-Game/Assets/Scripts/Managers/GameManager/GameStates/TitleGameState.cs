@@ -14,14 +14,16 @@ namespace EchoCity
             _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.TitleMenu, null);
         }
         public override void Update() { }
-        public override void Exit() => _context.SetPlayerOnSpawnEvent.RaiseEvent(_context);
+        public override void Exit() { }
+
         public override GameStatesEnum GetEnum() => GameStatesEnum.Title;
-        public override void InitLevelHandler(SceneEnum scene) => _context.LoadSceneEvent.RaiseEvent(_context, scene);
+        public override void InitLevelHandler(SceneEnum scene) => _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.LoadActiveLevel, scene);
         public override void EnterLoading() { }
         public override void ExitLoading()
         {
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, false);
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
+            _context.SetPlayerOnSpawnEvent.RaiseEvent(_context);
             _fsm.SwitchState(_fsm.PlayingState);
         }
     }
