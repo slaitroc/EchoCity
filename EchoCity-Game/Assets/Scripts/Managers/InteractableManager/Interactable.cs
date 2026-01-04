@@ -10,6 +10,7 @@ namespace EchoCity
         [SerializeField] protected PuzzleTagState[] checkTags;
         [SerializeField] protected PuzzleTagState[] setTags;
         protected AudioContext _audioContext;
+        protected Renderer[] _cachedRenderers;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -22,6 +23,18 @@ namespace EchoCity
         public bool IsInteractable => true;
 
         protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
+
+        protected virtual void OnEnable()
+        {
+            _cachedRenderers = GetComponentsInChildren<Renderer>(false);
+            InteractableOutlineRenderer.Register(_cachedRenderers);
+        }
+
+        protected virtual void OnDisable()
+        {
+            if (_cachedRenderers != null)
+                InteractableOutlineRenderer.Unregister(_cachedRenderers);
+        }
 
         protected virtual void Start()
         {
