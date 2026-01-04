@@ -122,14 +122,6 @@ namespace EchoCity
                         _isShowingDescription = true;
                     }
                 }
-                // else
-                // {
-                //     if (_isShowingDescription)
-                //     {
-                //         showInteractionEvent.RaiseEvent(this, false, false, null);
-                //         _isShowingDescription = false;
-                //     }
-                // }
             }
             else
             {
