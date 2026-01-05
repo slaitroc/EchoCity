@@ -8,14 +8,6 @@ namespace EchoCity
     {
         private static readonly HashSet<Renderer> HoveredRenderers = new();
 
-        public static void Register(IEnumerable<Renderer> renderers)
-        {
-            if (renderers == null) return;
-            foreach (var renderer in renderers)
-                if (renderer != null)
-                    HoveredRenderers.Add(renderer);
-        }
-
         public static void Unregister(IEnumerable<Renderer> renderers)
         {
             if (renderers == null) return;
