@@ -44,17 +44,33 @@ namespace EchoCity
         }
     }
 
-    public class WarningParams : EventParams
+    public class PopUpMessageParams : EventParams
     {
         private readonly string _message;
         private readonly Color _color;
         public string Message => _message;
         public Color Color => _color;
 
-        public WarningParams(string message, Color color)
+        public PopUpMessageParams(string message, Color color)
         {
             _message = message;
             _color = color;
         }
     }
+
+    public class SubtitleParams : EventParams
+    {
+        private readonly string _subtitle;
+        private readonly float _duration;
+        public string Subtitle => _subtitle;
+        public float Duration => _duration;
+
+        public SubtitleParams(string subtitle, float duration)
+        {
+            _subtitle = subtitle;
+            _duration = duration;
+        }
+    }
+
+
 }

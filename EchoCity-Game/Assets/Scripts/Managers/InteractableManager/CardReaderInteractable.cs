@@ -22,7 +22,7 @@ namespace EchoCity
         {
             if (outcome)
             {
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("CardReader Used!", new Color(1f, 0.5f, 0f, 1f)));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("CardReader Used!", new Color(1f, 0.5f, 0f, 1f)));
                 PlayAtPosition(transform.position, useSoundSource, _audioContext, MixerGroupEnum.SFX);
                 Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
                 setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.ReApply);
@@ -30,7 +30,7 @@ namespace EchoCity
             }
             else
             {
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f)));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f)));
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainerFail)));
             }
         }

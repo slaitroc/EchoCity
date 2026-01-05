@@ -17,13 +17,13 @@ namespace EchoCity
         {
             if (outcome)
             {
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("Last door opened!", new Color(1f, 0.5f, 0f, 1f)));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("Last door opened!", new Color(1f, 0.5f, 0f, 1f)));
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainerSuccess)));
                 switchToWinStateEvent?.RaiseEvent(this);
             }
             else
             {
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("Can not open door yet!", new Color(1f, 0.5f, 0f, 1f)));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("Can not open door yet!", new Color(1f, 0.5f, 0f, 1f)));
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainerFail)));
             }
         }

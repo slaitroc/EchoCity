@@ -315,7 +315,7 @@ namespace EchoCity
             //WARNING TEST
             if (context.performed)
             {
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("This is a test warning message!", Color.red));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("This is a test warning message!", Color.red));
             }
         }
 

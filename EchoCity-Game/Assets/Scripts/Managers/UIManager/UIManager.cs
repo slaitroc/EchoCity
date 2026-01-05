@@ -13,7 +13,8 @@ namespace EchoCity
         DeathMenu,
         WinMenu,
         Dialog,
-        Warning
+        PopUpMessage,
+        Subtitles,
     }
 
     [System.Serializable]
@@ -194,8 +195,8 @@ namespace EchoCity
                     HideAllElements();
                     _winMenu.SetActive(true);
                     break;
-                case ShowableUIEnum.Warning:
-                    var warningParams = eventParams as WarningParams;
+                case ShowableUIEnum.PopUpMessage:
+                    var warningParams = eventParams as PopUpMessageParams;
                     warningController.SpawnWarning(warningParams.Message, warningParams.Color);
                     break;
                 default:

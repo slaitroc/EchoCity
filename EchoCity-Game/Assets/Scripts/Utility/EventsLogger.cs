@@ -256,7 +256,7 @@ namespace EchoCity
                 return $"HudParams(state: {hudParams.HudState})";
             }
 
-            if (eventParams is WarningParams warningParams)
+            if (eventParams is PopUpMessageParams warningParams)
             {
                 return $"WarningParams(message: {warningParams.Message}, color: {warningParams.Color})";
             }
