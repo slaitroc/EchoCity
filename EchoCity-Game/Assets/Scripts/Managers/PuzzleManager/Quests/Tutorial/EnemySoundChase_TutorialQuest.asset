@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: EnemySoundChase_TutorialQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 0
-  description: 
-  questCompletedText: 
+  quest: 14
   tagsToCheck:
-  - _tag: 0
+  - _tag: 15
     _isActive: 1
     _count: 0
   countToComplete: 1
-  subscribeToEvents: []
+  subscribeToEvents:
+  - {fileID: 0}
   nextQuests: []
+  description: 
+  questCompletedText: 
+  scriptLines: []

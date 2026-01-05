@@ -27,6 +27,7 @@ namespace EchoCity
         EquippedItemChanged,
         GameStateTransition,
         InventoryChanged,
+        Interaction,
         LevelAction,
         PlayerInput,
         PlayerMovement,

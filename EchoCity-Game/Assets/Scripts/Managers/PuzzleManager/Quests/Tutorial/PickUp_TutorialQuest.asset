@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: PickUp_TutorialQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 4
+  quest: 5
   tagsToCheck:
-  - _tag: 0
+  - _tag: 6
     _isActive: 1
     _count: 0
-  countToComplete: 1
-  subscribeToEvents: []
+  countToComplete: 3
+  subscribeToEvents:
+  - {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
   nextQuests:
   - {fileID: 11400000, guid: 3753ea81ad975624f9f726e75a1a1383, type: 2}
   description: 
   questCompletedText: 
-  questTextLines: []
-  questAudioLines: []
+  scriptLines: []

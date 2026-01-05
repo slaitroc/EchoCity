@@ -15,7 +15,7 @@ MonoBehaviour:
   questType: 0
   quest: 3
   tagsToCheck:
-  - _tag: 0
+  - _tag: 4
     _isActive: 1
     _count: 0
   countToComplete: 3
@@ -24,8 +24,5 @@ MonoBehaviour:
   nextQuests:
   - {fileID: 11400000, guid: f03def73ca873fa4eb0dccf8a5eebacf, type: 2}
   description: Jump with SPACE
-  questCompletedText: 
-  scriptLines:
-  - speakerName: 
-    text: 
-    audioClip: {fileID: 0}
+  questCompletedText: Very nice. Landing make extra noise...
+  scriptContainer: {fileID: 0}

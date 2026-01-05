@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: EquipItem_TutorialQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 6
+  quest: 7
   tagsToCheck:
-  - _tag: 0
+  - _tag: 8
     _isActive: 1
     _count: 0
   countToComplete: 1
-  subscribeToEvents: []
+  subscribeToEvents:
+  - {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
   nextQuests:
   - {fileID: 11400000, guid: 74e813782192bb04184d735f98ff7d16, type: 2}
   description: 
   questCompletedText: 
-  questTextLines: []
-  questAudioLines: []
+  scriptLines: []

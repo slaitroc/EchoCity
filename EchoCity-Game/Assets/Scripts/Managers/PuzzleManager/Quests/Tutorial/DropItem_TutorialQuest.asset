@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: DropItem_TutorialQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 8
+  quest: 9
   tagsToCheck:
-  - _tag: 0
+  - _tag: 10
     _isActive: 1
     _count: 0
   countToComplete: 1
-  subscribeToEvents: []
+  subscribeToEvents:
+  - {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
   nextQuests:
   - {fileID: 11400000, guid: fde72680dde1e3241a1f4145f23b566e, type: 2}
   description: 
   questCompletedText: 
-  questTextLines: []
-  questAudioLines: []
+  scriptContainer: {fileID: 11400000, guid: a9c25fc8f979844ea9f4dbd9d8d9e889, type: 2}

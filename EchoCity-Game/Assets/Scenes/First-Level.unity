@@ -16373,6 +16373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
@@ -20128,6 +20129,14 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8193725294360524654, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 8193725294360524654, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -44475,6 +44484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 0}
+  interactionEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
@@ -45272,6 +45282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
@@ -72605,6 +72616,14 @@ PrefabInstance:
       propertyPath: puzzleManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6251220501324255516, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 6251220501324255516, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     - target: {fileID: 6530822660333683186, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.618094
@@ -73310,6 +73329,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
       propertyPath: switchLinkedObject
       value: 
       objectReference: {fileID: 235136907}
@@ -73317,6 +73340,10 @@ PrefabInstance:
       propertyPath: newAudioSphereEvent
       value: 
       objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+    - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

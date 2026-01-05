@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: SwitchLightsOff_TutorialQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 9
+  quest: 10
   tagsToCheck:
-  - _tag: 0
+  - _tag: 11
     _isActive: 1
     _count: 0
   countToComplete: 1
-  subscribeToEvents: []
+  subscribeToEvents:
+  - {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
   nextQuests:
   - {fileID: 11400000, guid: 71070c2dabe82f045a2150eb36ff5740, type: 2}
   description: 
   questCompletedText: 
-  questTextLines: []
-  questAudioLines: []
+  scriptContainer: {fileID: 11400000, guid: c3ab2b4e980ee4d0f84e2f9c0b0fb561, type: 2}

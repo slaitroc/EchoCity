@@ -87,6 +87,9 @@ namespace EchoCity
         [SerializeField] private SOPlayerMovementEvent playerMovementEvent;
         [SerializeField] private bool logPlayerMovement = true;
 
+        [SerializeField] private SOInteractionEvent interactionEvent;
+        [SerializeField] private bool logInteraction = true;
+
         [SerializeField] private bool activateDeactivateAll = true;
 
         void OnEnable()
@@ -117,6 +120,7 @@ namespace EchoCity
             if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised += OnSubmitFeedback;
             if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised += OnSoundEmitted;
             if (playerMovementEvent != null) playerMovementEvent.OnEventRaised += OnPlayerMovement;
+            if (interactionEvent != null) interactionEvent.OnEventRaised += OnInteraction;
         }
 
         private void UnregisterEvents()
@@ -137,6 +141,7 @@ namespace EchoCity
             if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised -= OnSubmitFeedback;
             if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised -= OnSoundEmitted;
             if (playerMovementEvent != null) playerMovementEvent.OnEventRaised -= OnPlayerMovement;
+            if (interactionEvent != null) interactionEvent.OnEventRaised -= OnInteraction;
         }
 
         private void OnGameManagerStateTransition(IEventSender sender, GameStatesEnum from, GameStatesEnum to)
@@ -237,6 +242,12 @@ namespace EchoCity
         {
             if (!logPlayerMovement) return;
             Log.DLazy(() => $"{GetColoredName(sender)}: Player movement | code: {movementCode}", this);
+        }
+
+        private void OnInteraction(IEventSender sender, InteractionEnum interactionCode)
+        {
+            if (!logInteraction) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Interaction | code: {interactionCode}", this);
         }
 
         private string GetColoredName(IEventSender sender)
@@ -344,6 +355,7 @@ namespace EchoCity
             logSubmitFeedback = newValue;
             logSoundEmitted = newValue;
             logPlayerMovement = newValue;
+            logInteraction = newValue;
         }
 
 #endif

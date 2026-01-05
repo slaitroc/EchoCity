@@ -15,7 +15,7 @@ MonoBehaviour:
   questType: 0
   quest: 1
   tagsToCheck:
-  - _tag: 0
+  - _tag: 2
     _isActive: 1
     _count: 0
   countToComplete: 3
@@ -24,11 +24,5 @@ MonoBehaviour:
   nextQuests:
   - {fileID: 11400000, guid: 76befa16118c2884591b4bad6a2e1d1a, type: 2}
   description: Move the MOUSE to look around
-  questCompletedText: 
-  scriptLines:
-  - speakerName: 
-    text: 
-    audioClip: {fileID: 0}
-  - speakerName: 
-    text: 
-    audioClip: {fileID: 0}
+  questCompletedText: Pay attention to your surroundings
+  scriptContainer: {fileID: 0}

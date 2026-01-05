@@ -15,7 +15,7 @@ MonoBehaviour:
   questType: 0
   quest: 0
   tagsToCheck:
-  - _tag: 0
+  - _tag: 1
     _isActive: 1
     _count: 0
   countToComplete: 3
@@ -24,8 +24,5 @@ MonoBehaviour:
   nextQuests:
   - {fileID: 11400000, guid: 6c42243a6ec1c0b4d9ac0a2716bb3da6, type: 2}
   description: Use WASD to move around
-  questCompletedText: 
-  scriptLines:
-  - speakerName: 
-    text: 
-    audioClip: {fileID: 0}
+  questCompletedText: Well done! Move carefully...
+  scriptContainer: {fileID: 0}

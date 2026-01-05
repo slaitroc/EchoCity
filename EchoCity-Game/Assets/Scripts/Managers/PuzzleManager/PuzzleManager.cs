@@ -5,36 +5,36 @@ namespace EchoCity
     [System.Serializable]
     public enum PuzzleTagEnum
     {
-        NONE,
+        NONE = 0,
         //TUTORIAL TAGS
-        Move_TutorialCompleted,
-        Look_TutorialCompleted,
-        Sprint_TutorialCompleted,
-        Jump_TutorialCompleted,
-        Interact_TutorialCompleted,
-        PickUp_TutorialCompleted,
-        OpenInventory_TutorialCompleted,
-        EquipItem_TutorialCompleted,
-        UseItem_TutorialCompleted,
-        DropItem_TutorialCompleted,
-        SwitchLightsOff_TutorialCompleted,
-        UseLowSO_TutorialCompleted,
-        UseMidSO_TutorialCompleted,
-        UseHighSO_TutorialCompleted,
-        EnemySoundChase_TutorialCompleted,
-        TutorialCompleted,
-
+        Move_TutorialCompleted = 1,
+        Look_TutorialCompleted = 2,
+        Sprint_TutorialCompleted = 3,
+        Jump_TutorialCompleted = 4,
+        Interact_TutorialCompleted = 5,
+        PickUp_TutorialCompleted = 6,
+        OpenInventory_TutorialCompleted = 7,
+        EquipItem_TutorialCompleted = 8,
+        UseItem_TutorialCompleted = 9,
+        DropItem_TutorialCompleted = 10,
+        SwitchLightsOff_TutorialCompleted = 11,
+        UseLowSO_TutorialCompleted = 12,
+        UseMidSO_TutorialCompleted = 13,
+        UseHighSO_TutorialCompleted = 14,
+        EnemySoundChase_TutorialCompleted = 15,
+        TutorialCompleted = 29,
         //FIRST LEVEL TAGS
         // Picked
-        Phone_Picked,
-        WalkieTalkie_Picked,
-        BunkerDoorKey_Picked,
-        Cable_Picked,
-        FloppyDisk_Picked,
+        Lighting_On = 30, // if false echo material must be used
+        Phone_Picked = 31,
+        WalkieTalkie_Picked = 32,
+        BunkerDoorKey_Picked = 33,
+        Cable_Picked = 34,
+        FloppyDisk_Picked = 35,
         // On / Activated
-        CardReader_On,
-        Lighting_On, // if false echo material must be used
-        WearingGlasses,
+        CardReader_On = 36,
+        WearingGlasses = 37,
+
         MAX
     }
 

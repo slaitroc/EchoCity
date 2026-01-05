@@ -31,7 +31,7 @@ namespace EchoCity
         {
             if (outcome)
             {
-                switchToNarrationStateEvent?.RaiseEvent(this, GameStatesEnum.Narration, new ToDialogueStateParams(new DialogData(tutorialDialogContainer.DialogLines)));
+                switchToNarrationStateEvent?.RaiseEvent(this, GameStatesEnum.Narration, new ToDialogueStateParams(new DialogData(tutorialDialogContainer)));
                 gameObject.SetActive(false);
             }
         }

@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: UseLowSO_TutorialQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 10
+  quest: 11
   tagsToCheck:
-  - _tag: 0
+  - _tag: 12
     _isActive: 1
     _count: 0
-  countToComplete: 1
+  countToComplete: 3
   subscribeToEvents: []
   nextQuests:
   - {fileID: 11400000, guid: f60ed92cf4f55cf44885ea211eb2f088, type: 2}
   description: 
   questCompletedText: 
-  questTextLines: []
-  questAudioLines: []
+  scriptLines: []

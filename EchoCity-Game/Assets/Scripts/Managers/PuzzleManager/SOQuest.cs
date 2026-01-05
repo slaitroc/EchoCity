@@ -38,25 +38,6 @@ namespace EchoCity
         MAX
     }
 
-    [System.Serializable]
-    public struct ScriptLine
-    {
-        [SerializeField] private string speakerName;
-        [TextArea, SerializeField] private string text;
-        [SerializeField] private AudioClip audioClip;
-
-        public string SpeakerName => speakerName;
-        public string Text => text;
-        public AudioClip AudioClip => audioClip;
-
-        public ScriptLine(string speakerName, string text, AudioClip audioClip)
-        {
-            this.speakerName = speakerName;
-            this.text = text;
-            this.audioClip = audioClip;
-        }
-    }
-
     [CreateAssetMenu(fileName = "Quest", menuName = "ECHO CITY/Puzzle/Quest")]
     public class SOQuest : ScriptableObject
     {
@@ -68,7 +49,7 @@ namespace EchoCity
         [SerializeField] private SOQuest[] nextQuests;
         [TextArea, SerializeField] private string description;
         [TextArea, SerializeField] private string questCompletedText;
-        [SerializeField] private ScriptLine[] scriptLines;
+        [SerializeField] private SODialogContainer scriptContainer;
 
         public QuestsTypeEnum QuestType => questType;
         public QuestsEnum Quest => quest;
@@ -78,7 +59,7 @@ namespace EchoCity
         public int CountToComplete => countToComplete;
         public SOEventBase[] SubscribeToEvents => subscribeToEvents;
         public SOQuest[] NextQuests => nextQuests;
-        public ScriptLine[] ScriptLines => scriptLines;
+        public SODialogContainer ScriptContainer => scriptContainer;
 
 
         void OnValidate()

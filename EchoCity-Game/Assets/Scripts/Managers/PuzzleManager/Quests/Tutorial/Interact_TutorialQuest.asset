@@ -13,17 +13,16 @@ MonoBehaviour:
   m_Name: Interact_TutorialQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 3
+  quest: 4
   tagsToCheck:
-  - _tag: 0
+  - _tag: 5
     _isActive: 1
     _count: 0
-  countToComplete: 3
+  countToComplete: 2
   subscribeToEvents:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
   nextQuests:
   - {fileID: 11400000, guid: e2e5d42e91f9a7e41a5f3a68a40f15fa, type: 2}
-  description: 
-  questCompletedText: 
-  questTextLines: []
-  questAudioLines: []
+  description: Interact with objects.
+  questCompletedText: You now know how to interact with the environment.
+  scriptContainer: {fileID: 0}

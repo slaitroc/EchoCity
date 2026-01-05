@@ -5,6 +5,7 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] protected SOSoundEmittedEvent newAudioSphereEvent;
+        [SerializeField] protected SOInteractionEvent interactionEvent;
         [Header("Interactable Settings")]
         [SerializeField] protected PuzzleManager puzzleManager;
         [SerializeField] protected PuzzleTagState[] checkTags;
@@ -21,6 +22,8 @@ namespace EchoCity
         public string Description => _description;
         public virtual bool HasRaycastDescription => true;
         public bool IsInteractable => true;
+
+        protected virtual InteractionEnum _interactionCode => InteractionEnum.Interactable;
 
         protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
 
@@ -52,6 +55,8 @@ namespace EchoCity
         public virtual void Interact()
         {
             bool outcome = puzzleManager?.TryUpdateTagsHandler(checkTags, setTags) ?? false;
+            if (outcome && interactionEvent != null)
+                interactionEvent.RaiseEvent(this, _interactionCode);
             ResolveInteraction(outcome);
         }
 
