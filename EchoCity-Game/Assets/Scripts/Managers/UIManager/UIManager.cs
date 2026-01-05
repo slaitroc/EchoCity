@@ -46,6 +46,9 @@ namespace EchoCity
 
         [Header("Dialogs")]
         [SerializeField] private DialogController dialogController;
+        [Header("Subtitle")]
+        [SerializeField] private SubtitlesController subtitlesController;
+        [SerializeField] private float _subtitlesBottomGapPx = 10f;
 
         [Header("Death Menu")]
         [SerializeField] private DeathMenuController deathMenuController;
@@ -87,6 +90,7 @@ namespace EchoCity
         private GameObject _pauseMenu;
         private GameObject _settingsMenu;
         private GameObject _dialog;
+        private GameObject _subtitles;
         private GameObject _deathMenu;
         private GameObject _loadingScreen;
         private GameObject _feedbackMenu;
@@ -104,6 +108,7 @@ namespace EchoCity
             _pauseMenu = pauseMenuController.gameObject;
             _settingsMenu = settingsMenuController.gameObject;
             _dialog = dialogController.gameObject;
+            _subtitles = subtitlesController.gameObject;
             _deathMenu = deathMenuController.gameObject;
             _loadingScreen = loadingScreenController.gameObject;
             _feedbackMenu = feedbackMenuController.gameObject;
@@ -132,6 +137,7 @@ namespace EchoCity
         {
             HideAllElements();
             _hud.SetActive(true);
+            _subtitles.SetActive(true);
             EquippedItemHandler(this);
             switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
         }
@@ -147,6 +153,7 @@ namespace EchoCity
         {
             HideAllElements();
             _hud.SetActive(true);
+            _subtitles.SetActive(true);
             EquippedItemHandler(this);
             switchLevelEvent?.RaiseEvent(this, scene, null);
         }
@@ -183,6 +190,10 @@ namespace EchoCity
                     HideAllElements();
                     _dialog.SetActive(true);
                     break;
+                case ShowableUIEnum.Subtitles:
+                    var subtitleParams = eventParams as SubtitleParams;
+                    subtitlesController.ShowSubtitle(subtitleParams.Subtitle, subtitleParams.Duration, subtitleParams.SpeakerName);
+                    break;
                 case ShowableUIEnum.DeathMenu:
                     HideAllElements();
                     _deathMenu.SetActive(true);
@@ -210,13 +221,21 @@ namespace EchoCity
             _hud.SetActive(false);
             _pauseMenu.SetActive(false);
             _dialog.SetActive(false);
+            _subtitles.SetActive(false);
             _deathMenu.SetActive(false);
             _loadingScreen.SetActive(false);
             _winMenu.SetActive(false);
         }
 
 
-        private void ShowInteractionHandler(IEventSender sender, bool isInteractable, bool showDescription, string text) => crosshairController.IsInteractable(showDescription, isInteractable, text);
+        private void ShowInteractionHandler(IEventSender sender, bool isInteractable, bool showDescription, string text)
+        {
+            crosshairController.IsInteractable(showDescription, isInteractable, text);
+            if (showDescription)
+                subtitlesController.ApplyOffset(crosshairController.InteractionPanelHeight + _subtitlesBottomGapPx);
+            else
+                subtitlesController.ApplyOffset(0f);
+        }
         private void EquippedItemHandler(IEventSender sender) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
         private void InventoryChangedHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum code)
         {

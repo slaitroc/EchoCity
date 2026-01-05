@@ -337,7 +337,14 @@ namespace EchoCity
             }
         }
 
-        private void OnTest4(InputAction.CallbackContext context) { }
+        private void OnTest4(InputAction.CallbackContext context)
+        {
+            //Subtitles TEST
+            if (context.performed)
+            {
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Subtitles, new SubtitleParams("NPC Name", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 3f));
+            }
+        }
         #endregion
 
         private void PlayerInputHandler(IEventSender sender, InputEnum input, bool activate)

@@ -1,0 +1,24 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Subtitles/SubtitlesStyleSheet.uss?fileID=7433441132597879392&amp;guid=32f14aee31d724e5a831b92ccd94c8d5&amp;type=3#SubtitlesStyleSheet" />
+
+    <!-- Fullscreen overlay to anchor subtitles relative to screen -->
+    <ui:VisualElement name="subtitles-root" class="subtitles-root">
+        
+        <!-- Safe area + bottom anchor -->
+        <ui:VisualElement name="subtitles-anchor" class="subtitles-anchor">
+            
+            <!-- Panel (background for readability) -->
+            <ui:VisualElement name="subtitles-panel" class="subtitles-panel">
+                
+                <!-- Optional speaker -->
+                <ui:Label name="subtitles-speaker" class="subtitles-speaker" text="Speaker Name" />
+
+                <!-- Main subtitle line(s) -->
+                <ui:Label name="subtitles-text" class="subtitles-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>
