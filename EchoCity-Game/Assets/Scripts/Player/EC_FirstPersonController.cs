@@ -95,6 +95,8 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
         private float _stepTimer = 0f;
+        private float _lookHoldTimer = 0f;
+        [SerializeField] private float lookHoldDuration = 0.2f;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -307,13 +309,15 @@ namespace StarterAssets
                 else
                     UpdateMovementState(MovementCodeEnum.Move);
             }
-            else if (_input.look.sqrMagnitude >= _threshold)
-            {
-                UpdateMovementState(MovementCodeEnum.Look);
-            }
             else
             {
-                UpdateMovementState(MovementCodeEnum.Idle);
+                bool hasLookInput = _input.look.sqrMagnitude >= _threshold;
+                _lookHoldTimer = hasLookInput ? lookHoldDuration : Mathf.Max(0f, _lookHoldTimer - Time.deltaTime);
+
+                if (hasLookInput || _lookHoldTimer > 0f)
+                    UpdateMovementState(MovementCodeEnum.Look);
+                else
+                    UpdateMovementState(MovementCodeEnum.Idle);
             }
         }
 
