@@ -5,15 +5,35 @@ namespace EchoCity
     [System.Serializable]
     public enum PuzzleTagEnum
     {
-        //FIRST LEVEL TAGS
         NONE,
-        PhonePicked,
-        WalkieTalkiePicked,
-        BunkerDoorKeyPicked,
-        CablePicked,
-        FloppyDiskPicked,
-        CardReaderIsOn,
-        LightingEnabled,
+        //TUTORIAL TAGS
+        Move_TutorialCompleted,
+        Look_TutorialCompleted,
+        Sprint_TutorialCompleted,
+        Interact_TutorialCompleted,
+        PickUp_TutorialCompleted,
+        OpenInventory_TutorialCompleted,
+        EquipItem_TutorialCompleted,
+        UseItem_TutorialCompleted,
+        DropItem_TutorialCompleted,
+        SwitchLightsOff_TutorialCompleted,
+        UseLowSO_TutorialCompleted,
+        UseMidSO_TutorialCompleted,
+        UseHighSO_TutorialCompleted,
+        EnemySoundChase_TutorialCompleted,
+        TutorialCompleted,
+
+        //FIRST LEVEL TAGS
+        // Picked
+        Phone_Picked,
+        WalkieTalkie_Picked,
+        BunkerDoorKey_Picked,
+        Cable_Picked,
+        FloppyDisk_Picked,
+        // On / Activated
+        CardReader_On,
+        Lighting_On, // if false echo material must be used
+        WearingGlasses,
         MAX
     }
 
@@ -82,7 +102,7 @@ namespace EchoCity
                 puzzleTags[i] = new PuzzleTagState((PuzzleTagEnum)i, false);
 
             // Set specific tags to active at the start
-            puzzleTags[(int)PuzzleTagEnum.LightingEnabled].IsActive = true;
+            puzzleTags[(int)PuzzleTagEnum.Lighting_On].IsActive = true;
         }
 
         // if tagsToCheck is null or empty, return false

@@ -35,7 +35,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.TestOne] < activeQuests[(int)QuestsEnum.TestOne].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PhonePicked, true) });
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Phone_Picked, true) });
         }
 
         private void OnTestOneCompleted(SOQuest quest)
@@ -68,7 +68,7 @@ namespace EchoCity
             IncrementQuestProgress(QuestsEnum.TestTwo);
             if (questProgression[(int)QuestsEnum.TestTwo] < activeQuests[(int)QuestsEnum.TestTwo].CountToComplete)
                 return;
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.BunkerDoorKeyPicked, true) });
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.BunkerDoorKey_Picked, true) });
         }
 
         private void OnTestTwoCompleted(SOQuest quest)
