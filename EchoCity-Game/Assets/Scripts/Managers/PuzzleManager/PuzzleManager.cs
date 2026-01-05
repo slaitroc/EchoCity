@@ -10,6 +10,7 @@ namespace EchoCity
         Move_TutorialCompleted,
         Look_TutorialCompleted,
         Sprint_TutorialCompleted,
+        Jump_TutorialCompleted,
         Interact_TutorialCompleted,
         PickUp_TutorialCompleted,
         OpenInventory_TutorialCompleted,

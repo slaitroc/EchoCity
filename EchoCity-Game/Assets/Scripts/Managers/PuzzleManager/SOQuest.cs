@@ -15,6 +15,7 @@ namespace EchoCity
         Move_Tutorial,
         Look_Tutorial,
         Sprint_Tutorial,
+        Jump_Tutorial,
         Interact_Tutorial,
         PickUp_Tutorial,
         OpenInventory_Tutorial,
