@@ -92,6 +92,9 @@ namespace EchoCity
         private GameObject _winMenu;
 
         #endregion
+        #region Public Properties
+        public bool IsPauseMenuActive => _pauseMenu.activeSelf;
+        #endregion
 
         private void Awake()
         {
@@ -123,7 +126,7 @@ namespace EchoCity
             if (questUpdatedEvent) questUpdatedEvent.OnEventRaised += QuestUpdatedEventHandler;
         }
 
-        #region Public Methods - State Switching
+        #region Public Methods
         public void SwitchToPlayState()
         {
             HideAllElements();

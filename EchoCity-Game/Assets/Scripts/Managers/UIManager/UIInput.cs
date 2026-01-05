@@ -38,7 +38,7 @@ namespace EchoCity
         private void OnExitPause(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            uiManager.SwitchToPlayState();
+            if (uiManager.IsPauseMenuActive) uiManager.SwitchToPlayState();
         }
 
         private void OnEnable()
