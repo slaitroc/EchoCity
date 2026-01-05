@@ -40,11 +40,17 @@ namespace EchoCity
     [System.Serializable]
     public struct ScriptLine
     {
-        [TextArea, SerializeField] public string text;
-        [SerializeField] public AudioClip audioClip;
+        [SerializeField] private string speakerName;
+        [TextArea, SerializeField] private string text;
+        [SerializeField] private AudioClip audioClip;
 
-        public ScriptLine(string text, AudioClip audioClip)
+        public string SpeakerName => speakerName;
+        public string Text => text;
+        public AudioClip AudioClip => audioClip;
+
+        public ScriptLine(string speakerName, string text, AudioClip audioClip)
         {
+            this.speakerName = speakerName;
             this.text = text;
             this.audioClip = audioClip;
         }

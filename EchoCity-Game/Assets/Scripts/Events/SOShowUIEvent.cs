@@ -60,13 +60,17 @@ namespace EchoCity
 
     public class SubtitleParams : EventParams
     {
+        private readonly string _speakerName;
         private readonly string _subtitle;
         private readonly float _duration;
+
+        public string SpeakerName => _speakerName;
         public string Subtitle => _subtitle;
         public float Duration => _duration;
 
-        public SubtitleParams(string subtitle, float duration)
+        public SubtitleParams(string speakerName, string subtitle, float duration)
         {
+            _speakerName = speakerName;
             _subtitle = subtitle;
             _duration = duration;
         }
