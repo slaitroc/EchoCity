@@ -3,7 +3,7 @@ using UnityEngine;
 namespace EchoCity
 {
     [CreateAssetMenu(fileName = "SoundEmittedEvent", menuName = "ECHO CITY/Events/Sound Emitted")]
-    public class SOSoundEmittedEvent : SOSigleParamEvent<SoundEmissionData>
+    public class SOSoundEmittedEvent : SOSingleParamEvent<SoundEmissionData>
     {
         public override void RaiseEvent(IEventSender sender, SoundEmissionData soundData)
         {
