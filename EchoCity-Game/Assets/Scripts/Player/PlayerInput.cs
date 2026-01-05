@@ -53,6 +53,7 @@ namespace EchoCity
                 _playerActionMap["AreaInteract"].performed += OnAreaInteract;
                 _playerActionMap["DropItem"].performed += OnDropItem;
                 _playerActionMap["UseTool"].performed += OnUseTool;
+                _playerActionMap["HideTutorial"].performed += OnHideTutorial;
 
                 // UI
                 _playerActionMap["OpenInventory"].started += OnOpenInventory;
@@ -260,6 +261,14 @@ namespace EchoCity
             if (context.performed)
             {
                 playerController.UseTool();
+            }
+        }
+
+        private void OnHideTutorial(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.HUD, new HudParams(HudEnum.Tutorial));
             }
         }
 

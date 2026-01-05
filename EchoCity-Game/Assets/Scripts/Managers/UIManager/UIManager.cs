@@ -21,7 +21,8 @@ namespace EchoCity
     public enum HudEnum
     {
         None = 0,
-        Inventory = 1
+        Inventory = 1,
+        Tutorial = 2
     }
 
     public class UIManager : MonoBehaviour, IEventSender
@@ -36,6 +37,7 @@ namespace EchoCity
         [SerializeField] private RadialMenuController radialMenuController;
         [SerializeField] private WarningController warningController;
         [SerializeField] private EquippedPanelController equippedPanelController;
+        [SerializeField] private TutorialPanelController tutorialPanelController;
         [SerializeField] private QuestController questController;
 
         [Header("Pause Menu")]
@@ -96,6 +98,8 @@ namespace EchoCity
         private GameObject _feedbackMenu;
         private GameObject _winMenu;
 
+        private bool _showTutorial = true;
+
         #endregion
         #region Public Properties
         public bool IsPauseMenuActive => _pauseMenu.activeSelf;
@@ -138,6 +142,7 @@ namespace EchoCity
             HideAllElements();
             _hud.SetActive(true);
             _subtitles.SetActive(true);
+            tutorialPanelController.ShowHideLines(_showTutorial);
             EquippedItemHandler(this);
             switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
         }
@@ -154,6 +159,7 @@ namespace EchoCity
             HideAllElements();
             _hud.SetActive(true);
             _subtitles.SetActive(true);
+            tutorialPanelController.ShowHideLines(_showTutorial);
             EquippedItemHandler(this);
             switchLevelEvent?.RaiseEvent(this, scene, null);
         }
@@ -178,9 +184,21 @@ namespace EchoCity
                     _titleMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.HUD:
-                    var hudParams = eventParams as HudParams; // currently not used
-                    radialMenuController.enabled = !radialMenuController.enabled;
-                    crosshairController.enabled = !crosshairController.enabled;
+                    var hudParams = eventParams as HudParams;
+                    switch (hudParams.HudState)
+                    {
+                        case HudEnum.Inventory:
+                            radialMenuController.enabled = !radialMenuController.enabled;
+                            crosshairController.enabled = !crosshairController.enabled;
+                            break;
+                        case HudEnum.Tutorial:
+                            _showTutorial = !_showTutorial;
+                            tutorialPanelController.ShowHideLines(_showTutorial);
+                            break;
+                        default:
+                            Log.DLazy(() => $"HUD State {hudParams.HudState} not handled in UIManager!", this);
+                            break;
+                    }
                     break;
                 case ShowableUIEnum.PauseMenu:
                     HideAllElements();
