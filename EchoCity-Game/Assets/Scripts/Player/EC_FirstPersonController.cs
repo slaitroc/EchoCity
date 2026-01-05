@@ -1,7 +1,6 @@
 using EchoCity;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
 using static EchoCity.EchoCitySound;
 #endif
 
@@ -61,7 +60,9 @@ namespace StarterAssets
         }
 
         [Header("Invoking Events")]
-        public SOSoundEmittedEvent newAudioSphereEvent;
+        [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
+        [SerializeField] private SOPlayerMovementEvent playerMovementEvent;
+
         private AudioContext _audioContext;
 
         string IEventSender.SenderName => gameObject.name;
@@ -78,6 +79,12 @@ namespace StarterAssets
         [Header("Footstep/Ground Settings")]
         public float rayDistance = 1.3f;
         public float stepSpeedMultiplier = 0.5f;
+        private float _timer;
+        [SerializeField] private MovementCodeEnum lastMovementCode = MovementCodeEnum.Idle;
+
+        // Movement state tracking - accesso O(1) tramite cast dell'enum
+        private float[] _movementTimers;
+        private float[] _movementThresholds;
 
         // cinemachine
         private float _cinemachineTargetPitch;
@@ -128,9 +135,11 @@ namespace StarterAssets
 
         private void Start()
         {
-            _audioContext = new AudioContext(this, newAudioSphereEvent);
+            _audioContext = new AudioContext(this, soundEmittedEvent);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
+            _timer = 0f;
+            lastMovementCode = MovementCodeEnum.Idle;
 
             // fallback: try to find StarterAssetsInputs on the Player-tagged object
             if (_input == null)
@@ -148,10 +157,22 @@ namespace StarterAssets
 
             // init landing detection
             _prevGrounded = Grounded;
+
+            // Inizializza gli array per i timer di movimento usando MAX
+            _movementTimers = new float[(int)MovementCodeEnum.MAX];
+            _movementThresholds = new float[(int)MovementCodeEnum.MAX];
+
+            // Configura le soglie per ogni tipo di movimento
+            _movementThresholds[(int)MovementCodeEnum.Idle] = 0.5f;
+            _movementThresholds[(int)MovementCodeEnum.Look] = 1.5f;
+            _movementThresholds[(int)MovementCodeEnum.Move] = 1.5f;
+            _movementThresholds[(int)MovementCodeEnum.Sprint] = 1.0f;
+            _movementThresholds[(int)MovementCodeEnum.Jump] = 0.0f;  // Immediato
         }
 
         private void Update()
         {
+            _timer += Time.deltaTime;
             _prevGrounded = Grounded;
 
             JumpAndGravity();
@@ -166,6 +187,41 @@ namespace StarterAssets
         private void LateUpdate()
         {
             CameraRotation();
+        }
+
+        private void UpdateMovementState(MovementCodeEnum newCode)
+        {
+            if (_timer < 2.0f)
+                return;
+
+            int codeIndex = (int)newCode;
+
+            // Incrementa il timer per il codice corrente
+            _movementTimers[codeIndex] += Time.deltaTime;
+
+            // Resetta i timer degli altri codici
+            for (int i = 0; i < _movementTimers.Length; i++)
+            {
+                if (i != codeIndex)
+                    _movementTimers[i] = 0f;
+            }
+
+            // Verifica se ha raggiunto la soglia
+            CheckAndRaiseMovementEvent(newCode);
+        }
+
+        private void CheckAndRaiseMovementEvent(MovementCodeEnum code)
+        {
+            int codeIndex = (int)code;
+            if (_movementTimers[codeIndex] >= _movementThresholds[codeIndex])
+            {
+                playerMovementEvent?.RaiseEvent(this, code);
+                lastMovementCode = code;
+                _movementTimers[codeIndex] = 0f; // reset timer after raising event
+                if (code == MovementCodeEnum.Jump)
+                    _movementTimers[(int)MovementCodeEnum.Idle] = 0f;
+
+            }
         }
 
         private void GroundedCheck()
@@ -242,6 +298,23 @@ namespace StarterAssets
 
             // move the player
             _controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+            // Determina lo stato di movimento corrente - priorità: Move/Sprint > Look > Idle
+            if (_input.move != Vector2.zero)
+            {
+                if (_input.sprint)
+                    UpdateMovementState(MovementCodeEnum.Sprint);
+                else
+                    UpdateMovementState(MovementCodeEnum.Move);
+            }
+            else if (_input.look.sqrMagnitude >= _threshold)
+            {
+                UpdateMovementState(MovementCodeEnum.Look);
+            }
+            else
+            {
+                UpdateMovementState(MovementCodeEnum.Idle);
+            }
         }
 
         private void JumpAndGravity()
@@ -262,6 +335,10 @@ namespace StarterAssets
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    playerMovementEvent?.RaiseEvent(this, MovementCodeEnum.Jump);
+
+                    _jumpTimeoutDelta = JumpTimeout; // blocca trigger multipli nello stesso salto
+                    _input.jump = false;             // evita che resti true nei frame successivi
                 }
 
                 // jump timeout

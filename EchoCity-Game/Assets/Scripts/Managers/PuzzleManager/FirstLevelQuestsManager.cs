@@ -13,6 +13,12 @@ namespace EchoCity
 
             _onAddQuest[(int)QuestsEnum.TestTwo] = OnTestTwoAdded;
             _onCompleteQuest[(int)QuestsEnum.TestTwo] = OnTestTwoCompleted;
+
+            _onAddQuest[(int)QuestsEnum.Move_Tutorial] = OnMove_TutorialAdded;
+            _onCompleteQuest[(int)QuestsEnum.Move_Tutorial] = OnMove_TutorialCompleted;
+
+            _onAddQuest[(int)QuestsEnum.Look_Tutorial] = OnLook_TutorialAdded;
+            _onCompleteQuest[(int)QuestsEnum.Look_Tutorial] = OnLook_TutorialCompleted;
         }
 
         //####################################################################
@@ -83,5 +89,70 @@ namespace EchoCity
 
         //####################################################################
 
+        private void OnMove_TutorialAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest Move_Tutorial added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
+                    ((SOPlayerMovementEvent)eventBase).OnEventRaised += MoveTutorialHandler;
+            }
+        }
+
+        private void MoveTutorialHandler(IEventSender sender, MovementCodeEnum code)
+        {
+            if (code != MovementCodeEnum.Move)
+                return;
+
+            questProgression[(int)QuestsEnum.Move_Tutorial]++;
+            if (questProgression[(int)QuestsEnum.Move_Tutorial] < activeQuests[(int)QuestsEnum.Move_Tutorial].CountToComplete)
+                return;
+
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Move_TutorialCompleted, true) });
+        }
+
+        private void OnMove_TutorialCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
+                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= MoveTutorialHandler;
+            }
+        }
+
+        //####################################################################
+
+        private void OnLook_TutorialAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest Look_Tutorial added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
+                    ((SOPlayerMovementEvent)eventBase).OnEventRaised += LookTutorialHandler;
+            }
+        }
+
+        private void LookTutorialHandler(IEventSender sender, MovementCodeEnum code)
+        {
+            if (code != MovementCodeEnum.Look)
+                return;
+
+            questProgression[(int)QuestsEnum.Look_Tutorial]++;
+            if (questProgression[(int)QuestsEnum.Look_Tutorial] < activeQuests[(int)QuestsEnum.Look_Tutorial].CountToComplete)
+                return;
+
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Look_TutorialCompleted, true) });
+        }
+
+        private void OnLook_TutorialCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
+                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= LookTutorialHandler;
+            }
+        }
     }
 }

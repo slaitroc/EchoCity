@@ -84,6 +84,9 @@ namespace EchoCity
         [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
         [SerializeField] private bool logSoundEmitted = true;
 
+        [SerializeField] private SOPlayerMovementEvent playerMovementEvent;
+        [SerializeField] private bool logPlayerMovement = true;
+
         [SerializeField] private bool activateDeactivateAll = true;
 
         void OnEnable()
@@ -113,6 +116,7 @@ namespace EchoCity
             if (switchLevelEvent != null) switchLevelEvent.OnEventRaised += OnSwitchLevel;
             if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised += OnSubmitFeedback;
             if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised += OnSoundEmitted;
+            if (playerMovementEvent != null) playerMovementEvent.OnEventRaised += OnPlayerMovement;
         }
 
         private void UnregisterEvents()
@@ -132,6 +136,7 @@ namespace EchoCity
             if (switchLevelEvent != null) switchLevelEvent.OnEventRaised -= OnSwitchLevel;
             if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised -= OnSubmitFeedback;
             if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised -= OnSoundEmitted;
+            if (playerMovementEvent != null) playerMovementEvent.OnEventRaised -= OnPlayerMovement;
         }
 
         private void OnGameManagerStateTransition(IEventSender sender, GameStatesEnum from, GameStatesEnum to)
@@ -226,6 +231,12 @@ namespace EchoCity
         {
             if (!logSoundEmitted) return;
             Log.DLazy(() => $"{GetColoredName(sender)}: Sound emitted | {DescribeSoundEmissionData(soundData)}", this);
+        }
+
+        private void OnPlayerMovement(IEventSender sender, MovementCodeEnum movementCode)
+        {
+            if (!logPlayerMovement) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Player movement | code: {movementCode}", this);
         }
 
         private string GetColoredName(IEventSender sender)
@@ -332,6 +343,7 @@ namespace EchoCity
             logSwitchLevel = newValue;
             logSubmitFeedback = newValue;
             logSoundEmitted = newValue;
+            logPlayerMovement = newValue;
         }
 
 #endif

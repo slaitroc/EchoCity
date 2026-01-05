@@ -30,6 +30,7 @@ namespace EchoCity
         "Second-Level"
     };
         private SceneEnum _currentLevelEnum = SceneEnum.None;
+        [SerializeField] private SOQuest triggerRespawnQuest;
 
         private void OnEnable()
         {
@@ -77,6 +78,14 @@ namespace EchoCity
             else
             {
                 Log.WLazy(() => "Failed to find Player or Respawn point", this);
+            }
+
+            // add respawn quest to puzzle manager
+            var puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
+            if (puzzleManager != null && triggerRespawnQuest != null)
+            {
+                puzzleManager.AddQuest(triggerRespawnQuest);
+                Log.DLazy(() => "Respawn quest added to PuzzleManager", this);
             }
         }
 

@@ -29,6 +29,7 @@ namespace EchoCity
         InventoryChanged,
         LevelAction,
         PlayerInput,
+        PlayerMovement,
         QuestUpdated,
         SetPlayerOnSpawn,
         ShowInteraction,

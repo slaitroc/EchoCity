@@ -4,10 +4,12 @@ namespace EchoCity
 {
     public enum MovementCodeEnum
     {
+        Idle,
         Move,
         Look,
         Sprint,
         Jump,
+        MAX
 
     }
     [CreateAssetMenu(fileName = "PlayerMovementEvent", menuName = "ECHO CITY/Events/Player Movement")]
