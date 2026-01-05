@@ -114,7 +114,7 @@ namespace EchoCity
             if (hitInfo.collider != null)
             {
                 var description = hitInfo.collider?.GetComponent<IHasDescription>();
-                if (description != null && description.HasRaycastDescription)
+                if (description != null && description.HasRaycastDescription && EcholocationVisibility.IsRevealedByAudio(hitInfo))
                 {
                     if (!_isShowingDescription)
                     {
@@ -218,7 +218,7 @@ namespace EchoCity
                 {
                     Physics.Raycast(ray, out RaycastHit hitInfo, raycastDistance, (1 << 6) | (1 << 9), QueryTriggerInteraction.Collide);
                     var pickable = hitInfo.collider?.GetComponent<Pickable>();
-                    if (pickable != null)
+                    if (pickable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
                     {
                         Log.DLazy(() => $"Interacting with Pickable: {pickable.name}", this);
                         if (playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab))
@@ -228,7 +228,7 @@ namespace EchoCity
                     else
                     {
                         var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
-                        if (interactable != null)
+                        if (interactable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
                             interactable.Interact();
 
                     }

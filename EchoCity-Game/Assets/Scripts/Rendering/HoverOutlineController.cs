@@ -5,7 +5,7 @@ namespace EchoCity
     [RequireComponent(typeof(Camera))]
     public class HoverOutlineController : MonoBehaviour
     {
-        [SerializeField] private float maxDistance = 10f;
+        [SerializeField] private float maxDistance = 5f;
         [SerializeField] private LayerMask outlineLayers = (1 << 6) | (1 << 9);
 
         private Camera _camera;
@@ -25,7 +25,11 @@ namespace EchoCity
             var ray = new Ray(_camera.transform.position, _camera.transform.forward);
             Interactable interactable = null;
             if (Physics.Raycast(ray, out var hit, maxDistance, outlineLayers, QueryTriggerInteraction.Collide))
-                interactable = hit.collider?.GetComponentInParent<Interactable>();
+            {
+                var candidate = hit.collider?.GetComponentInParent<Interactable>();
+                if (candidate != null && EcholocationVisibility.IsRevealedByAudio(hit))
+                    interactable = candidate;
+            }
 
             if (interactable != _current)
             {
