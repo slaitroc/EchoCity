@@ -115,7 +115,7 @@ namespace EchoCity
         void Start()
         {
             _audioContext = new AudioContext(this, soundEmittedEvent);
-
+            EquipItem(0, playerInventory.Items[0]?.Data, playerInventory.Prefabs[0]);
             currentHealth = maxHealth;
             _lastTimeDamaged = float.NegativeInfinity;
 
@@ -199,8 +199,7 @@ namespace EchoCity
 
         public void DropItem()
         {
-            if (equippedItem == null) return;
-            if (equippedItem.Index == 0) return;
+            if (equippedItem == null || equippedItem.Index == 0) return;
 
             Vector3 dropPosition = dropPoint != null ? dropPoint.position : transform.position + transform.forward;
             if (equippedItem.Prefab == null)
@@ -213,8 +212,9 @@ namespace EchoCity
                 dropped.AddComponent<Rigidbody>();
             }
             playerInventory.DropItem(equippedItem.Index);
+            EquipItem(0, playerInventory.Items[0]?.Data, playerInventory.Prefabs[0]);
+
             setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.ReApply);
-            equippedItem = null;
         }
 
         // player estimated attraction computation
