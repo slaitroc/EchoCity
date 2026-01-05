@@ -24,7 +24,17 @@ namespace EchoCity
 
         protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
 
-        protected virtual void OnEnable() => _cachedRenderers = GetComponentsInChildren<Renderer>(false);
+        protected virtual void OnEnable()
+        {
+            _cachedRenderers = GetComponentsInChildren<Renderer>(false);
+            if (_cachedRenderers == null) return;
+            for (int i = 0; i < _cachedRenderers.Length; i++)
+            {
+                var r = _cachedRenderers[i];
+                if (r != null)
+                    r.gameObject.layer = gameObject.layer;
+            }
+        }
 
         protected virtual void OnDisable()
         {
