@@ -43,6 +43,8 @@ namespace EchoCity
             }
         }
 
+        private static AudioSource playerAudioSource; //cached player transform
+
         public static AudioMixerGroup GetMixerGroup(MixerGroupEnum group)
         {
             return _mixer.FindMatchingGroups(GetGroupString(group))[0];
@@ -118,9 +120,11 @@ namespace EchoCity
 
         /// <summary>
         /// Plays a random AudioClip from the SOSoundSource in the given AudioSource and raises the context event.
+        /// Defaults to the player's AudioSource if none is provided.
         /// </summary>
         public static void PlayRandomInAudioSource(SOSoundSource soundSource, AudioContext audioContext, AudioSource audioSource, MixerGroupEnum mixerGroup = MixerGroupEnum.Master)
         {
+
             var clip = GetRandomClip(soundSource.RandomAudioClips);
             if (clip == null)
             {
@@ -144,9 +148,18 @@ namespace EchoCity
         /// <summary>
         /// Plays an AudioClip in the given AudioSource with specified volume and mixer group.
         /// It does not raise any events.
+        /// Defaults to the player's AudioSource if none is provided.
         /// </summary>
         public static void PlayInAudioSource(AudioClip clip, float volume, AudioSource aSource, MixerGroupEnum mixerGroup = MixerGroupEnum.Master)
         {
+            if (playerAudioSource == null)
+            {
+                playerAudioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+            }
+            if (aSource == null)
+            {
+                aSource = playerAudioSource;
+            }
             aSource.outputAudioMixerGroup = GetMixerGroup(mixerGroup);
             aSource.clip = clip;
             aSource.volume = volume;
@@ -155,6 +168,7 @@ namespace EchoCity
 
         /// <summary>
         /// Plays a SOSoundSource in the given AudioSource and raises the context event.
+        /// Defaults to the player's AudioSource if none is provided.
         /// </summary>
         public static void PlayInAudioSource(SOSoundSource soundSource, AudioSource aSource, AudioContext audioContext, MixerGroupEnum mixerGroup = MixerGroupEnum.Master)
         {
