@@ -155,22 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ec509e72be1cfc45b8a371301e8aad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
-  - _tag: 4
-    _isActive: 1
-    _count: 0
-  - _tag: 6
-    _isActive: 1
-    _count: 0
-  setTags:
   - _tag: 0
     _isActive: 0
     _count: 0
+  setTags: []
   _description: 
-  materialToggleEvent: {fileID: 11400000, guid: dbace1fd95edfdc779b023eaa9f0e727, type: 2}
-  showUIEvent: {fileID: 0}
+  setMaterialEvent: {fileID: 0}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
   cardPrefab: {fileID: 2224368390549605647, guid: f16ddeba5edac764da33972634453b46, type: 3}
   cardSpawnPoint: {fileID: 3462270299063593959}

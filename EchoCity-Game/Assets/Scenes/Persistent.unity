@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
-  setMaterialEvent: {fileID: 0}
+  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   scenesNames:
@@ -274,6 +274,7 @@ MonoBehaviour:
   - Playground
   - First-Level
   - Second-Level
+  triggerRespawnQuest: {fileID: 0}
 --- !u!4 &93132285510838562
 Transform:
   m_ObjectHideFlags: 0
@@ -1006,10 +1007,13 @@ MonoBehaviour:
   radialMenuController: {fileID: 4790034666761535784}
   warningController: {fileID: 7854739263412934793}
   equippedPanelController: {fileID: 1181520305264546771}
+  tutorialPanelController: {fileID: 0}
   questController: {fileID: 8243044582833020492}
   pauseMenuController: {fileID: 8660582204158062874}
   settingsMenuController: {fileID: 959638427431380207}
   dialogController: {fileID: 782783970492582696}
+  subtitlesController: {fileID: 0}
+  _subtitlesBottomGapPx: 10
   deathMenuController: {fileID: 7814997904437534686}
   loadingScreenController: {fileID: 7018564923397504573}
   feedbackMenuController: {fileID: 459615655157302000}
@@ -1101,7 +1105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  setMaterialEvent: {fileID: 0}
+  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   useEcholocationMaterial: 0
   echolocationMaterial: {fileID: 2100000, guid: 93540b57ea56d16978865b3e9bfbed51, type: 2}
   visualizationMode: 0
@@ -1797,6 +1801,10 @@ MonoBehaviour:
   logSubmitFeedback: 0
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   logSoundEmitted: 0
+  playerMovementEvent: {fileID: 11400000, guid: eb10e54283279d1488d2959a694bad1c, type: 2}
+  logPlayerMovement: 1
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  logInteraction: 1
   activateDeactivateAll: 0
 --- !u!114 &7814997904437534686
 MonoBehaviour:
@@ -2180,7 +2188,8 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 1940418657335968769}
   TopClamp: 90
   BottomClamp: -90
-  newAudioSphereEvent: {fileID: 0}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  playerMovementEvent: {fileID: 11400000, guid: eb10e54283279d1488d2959a694bad1c, type: 2}
   landingSounds:
   - layer:
       serializedVersion: 2
@@ -2193,6 +2202,8 @@ MonoBehaviour:
     SoundSource: {fileID: 11400000, guid: 76f77206056e9014f861517c71af8e2d, type: 2}
   rayDistance: 1.3
   stepSpeedMultiplier: 0.5
+  lastMovementCode: 0
+  lookHoldDuration: 0.2
 --- !u!1 &8861211339865653365
 GameObject:
   m_ObjectHideFlags: 0
