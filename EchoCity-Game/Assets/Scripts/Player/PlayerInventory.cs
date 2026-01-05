@@ -32,7 +32,11 @@ namespace EchoCity
         void Awake()
         {
             itemsArray = new InventoryItem[8];
+            for (int i = 0; i < itemsArray.Length; i++)
+                itemsArray[i] = null;
             prefabsArray = new GameObject[itemsArray.Length];
+            for (int i = 0; i < prefabsArray.Length; i++)
+                prefabsArray[i] = null;
             if (handsSoundTool != null)
                 itemsArray[0] = new InventoryItem(handsSoundTool);
         }
@@ -77,7 +81,11 @@ namespace EchoCity
         public void Clear()
         {
             itemsArray = new InventoryItem[8];
+            for (int i = 0; i < itemsArray.Length; i++)
+                itemsArray[i] = null;
             prefabsArray = new GameObject[itemsArray.Length];
+            for (int i = 0; i < prefabsArray.Length; i++)
+                prefabsArray[i] = null;
             if (handsSoundTool != null)
                 itemsArray[0] = new InventoryItem(handsSoundTool);
             inventoryChangedEvent?.RaiseEvent(this, PickablesEnum.None, PickableTypeEnum.None, InventoryCodesEnum.Cleared);

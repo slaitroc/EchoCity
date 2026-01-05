@@ -131,6 +131,7 @@ namespace EchoCity
         {
             HideAllElements();
             _hud.SetActive(true);
+            EquippedItemHandler(this);
             switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
         }
 
@@ -145,6 +146,7 @@ namespace EchoCity
         {
             HideAllElements();
             _hud.SetActive(true);
+            EquippedItemHandler(this);
             switchLevelEvent?.RaiseEvent(this, scene, null);
         }
 
