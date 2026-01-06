@@ -1140,6 +1140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4a3e05e1ba9ae1dbb0d3af9fa47fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  echoMaterialUpdatedEvent: {fileID: 11400000, guid: 335560a647d4a6b4e84a5ee3d537e567, type: 2}
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   useEcholocationMaterial: 0
@@ -1883,19 +1884,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: Events are grouped under headers based on where their logic is executed
   gameManagerStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
-  logGameManagerStateTransition: 1
+  logGameManagerStateTransition: 0
   equippedItemChangedEvent: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
   logEquippedItemChanged: 0
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
-  logSetPlayerOnSpawn: 1
+  logSetPlayerOnSpawn: 0
   questUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
-  logQuestUpdated: 0
+  logQuestUpdated: 1
   showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
   logShowInteraction: 0
   playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
   logPlayerInput: 0
   levelActionEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  logLevelAction: 1
+  logLevelAction: 0
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   logShowUI: 0
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
@@ -1903,19 +1904,23 @@ MonoBehaviour:
   attractionInfoEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
   logAttractionInfo: 0
   setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
-  logSetMaterial: 1
+  logSetMaterial: 0
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
-  logSwitchToGameState: 1
+  logSwitchToGameState: 0
   switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
-  logSwitchLevel: 1
+  logSwitchLevel: 0
   submitFeedbackEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
   logSubmitFeedback: 0
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   logSoundEmitted: 0
   playerMovementEvent: {fileID: 11400000, guid: eb10e54283279d1488d2959a694bad1c, type: 2}
-  logPlayerMovement: 1
+  logPlayerMovement: 0
   interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
-  logInteraction: 1
+  logInteraction: 0
+  itemUsedEvent: {fileID: 11400000, guid: 4fe41dcdfe7c3774eb6d383640386ad6, type: 2}
+  logItemUsed: 0
+  echoMaterialUpdatedEvent: {fileID: 11400000, guid: 335560a647d4a6b4e84a5ee3d537e567, type: 2}
+  logEchoMaterialUpdated: 0
   activateDeactivateAll: 0
 --- !u!114 &7786499030132305608
 MonoBehaviour:
@@ -1952,6 +1957,7 @@ MonoBehaviour:
   setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   equippedItemChanged: {fileID: 11400000, guid: 2caf16a164cd42b4c81ea33828272924, type: 2}
+  itemUsedEvent: {fileID: 11400000, guid: 4fe41dcdfe7c3774eb6d383640386ad6, type: 2}
   enemyAttractionEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
   perceivedSoundEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   playerInventory: {fileID: 2751710482949066772}
@@ -2303,6 +2309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 8714278021380127983}
   activeQuests: []
   questProgression: 

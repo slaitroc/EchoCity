@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: 5_Pick up an object
+  m_Name: Interact with an object
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: Now try picking up an object. Aim at it with the crosshair and press
-      the left mouse button.
-    audioClip: {fileID: 0}
+    dialogText: When you see the crosshair at the center on an object, it means you
+      can interact. Press the left mouse button.
+    audioClip: {fileID: 8300000, guid: ee7d0d39903274e89af637a31c9dbc04, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: The object is now in your inventory.
-    audioClip: {fileID: 0}
+    dialogText: You now know how to interact with the environment.
+    audioClip: {fileID: 8300000, guid: 4f13192969b3ed843ac0d079dc6513df, type: 3}
