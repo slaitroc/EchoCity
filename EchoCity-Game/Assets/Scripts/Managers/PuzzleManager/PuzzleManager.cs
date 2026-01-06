@@ -129,7 +129,7 @@ namespace EchoCity
             return allTagsActive;
         }
 
-        public void SetTags(PuzzleTagState[] tagsToSet)
+        public void SetTags(PuzzleTagState[] tagsToSet, bool checkQuests = true)
         {
             if (tagsToSet == null || tagsToSet.Length == 0) return;
             for (int i = 0; i < tagsToSet.Length; i++)
@@ -138,7 +138,8 @@ namespace EchoCity
                 puzzleTags[(int)tagsToSet[i].Tag].IsActive = tagsToSet[i].IsActive;
                 puzzleTags[(int)tagsToSet[i].Tag].Count = tagsToSet[i].Count;
             }
-            questManager?.UpdateActiveQuests(this);
+            if (checkQuests)
+                questManager?.UpdateActiveQuests(this);
         }
     }
 

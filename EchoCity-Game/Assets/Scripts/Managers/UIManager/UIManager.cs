@@ -79,7 +79,7 @@ namespace EchoCity
 
         [Header("Observed Events From Others")]
         [SerializeField] private SOShowInteractionEvent showInteractionEvent;
-        [SerializeField] private SOEquippedItemChanged equippedItemChanged;
+        [SerializeField] private SOEquippedItemChangedEvent equippedItemChanged;
         [SerializeField] private SOInventoryChangedEvent inventoryChangedEvent;
         [SerializeField] private SOQuestUpdatedEvent questUpdatedEvent;
 
@@ -143,7 +143,7 @@ namespace EchoCity
             _hud.SetActive(true);
             _subtitles.SetActive(true);
             tutorialPanelController.ShowHideLines(_showTutorial);
-            EquippedItemHandler(this);
+            EquippedItemHandler(this, PickablesEnum.None);
             switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
         }
 
@@ -160,7 +160,7 @@ namespace EchoCity
             _hud.SetActive(true);
             _subtitles.SetActive(true);
             tutorialPanelController.ShowHideLines(_showTutorial);
-            EquippedItemHandler(this);
+            EquippedItemHandler(this, PickablesEnum.None);
             switchLevelEvent?.RaiseEvent(this, scene, null);
         }
 
@@ -254,7 +254,7 @@ namespace EchoCity
             else
                 subtitlesController.ApplyOffset(0f);
         }
-        private void EquippedItemHandler(IEventSender sender) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
+        private void EquippedItemHandler(IEventSender sender, PickablesEnum newEquippedItem) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
         private void InventoryChangedHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum code)
         {
             if (code == InventoryCodesEnum.ItemDropped) equippedPanelController.ClearEquipped();

@@ -42,7 +42,7 @@ namespace EchoCity
         [SerializeField] private SOGameManagerStateTransitionEvent gameManagerStateTransitionEvent;
         [SerializeField] private bool logGameManagerStateTransition = true;
 
-        [SerializeField] private SOEquippedItemChanged equippedItemChangedEvent;
+        [SerializeField] private SOEquippedItemChangedEvent equippedItemChangedEvent;
         [SerializeField] private bool logEquippedItemChanged = true;
 
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
@@ -90,6 +90,12 @@ namespace EchoCity
         [SerializeField] private SOInteractionEvent interactionEvent;
         [SerializeField] private bool logInteraction = true;
 
+        [SerializeField] private SOItemUsedEvent itemUsedEvent;
+        [SerializeField] private bool logItemUsed = true;
+
+        [SerializeField] private SOEchoMaterialUpdated echoMaterialUpdatedEvent;
+        [SerializeField] private bool logEchoMaterialUpdated = true;
+
         [SerializeField] private bool activateDeactivateAll = true;
 
         void OnEnable()
@@ -121,6 +127,8 @@ namespace EchoCity
             if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised += OnSoundEmitted;
             if (playerMovementEvent != null) playerMovementEvent.OnEventRaised += OnPlayerMovement;
             if (interactionEvent != null) interactionEvent.OnEventRaised += OnInteraction;
+            if (itemUsedEvent != null) itemUsedEvent.OnEventRaised += OnItemUsed;
+            if (echoMaterialUpdatedEvent != null) echoMaterialUpdatedEvent.OnEventRaised += OnEchoMaterialUpdated;
         }
 
         private void UnregisterEvents()
@@ -142,6 +150,8 @@ namespace EchoCity
             if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised -= OnSoundEmitted;
             if (playerMovementEvent != null) playerMovementEvent.OnEventRaised -= OnPlayerMovement;
             if (interactionEvent != null) interactionEvent.OnEventRaised -= OnInteraction;
+            if (itemUsedEvent != null) itemUsedEvent.OnEventRaised -= OnItemUsed;
+            if (echoMaterialUpdatedEvent != null) echoMaterialUpdatedEvent.OnEventRaised -= OnEchoMaterialUpdated;
         }
 
         private void OnGameManagerStateTransition(IEventSender sender, GameStatesEnum from, GameStatesEnum to)
@@ -150,10 +160,10 @@ namespace EchoCity
             Log.DLazy(() => $"{GetColoredName(sender)}: GameManager state transition {from} -> {to}", this);
         }
 
-        private void OnEquippedItemChanged(IEventSender sender)
+        private void OnEquippedItemChanged(IEventSender sender, PickablesEnum newEquippedItem)
         {
             if (!logEquippedItemChanged) return;
-            Log.DLazy(() => $"{GetColoredName(sender)}: Equipped item changed", this);
+            Log.DLazy(() => $"{GetColoredName(sender)}: Equipped item changed to {newEquippedItem}", this);
         }
 
         private void OnSetPlayerOnSpawn(IEventSender sender)
@@ -248,6 +258,18 @@ namespace EchoCity
         {
             if (!logInteraction) return;
             Log.DLazy(() => $"{GetColoredName(sender)}: Interaction | code: {interactionCode}", this);
+        }
+
+        private void OnItemUsed(IEventSender sender, SOPickable toolUsed)
+        {
+            if (!logItemUsed) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Item used | tool: {(toolUsed != null ? toolUsed.name : "null")}", this);
+        }
+
+        private void OnEchoMaterialUpdated(IEventSender sender, bool active)
+        {
+            if (!logEchoMaterialUpdated) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Echo material updated | active: {active}", this);
         }
 
         private string GetColoredName(IEventSender sender)
@@ -356,6 +378,8 @@ namespace EchoCity
             logSoundEmitted = newValue;
             logPlayerMovement = newValue;
             logInteraction = newValue;
+            logItemUsed = newValue;
+            logEchoMaterialUpdated = newValue;
         }
 
 #endif

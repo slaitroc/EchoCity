@@ -24,10 +24,13 @@ namespace EchoCity
     {
         None = 0,
         AttractionInfo,
+        EchoMaterialUpdated,
+        EnemyStateTransition,
         EquippedItemChanged,
         GameStateTransition,
         InventoryChanged,
         Interaction,
+        ItemUsed,
         LevelAction,
         PlayerInput,
         PlayerMovement,

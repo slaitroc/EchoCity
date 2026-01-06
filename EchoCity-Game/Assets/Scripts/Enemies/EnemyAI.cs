@@ -117,6 +117,7 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
         [SerializeField] private SOAttractionInfoEvent attractionInfoEvent;
+        [SerializeField] private SOEnemyStateTransitionEvent enemyStateTransitionEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -166,6 +167,7 @@ namespace EchoCity
         public IConfusionSystem ConfusionSystem => this;
         public SOSoundEmittedEvent SoundEmittedEvent => soundEmittedEvent;
         public SOAttractionInfoEvent AttractionInfoEvent => attractionInfoEvent;
+        public SOEnemyStateTransitionEvent EnemyStateTransitionEvent => enemyStateTransitionEvent;
 
         // ATTRACTION System
         [SerializeField] private float _A = 0f; //attraction

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -43,7 +45,7 @@ namespace EchoCity
             }
         }
 
-        private static AudioSource playerAudioSource; //cached player transform
+        private static PlayerController playerController; //cached player controller
 
         public static AudioMixerGroup GetMixerGroup(MixerGroupEnum group)
         {
@@ -152,13 +154,13 @@ namespace EchoCity
         /// </summary>
         public static void PlayInAudioSource(AudioClip clip, float volume, AudioSource aSource, MixerGroupEnum mixerGroup = MixerGroupEnum.Master)
         {
-            if (playerAudioSource == null)
+            if (playerController == null)
             {
-                playerAudioSource = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+                playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
             }
             if (aSource == null)
             {
-                aSource = playerAudioSource;
+                aSource = playerController.PlayerAudioSource;
             }
             aSource.outputAudioMixerGroup = GetMixerGroup(mixerGroup);
             aSource.clip = clip;
@@ -175,5 +177,54 @@ namespace EchoCity
             audioContext.NewAudioSphereEvent?.RaiseEvent(audioContext.Sender, new SoundEmissionData(aSource.transform.position, soundSource));
             PlayInAudioSource(soundSource.AudioClip, soundSource.Volume, aSource, mixerGroup);
         }
+
+        #region Voice Lines
+
+        private static Queue<DialogLines> _voicePlayQueue = new();
+        private static SOShowUIEvent _showUIEvent;
+        private static Coroutine _voiceCoroutine;
+
+        public static void AddInVoicePlayQueue(SOQuest quest, SOShowUIEvent @event, int lineIndex, bool @override = false)
+        {
+            if (playerController == null)
+                playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
+            if (_showUIEvent == null)
+                _showUIEvent = @event;
+            if (quest == null || quest.ScriptContainer == null || quest.ScriptContainer.DialogLines == null)
+                return;
+            if (lineIndex < 0 || lineIndex >= quest.ScriptContainer.DialogLines.Length)
+                return;
+            if (quest.ScriptContainer.DialogLines[lineIndex].AudioClip == null)
+                return;
+            if (@override && _voiceCoroutine != null)
+            {
+                playerController.StopCoroutine(_voiceCoroutine);
+                _voiceCoroutine = null;
+                playerController.PlayerVoiceAudioSource.AudioSource.Stop();
+                _voicePlayQueue.Clear();
+            }
+            if (_voiceCoroutine == null)
+            {
+                _voicePlayQueue.Enqueue(quest.ScriptContainer.DialogLines[lineIndex]);
+                _voiceCoroutine = playerController.StartCoroutine(PlayVoiceQueueCoroutine());
+            }
+            else
+                _voicePlayQueue.Enqueue(quest.ScriptContainer.DialogLines[lineIndex]);
+        }
+
+        private static IEnumerator PlayVoiceQueueCoroutine()
+        {
+            var aSource = playerController.PlayerVoiceAudioSource.AudioSource;
+            while (_voicePlayQueue.Count > 0)
+            {
+                var line = _voicePlayQueue.Dequeue();
+                PlayInAudioSource(line.AudioClip, 1f, aSource, MixerGroupEnum.Voice);
+                _showUIEvent?.RaiseEvent(playerController, ShowableUIEnum.Subtitles, new SubtitleParams(line.SpeakerName, line.DialogText, line.AudioClip.length));
+                yield return new WaitWhile(() => aSource.isPlaying);
+            }
+            _voiceCoroutine = null;
+        }
+
+        #endregion
     }
 }
