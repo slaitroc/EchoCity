@@ -87,7 +87,6 @@ namespace EchoCity
                         CompleteQuest(quest);
                 }
             }
-
         }
 
         protected void IncrementQuestProgress(QuestsEnum questEnum)
@@ -101,7 +100,7 @@ namespace EchoCity
 
         protected void PlayLine(SOQuest quest, int lineIndex, bool @override = false)
         {
-            EchoCitySound.AddInVoicePlayQueue(quest, showUIEvent, lineIndex, @override);
+            EchoCitySound.AddInVoicePlayQueue(quest.ScriptContainer, showUIEvent, lineIndex, @override);
         }
     }
 }

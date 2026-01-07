@@ -184,17 +184,15 @@ namespace EchoCity
         private static SOShowUIEvent _showUIEvent;
         private static Coroutine _voiceCoroutine;
 
-        public static void AddInVoicePlayQueue(SOQuest quest, SOShowUIEvent @event, int lineIndex, bool @override = false)
+        public static void AddInVoicePlayQueue(SODialogContainer container, SOShowUIEvent @event, int lineIndex, bool @override = false)
         {
             if (playerController == null)
                 playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
             if (_showUIEvent == null)
                 _showUIEvent = @event;
-            if (quest == null || quest.ScriptContainer == null || quest.ScriptContainer.DialogLines == null)
+            if (lineIndex < 0 || lineIndex >= container.DialogLines.Length)
                 return;
-            if (lineIndex < 0 || lineIndex >= quest.ScriptContainer.DialogLines.Length)
-                return;
-            if (quest.ScriptContainer.DialogLines[lineIndex].AudioClip == null)
+            if (container.DialogLines[lineIndex].AudioClip == null)
                 return;
             if (@override && _voiceCoroutine != null)
             {
@@ -205,11 +203,11 @@ namespace EchoCity
             }
             if (_voiceCoroutine == null)
             {
-                _voicePlayQueue.Enqueue(quest.ScriptContainer.DialogLines[lineIndex]);
+                _voicePlayQueue.Enqueue(container.DialogLines[lineIndex]);
                 _voiceCoroutine = playerController.StartCoroutine(PlayVoiceQueueCoroutine());
             }
             else
-                _voicePlayQueue.Enqueue(quest.ScriptContainer.DialogLines[lineIndex]);
+                _voicePlayQueue.Enqueue(container.DialogLines[lineIndex]);
         }
 
         private static IEnumerator PlayVoiceQueueCoroutine()

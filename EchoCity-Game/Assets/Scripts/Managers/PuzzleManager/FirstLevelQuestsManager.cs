@@ -519,8 +519,5 @@ namespace EchoCity
             PlayLine(quest, 1, true);
         }
         #endregion
-
-
-
     }
 }

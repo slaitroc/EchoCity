@@ -34,7 +34,6 @@ namespace EchoCity
         // On / Activated
         CardReader_On = 36,
         WearingGlasses = 37,
-
         MAX
     }
 

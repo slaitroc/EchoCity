@@ -134,6 +134,7 @@ namespace EchoCity
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private Animator animator;
         [SerializeField] private AudioSource audioSource;
+        [SerializeField] private HeadMarkManager headMark;
 
         [Header("Runtime")]
         [SerializeField] private EnemyStatesEnum currentState;
@@ -161,6 +162,7 @@ namespace EchoCity
         public Animator Animator => animator;
         public AudioSource AudioSource => audioSource;
         public IHitDetector HitDetector => hitDetector;
+        public HeadMarkManager HeadMark => headMark;
         public PerceivedSound LastPerceivedSound => lastPS;
         public PerceivedSound TargetSound => targetSound;
         public IAttractionSystem AttractionSystem => this;
@@ -214,6 +216,7 @@ namespace EchoCity
             InitializeFOV(enemyData.FOVData); // Initialize FOV with enemy data
             InitPerceivedSounds();
             FindPatrolAreas();
+            if (headMark) headMark.Initialize(transform);
             _fsm = new EnemyFSM(this);
             _fsm.Initialize();
         }

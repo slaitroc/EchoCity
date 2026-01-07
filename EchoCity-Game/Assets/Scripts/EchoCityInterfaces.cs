@@ -115,6 +115,8 @@ namespace EchoCity
         PatrolArea CurrentPatrolArea { get; set; }
         // <summary> The enemy's hit detector component</summary>
         IHitDetector HitDetector { get; }
+        // <summary> The enemy's head mark </summary>
+        HeadMarkManager HeadMark { get; }
         // <summary> The enemy's last perceived sound </summary>
         PerceivedSound LastPerceivedSound { get; }
         // <summary> The enemy's target sound </summary>

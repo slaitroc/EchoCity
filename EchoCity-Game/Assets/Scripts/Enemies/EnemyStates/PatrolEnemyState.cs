@@ -94,15 +94,16 @@ namespace EchoCity
 
         private void StartWaitAtWaypoint()
         {
+            _context.HeadMark.ShowCheckMark();
             _isWaitingAtWaypoint = true;
             _waitTimer = _context.EnemyData.WaypointPauseDuration;
 
-            _agent.isStopped = true;
-            _agent.ResetPath();
+            _animator.SetFloat(_animSpeedParameter, 0f, _enemyData.PatrolSpeedDampTime, Time.deltaTime);
         }
 
         private void GotoNextWaypoint()
         {
+            _context.HeadMark.ClearMarks();
             _isWaitingAtWaypoint = false;
             _agent.isStopped = false;
             _agent.SetDestination(_waypoints[_currentWaypointIndex].position);

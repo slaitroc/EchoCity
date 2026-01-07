@@ -21,6 +21,8 @@ namespace EchoCity
             _agent.isStopped = true;
 
             _owner.StartCoroutine(AttackRoutine());
+
+            _context.HeadMark.ShowChaseMark();
         }
         public override void Update()
         {
@@ -49,6 +51,8 @@ namespace EchoCity
             _animator.SetBool(_animIsAttacking, false);
             _attackEnded = false;
             _hitDetector.Disable();
+
+            _context.HeadMark.ShowChaseMark();
         }
 
         IEnumerator AttackRoutine()

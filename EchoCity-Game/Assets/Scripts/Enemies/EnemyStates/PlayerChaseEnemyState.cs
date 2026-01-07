@@ -25,6 +25,8 @@ namespace EchoCity
 
             //set as target the closest visible target which triggered the state
             _fov.ActiveTarget = _fov.ClosestTarget;
+
+            _context.HeadMark.ShowChaseMark();
         }
 
         public override void Update()
@@ -51,7 +53,10 @@ namespace EchoCity
             _agent.SetDestination(_fov.ActiveTarget.Transform.position);
         }
 
-        public override void Exit() { }
+        public override void Exit()
+        {
+            _context.HeadMark.ClearMarks();
+        }
 
         public override void DealDamage(IDamageable damageable) { }
     }
