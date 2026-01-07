@@ -137,12 +137,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
     _isActive: 0
     _count: 0
   setTags: []
-  _description: Screwdriver
+  _description: Screwdriver. Dos it emit any sound?
   PickableData: {fileID: 11400000, guid: 8c6906cb39ba1b14b85d0097416625cb, type: 2}
