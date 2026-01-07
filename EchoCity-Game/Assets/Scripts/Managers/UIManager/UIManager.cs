@@ -190,6 +190,7 @@ namespace EchoCity
                         case HudEnum.Inventory:
                             radialMenuController.enabled = !radialMenuController.enabled;
                             crosshairController.enabled = !crosshairController.enabled;
+                            tutorialPanelController.enabled = !tutorialPanelController.enabled;
                             break;
                         case HudEnum.Tutorial:
                             _showTutorial = !_showTutorial;

@@ -9432,6 +9432,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5595003298818426895}
     m_Modifications:
+    - target: {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+      propertyPath: showUIEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+    - target: {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+      propertyPath: PickableData
+      value: 
+      objectReference: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
+    - target: {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     - target: {fileID: 5855796167742410494, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.342
@@ -44600,6 +44616,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5595003298818426895}
     m_Modifications:
+    - target: {fileID: 1305504470667882960, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
+      propertyPath: PickableData
+      value: 
+      objectReference: {fileID: 11400000, guid: e92a8ea5fa1a3476fba2644de9639cee, type: 2}
+    - target: {fileID: 1305504470667882960, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 1305504470667882960, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     - target: {fileID: 2787324953342941381, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
       propertyPath: m_Name
       value: SoundTool-Mid-Screwdriver_High
@@ -62090,6 +62118,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300712160690107500, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 2300712160690107500, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     - target: {fileID: 3965556255802317529, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: m_Size.y
       value: 1.011677
@@ -72671,6 +72707,10 @@ PrefabInstance:
     - target: {fileID: 8329093095538863462, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8329093095538863462, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

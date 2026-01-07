@@ -1,3 +1,4 @@
+/* HUD Style Sheet */
 .hud-root {
     position: absolute;
     top: 0;
@@ -6,6 +7,8 @@
     bottom: 0;
 }
 
+
+/* CROSSHAIR */
 .crosshair-layer {
     position: absolute;
     top: 0;
@@ -47,6 +50,8 @@
     height: 20px;
 }
 
+
+/* INTERACTION PANEL */
 .interaction-panel {
     position: absolute;
     bottom: 40px;
@@ -99,17 +104,19 @@
     opacity: 0.9;
 }
 
+
+/* RADIAL MENU */
 .radial-menu-root {
+    opacity: 0;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0;
     justify-content: center;
     align-items: center;
     pointer-events: none;
-    display: none;
+    display: flex;
     transition-property: opacity, scale;
     transition-duration: 200ms;
     transition-timing-function: ease-in-out;
@@ -117,9 +124,9 @@
 
 .radial-menu-root.active {
     opacity: 1;
-    display: flex;
     pointer-events: auto;
 }
+
 
 .radial-center {
     width: 500px;
@@ -265,6 +272,167 @@
     color: rgb(200, 200, 200);
 }
 
+
+/* RADIAL TOOLS TUTORIAL PANEL */
+.tools-tutorial-panel {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+
+    width: 500px;
+    min-height: 60px;
+    
+    padding: 12px 16px;
+
+    background-color: rgba(0, 0, 0, 0.65);
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.tools-properties-title {
+    font-size: 18px;
+
+    white-space: normal;
+    -unity-text-align: middle-left;
+
+    color: rgb(200, 200, 200);
+    opacity: 0.95;
+
+    letter-spacing: 0.3px;
+}
+
+.tools-tutorial-list {
+    width: 100%;
+    margin-top: 8px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tools-tutorial-entry {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tools-tutorial-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* gap: 8px; */
+    margin-top: 4px;
+}
+
+.tools-tutorial-icon {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.95;
+}
+
+.tools-tutorial-title {
+    font-size: 16px;
+    unity-font-style: bold;
+    color: rgb(230, 230, 230);
+}
+
+.tools-tutorial-text {
+    font-size: 14px;
+    color: rgb(200, 200, 200);
+    opacity: 0.95;
+    white-space: normal;
+    -unity-text-align: upper-left;
+}
+
+/* RADIAL INFO - PROPERTIES (CLASS + VOLUME) */
+
+.radial-info-properties {
+    width: 100%;
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.radial-info-class,
+.radial-info-range {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.radial-info-class-label,
+.radial-info-range-label {
+    font-size: 16px;
+    color: rgb(200, 200, 200);
+    opacity: 0.95;
+}
+
+.radial-info-class-icon,
+.radial-info-transient-icon {
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.95;
+}
+
+.radial-info-range-bar {
+    flex-grow: 1;
+    height: 10px;
+    max-width: 110px;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+}
+
+.radial-info-range-fill {
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+
+    transform-origin: left center;
+    background-color: rgba(154, 104, 255, 0.95);
+}
+
+.radial-info-range-ticks {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding-left: 6px; 
+    padding-right: 6px;
+
+    pointer-events: none;
+}
+
+.radial-info-range-tick {
+    width: 2px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* WARNING PANEL */
+
 .warning-panel {
     opacity: 1;
     position: absolute;
@@ -340,7 +508,6 @@
 
 }
 
-
 .tutorial-line {
     display: flex;
     flex-direction: row;
@@ -374,8 +541,6 @@
 }
 
 
-
-
 /* EQUIPPED PANEL */
 .equipped-panel {
     position: absolute;
@@ -388,7 +553,6 @@
     flex-direction: row;
     align-items: center;
 }
-
 
 .equipped-icon {
     width: 56px;
@@ -462,7 +626,6 @@
 
 
 /* QUEST LOGGER */
-
 .quest-logger-panel {
     position: absolute;
     top: 40px;
@@ -495,7 +658,6 @@
     flex-direction: column;
     gap: 8px;
 }
-
 
 .quest-item {
     display: flex;

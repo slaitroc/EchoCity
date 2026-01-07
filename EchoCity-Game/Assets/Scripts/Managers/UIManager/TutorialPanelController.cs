@@ -36,6 +36,7 @@ namespace EchoCity
             _tutorialLinesContainer = _root.Q<VisualElement>("TutorialLines");
 
             yield return null;
+            _tutorialPanel.style.display = DisplayStyle.Flex;
         }
 
         public void BuildFromLines(SOTutorialLine[] lines)
@@ -92,6 +93,11 @@ namespace EchoCity
         {
             _tutorialLinesContainer.Clear();
             _tutorialLinesContainer.RemoveFromClassList("expanded");
+        }
+
+        private void OnDisable()
+        {
+            _tutorialPanel.style.display = DisplayStyle.None;
         }
 
     }
