@@ -9,8 +9,8 @@ namespace EchoCity
         None = 0,
         Persistent = 1,
         Playground = 2,
-        Level1 = 3,
-        Level2 = 4,
+        FirstLevel = 3,
+        SecondLevel = 4,
         InitialNarration = 5,
         AfterTutorialNarration = 6,
         MAX

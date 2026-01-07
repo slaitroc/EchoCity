@@ -234,9 +234,11 @@ namespace EchoCity
         private static SOTimerEvent _timerEvent;
         private static int _narrationIndex = 0;
         private static Coroutine _narrationCoroutine;
+        private static IEventSender _narrationSender;
 
-        public static void PlayNarration(SODialogContainer container, SOTimerEvent @event)
+        public static void PlayNarration(SODialogContainer container, SOTimerEvent @event, IEventSender sender)
         {
+            _narrationSender = sender;
             _currentContainer = container;
             _narrationIndex = 0;
             if (_timerEvent == null)
@@ -278,7 +280,7 @@ namespace EchoCity
                 var line = _currentContainer.DialogLines[i];
                 PlayInAudioSource(line.AudioClip, 1f, aSource, MixerGroupEnum.Voice);
                 yield return new WaitWhile(() => aSource.isPlaying);
-                _timerEvent?.RaiseEvent(playerController, TimerEventEnum.NarrationLineEnded);
+                _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineEnded);
             }
             _narrationCoroutine = null;
         }

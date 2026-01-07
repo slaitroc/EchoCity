@@ -143,7 +143,7 @@ namespace EchoCity
         private void StartGameClickHandler()
         {
             _titleMenuContainer.AddToClassList("hide");
-            uiManager.SwitchToInitLevel(SceneEnum.Level1);
+            uiManager.SwitchToInitLevel(SceneEnum.FirstLevel);
         }
 
         private void PlaygroundClickHandler()

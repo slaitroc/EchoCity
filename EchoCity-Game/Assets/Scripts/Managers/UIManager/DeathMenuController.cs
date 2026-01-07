@@ -103,7 +103,7 @@ namespace EchoCity
                 button?.Blur();
         }
 
-        private void RestartGameClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.Level1);
+        private void RestartGameClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.FirstLevel);
         private void PlaygroundClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.Playground);
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
         private void QuitClickHandler() => uiManager.SwitchToTitleState();
