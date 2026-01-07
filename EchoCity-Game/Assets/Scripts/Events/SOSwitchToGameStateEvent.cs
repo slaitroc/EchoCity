@@ -22,12 +22,12 @@ namespace EchoCity
         }
     }
 
-    public class ToDialogueStateParams : EventParams
+    public class ToNarrationParams : EventParams
     {
-        private readonly DialogData _dialogData;
-        public DialogData DialogData => _dialogData;
+        private readonly SODialogContainer _dialogData;
+        public SODialogContainer DialogData => _dialogData;
 
-        public ToDialogueStateParams(DialogData dialogData)
+        public ToNarrationParams(SODialogContainer dialogData)
         {
             _dialogData = dialogData;
         }

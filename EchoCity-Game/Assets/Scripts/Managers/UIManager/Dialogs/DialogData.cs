@@ -2,8 +2,8 @@ namespace EchoCity
 {
     public struct DialogData
     {
-        private readonly DialogLines[] dialogLines;
-        public readonly DialogLines[] DialogLines => dialogLines;
+        private readonly DialogLine[] dialogLines;
+        public readonly DialogLine[] DialogLines => dialogLines;
 
         public DialogData(SODialogContainer dialogContainer)
         {

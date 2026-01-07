@@ -6,10 +6,10 @@ namespace EchoCity
     {
         public PlayerChaseEnemyState(IEnemyContext context, EnemyFSM fsm) : base(context, fsm) { }
 
-        public override EnemyStatesEnum GetEnum() => EnemyStatesEnum.PlayerChase;
+        public override EnemyStateEnum GetEnum() => EnemyStateEnum.PlayerChase;
         public override void Enter()
         {
-            _context.CurrentStateEnum = EnemyStatesEnum.PlayerChase;
+            _context.CurrentStateEnum = EnemyStateEnum.PlayerChase;
             _hitDetector.Disable();
 
             _agent.speed = _enemyData.ChaseSpeed;

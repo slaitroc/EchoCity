@@ -7,13 +7,13 @@ namespace EchoCity
         private bool _isCheckingSound = false;
         private float _waitTimer = 0f;
         public SoundChaseEnemyState(IEnemyContext context, EnemyFSM fsm) : base(context, fsm) { }
-        public override EnemyStatesEnum GetEnum() => EnemyStatesEnum.SoundChase;
+        public override EnemyStateEnum GetEnum() => EnemyStateEnum.SoundChase;
         public override void Enter()
         {
             _isCheckingSound = false;
             _waitTimer = 0f;
 
-            _context.CurrentStateEnum = EnemyStatesEnum.SoundChase;
+            _context.CurrentStateEnum = EnemyStateEnum.SoundChase;
             _hitDetector.Disable();
 
             _agent.isStopped = false;

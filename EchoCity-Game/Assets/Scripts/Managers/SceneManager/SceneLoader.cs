@@ -27,7 +27,9 @@ namespace EchoCity
         "Persistent",
         "Playground",
         "First-Level",
-        "Second-Level"
+        "Second-Level",
+        "InitialNarration",
+        "AfterTutorialNarration"
     };
         private SceneEnum _currentLevelEnum = SceneEnum.None;
         [SerializeField] private SOQuest triggerRespawnQuest;

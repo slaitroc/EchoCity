@@ -179,8 +179,11 @@ namespace EchoCity
         }
 
         #region Voice Lines
+        //#####################################
+        //## IN GAME VOICE LINES MANAGEMENT  ##
+        //#####################################
 
-        private static Queue<DialogLines> _voicePlayQueue = new();
+        private static Queue<DialogLine> _voicePlayQueue = new();
         private static SOShowUIEvent _showUIEvent;
         private static Coroutine _voiceCoroutine;
 
@@ -221,6 +224,63 @@ namespace EchoCity
                 yield return new WaitWhile(() => aSource.isPlaying);
             }
             _voiceCoroutine = null;
+        }
+
+        //##########################
+        //## NARRATION MANAGEMENT ##
+        //##########################
+
+        private static SODialogContainer _currentContainer;
+        private static SOTimerEvent _timerEvent;
+        private static int _narrationIndex = 0;
+        private static Coroutine _narrationCoroutine;
+
+        public static void PlayNarration(SODialogContainer container, SOTimerEvent @event)
+        {
+            _currentContainer = container;
+            _narrationIndex = 0;
+            if (_timerEvent == null)
+                _timerEvent = @event;
+            if (_voiceCoroutine != null)
+            {
+                playerController.StopCoroutine(_voiceCoroutine);
+                _voiceCoroutine = null;
+                playerController.PlayerVoiceAudioSource.AudioSource.Stop();
+                _voicePlayQueue.Clear();
+            }
+            if (_narrationCoroutine == null)
+            {
+                _timerEvent = @event;
+                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine());
+            }
+            PlayNarrationLine(_narrationIndex);
+        }
+
+        public static void PlayNarrationLine(int index)
+        {
+            if (_currentContainer == null || index < 0 || index >= _currentContainer.DialogLines.Length)
+                return;
+            _narrationIndex = index;
+            if (_narrationCoroutine == null)
+                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine(index));
+            else
+            {
+                playerController.StopCoroutine(_narrationCoroutine);
+                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine(index));
+            }
+        }
+
+        private static IEnumerator PlayNarrationCoroutine(int startIndex = 0)
+        {
+            var aSource = playerController.PlayerVoiceAudioSource.AudioSource;
+            for (int i = startIndex; i < _currentContainer.DialogLines.Length; i++)
+            {
+                var line = _currentContainer.DialogLines[i];
+                PlayInAudioSource(line.AudioClip, 1f, aSource, MixerGroupEnum.Voice);
+                yield return new WaitWhile(() => aSource.isPlaying);
+                _timerEvent?.RaiseEvent(playerController, TimerEventEnum.NarrationLineEnded);
+            }
+            _narrationCoroutine = null;
         }
 
         #endregion

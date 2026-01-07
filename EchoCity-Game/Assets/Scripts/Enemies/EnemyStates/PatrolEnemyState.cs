@@ -13,13 +13,13 @@ namespace EchoCity
 
         public PatrolEnemyState(IEnemyContext context, EnemyFSM fsm) : base(context, fsm) { }
 
-        public override EnemyStatesEnum GetEnum() => EnemyStatesEnum.Patrol;
+        public override EnemyStateEnum GetEnum() => EnemyStateEnum.Patrol;
         public override void Enter()
         {
             _isWaitingAtWaypoint = false;
             _waitTimer = 0f;
 
-            _context.CurrentStateEnum = EnemyStatesEnum.Patrol;
+            _context.CurrentStateEnum = EnemyStateEnum.Patrol;
             _hitDetector.Disable();
 
             _currentWaypointIndex = EchoCityUtils.SelectClosestWaypoint(_patrolAreas, _owner.Transform, out _tempCurrentPatrolArea);

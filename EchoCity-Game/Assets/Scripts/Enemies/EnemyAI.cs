@@ -137,7 +137,7 @@ namespace EchoCity
         [SerializeField] private HeadMarkManager headMark;
 
         [Header("Runtime")]
-        [SerializeField] private EnemyStatesEnum currentState;
+        [SerializeField] private EnemyStateEnum currentState;
         [SerializeField] private PatrolArea currentPatrolArea;
         [SerializeField] private PatrolArea[] patrolAreas;
         [SerializeField] private PerceivedSound lastPS;
@@ -154,7 +154,7 @@ namespace EchoCity
         // ENEMY CONTEXT
         public IFSMOwner Owner => this;
         public IFOV FOV => fov;
-        public EnemyStatesEnum CurrentStateEnum { get => currentState; set => currentState = value; }
+        public EnemyStateEnum CurrentStateEnum { get => currentState; set => currentState = value; }
         public SOEnemyData EnemyData => enemyData;
         public NavMeshAgent Agent => agent;
         public PatrolArea[] PatrolAreas => patrolAreas;

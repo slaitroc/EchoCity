@@ -12,7 +12,7 @@ namespace EchoCity
         PauseMenu,
         DeathMenu,
         WinMenu,
-        Dialog,
+        Narration,
         PopUpMessage,
         Subtitles,
     }
@@ -204,7 +204,7 @@ namespace EchoCity
                     HideAllElements();
                     _pauseMenu.SetActive(true);
                     break;
-                case ShowableUIEnum.Dialog:
+                case ShowableUIEnum.Narration:
                     HideAllElements();
                     _dialog.SetActive(true);
                     break;

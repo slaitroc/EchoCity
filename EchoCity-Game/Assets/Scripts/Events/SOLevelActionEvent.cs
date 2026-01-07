@@ -11,6 +11,9 @@ namespace EchoCity
         Playground = 2,
         Level1 = 3,
         Level2 = 4,
+        InitialNarration = 5,
+        AfterTutorialNarration = 6,
+        MAX
     }
 
     public enum LevelActionCodeEnum

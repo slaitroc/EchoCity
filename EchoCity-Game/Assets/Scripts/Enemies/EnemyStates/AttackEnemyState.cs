@@ -10,7 +10,7 @@ namespace EchoCity
 
         public AttackEnemyState(IEnemyContext context, EnemyFSM fsm) : base(context, fsm) { }
 
-        public override EnemyStatesEnum GetEnum() => EnemyStatesEnum.Attack;
+        public override EnemyStateEnum GetEnum() => EnemyStateEnum.Attack;
         public override void Enter()
         {
             _coolDownTimer = 0f;

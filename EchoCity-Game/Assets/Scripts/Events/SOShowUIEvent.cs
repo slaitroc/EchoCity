@@ -31,6 +31,11 @@ namespace EchoCity
         {
             _dialogData = dialogData;
         }
+
+        public DialogParams(SODialogContainer dialogContainer)
+        {
+            _dialogData = new DialogData(dialogContainer);
+        }
     }
 
     public class HudParams : EventParams

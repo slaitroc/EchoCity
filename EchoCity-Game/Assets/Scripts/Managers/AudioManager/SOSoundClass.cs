@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "SoundClassSO", menuName = "ECHO CITY/Sound/SoundClassSO")]
+[CreateAssetMenu(fileName = "SoundClassSO", menuName = "ECHO CITY/Sound/Sound Class")]
 public class SOSoundClass : ScriptableObject
 {
     [Tooltip("Frequency band of the sound: impacts the echolocator color"), SerializeField] private Frequency frequency = Frequency.Low;

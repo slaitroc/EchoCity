@@ -1,7 +1,7 @@
 namespace EchoCity
 {
     [System.Serializable]
-    public enum EnemyStatesEnum
+    public enum EnemyStateEnum
     {
         Patrol,
         SoundChase,

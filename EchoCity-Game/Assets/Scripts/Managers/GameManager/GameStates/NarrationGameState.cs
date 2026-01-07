@@ -14,10 +14,10 @@ namespace EchoCity
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
             Time.timeScale = 0;
         }
-        public void EnterNarration(DialogData data)
+        public void EnterNarration(SODialogContainer container)
         {
             Enter();
-            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.Dialog, new DialogParams(data));
+            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.Narration, new DialogParams(container));
         }
         public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
         public override void SwitchToWinHandler() => _fsm.SwitchState(_fsm.WinState);

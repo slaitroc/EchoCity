@@ -23,7 +23,7 @@ namespace EchoCity
         public virtual void SwitchToPauseHandler() { }
         public virtual void SwitchToDeathHandler() { }
         public virtual void SwitchToWinHandler() { }
-        public virtual void SwitchToNarrationHandler(DialogData data) { }
+        public virtual void SwitchToNarrationHandler(SODialogContainer container) { }
         public virtual void SwitchToHudHandler(HudEnum hud) { }
     }
 }

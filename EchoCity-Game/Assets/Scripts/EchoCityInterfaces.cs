@@ -80,7 +80,7 @@ namespace EchoCity
         void SwitchToPauseHandler();
         void SwitchToDeathHandler();
         void SwitchToWinHandler();
-        void SwitchToNarrationHandler(DialogData data);
+        void SwitchToNarrationHandler(SODialogContainer container);
         void SwitchToHudHandler(HudEnum hud);
     }
 
@@ -100,7 +100,7 @@ namespace EchoCity
         // <summary> The enemy who owns the FSM </summary>
         IFSMOwner Owner { get; }
         // <summary> The enemy's FSM current state </summary>
-        EnemyStatesEnum CurrentStateEnum { get; set; }
+        EnemyStateEnum CurrentStateEnum { get; set; }
         // <summary> The enemy's audio source component</summary>
         AudioSource AudioSource { get; }
         // <summary> The enemy's animator component</summary>
@@ -136,7 +136,7 @@ namespace EchoCity
     public interface IEnemyState : IState, IDamageDealer //TODO
     {
         //<summary> Returns the enum associated with the state </summary>
-        EnemyStatesEnum GetEnum();
+        EnemyStateEnum GetEnum();
     }
 
     //TODO

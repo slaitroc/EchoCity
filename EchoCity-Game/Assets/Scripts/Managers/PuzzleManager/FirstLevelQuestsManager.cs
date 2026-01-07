@@ -46,6 +46,18 @@ namespace EchoCity
 
             _onAddQuest[(int)QuestsEnum.SwitchLightsOff_Tutorial] = OnSwitchLightsOff_TutorialAdded;
             _onCompleteQuest[(int)QuestsEnum.SwitchLightsOff_Tutorial] = OnSwitchLightsOff_TutorialCompleted;
+
+            _onAddQuest[(int)QuestsEnum.UseLowSO_Tutorial] = OnUseLowSO_TutorialAdded;
+            _onCompleteQuest[(int)QuestsEnum.UseLowSO_Tutorial] = OnUseLowSO_TutorialCompleted;
+
+            _onAddQuest[(int)QuestsEnum.UseMidSO_Tutorial] = OnUseMidSO_TutorialAdded;
+            _onCompleteQuest[(int)QuestsEnum.UseMidSO_Tutorial] = OnUseMidSO_TutorialCompleted;
+
+            _onAddQuest[(int)QuestsEnum.UseHighSO_Tutorial] = OnUseHighSO_TutorialAdded;
+            _onCompleteQuest[(int)QuestsEnum.UseHighSO_Tutorial] = OnUseHighSO_TutorialCompleted;
+
+            _onAddQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = OnEnemySoundChase_TutorialAdded;
+            _onCompleteQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = OnEnemySoundChase_TutorialCompleted;
         }
 
         #region TestOne
@@ -515,6 +527,152 @@ namespace EchoCity
             {
                 if (eventBase.EventType == EchoCityEventsEnum.EchoMaterialUpdated)
                     ((SOEchoMaterialUpdated)eventBase).OnEventRaised -= SwitchLightsOffTutorialHandler;
+            }
+            PlayLine(quest, 1, true);
+        }
+        #endregion
+
+        #region UseLowSO_Tutorial
+
+        private void OnUseLowSO_TutorialAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest UseLowSO_Tutorial added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised += UseLowSOTutorialHandler;
+            }
+            PlayLine(quest, 0);
+        }
+
+        private void UseLowSOTutorialHandler(IEventSender sender, SOPickable toolUsed)
+        {
+            if (toolUsed.ToolSound.SoundClass.Frequency != Frequency.Low)
+                return;
+
+            IncrementQuestProgress(QuestsEnum.UseLowSO_Tutorial);
+            if (questProgression[(int)QuestsEnum.UseLowSO_Tutorial] < activeQuests[(int)QuestsEnum.UseLowSO_Tutorial].CountToComplete)
+                return;
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseLowSO_TutorialCompleted, true) });
+            CompleteQuest(activeQuests[(int)QuestsEnum.UseLowSO_Tutorial]);
+        }
+
+        private void OnUseLowSO_TutorialCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseLowSOTutorialHandler;
+            }
+            PlayLine(quest, 1, true);
+        }
+        #endregion
+
+        #region UseMidSO_Tutorial
+        private void OnUseMidSO_TutorialAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest UseMidSO_Tutorial added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised += UseMidSOTutorialHandler;
+            }
+            PlayLine(quest, 0);
+        }
+
+        private void UseMidSOTutorialHandler(IEventSender sender, SOPickable toolUsed)
+        {
+            if (toolUsed.ToolSound.SoundClass.Frequency != Frequency.Mid)
+                return;
+
+            IncrementQuestProgress(QuestsEnum.UseMidSO_Tutorial);
+            if (questProgression[(int)QuestsEnum.UseMidSO_Tutorial] < activeQuests[(int)QuestsEnum.UseMidSO_Tutorial].CountToComplete)
+                return;
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseMidSO_TutorialCompleted, true) });
+            CompleteQuest(activeQuests[(int)QuestsEnum.UseMidSO_Tutorial]);
+        }
+
+        private void OnUseMidSO_TutorialCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseMidSOTutorialHandler;
+            }
+            PlayLine(quest, 1, true);
+        }
+        #endregion
+
+        #region UseHighSO_Tutorial
+        private void OnUseHighSO_TutorialAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest UseHighSO_Tutorial added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised += UseHighSOTutorialHandler;
+            }
+            PlayLine(quest, 0);
+        }
+
+        private void UseHighSOTutorialHandler(IEventSender sender, SOPickable toolUsed)
+        {
+            if (toolUsed.ToolSound.SoundClass.Frequency != Frequency.High)
+                return;
+
+            IncrementQuestProgress(QuestsEnum.UseHighSO_Tutorial);
+            if (questProgression[(int)QuestsEnum.UseHighSO_Tutorial] < activeQuests[(int)QuestsEnum.UseHighSO_Tutorial].CountToComplete)
+                return;
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseHighSO_TutorialCompleted, true) });
+            CompleteQuest(activeQuests[(int)QuestsEnum.UseHighSO_Tutorial]);
+        }
+
+        private void OnUseHighSO_TutorialCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseHighSOTutorialHandler;
+            }
+            PlayLine(quest, 1, true);
+        }
+        #endregion
+
+        #region EnemySoundChase_Tutorial
+        private void OnEnemySoundChase_TutorialAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest EnemySoundChase_Tutorial added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
+                    ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised += EnemySoundChaseTutorialHandler;
+            }
+            PlayLine(quest, 0);
+        }
+
+        private void EnemySoundChaseTutorialHandler(IEventSender sender, EnemyStateEnum newState, EnemyStateEnum previousState, Transform enemyTransform)
+        {
+            if (newState != EnemyStateEnum.SoundChase || previousState != EnemyStateEnum.PlayerChase)
+                return;
+
+            IncrementQuestProgress(QuestsEnum.EnemySoundChase_Tutorial);
+            if (questProgression[(int)QuestsEnum.EnemySoundChase_Tutorial] < activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial].CountToComplete)
+                return;
+
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.EnemySoundChase_TutorialCompleted, true) }, false);
+            CompleteQuest(activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial]);
+        }
+
+        private void OnEnemySoundChase_TutorialCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
+                    ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised -= EnemySoundChaseTutorialHandler;
             }
             PlayLine(quest, 1, true);
         }

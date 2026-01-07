@@ -92,7 +92,7 @@ namespace EchoCity
                     _fsm.CurrentState.SwitchToWinHandler();
                     break;
                 case GameStatesEnum.Narration:
-                    if (@params is ToDialogueStateParams dialogParams)
+                    if (@params is ToNarrationParams dialogParams)
                         _fsm.CurrentState.SwitchToNarrationHandler(dialogParams.DialogData);
                     else
                         Log.ELazy(() => "GameManager: SwitchToGameStateHandler - Missing DialogData for Narration state.", this);

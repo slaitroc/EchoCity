@@ -40,6 +40,6 @@ namespace EchoCity
         public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
         public override void SwitchToPauseHandler() => _fsm.SwitchState(_fsm.PauseState);
         public override void SwitchToDeathHandler() => _fsm.SwitchState(_fsm.DeathState);
-        public override void SwitchToNarrationHandler(DialogData data) => _fsm.SwitchToNarration(data);
+        public override void SwitchToNarrationHandler(SODialogContainer container) => _fsm.SwitchToNarration(container);
     }
 }

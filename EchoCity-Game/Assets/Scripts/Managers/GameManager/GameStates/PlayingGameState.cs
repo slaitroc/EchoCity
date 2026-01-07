@@ -18,7 +18,7 @@ namespace EchoCity
         public override void SwitchToPauseHandler() => _fsm.SwitchState(_fsm.PauseState);
         public override void SwitchToDeathHandler() => _fsm.SwitchState(_fsm.DeathState);
         public override void SwitchToWinHandler() => _fsm.SwitchState(_fsm.WinState);
-        public override void SwitchToNarrationHandler(DialogData data) => _fsm.SwitchToNarration(data);
+        public override void SwitchToNarrationHandler(SODialogContainer container) => _fsm.SwitchToNarration(container);
         public override void SwitchToHudHandler(HudEnum hud) => _fsm.SwitchToHud(hud);
 
         public override void EnterLoading() { }

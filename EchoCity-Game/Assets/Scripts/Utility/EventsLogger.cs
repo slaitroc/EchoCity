@@ -96,6 +96,18 @@ namespace EchoCity
         [SerializeField] private SOEchoMaterialUpdated echoMaterialUpdatedEvent;
         [SerializeField] private bool logEchoMaterialUpdated = true;
 
+        [SerializeField] private SOUITriggerEvent uiTriggerEvent;
+        [SerializeField] private bool logUITrigger = true;
+
+        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
+        [SerializeField] private bool logToggleMaterial = true;
+
+        [SerializeField] private SOTimerEvent timerEvent;
+        [SerializeField] private bool logTimerEvent = true;
+
+        [SerializeField] private SOEnemyStateTransitionEvent enemyStateTransitionEvent;
+        [SerializeField] private bool logEnemyStateTransition = true;
+
         [SerializeField] private bool activateDeactivateAll = true;
 
         void OnEnable()
@@ -129,6 +141,10 @@ namespace EchoCity
             if (interactionEvent != null) interactionEvent.OnEventRaised += OnInteraction;
             if (itemUsedEvent != null) itemUsedEvent.OnEventRaised += OnItemUsed;
             if (echoMaterialUpdatedEvent != null) echoMaterialUpdatedEvent.OnEventRaised += OnEchoMaterialUpdated;
+            if (uiTriggerEvent != null) uiTriggerEvent.OnEventRaised += OnUITrigger;
+            if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised += OnToggleMaterial;
+            if (timerEvent != null) timerEvent.OnEventRaised += OnTimerEvent;
+            if (enemyStateTransitionEvent != null) enemyStateTransitionEvent.OnEventRaised += OnEnemyStateTransition;
         }
 
         private void UnregisterEvents()
@@ -152,6 +168,10 @@ namespace EchoCity
             if (interactionEvent != null) interactionEvent.OnEventRaised -= OnInteraction;
             if (itemUsedEvent != null) itemUsedEvent.OnEventRaised -= OnItemUsed;
             if (echoMaterialUpdatedEvent != null) echoMaterialUpdatedEvent.OnEventRaised -= OnEchoMaterialUpdated;
+            if (uiTriggerEvent != null) uiTriggerEvent.OnEventRaised -= OnUITrigger;
+            if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised -= OnToggleMaterial;
+            if (timerEvent != null) timerEvent.OnEventRaised -= OnTimerEvent;
+            if (enemyStateTransitionEvent != null) enemyStateTransitionEvent.OnEventRaised -= OnEnemyStateTransition;
         }
 
         private void OnGameManagerStateTransition(IEventSender sender, GameStatesEnum from, GameStatesEnum to)
@@ -272,6 +292,30 @@ namespace EchoCity
             Log.DLazy(() => $"{GetColoredName(sender)}: Echo material updated | active: {active}", this);
         }
 
+        private void OnUITrigger(IEventSender sender, UITriggerEnum triggerCode)
+        {
+            if (!logUITrigger) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: UI trigger | code: {triggerCode}", this);
+        }
+
+        private void OnToggleMaterial(IEventSender sender)
+        {
+            if (!logToggleMaterial) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Toggle material", this);
+        }
+
+        private void OnTimerEvent(IEventSender sender, TimerEventEnum timerEventEnum)
+        {
+            if (!logTimerEvent) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Timer event | code: {timerEventEnum}", this);
+        }
+
+        private void OnEnemyStateTransition(IEventSender sender, EnemyStateEnum from, EnemyStateEnum to, Transform enemyTransform)
+        {
+            if (!logEnemyStateTransition) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Enemy state transition {from} -> {to} | enemy: {DescribeTransform(enemyTransform)}", this);
+        }
+
         private string GetColoredName(IEventSender sender)
         {
             string color = sender != null ? SenderColorCache.GetColor(sender) : "#FFFFFF";
@@ -290,7 +334,7 @@ namespace EchoCity
 
             if (eventParams is DialogParams dialogParams)
             {
-                DialogLines[] lines = dialogParams.DialogData.DialogLines;
+                DialogLine[] lines = dialogParams.DialogData.DialogLines;
                 int count = lines != null ? lines.Length : 0;
                 return $"DialogParams(lines: {count})";
             }
@@ -310,9 +354,9 @@ namespace EchoCity
                 return $"ToHUDStateParams(state: {toHudStateParams.HudState})";
             }
 
-            if (eventParams is ToDialogueStateParams toDialogueStateParams)
+            if (eventParams is ToNarrationParams toDialogueStateParams)
             {
-                DialogLines[] lines = toDialogueStateParams.DialogData.DialogLines;
+                DialogLine[] lines = toDialogueStateParams.DialogData.DialogLines;
                 int count = lines != null ? lines.Length : 0;
                 return $"ToDialogueStateParams(lines: {count})";
             }
@@ -321,12 +365,6 @@ namespace EchoCity
             {
                 return $"ToLoadingStateParams(isLoading: {toLoadingStateParams.IsLoading})";
             }
-
-            if (eventParams is ToLevelParams)
-            {
-                return "ToLevelParams";
-            }
-
             return eventParams.GetType().Name;
         }
 
@@ -380,6 +418,10 @@ namespace EchoCity
             logInteraction = newValue;
             logItemUsed = newValue;
             logEchoMaterialUpdated = newValue;
+            logUITrigger = newValue;
+            logToggleMaterial = newValue;
+            logTimerEvent = newValue;
+            logEnemyStateTransition = newValue;
         }
 
 #endif

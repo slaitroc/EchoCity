@@ -85,12 +85,12 @@ namespace EchoCity
             _inLoadingState = null;
         }
 
-        public void SwitchToNarration(DialogData data)
+        public void SwitchToNarration(SODialogContainer container)
         {
             CurrentState.Exit();
             PreviousState = CurrentState;
             CurrentState = NarrationState;
-            NarrationState.EnterNarration(data);
+            NarrationState.EnterNarration(container);
         }
 
         public void SwitchToHud(HudEnum hud)
