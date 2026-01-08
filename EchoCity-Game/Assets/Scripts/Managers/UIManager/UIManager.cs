@@ -111,7 +111,7 @@ namespace EchoCity
         #endregion
 
         #region Test and Debug 
-        [SerializeField] private SODialogContainer testDialogContainer;
+
         #endregion
 
         private void Awake()
