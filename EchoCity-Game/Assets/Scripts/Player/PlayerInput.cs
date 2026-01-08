@@ -221,7 +221,7 @@ namespace EchoCity
                     if (pickable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
                     {
                         Log.DLazy(() => $"Interacting with Pickable: {pickable.name}", this);
-                        if (playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab))
+                        if (pickable.PickableData == null || playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab))
                             pickable.Interact();
                         else playerController.EmitFullInventorySound();
                     }

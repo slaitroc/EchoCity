@@ -20,7 +20,8 @@ namespace EchoCity
 
         public void PickUp()
         {
-            PlayAtPosition(transform.position, PickableData.PickUpSound, _audioContext, MixerGroupEnum.SFX);
+            if (PickableData != null)
+                PlayAtPosition(transform.position, PickableData.PickUpSound, _audioContext, MixerGroupEnum.SFX);
             Destroy(gameObject);
         }
     }
