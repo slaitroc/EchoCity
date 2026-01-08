@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 401002955167915025}
   - component: {fileID: 1301365253409466151}
   - component: {fileID: 1450567556872142784}
+  - component: {fileID: -6596683679760121832}
   - component: {fileID: 572489074121802945}
   m_Layer: 0
   m_Name: Tool-Battery-02_High
@@ -87,6 +88,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-6596683679760121832
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8712317860474891702}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.12575531, y: 0.123318754, z: 0.30971715}
+  m_Center: {x: 0.0000000032000855, y: 0, z: 0.10737704}
 --- !u!114 &572489074121802945
 MonoBehaviour:
   m_ObjectHideFlags: 0
