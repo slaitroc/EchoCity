@@ -259,6 +259,7 @@ namespace EchoCity
             _deathMenu.SetActive(false);
             _loadingScreen.SetActive(false);
             _winMenu.SetActive(false);
+            _narration.SetActive(false);
         }
 
 

@@ -29,6 +29,15 @@
     white-space: normal;
 
     max-width: 900px;
+
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+}
+
+.narration-text.visible {
+    opacity: 1;
 }
 
 .narration-controls {
