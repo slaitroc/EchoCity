@@ -1,0 +1,79 @@
+.narration-root {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+
+    background-color: rgba(0, 0, 0, 1);
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: auto;
+}
+
+.narration-center {
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+
+    padding-left: 64px;
+    padding-right: 64px;
+}
+
+.narration-text {
+    unity-text-align: middle-center;
+
+    font-size: 44px;
+    color: rgba(255, 255, 255, 1);
+
+    white-space: normal;
+
+    max-width: 900px;
+}
+
+.narration-controls {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.narration-button {
+    min-width: 180px;
+    height: 56px;
+
+    unity-font-style: bold;
+    font-size: 20px;
+
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.25);
+
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 1);
+
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.narration-button:hover {
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+.narration-button:active {
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+.narration-skip {
+    opacity: 0.85;
+}
+
+.narration-continue {
+    opacity: 1;
+}

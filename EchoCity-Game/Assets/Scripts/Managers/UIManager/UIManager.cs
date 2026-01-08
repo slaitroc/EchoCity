@@ -62,6 +62,9 @@ namespace EchoCity
         [Header("Win Menu")]
         [SerializeField] private WinMenuController winMenuController;
 
+        [Header("Narration")]
+        [SerializeField] private NarrationController narrationController;
+
         [Header("Events")]
 
         [Header("Invoking Events for GM")]
@@ -82,6 +85,7 @@ namespace EchoCity
         [SerializeField] private SOEquippedItemChangedEvent equippedItemChanged;
         [SerializeField] private SOInventoryChangedEvent inventoryChangedEvent;
         [SerializeField] private SOQuestUpdatedEvent questUpdatedEvent;
+        [SerializeField] private SOTimerEvent timerEvent;
 
         [Header("External References")]
         [SerializeField] private PlayerController playerController;
@@ -97,12 +101,17 @@ namespace EchoCity
         private GameObject _loadingScreen;
         private GameObject _feedbackMenu;
         private GameObject _winMenu;
+        private GameObject _narration;
 
         private bool _showTutorial = true;
 
         #endregion
         #region Public Properties
         public bool IsPauseMenuActive => _pauseMenu.activeSelf;
+        #endregion
+
+        #region Test and Debug 
+        [SerializeField] private SODialogContainer testDialogContainer;
         #endregion
 
         private void Awake()
@@ -117,6 +126,7 @@ namespace EchoCity
             _loadingScreen = loadingScreenController.gameObject;
             _feedbackMenu = feedbackMenuController.gameObject;
             _winMenu = winMenuController.gameObject;
+            _narration = narrationController.gameObject;
 
 
             if (playerController == null)
@@ -134,6 +144,7 @@ namespace EchoCity
             if (equippedItemChanged) equippedItemChanged.OnEventRaised += EquippedItemHandler;
             if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised += InventoryChangedHandler;
             if (questUpdatedEvent) questUpdatedEvent.OnEventRaised += QuestUpdatedEventHandler;
+            if (timerEvent) timerEvent.OnEventRaised += TimerEventHandler;
         }
 
         #region Public Methods
@@ -170,6 +181,7 @@ namespace EchoCity
         public void OpenFeedbackMenu() => _feedbackMenu.SetActive(true);
         public void CloseFeedbackMenu() => _feedbackMenu.SetActive(false);
         public void EquipItem(int index, SOPickable pickableData, GameObject obj) => playerController.EquipItem(index, pickableData, obj);
+        public void PlayNextNarrationLine(int index) => EchoCitySound.PlayNarrationLine(index);
         #endregion
 
 
@@ -206,8 +218,11 @@ namespace EchoCity
                     _pauseMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.Narration:
+                    var narrationParams = eventParams as NarrationParams;
                     HideAllElements();
-                    _dialog.SetActive(true);
+                    _narration.SetActive(true);
+                    narrationController.StartNarration(narrationParams);
+                    EchoCitySound.PlayNarration(testDialogContainer, timerEvent, sender);
                     break;
                 case ShowableUIEnum.Subtitles:
                     var subtitleParams = eventParams as SubtitleParams;
@@ -261,6 +276,13 @@ namespace EchoCity
             if (code == InventoryCodesEnum.ItemDropped) equippedPanelController.ClearEquipped();
         }
         private void QuestUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
+        private void TimerEventHandler(IEventSender sender, TimerEventEnum timerEventEnum)
+        {
+            if (timerEventEnum == TimerEventEnum.NarrationLineEnded)
+            {
+                narrationController.NextDialog();
+            }
+        }
 
         #endregion
 
@@ -272,6 +294,7 @@ namespace EchoCity
             if (equippedItemChanged) equippedItemChanged.OnEventRaised -= EquippedItemHandler;
             if (inventoryChangedEvent) inventoryChangedEvent.OnEventRaised -= InventoryChangedHandler;
             if (questUpdatedEvent) questUpdatedEvent.OnEventRaised -= QuestUpdatedEventHandler;
+            if (timerEvent) timerEvent.OnEventRaised -= TimerEventHandler;
         }
 
     }
