@@ -94,7 +94,7 @@ namespace EchoCity
 
         private void StartWaitAtWaypoint()
         {
-            _context.HeadMark.ShowCheckMark();
+            _context.HeadMark?.ShowCheckMark();
             _isWaitingAtWaypoint = true;
             _waitTimer = _context.EnemyData.WaypointPauseDuration;
 
@@ -103,7 +103,7 @@ namespace EchoCity
 
         private void GotoNextWaypoint()
         {
-            _context.HeadMark.ClearMarks();
+            _context.HeadMark?.ClearMarks();
             _isWaitingAtWaypoint = false;
             _agent.isStopped = false;
             _agent.SetDestination(_waypoints[_currentWaypointIndex].position);

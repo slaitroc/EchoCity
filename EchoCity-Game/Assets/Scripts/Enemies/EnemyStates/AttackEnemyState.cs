@@ -22,7 +22,7 @@ namespace EchoCity
 
             _owner.StartCoroutine(AttackRoutine());
 
-            _context.HeadMark.ShowChaseMark();
+            _context.HeadMark?.ShowChaseMark();
         }
         public override void Update()
         {
@@ -52,7 +52,7 @@ namespace EchoCity
             _attackEnded = false;
             _hitDetector.Disable();
 
-            _context.HeadMark.ShowChaseMark();
+            _context.HeadMark?.ShowChaseMark();
         }
 
         IEnumerator AttackRoutine()

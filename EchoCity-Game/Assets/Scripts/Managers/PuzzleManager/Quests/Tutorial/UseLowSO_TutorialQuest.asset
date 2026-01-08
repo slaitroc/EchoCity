@@ -19,7 +19,8 @@ MonoBehaviour:
     _isActive: 1
     _count: 0
   countToComplete: 3
-  subscribeToEvents: []
+  subscribeToEvents:
+  - {fileID: 11400000, guid: 4fe41dcdfe7c3774eb6d383640386ad6, type: 2}
   nextQuests:
   - {fileID: 11400000, guid: f60ed92cf4f55cf44885ea211eb2f088, type: 2}
   description: Use a Low Frequency sound tool

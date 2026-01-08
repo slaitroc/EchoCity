@@ -655,7 +655,7 @@ namespace EchoCity
 
         private void EnemySoundChaseTutorialHandler(IEventSender sender, EnemyStateEnum newState, EnemyStateEnum previousState, Transform enemyTransform)
         {
-            if (newState != EnemyStateEnum.SoundChase || previousState != EnemyStateEnum.PlayerChase)
+            if (newState != EnemyStateEnum.SoundChase)
                 return;
 
             IncrementQuestProgress(QuestsEnum.EnemySoundChase_Tutorial);

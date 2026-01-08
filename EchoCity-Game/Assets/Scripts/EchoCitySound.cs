@@ -189,6 +189,8 @@ namespace EchoCity
 
         public static void AddInVoicePlayQueue(SODialogContainer container, SOShowUIEvent @event, int lineIndex, bool @override = false)
         {
+            if (!container || !@event || container.DialogLines.Length == 0)
+                return;
             if (playerController == null)
                 playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
             if (_showUIEvent == null)
