@@ -214,7 +214,7 @@ namespace EchoCity
                     }
                     break;
                 case ShowableUIEnum.PauseMenu:
-                    HideAllElements();
+                    HideAllElements(narration: false);
                     _pauseMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.Narration:
@@ -249,17 +249,18 @@ namespace EchoCity
             }
         }
 
-        private void HideAllElements()
+        private void HideAllElements(bool title = false, bool hud = false, bool pause = false, bool dialog = false,
+            bool subtitles = false, bool death = false, bool loading = false, bool win = false, bool narration = false)
         {
-            _titleMenu.SetActive(false);
-            _hud.SetActive(false);
-            _pauseMenu.SetActive(false);
-            _dialog.SetActive(false);
-            _subtitles.SetActive(false);
-            _deathMenu.SetActive(false);
-            _loadingScreen.SetActive(false);
-            _winMenu.SetActive(false);
-            _narration.SetActive(false);
+            _titleMenu.SetActive(title);
+            _hud.SetActive(hud);
+            _pauseMenu.SetActive(pause);
+            _dialog.SetActive(dialog);
+            _subtitles.SetActive(subtitles);
+            _deathMenu.SetActive(death);
+            _loadingScreen.SetActive(loading);
+            _winMenu.SetActive(win);
+            _narration.SetActive(narration);
         }
 
 
@@ -279,10 +280,20 @@ namespace EchoCity
         private void QuestUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
         private void TimerEventHandler(IEventSender sender, TimerEventEnum timerEventEnum)
         {
-            if (timerEventEnum == TimerEventEnum.NarrationLineEnded)
+            switch (timerEventEnum)
             {
-                narrationController.NextDialog();
+                case TimerEventEnum.NarrationLineEnded:
+                    narrationController.NextDialog();
+                    break;
+
+                case TimerEventEnum.NarrationLineHalfway:
+                    // Do nothing for now
+                    break;
+
+                default:
+                    break;
             }
+
         }
 
         #endregion
