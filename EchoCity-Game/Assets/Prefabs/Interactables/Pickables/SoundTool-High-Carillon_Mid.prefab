@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 442881692552996386}
   - component: {fileID: 7503454576600777820}
   - component: {fileID: 2300712160690107500}
+  - component: {fileID: 5346172932528739134}
   m_Layer: 0
   m_Name: SoundTool-High-Carillon_Mid
   m_TagString: Untagged
@@ -180,8 +181,20 @@ MonoBehaviour:
     _count: 0
   setTags: []
   _description: Wow, a beautiful carillon
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   PickableData: {fileID: 11400000, guid: ed686a97e9a2ee04c956828f8a62fbb2, type: 2}
+--- !u!114 &5346172932528739134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247218394706471733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!1 &3101622509070129195
 GameObject:
   m_ObjectHideFlags: 0
