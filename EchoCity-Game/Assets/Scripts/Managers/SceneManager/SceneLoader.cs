@@ -58,8 +58,6 @@ namespace EchoCity
             var pc = _player?.GetComponent<PlayerController>();
             var cc = _player?.GetComponent<CharacterController>();
 
-            // FIXME: Will always disable ecolocation material when respawning
-            setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Inactive);
 
             if (_spawnPoint != null && _player != null && pc != null)
             {
@@ -113,6 +111,10 @@ namespace EchoCity
                 SceneManager.SetActiveScene(existingScene);
                 yield return StartCoroutine(UnloadOtherLevels(scene));
                 Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, this);
+                if (_currentLevelEnum == SceneEnum.Level1)
+                {
+                    setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Active);
+                }
                 yield break;
             }
 #endif
@@ -134,6 +136,10 @@ namespace EchoCity
                 _currentLevelEnum = scene;
             }
             Log.DLazy(() => "Loaded active scene: " + sceneName, this);
+            if (_currentLevelEnum == SceneEnum.Level1)
+            {
+                setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Active);
+            }
         }
 
         public IEnumerator LoadSceneAdditiveNoActive(SceneEnum scene)
