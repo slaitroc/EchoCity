@@ -222,7 +222,7 @@ namespace EchoCity
                     HideAllElements();
                     _narration.SetActive(true);
                     narrationController.StartNarration(narrationParams);
-                    EchoCitySound.PlayNarration(testDialogContainer, timerEvent, sender);
+                    EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender);
                     break;
                 case ShowableUIEnum.Subtitles:
                     var subtitleParams = eventParams as SubtitleParams;
