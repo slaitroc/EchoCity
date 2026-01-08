@@ -284,7 +284,7 @@ namespace EchoCity
                 var audio = _currentContainer.DialogLines[i].AudioClip;
                 var eTime = audio.length - eventTime;
                 PlayInAudioSource(audio, 1f, aSource, MixerGroupEnum.Voice);
-                yield return new WaitForSeconds(eTime);
+                yield return new WaitForSecondsRealtime(eTime);
                 _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineHalfway);
                 yield return new WaitWhile(() => aSource.isPlaying);
                 _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineEnded);

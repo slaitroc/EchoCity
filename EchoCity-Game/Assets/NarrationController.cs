@@ -79,6 +79,7 @@ namespace EchoCity
             _lines = narrationParams.NarrationContainer.DialogLines;
             _index = 0;
             _isClosed = false;
+            _isFading = false;
 
             Show();
             RenderCurrentLine();
@@ -105,25 +106,39 @@ namespace EchoCity
         {
             if (_isClosed || _lines == null || _lines.Length == 0) return;
 
-            if (instant)
-            {
-                AdvanceInstant();
-                return;
-            }
-
             if (_index >= _lines.Length - 1)
             {
                 Finish();
                 return;
             }
 
-            if (_isFading)
+            _index++;
+            RenderCurrentLine();
+
+            if (instant)
             {
-                _queuedNext++;
+                _narrationText.AddToClassList("visible");
+                _isFading = false;
                 return;
             }
 
-            StartFadeToNextLine();
+            _narrationText.RemoveFromClassList("visible");
+            _narrationText.schedule.Execute(() =>
+            {
+                _narrationText.AddToClassList("visible");
+                _isFading = false;
+            }).ExecuteLater(1);
+        }
+
+        public void StartFadeOut()
+        {
+            if (_isClosed || _lines == null || _lines.Length == 0) return;
+
+            if (_isFading) return;
+
+            _isFading = true;
+
+            _narrationText.RemoveFromClassList("visible");
         }
 
         private void AdvanceInstant()

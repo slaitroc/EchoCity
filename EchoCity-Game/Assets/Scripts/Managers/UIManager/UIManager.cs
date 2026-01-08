@@ -222,7 +222,7 @@ namespace EchoCity
                     HideAllElements();
                     _narration.SetActive(true);
                     narrationController.StartNarration(narrationParams);
-                    EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender);
+                    EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender, eventTime: 1f);
                     break;
                 case ShowableUIEnum.Subtitles:
                     var subtitleParams = eventParams as SubtitleParams;
@@ -282,18 +282,17 @@ namespace EchoCity
         {
             switch (timerEventEnum)
             {
-                case TimerEventEnum.NarrationLineEnded:
-                    narrationController.NextDialog();
+                case TimerEventEnum.NarrationLineHalfway:
+                    narrationController.StartFadeOut();
                     break;
 
-                case TimerEventEnum.NarrationLineHalfway:
-                    // Do nothing for now
+                case TimerEventEnum.NarrationLineEnded:
+                    narrationController.NextDialog();
                     break;
 
                 default:
                     break;
             }
-
         }
 
         #endregion
