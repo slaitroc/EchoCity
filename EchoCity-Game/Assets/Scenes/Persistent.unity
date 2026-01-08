@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &33853866
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.030535
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.6199112
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 49.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537742869584992434, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: m_Name
+      value: Interactable-LightSwitch
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
 --- !u!1 &824820248
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!143 &1481902105245726797
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1914,17 +1971,17 @@ MonoBehaviour:
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
   logInventoryChanged: 0
   itemUsedEvent: {fileID: 11400000, guid: 4fe41dcdfe7c3774eb6d383640386ad6, type: 2}
-  logItemUsed: 0
+  logItemUsed: 1
   levelActionEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
-  logLevelAction: 1
+  logLevelAction: 0
   playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
   logPlayerInput: 0
   playerMovementEvent: {fileID: 11400000, guid: eb10e54283279d1488d2959a694bad1c, type: 2}
   logPlayerMovement: 0
   questUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
   logQuestUpdated: 1
-  sceneLoaderTriggerEvent: {fileID: 0}
-  logSceneLoaderTrigger: 1
+  sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
+  logSceneLoaderTrigger: 0
   setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   logSetMaterial: 0
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
@@ -1932,7 +1989,7 @@ MonoBehaviour:
   showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
   logShowInteraction: 0
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  logShowUI: 1
+  logShowUI: 0
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   logSoundEmitted: 0
   submitFeedbackEvent: {fileID: 11400000, guid: 59eb50e859a2047178ee5f4ccd6e8799, type: 2}
@@ -1940,7 +1997,7 @@ MonoBehaviour:
   switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
   logSwitchLevel: 0
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
-  logSwitchToGameState: 1
+  logSwitchToGameState: 0
   timerEvent: {fileID: 11400000, guid: 5e90d57857cfd704f875ef6a86817fc2, type: 2}
   logTimerEvent: 0
   uiTriggerEvent: {fileID: 11400000, guid: 514c18facc1a0fb45a641f13e6a21fa8, type: 2}
@@ -2459,3 +2516,4 @@ SceneRoots:
   - {fileID: 3601835976632961267}
   - {fileID: 5054039297036936703}
   - {fileID: 1758418714}
+  - {fileID: 33853866}

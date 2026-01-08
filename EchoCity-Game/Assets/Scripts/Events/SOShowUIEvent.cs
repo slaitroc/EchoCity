@@ -26,18 +26,21 @@ namespace EchoCity
     {
         private readonly SODialogContainer _narrationContainer;
         private readonly SceneEnum _destinationScene;
+        private readonly bool _useCached;
         public SODialogContainer NarrationContainer => _narrationContainer;
         public SceneEnum DestinationScene => _destinationScene;
+        public bool UseCached => _useCached;
 
-
-        public NarrationParams(SODialogContainer dialogContainer, SceneEnum destinationScene)
+        public NarrationParams(SODialogContainer dialogContainer, SceneEnum destinationScene, bool useCached = false)
         {
+            _useCached = useCached;
             _narrationContainer = dialogContainer;
             _destinationScene = destinationScene;
         }
 
-        public NarrationParams(ToNarrationParams toNarrationParams)
+        public NarrationParams(ToNarrationParams toNarrationParams, bool useCached = false)
         {
+            _useCached = useCached;
             _narrationContainer = toNarrationParams.NarrationContainer;
             _destinationScene = toNarrationParams.DestinationScene;
         }

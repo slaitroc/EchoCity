@@ -16,8 +16,15 @@ namespace EchoCity
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, false);
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
             _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.PauseMenu, null);
+
+            EchoCitySound.PauseAllPlayingAudioSources();
         }
         public override void Update() { }
+
+        public override void Exit()
+        {
+            EchoCitySound.UnPauseAllPlayingAudioSources();
+        }
 
         public override void ExitLoading()
         {

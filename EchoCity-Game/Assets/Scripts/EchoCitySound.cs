@@ -284,12 +284,28 @@ namespace EchoCity
                 var audio = _currentContainer.DialogLines[i].AudioClip;
                 var eTime = audio.length - eventTime;
                 PlayInAudioSource(audio, 1f, aSource, MixerGroupEnum.Voice);
-                yield return new WaitForSecondsRealtime(eTime);
+                yield return new WaitForSeconds(eTime);
                 _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineHalfway);
                 yield return new WaitWhile(() => aSource.isPlaying);
                 _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineEnded);
             }
             _narrationCoroutine = null;
+        }
+
+        public static void PauseAllPlayingAudioSources()
+        {
+            if (playerController == null)
+                playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
+            playerController.PlayerAudioSource.Pause();
+            playerController.PlayerVoiceAudioSource.AudioSource.Pause();
+        }
+
+        public static void UnPauseAllPlayingAudioSources()
+        {
+            if (playerController == null)
+                playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
+            playerController.PlayerAudioSource.UnPause();
+            playerController.PlayerVoiceAudioSource.AudioSource.UnPause();
         }
 
         #endregion
