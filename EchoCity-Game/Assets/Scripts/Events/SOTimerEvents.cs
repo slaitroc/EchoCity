@@ -8,7 +8,7 @@ namespace EchoCity
     }
 
     [CreateAssetMenu(fileName = "TimerEvent", menuName = "ECHO CITY/Events/Timer")]
-    public class SOTimerEvent : SOSingleParamEvent<TimerEventEnum>
+    public class SOTimerEvent : SOEventSingleParam<TimerEventEnum>
     {
         public override void RaiseEvent(IEventSender sender, TimerEventEnum timerEvent)
         {

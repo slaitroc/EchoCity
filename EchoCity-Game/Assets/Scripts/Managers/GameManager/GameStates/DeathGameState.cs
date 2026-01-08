@@ -31,7 +31,7 @@ namespace EchoCity
                 _restart = false;
             }
         }
-        public override void SwitchToTitleHandler()
+        public override void SwitchToTitleHandler(GameStatesEnum fromState)
         {
             _toTitle = true;
             _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.UnloadLevel);

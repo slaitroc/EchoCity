@@ -3,7 +3,7 @@ using UnityEngine;
 namespace EchoCity
 {
     [CreateAssetMenu(fileName = "EquippedItemChangedEvent", menuName = "ECHO CITY/Events/Equipped Item Changed")]
-    public class SOEquippedItemChangedEvent : SOSingleParamEvent<PickablesEnum>
+    public class SOEquippedItemChangedEvent : SOEventSingleParam<PickablesEnum>
     {
         public override void RaiseEvent(IEventSender sender, PickablesEnum newEquippedItem)
         {

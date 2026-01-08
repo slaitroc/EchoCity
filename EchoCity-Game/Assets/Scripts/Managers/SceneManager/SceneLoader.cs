@@ -9,6 +9,7 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOSceneLoaderTriggerEvent sceneLoaderTriggerEvent;
         [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
         string IEventSender.SenderName => gameObject.name;
@@ -26,13 +27,13 @@ namespace EchoCity
         "None",
         "Persistent",
         "Playground",
+        "InitialNarration",
+        "Tutorial",
+        "AfterTutorialNarration",
         "First-Level",
         "Second-Level",
-        "InitialNarration",
-        "AfterTutorialNarration"
     };
         private SceneEnum _currentLevelEnum = SceneEnum.None;
-        [SerializeField] private SOQuest triggerRespawnQuest;
 
         private void OnEnable()
         {
@@ -80,14 +81,6 @@ namespace EchoCity
             else
             {
                 Log.WLazy(() => "Failed to find Player or Respawn point", this);
-            }
-
-            // add respawn quest to puzzle manager
-            var puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
-            if (puzzleManager != null && triggerRespawnQuest != null)
-            {
-                puzzleManager.AddQuest(triggerRespawnQuest);
-                Log.DLazy(() => "Respawn quest added to PuzzleManager", this);
             }
         }
 
@@ -216,6 +209,7 @@ namespace EchoCity
             yield return StartCoroutine(StartLoading());
             yield return StartCoroutine(LoadSceneAdditiveNoActive(scene));
             yield return StartCoroutine(StopLoading());
+            // sceneLoaderTriggerEvent?.RaiseEvent(this, SceneLoaderTriggerEnum.InitLevel);
         }
 
         private IEnumerator LoadLevelAdditiveWithLoading(SceneEnum scene)
@@ -223,6 +217,7 @@ namespace EchoCity
             yield return StartCoroutine(StartLoading());
             yield return StartCoroutine(LoadLevelAdditive(scene));
             yield return StartCoroutine(StopLoading());
+            sceneLoaderTriggerEvent?.RaiseEvent(this, SceneLoaderTriggerEnum.InitLevel);
         }
 
         private IEnumerator ReloadCurrentLevelWithLoading()
@@ -230,7 +225,7 @@ namespace EchoCity
             yield return StartCoroutine(StartLoading());
             yield return StartCoroutine(ReloadCurrentLevel());
             yield return StartCoroutine(StopLoading());
-            SetPlayerOnSpawnHandler(this);
+            sceneLoaderTriggerEvent?.RaiseEvent(this, SceneLoaderTriggerEnum.InitLevel);
         }
 
         private IEnumerator UnloadCurrentLevelWithLoading()
@@ -250,6 +245,7 @@ namespace EchoCity
         {
             yield return new WaitForSecondsRealtime(0.5f);
             switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Loading, new ToLoadingStateParams(false));
+            yield return null;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace EchoCity
         Emitter,
         Utility,
         Tutorial,
-        Narration_Level_Initializer
+        Initializer
     }
     //Name must match exactly with the SOEventBase asset names (without the "Event" suffix)
     public enum EchoCityEventsEnum
@@ -36,6 +36,7 @@ namespace EchoCity
         PlayerInput,
         PlayerMovement,
         QuestUpdated,
+        SceneLoaderTrigger,
         SetPlayerOnSpawn,
         ShowInteraction,
         ShowUI,
@@ -45,7 +46,7 @@ namespace EchoCity
         SwitchToGameState,
         SetMaterial,
         UITrigger,
-        Timer
+        Timer,
     }
 
     public abstract class SOEventBase : ScriptableObject

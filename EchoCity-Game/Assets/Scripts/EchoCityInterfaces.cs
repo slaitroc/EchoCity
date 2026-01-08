@@ -74,14 +74,14 @@ namespace EchoCity
     public interface IGameState : IStateWithLoading
     {
         GameStatesEnum GetEnum();
-        void SwitchToTitleHandler();
         void InitLevelHandler(SceneEnum scene);
-        void SwitchToPlayingHandler();
-        void SwitchToPauseHandler();
-        void SwitchToDeathHandler();
-        void SwitchToWinHandler();
-        void SwitchToNarrationHandler(SODialogContainer container);
-        void SwitchToHudHandler(HudEnum hud);
+        void SwitchToTitleHandler(GameStatesEnum fromState);
+        void SwitchToPlayingHandler(GameStatesEnum fromState);
+        void SwitchToPauseHandler(GameStatesEnum fromState);
+        void SwitchToDeathHandler(GameStatesEnum fromState);
+        void SwitchToWinHandler(GameStatesEnum fromState);
+        void SwitchToNarrationHandler(GameStatesEnum fromState, ToNarrationParams @params);
+        void SwitchToHudHandler(GameStatesEnum fromState, HudEnum hud);
     }
 
     public interface IGameStatesFSM : IFSMWithLoading

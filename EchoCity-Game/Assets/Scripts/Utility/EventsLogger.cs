@@ -39,74 +39,75 @@ namespace EchoCity
 #pragma warning restore CS0414
 
         [Header("Events")]
-        [SerializeField] private SOGameManagerStateTransitionEvent gameManagerStateTransitionEvent;
-        [SerializeField] private bool logGameManagerStateTransition = true;
-
-        [SerializeField] private SOEquippedItemChangedEvent equippedItemChangedEvent;
-        [SerializeField] private bool logEquippedItemChanged = true;
-
-        [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
-        [SerializeField] private bool logSetPlayerOnSpawn = true;
-
-        [SerializeField] private SOQuestUpdatedEvent questUpdatedEvent;
-        [SerializeField] private bool logQuestUpdated = true;
-
-        [SerializeField] private SOShowInteractionEvent showInteractionEvent;
-        [SerializeField] private bool logShowInteraction = true;
-
-        [SerializeField] private SOPlayerInputEvent playerInputEvent;
-        [SerializeField] private bool logPlayerInput = true;
-
-        [SerializeField] private SOLevelActionEvent levelActionEvent;
-        [SerializeField] private bool logLevelAction = true;
-
-        [SerializeField] private SOShowUIEvent showUIEvent;
-        [SerializeField] private bool logShowUI = true;
-
-        [SerializeField] private SOInventoryChangedEvent inventoryChangedEvent;
-        [SerializeField] private bool logInventoryChanged = true;
-
         [SerializeField] private SOAttractionInfoEvent attractionInfoEvent;
         [SerializeField] private bool logAttractionInfo = true;
-
-        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
-        [SerializeField] private bool logSetMaterial = true;
-
-        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
-        [SerializeField] private bool logSwitchToGameState = true;
-
-        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
-        [SerializeField] private bool logSwitchLevel = true;
-
-        [SerializeField] private SOSubmitFeedbackEvent submitFeedbackEvent;
-        [SerializeField] private bool logSubmitFeedback = true;
-
-        [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
-        [SerializeField] private bool logSoundEmitted = true;
-
-        [SerializeField] private SOPlayerMovementEvent playerMovementEvent;
-        [SerializeField] private bool logPlayerMovement = true;
-
-        [SerializeField] private SOInteractionEvent interactionEvent;
-        [SerializeField] private bool logInteraction = true;
-
-        [SerializeField] private SOItemUsedEvent itemUsedEvent;
-        [SerializeField] private bool logItemUsed = true;
 
         [SerializeField] private SOEchoMaterialUpdated echoMaterialUpdatedEvent;
         [SerializeField] private bool logEchoMaterialUpdated = true;
 
-        [SerializeField] private SOUITriggerEvent uiTriggerEvent;
-        [SerializeField] private bool logUITrigger = true;
+        [SerializeField] private SOEnemyStateTransitionEvent enemyStateTransitionEvent;
+        [SerializeField] private bool logEnemyStateTransition = true;
 
-        [SerializeField] private SOToggleMaterialEvent toggleMaterialEvent;
-        [SerializeField] private bool logToggleMaterial = true;
+        [SerializeField] private SOEquippedItemChangedEvent equippedItemChangedEvent;
+        [SerializeField] private bool logEquippedItemChanged = true;
+
+        [SerializeField] private SOGameManagerStateTransitionEvent gameManagerStateTransitionEvent;
+        [SerializeField] private bool logGameManagerStateTransition = true;
+
+        [SerializeField] private SOInteractionEvent interactionEvent;
+        [SerializeField] private bool logInteraction = true;
+
+        [SerializeField] private SOInventoryChangedEvent inventoryChangedEvent;
+        [SerializeField] private bool logInventoryChanged = true;
+
+        [SerializeField] private SOItemUsedEvent itemUsedEvent;
+        [SerializeField] private bool logItemUsed = true;
+
+        [SerializeField] private SOLevelActionEvent levelActionEvent;
+        [SerializeField] private bool logLevelAction = true;
+
+        [SerializeField] private SOPlayerInputEvent playerInputEvent;
+        [SerializeField] private bool logPlayerInput = true;
+
+        [SerializeField] private SOPlayerMovementEvent playerMovementEvent;
+        [SerializeField] private bool logPlayerMovement = true;
+
+        [SerializeField] private SOQuestUpdatedEvent questUpdatedEvent;
+        [SerializeField] private bool logQuestUpdated = true;
+
+        [SerializeField] private SOSceneLoaderTriggerEvent sceneLoaderTriggerEvent;
+        [SerializeField] private bool logSceneLoaderTrigger = true;
+
+        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
+        [SerializeField] private bool logSetMaterial = true;
+
+        [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
+        [SerializeField] private bool logSetPlayerOnSpawn = true;
+
+        [SerializeField] private SOShowInteractionEvent showInteractionEvent;
+        [SerializeField] private bool logShowInteraction = true;
+
+        [SerializeField] private SOShowUIEvent showUIEvent;
+        [SerializeField] private bool logShowUI = true;
+
+        [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
+        [SerializeField] private bool logSoundEmitted = true;
+
+        [SerializeField] private SOSubmitFeedbackEvent submitFeedbackEvent;
+        [SerializeField] private bool logSubmitFeedback = true;
+
+        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
+        [SerializeField] private bool logSwitchLevel = true;
+
+        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private bool logSwitchToGameState = true;
 
         [SerializeField] private SOTimerEvent timerEvent;
         [SerializeField] private bool logTimerEvent = true;
 
-        [SerializeField] private SOEnemyStateTransitionEvent enemyStateTransitionEvent;
-        [SerializeField] private bool logEnemyStateTransition = true;
+
+        [SerializeField] private SOUITriggerEvent uiTriggerEvent;
+        [SerializeField] private bool logUITrigger = true;
 
         [SerializeField] private bool activateDeactivateAll = true;
 
@@ -122,56 +123,56 @@ namespace EchoCity
 
         private void RegisterEvents()
         {
-            if (gameManagerStateTransitionEvent != null) gameManagerStateTransitionEvent.OnEventRaised += OnGameManagerStateTransition;
-            if (equippedItemChangedEvent != null) equippedItemChangedEvent.OnEventRaised += OnEquippedItemChanged;
-            if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised += OnSetPlayerOnSpawn;
-            if (questUpdatedEvent != null) questUpdatedEvent.OnEventRaised += OnQuestUpdated;
-            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised += OnShowInteraction;
-            if (playerInputEvent != null) playerInputEvent.OnEventRaised += OnPlayerInput;
-            if (levelActionEvent != null) levelActionEvent.OnEventRaised += OnLevelAction;
-            if (showUIEvent != null) showUIEvent.OnEventRaised += OnShowUI;
-            if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised += OnInventoryChanged;
             if (attractionInfoEvent != null) attractionInfoEvent.OnEventRaised += OnAttractionInfo;
-            if (setMaterialEvent != null) setMaterialEvent.OnEventRaised += OnSetMaterial;
-            if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised += OnSwitchToGameState;
-            if (switchLevelEvent != null) switchLevelEvent.OnEventRaised += OnSwitchLevel;
-            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised += OnSubmitFeedback;
-            if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised += OnSoundEmitted;
-            if (playerMovementEvent != null) playerMovementEvent.OnEventRaised += OnPlayerMovement;
-            if (interactionEvent != null) interactionEvent.OnEventRaised += OnInteraction;
-            if (itemUsedEvent != null) itemUsedEvent.OnEventRaised += OnItemUsed;
             if (echoMaterialUpdatedEvent != null) echoMaterialUpdatedEvent.OnEventRaised += OnEchoMaterialUpdated;
-            if (uiTriggerEvent != null) uiTriggerEvent.OnEventRaised += OnUITrigger;
-            if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised += OnToggleMaterial;
-            if (timerEvent != null) timerEvent.OnEventRaised += OnTimerEvent;
             if (enemyStateTransitionEvent != null) enemyStateTransitionEvent.OnEventRaised += OnEnemyStateTransition;
+            if (equippedItemChangedEvent != null) equippedItemChangedEvent.OnEventRaised += OnEquippedItemChanged;
+            if (gameManagerStateTransitionEvent != null) gameManagerStateTransitionEvent.OnEventRaised += OnGameManagerStateTransition;
+            if (interactionEvent != null) interactionEvent.OnEventRaised += OnInteraction;
+            if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised += OnInventoryChanged;
+            if (itemUsedEvent != null) itemUsedEvent.OnEventRaised += OnItemUsed;
+            if (levelActionEvent != null) levelActionEvent.OnEventRaised += OnLevelAction;
+            if (playerInputEvent != null) playerInputEvent.OnEventRaised += OnPlayerInput;
+            if (playerMovementEvent != null) playerMovementEvent.OnEventRaised += OnPlayerMovement;
+            if (questUpdatedEvent != null) questUpdatedEvent.OnEventRaised += OnQuestUpdated;
+            if (sceneLoaderTriggerEvent != null) sceneLoaderTriggerEvent.OnEventRaised += OnSceneLoaderTrigger;
+            if (setMaterialEvent != null) setMaterialEvent.OnEventRaised += OnSetMaterial;
+            if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised += OnSetPlayerOnSpawn;
+            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised += OnShowInteraction;
+            if (showUIEvent != null) showUIEvent.OnEventRaised += OnShowUI;
+            if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised += OnSoundEmitted;
+            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised += OnSubmitFeedback;
+            if (switchLevelEvent != null) switchLevelEvent.OnEventRaised += OnSwitchLevel;
+            if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised += OnSwitchToGameState;
+            if (timerEvent != null) timerEvent.OnEventRaised += OnTimerEvent;
+            if (uiTriggerEvent != null) uiTriggerEvent.OnEventRaised += OnUITrigger;
         }
 
         private void UnregisterEvents()
         {
-            if (gameManagerStateTransitionEvent != null) gameManagerStateTransitionEvent.OnEventRaised -= OnGameManagerStateTransition;
-            if (equippedItemChangedEvent != null) equippedItemChangedEvent.OnEventRaised -= OnEquippedItemChanged;
-            if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised -= OnSetPlayerOnSpawn;
-            if (questUpdatedEvent != null) questUpdatedEvent.OnEventRaised -= OnQuestUpdated;
-            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised -= OnShowInteraction;
-            if (playerInputEvent != null) playerInputEvent.OnEventRaised -= OnPlayerInput;
-            if (levelActionEvent != null) levelActionEvent.OnEventRaised -= OnLevelAction;
-            if (showUIEvent != null) showUIEvent.OnEventRaised -= OnShowUI;
-            if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised -= OnInventoryChanged;
             if (attractionInfoEvent != null) attractionInfoEvent.OnEventRaised -= OnAttractionInfo;
-            if (setMaterialEvent != null) setMaterialEvent.OnEventRaised -= OnSetMaterial;
-            if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised -= OnSwitchToGameState;
-            if (switchLevelEvent != null) switchLevelEvent.OnEventRaised -= OnSwitchLevel;
-            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised -= OnSubmitFeedback;
-            if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised -= OnSoundEmitted;
-            if (playerMovementEvent != null) playerMovementEvent.OnEventRaised -= OnPlayerMovement;
-            if (interactionEvent != null) interactionEvent.OnEventRaised -= OnInteraction;
-            if (itemUsedEvent != null) itemUsedEvent.OnEventRaised -= OnItemUsed;
             if (echoMaterialUpdatedEvent != null) echoMaterialUpdatedEvent.OnEventRaised -= OnEchoMaterialUpdated;
-            if (uiTriggerEvent != null) uiTriggerEvent.OnEventRaised -= OnUITrigger;
-            if (toggleMaterialEvent != null) toggleMaterialEvent.OnEventRaised -= OnToggleMaterial;
-            if (timerEvent != null) timerEvent.OnEventRaised -= OnTimerEvent;
             if (enemyStateTransitionEvent != null) enemyStateTransitionEvent.OnEventRaised -= OnEnemyStateTransition;
+            if (equippedItemChangedEvent != null) equippedItemChangedEvent.OnEventRaised -= OnEquippedItemChanged;
+            if (gameManagerStateTransitionEvent != null) gameManagerStateTransitionEvent.OnEventRaised -= OnGameManagerStateTransition;
+            if (interactionEvent != null) interactionEvent.OnEventRaised -= OnInteraction;
+            if (inventoryChangedEvent != null) inventoryChangedEvent.OnEventRaised -= OnInventoryChanged;
+            if (itemUsedEvent != null) itemUsedEvent.OnEventRaised -= OnItemUsed;
+            if (levelActionEvent != null) levelActionEvent.OnEventRaised -= OnLevelAction;
+            if (playerInputEvent != null) playerInputEvent.OnEventRaised -= OnPlayerInput;
+            if (playerMovementEvent != null) playerMovementEvent.OnEventRaised -= OnPlayerMovement;
+            if (questUpdatedEvent != null) questUpdatedEvent.OnEventRaised -= OnQuestUpdated;
+            if (sceneLoaderTriggerEvent != null) sceneLoaderTriggerEvent.OnEventRaised -= OnSceneLoaderTrigger;
+            if (setMaterialEvent != null) setMaterialEvent.OnEventRaised -= OnSetMaterial;
+            if (setPlayerOnSpawnEvent != null) setPlayerOnSpawnEvent.OnEventRaised -= OnSetPlayerOnSpawn;
+            if (showInteractionEvent != null) showInteractionEvent.OnEventRaised -= OnShowInteraction;
+            if (showUIEvent != null) showUIEvent.OnEventRaised -= OnShowUI;
+            if (soundEmittedEvent != null) soundEmittedEvent.OnEventRaised -= OnSoundEmitted;
+            if (submitFeedbackEvent != null) submitFeedbackEvent.OnEventRaised -= OnSubmitFeedback;
+            if (switchLevelEvent != null) switchLevelEvent.OnEventRaised -= OnSwitchLevel;
+            if (switchToGameStateEvent != null) switchToGameStateEvent.OnEventRaised -= OnSwitchToGameState;
+            if (timerEvent != null) timerEvent.OnEventRaised -= OnTimerEvent;
+            if (uiTriggerEvent != null) uiTriggerEvent.OnEventRaised -= OnUITrigger;
         }
 
         private void OnGameManagerStateTransition(IEventSender sender, GameStatesEnum from, GameStatesEnum to)
@@ -196,6 +197,12 @@ namespace EchoCity
         {
             if (!logQuestUpdated) return;
             Log.DLazy(() => $"{GetColoredName(sender)}: Quest updated (index: {questIndex}, code: {code})", this);
+        }
+
+        private void OnSceneLoaderTrigger(IEventSender sender, SceneLoaderTriggerEnum triggerCode)
+        {
+            if (!logSceneLoaderTrigger) return;
+            Log.DLazy(() => $"{GetColoredName(sender)}: Scene loader trigger | code: {triggerCode}", this);
         }
 
         private void OnShowInteraction(IEventSender sender, bool isRaycastInteractable, bool showDescription, string description)
@@ -298,12 +305,6 @@ namespace EchoCity
             Log.DLazy(() => $"{GetColoredName(sender)}: UI trigger | code: {triggerCode}", this);
         }
 
-        private void OnToggleMaterial(IEventSender sender)
-        {
-            if (!logToggleMaterial) return;
-            Log.DLazy(() => $"{GetColoredName(sender)}: Toggle material", this);
-        }
-
         private void OnTimerEvent(IEventSender sender, TimerEventEnum timerEventEnum)
         {
             if (!logTimerEvent) return;
@@ -332,9 +333,9 @@ namespace EchoCity
                 return $"LoadingParams(isLoading: {loadingParams.IsLoading})";
             }
 
-            if (eventParams is DialogParams dialogParams)
+            if (eventParams is NarrationParams dialogParams)
             {
-                DialogLine[] lines = dialogParams.DialogData.DialogLines;
+                DialogLine[] lines = dialogParams.NarrationContainer.DialogLines;
                 int count = lines != null ? lines.Length : 0;
                 return $"DialogParams(lines: {count})";
             }
@@ -356,7 +357,7 @@ namespace EchoCity
 
             if (eventParams is ToNarrationParams toDialogueStateParams)
             {
-                DialogLine[] lines = toDialogueStateParams.DialogData.DialogLines;
+                DialogLine[] lines = toDialogueStateParams.NarrationContainer.DialogLines;
                 int count = lines != null ? lines.Length : 0;
                 return $"ToDialogueStateParams(lines: {count})";
             }
@@ -397,31 +398,31 @@ namespace EchoCity
             }
 
             activateDeactivateAll = false;
-            bool newValue = !logGameManagerStateTransition;
+            bool newValue = !logAttractionInfo;
 
-            logGameManagerStateTransition = newValue;
-            logEquippedItemChanged = newValue;
-            logSetPlayerOnSpawn = newValue;
-            logQuestUpdated = newValue;
-            logShowInteraction = newValue;
-            logPlayerInput = newValue;
-            logLevelAction = newValue;
-            logShowUI = newValue;
-            logInventoryChanged = newValue;
             logAttractionInfo = newValue;
-            logSetMaterial = newValue;
-            logSwitchToGameState = newValue;
-            logSwitchLevel = newValue;
-            logSubmitFeedback = newValue;
-            logSoundEmitted = newValue;
-            logPlayerMovement = newValue;
-            logInteraction = newValue;
-            logItemUsed = newValue;
             logEchoMaterialUpdated = newValue;
-            logUITrigger = newValue;
-            logToggleMaterial = newValue;
-            logTimerEvent = newValue;
             logEnemyStateTransition = newValue;
+            logEquippedItemChanged = newValue;
+            logGameManagerStateTransition = newValue;
+            logInteraction = newValue;
+            logInventoryChanged = newValue;
+            logItemUsed = newValue;
+            logLevelAction = newValue;
+            logPlayerInput = newValue;
+            logPlayerMovement = newValue;
+            logQuestUpdated = newValue;
+            logSceneLoaderTrigger = newValue;
+            logSetMaterial = newValue;
+            logSetPlayerOnSpawn = newValue;
+            logShowInteraction = newValue;
+            logShowUI = newValue;
+            logSoundEmitted = newValue;
+            logSubmitFeedback = newValue;
+            logSwitchLevel = newValue;
+            logSwitchToGameState = newValue;
+            logTimerEvent = newValue;
+            logUITrigger = newValue;
         }
 
 #endif

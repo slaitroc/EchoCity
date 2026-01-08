@@ -35,8 +35,17 @@ namespace EchoCity
         }
         public override GameStatesEnum GetEnum() => GameStatesEnum.Pause;
 
-        public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
-        public override void SwitchToTitleHandler()
+        public override void SwitchToPlayingHandler(GameStatesEnum previousState)
+        {
+            if (previousState == GameStatesEnum.Narration)
+            {
+                // Resume from Narration state
+                _fsm.SwitchState(_fsm.NarrationState);
+                return;
+            }
+            _fsm.SwitchState(_fsm.PlayingState);
+        }
+        public override void SwitchToTitleHandler(GameStatesEnum previousState)
         {
             _toTitle = true;
             _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.UnloadLevel);

@@ -8,7 +8,7 @@ namespace EchoCity
         Pickable
     }
     [CreateAssetMenu(fileName = "InteractionEvent", menuName = "ECHO CITY/Events/Interaction")]
-    public class SOInteractionEvent : SOSingleParamEvent<InteractionEnum>
+    public class SOInteractionEvent : SOEventSingleParam<InteractionEnum>
     {
         public override void RaiseEvent(IEventSender sender, InteractionEnum interaction)
         {

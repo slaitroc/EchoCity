@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace EchoCity
 {
-    public class NarrationSceneInitializer : MonoBehaviour, IEventSender
+    public class LevelInitializer : MonoBehaviour, IEventSender
     {
         [Header("Invoking Events")]
-        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
 
         [Header("Observing Events")]
         [SerializeField] private SOSceneLoaderTriggerEvent sceneLoaderTriggerEvent;
@@ -16,8 +16,7 @@ namespace EchoCity
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Initializer };
 
         [Header("Initialization Data")]
-        [SerializeField] private SODialogContainer container;
-        [SerializeField] private SceneEnum destinationScene;
+        [SerializeField] private SOQuest initialTutorialQuest;
 
         void OnEnable()
         {
@@ -30,8 +29,17 @@ namespace EchoCity
         }
         void InitializeHandler(IEventSender sender, SceneLoaderTriggerEnum triggerCode)
         {
-            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Narration, new ToNarrationParams(container, destinationScene));
+            if (triggerCode != SceneLoaderTriggerEnum.InitLevel) return;
+            setPlayerOnSpawnEvent.RaiseEvent(this);
+            // add respawn quest to puzzle manager
+            var puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
+            if (puzzleManager != null && initialTutorialQuest != null)
+            {
+                puzzleManager.AddQuest(initialTutorialQuest);
+                Log.DLazy(() => "Respawn quest added to PuzzleManager", this);
+            }
         }
-    }
 
+
+    }
 }

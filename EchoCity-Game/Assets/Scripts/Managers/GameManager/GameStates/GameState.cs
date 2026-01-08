@@ -17,13 +17,13 @@ namespace EchoCity
         public virtual void Update() { }
         public virtual void Exit() { }
         public virtual void ExitLoading() { }
-        public virtual void SwitchToTitleHandler() { }
+        public virtual void SwitchToTitleHandler(GameStatesEnum previousState) { }
+        public virtual void SwitchToPlayingHandler(GameStatesEnum previousState) { }
+        public virtual void SwitchToPauseHandler(GameStatesEnum previousState) { }
+        public virtual void SwitchToDeathHandler(GameStatesEnum previousState) { }
+        public virtual void SwitchToWinHandler(GameStatesEnum previousState) { }
+        public virtual void SwitchToNarrationHandler(GameStatesEnum previousState, ToNarrationParams @params) { }
+        public virtual void SwitchToHudHandler(GameStatesEnum previousState, HudEnum hud) { }
         public virtual void InitLevelHandler(SceneEnum scene) { }
-        public virtual void SwitchToPlayingHandler() { }
-        public virtual void SwitchToPauseHandler() { }
-        public virtual void SwitchToDeathHandler() { }
-        public virtual void SwitchToWinHandler() { }
-        public virtual void SwitchToNarrationHandler(SODialogContainer container) { }
-        public virtual void SwitchToHudHandler(HudEnum hud) { }
     }
 }

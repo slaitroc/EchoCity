@@ -7,7 +7,7 @@ namespace EchoCity
     }
 
     [CreateAssetMenu(fileName = "UITriggerEvent", menuName = "ECHO CITY/Events/UI Trigger")]
-    public class SOUITriggerEvent : SOSingleParamEvent<UITriggerEnum>
+    public class SOUITriggerEvent : SOEventSingleParam<UITriggerEnum>
     {
         public override void RaiseEvent(IEventSender sender, UITriggerEnum triggerCode)
         {

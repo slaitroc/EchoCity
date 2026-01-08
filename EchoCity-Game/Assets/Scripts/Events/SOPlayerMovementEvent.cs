@@ -13,7 +13,7 @@ namespace EchoCity
 
     }
     [CreateAssetMenu(fileName = "PlayerMovementEvent", menuName = "ECHO CITY/Events/Player Movement")]
-    public class SOPlayerMovementEvent : SOSingleParamEvent<MovementCodeEnum>
+    public class SOPlayerMovementEvent : SOEventSingleParam<MovementCodeEnum>
     {
         public override void RaiseEvent(IEventSender sender, MovementCodeEnum code)
         {

@@ -24,12 +24,15 @@ namespace EchoCity
 
     public class ToNarrationParams : EventParams
     {
-        private readonly SODialogContainer _dialogData;
-        public SODialogContainer DialogData => _dialogData;
+        private readonly SODialogContainer _narrationContainer;
+        private readonly SceneEnum _destinationScene = SceneEnum.None;
+        public SODialogContainer NarrationContainer => _narrationContainer;
+        public SceneEnum DestinationScene => _destinationScene;
 
-        public ToNarrationParams(SODialogContainer dialogData)
+        public ToNarrationParams(SODialogContainer narrationContainer, SceneEnum destinationScene)
         {
-            _dialogData = dialogData;
+            _narrationContainer = narrationContainer;
+            _destinationScene = destinationScene;
         }
     }
 

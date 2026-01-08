@@ -22,19 +22,24 @@ namespace EchoCity
         }
     }
 
-    public class DialogParams : EventParams
+    public class NarrationParams : EventParams
     {
-        private readonly DialogData _dialogData;
-        public DialogData DialogData => _dialogData;
+        private readonly SODialogContainer _narrationContainer;
+        private readonly SceneEnum _destinationScene;
+        public SODialogContainer NarrationContainer => _narrationContainer;
+        public SceneEnum DestinationScene => _destinationScene;
 
-        public DialogParams(DialogData dialogData)
+
+        public NarrationParams(SODialogContainer dialogContainer, SceneEnum destinationScene)
         {
-            _dialogData = dialogData;
+            _narrationContainer = dialogContainer;
+            _destinationScene = destinationScene;
         }
 
-        public DialogParams(SODialogContainer dialogContainer)
+        public NarrationParams(ToNarrationParams toNarrationParams)
         {
-            _dialogData = new DialogData(dialogContainer);
+            _narrationContainer = toNarrationParams.NarrationContainer;
+            _destinationScene = toNarrationParams.DestinationScene;
         }
     }
 

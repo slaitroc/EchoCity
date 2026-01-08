@@ -37,9 +37,9 @@ namespace EchoCity
             }
             _currentHud = HudEnum.None;
         }
-        public override void SwitchToPlayingHandler() => _fsm.SwitchState(_fsm.PlayingState);
-        public override void SwitchToPauseHandler() => _fsm.SwitchState(_fsm.PauseState);
-        public override void SwitchToDeathHandler() => _fsm.SwitchState(_fsm.DeathState);
-        public override void SwitchToNarrationHandler(SODialogContainer container) => _fsm.SwitchToNarration(container);
+        public override void SwitchToPlayingHandler(GameStatesEnum previousState) => _fsm.SwitchState(_fsm.PlayingState);
+        public override void SwitchToPauseHandler(GameStatesEnum previousState) => _fsm.SwitchState(_fsm.PauseState);
+        public override void SwitchToDeathHandler(GameStatesEnum previousState) => _fsm.SwitchState(_fsm.DeathState);
+        public override void SwitchToNarrationHandler(GameStatesEnum previousState, ToNarrationParams @params) => _fsm.SwitchToNarration(@params);
     }
 }

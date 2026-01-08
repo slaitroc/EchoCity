@@ -7,12 +7,13 @@ namespace EchoCity
     {
         //NOTE: numbers must match scene loader's scenes array indices
         None = 0,
-        Persistent = 1,
-        Playground = 2,
-        FirstLevel = 3,
-        SecondLevel = 4,
-        InitialNarration = 5,
-        AfterTutorialNarration = 6,
+        Persistent,
+        Playground,
+        InitialNarration,
+        Tutorial,
+        AfterTutorialNarration,
+        FirstLevel,
+        SecondLevel,
         MAX
     }
 

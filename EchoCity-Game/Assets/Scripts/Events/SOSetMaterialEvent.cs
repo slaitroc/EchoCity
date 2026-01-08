@@ -11,5 +11,5 @@ namespace EchoCity
         Toggle
     }
     [CreateAssetMenu(fileName = "SetMaterialEvent", menuName = "ECHO CITY/Events/Set Material")]
-    public class SOSetMaterialEvent : SOSingleParamEvent<EchoMaterialCodeEnum> { }
+    public class SOSetMaterialEvent : SOEventSingleParam<EchoMaterialCodeEnum> { }
 }

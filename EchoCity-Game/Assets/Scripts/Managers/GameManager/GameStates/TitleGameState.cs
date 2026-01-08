@@ -23,7 +23,6 @@ namespace EchoCity
         {
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, false);
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, true);
-            _context.SetPlayerOnSpawnEvent.RaiseEvent(_context);
             _fsm.SwitchState(_fsm.PlayingState);
         }
     }
