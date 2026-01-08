@@ -238,6 +238,8 @@ namespace EchoCity
 
         public static void PlayNarration(SODialogContainer container, SOTimerEvent @event, IEventSender sender)
         {
+            if (playerController == null)
+                playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
             _narrationSender = sender;
             _currentContainer = container;
             _narrationIndex = 0;
