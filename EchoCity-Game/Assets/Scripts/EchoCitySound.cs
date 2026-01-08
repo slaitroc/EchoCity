@@ -238,7 +238,7 @@ namespace EchoCity
         private static Coroutine _narrationCoroutine;
         private static IEventSender _narrationSender;
 
-        public static void PlayNarration(SODialogContainer container, SOTimerEvent @event, IEventSender sender)
+        public static void PlayNarration(SODialogContainer container, SOTimerEvent @event, IEventSender sender, float eventTime = 0f)
         {
             if (playerController == null)
                 playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
@@ -257,32 +257,35 @@ namespace EchoCity
             if (_narrationCoroutine == null)
             {
                 _timerEvent = @event;
-                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine());
+                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine(0, eventTime));
             }
-            PlayNarrationLine(_narrationIndex);
+            PlayNarrationLine(_narrationIndex, eventTime);
         }
 
-        public static void PlayNarrationLine(int index)
+        public static void PlayNarrationLine(int index, float eventTime = 0f)
         {
             if (_currentContainer == null || index < 0 || index >= _currentContainer.DialogLines.Length)
                 return;
             _narrationIndex = index;
             if (_narrationCoroutine == null)
-                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine(index));
+                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine(index, eventTime));
             else
             {
                 playerController.StopCoroutine(_narrationCoroutine);
-                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine(index));
+                _narrationCoroutine = playerController.StartCoroutine(PlayNarrationCoroutine(index, eventTime));
             }
         }
 
-        private static IEnumerator PlayNarrationCoroutine(int startIndex = 0)
+        private static IEnumerator PlayNarrationCoroutine(int startIndex = 0, float eventTime = 0f)
         {
             var aSource = playerController.PlayerVoiceAudioSource.AudioSource;
             for (int i = startIndex; i < _currentContainer.DialogLines.Length; i++)
             {
-                var line = _currentContainer.DialogLines[i];
-                PlayInAudioSource(line.AudioClip, 1f, aSource, MixerGroupEnum.Voice);
+                var audio = _currentContainer.DialogLines[i].AudioClip;
+                var eTime = audio.length - eventTime;
+                PlayInAudioSource(audio, 1f, aSource, MixerGroupEnum.Voice);
+                yield return new WaitForSeconds(eTime);
+                _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineHalfway);
                 yield return new WaitWhile(() => aSource.isPlaying);
                 _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineEnded);
             }

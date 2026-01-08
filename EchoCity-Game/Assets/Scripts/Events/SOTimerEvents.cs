@@ -4,7 +4,8 @@ namespace EchoCity
 {
     public enum TimerEventEnum
     {
-        NarrationLineEnded
+        NarrationLineEnded,
+        NarrationLineHalfway
     }
 
     [CreateAssetMenu(fileName = "TimerEvent", menuName = "ECHO CITY/Events/Timer")]
