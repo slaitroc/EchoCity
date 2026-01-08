@@ -16,7 +16,7 @@ namespace EchoCity
             if (outcome)
             {
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("WalkieTalkie Picked Up!", new Color(1f, 0.5f, 0f, 1f)));
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Narration, new DialogParams(new DialogData(dialogContainer)));
+                // showUIEvent?.RaiseEvent(this, ShowableUIEnum.Narration, new NarrationParams(new DialogData(dialogContainer)));
             }
         }
     }

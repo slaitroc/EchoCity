@@ -26,12 +26,12 @@ namespace EchoCity
                 PlayAtPosition(transform.position, useSoundSource, _audioContext, MixerGroupEnum.SFX);
                 Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
                 setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.ReApply);
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Narration, new DialogParams(new DialogData(dialogContainerSuccess)));
+                // showUIEvent?.RaiseEvent(this, ShowableUIEnum.Narration, new NarrationParams(new DialogData(dialogContainerSuccess)));
             }
             else
             {
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f)));
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Narration, new DialogParams(new DialogData(dialogContainerFail)));
+                // showUIEvent?.RaiseEvent(this, ShowableUIEnum.Narration, new NarrationParams(new DialogData(dialogContainerFail)));
             }
         }
     }

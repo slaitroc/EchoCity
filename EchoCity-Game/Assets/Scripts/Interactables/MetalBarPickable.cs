@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EchoCity
 {
-    public class BatteryPickable : Pickable
+    public class MetalBarPickable : Pickable
     {
         [Header("Invoking Events")]
         [SerializeField] private SOShowUIEvent showUIEvent;
@@ -14,8 +14,8 @@ namespace EchoCity
             base.ResolveInteraction(outcome);
             if (outcome)
             {
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("Battery Picked Up!", new Color(1f, 0.5f, 0f, 1f)));
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Narration, new DialogParams(new DialogData(dialogContainer)));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("Metal Bar Picked Up!", new Color(1f, 0.5f, 0f, 1f)));
+                // showUIEvent?.RaiseEvent(this, ShowableUIEnum.Narration, new NarrationParams(new DialogData(dialogContainer)));
             }
         }
     }
