@@ -158,16 +158,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327671a88ba00264eb63534826ba88bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkTagsEvent: {fileID: 11400000, guid: 26ab735602efe7c43be331cc60b9bc2a, type: 2}
-  setPuzzleTagsEvent: {fileID: 11400000, guid: a59b6c0a83e47384f8feeaf6060319b7, type: 2}
-  materialToggleEvent: {fileID: 0}
-  interactionOutcomeEvent: {fileID: 11400000, guid: c4b65ac6744657b4b8e600f21b968152, type: 2}
-  checkTags: 00000000
-  setTags: 05000000
-  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
-  canBePickedEvent: {fileID: 11400000, guid: 5e3183bc46375ab4a8abef4d11e1f925, type: 2}
-  pickableData: {fileID: 11400000, guid: b7bd79ad65fc56449a3822c9158f169c, type: 2}
+  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags:
+  - _tag: 0
+    _isActive: 0
+    _count: 0
+  setTags:
+  - _tag: 5
+    _isActive: 1
+    _count: 0
+  _description: 
+  PickableData: {fileID: 0}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   dialogContainer: {fileID: 11400000, guid: 7a37dd4918bd84d8b9a19ff1a4f3be47, type: 2}
-  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
