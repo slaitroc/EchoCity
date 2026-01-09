@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7931390142878105525}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6672665, y: 0.23399882, z: 0.23399882, w: 0.6672665}
+  m_LocalRotation: {x: -0.6672661, y: 0.23400013, z: 0.23400013, w: 0.6672661}
   m_LocalPosition: {x: 9.342, y: -0.89, z: -1.050119}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -135,11 +135,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f60c6968c9d21d46972dcefc77aeb97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 0}
+  interactionEvent: {fileID: 0}
+  showUIEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
-  _description: 
-  PickableData: {fileID: 0}
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
+  PickableData: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
   showUIEvent: {fileID: 0}
   dialogContainer: {fileID: 11400000, guid: 34163aab2457843ea8925c9c6556bb99, type: 2}

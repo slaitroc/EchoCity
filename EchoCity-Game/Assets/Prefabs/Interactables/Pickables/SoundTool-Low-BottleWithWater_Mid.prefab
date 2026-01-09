@@ -135,9 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 0}
+  showUIEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
-  _description: Bottle with water can make sound.
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 33bee8d5d5780584b8cfe9b36592a1ec, type: 2}

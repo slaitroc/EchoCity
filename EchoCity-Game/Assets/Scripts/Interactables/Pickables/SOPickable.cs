@@ -21,6 +21,7 @@ namespace EchoCity
         Carillon,
         CannedFood,
         MetalBar,
+        WaterBottle,
         WalkieTalkie,
         // Tools
         Battery,

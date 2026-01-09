@@ -4379,6 +4379,72 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a2b2aefafe7a2f4bb79271e2b6b2e62, type: 3}
+--- !u!1 &192391007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 192391010}
+  - component: {fileID: 192391009}
+  - component: {fileID: 192391008}
+  m_Layer: 0
+  m_Name: Initializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &192391008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192391007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c695d890f465d8439f86b6a010789ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  activeQuests: []
+  questProgression: 
+  completeQuestMessageColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &192391009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192391007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b558e57ba9bdc0145b1004b73112bd41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
+  sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
+  questsManager: {fileID: 192391008}
+  initialTutorialQuest: {fileID: 11400000, guid: 82fd8b87a7d42f74ab0d14ef97df8006, type: 2}
+--- !u!4 &192391010
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192391007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -38.79999, y: 1.03595, z: 40.299995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &193679794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17106,6 +17172,50 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 1.9226778, z: 0.07064635}
   m_Center: {x: 1, y: 0.98333883, z: 0}
+--- !u!1 &719031166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 719031168}
+  - component: {fileID: 719031167}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: Respawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &719031167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719031166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ad2b848c6d30e4586700b3a71ce903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &719031168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719031166}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.64896214, z: -0, w: 0.76082075}
+  m_LocalPosition: {x: -60.65, y: 2.78, z: 1.81}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -80.927, z: 0}
 --- !u!4 &723416184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4503812955185784, guid: 610fb923aa6001549b857ef2559384cd, type: 3}
@@ -33976,26 +34086,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 363654660}
     m_Modifications:
-    - target: {fileID: 2897895215895834478, guid: 8dace2429cf33214ab77822de0a603e4, type: 3}
-      propertyPath: PickableData
-      value: 
-      objectReference: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
-    - target: {fileID: 2897895215895834478, guid: 8dace2429cf33214ab77822de0a603e4, type: 3}
-      propertyPath: _description
-      value: Another WalkieTalkie!
-      objectReference: {fileID: 0}
-    - target: {fileID: 5855796167742410494, guid: 8dace2429cf33214ab77822de0a603e4, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5855796167742410494, guid: 8dace2429cf33214ab77822de0a603e4, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5855796167742410494, guid: 8dace2429cf33214ab77822de0a603e4, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5855796167742410494, guid: 8dace2429cf33214ab77822de0a603e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -48.207
@@ -50912,6 +51002,8 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 192391010}
+  - {fileID: 719031168}
   - {fileID: 263801790}
   - {fileID: 708421949}
   - {fileID: 842127951}
