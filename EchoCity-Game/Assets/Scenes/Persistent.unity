@@ -1760,7 +1760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudDocument: {fileID: 2914935634092200893}
-  questsManager: {fileID: 8861211339865653366}
+  puzzleManager: {fileID: 8714278021380127983}
   completedVisibleSeconds: 5
   fadeOutSeconds: 2
 --- !u!114 &8714278021380127983
@@ -1816,7 +1816,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8861211339865653365}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c6c3b97acd46e745add336fa6be8438, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c695d890f465d8439f86b6a010789ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
@@ -1824,6 +1824,7 @@ MonoBehaviour:
   puzzleManager: {fileID: 8714278021380127983}
   activeQuests: []
   questProgression: 
+  completeQuestMessageColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &8883209508520622200
 MonoBehaviour:
   m_ObjectHideFlags: 0
