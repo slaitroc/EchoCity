@@ -22,14 +22,27 @@ namespace EchoCity
         }
     }
 
-    public class DialogParams : EventParams
+    public class NarrationParams : EventParams
     {
-        private readonly DialogData _dialogData;
-        public DialogData DialogData => _dialogData;
+        private readonly SODialogContainer _narrationContainer;
+        private readonly SceneEnum _destinationScene;
+        private readonly bool _useCached;
+        public SODialogContainer NarrationContainer => _narrationContainer;
+        public SceneEnum DestinationScene => _destinationScene;
+        public bool UseCached => _useCached;
 
-        public DialogParams(DialogData dialogData)
+        public NarrationParams(SODialogContainer dialogContainer, SceneEnum destinationScene, bool useCached = false)
         {
-            _dialogData = dialogData;
+            _useCached = useCached;
+            _narrationContainer = dialogContainer;
+            _destinationScene = destinationScene;
+        }
+
+        public NarrationParams(ToNarrationParams toNarrationParams, bool useCached = false)
+        {
+            _useCached = useCached;
+            _narrationContainer = toNarrationParams.NarrationContainer;
+            _destinationScene = toNarrationParams.DestinationScene;
         }
     }
 
@@ -44,17 +57,37 @@ namespace EchoCity
         }
     }
 
-    public class WarningParams : EventParams
+    public class PopUpMessageParams : EventParams
     {
         private readonly string _message;
         private readonly Color _color;
         public string Message => _message;
         public Color Color => _color;
 
-        public WarningParams(string message, Color color)
+        public PopUpMessageParams(string message, Color color)
         {
             _message = message;
             _color = color;
         }
     }
+
+    public class SubtitleParams : EventParams
+    {
+        private readonly string _speakerName;
+        private readonly string _subtitle;
+        private readonly float _duration;
+
+        public string SpeakerName => _speakerName;
+        public string Subtitle => _subtitle;
+        public float Duration => _duration;
+
+        public SubtitleParams(string speakerName, string subtitle, float duration)
+        {
+            _speakerName = speakerName;
+            _subtitle = subtitle;
+            _duration = duration;
+        }
+    }
+
+
 }

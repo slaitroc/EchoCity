@@ -24,6 +24,12 @@
                     <ui:Slider name="SfxSlider" lowValue="0" highValue="10" class="settings-slider" />
                 </ui:VisualElement>
             </ui:VisualElement>
+            <ui:VisualElement class="settings-slider-row">
+                <ui:Label text="Voice" class="settings-slider-label" />
+                <ui:VisualElement class="settings-slider-container">
+                    <ui:Slider name="VoiceSlider" lowValue="0" highValue="10" class="settings-slider" />
+                </ui:VisualElement>
+            </ui:VisualElement>
             <ui:Button name="BackButton" text="Back" class="button-back" />
         </ui:VisualElement>
     </ui:VisualElement>

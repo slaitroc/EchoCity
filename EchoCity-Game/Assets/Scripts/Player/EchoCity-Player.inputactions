@@ -158,6 +158,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "HideTutorial",
+                    "type": "Button",
+                    "id": "f52cfd23-b404-41cf-b4ff-970da2ece7a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -477,6 +486,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Test3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e0bda03-05a3-4f4d-a5fd-462ca6668e28",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HideTutorial",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

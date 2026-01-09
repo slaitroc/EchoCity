@@ -3,7 +3,6 @@ using System;
 
 namespace EchoCity
 {
-    [CreateAssetMenu(fileName = "VoidEventSO", menuName = "ECHO CITY/Events/VoidEventSO")]
     public abstract class SOEventVoid : SOEventBase
     {
         public event Action<IEventSender> OnEventRaised;

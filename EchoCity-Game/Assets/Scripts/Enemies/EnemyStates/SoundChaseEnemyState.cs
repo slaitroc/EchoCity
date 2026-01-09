@@ -7,13 +7,13 @@ namespace EchoCity
         private bool _isCheckingSound = false;
         private float _waitTimer = 0f;
         public SoundChaseEnemyState(IEnemyContext context, EnemyFSM fsm) : base(context, fsm) { }
-        public override EnemyStatesEnum GetEnum() => EnemyStatesEnum.SoundChase;
+        public override EnemyStateEnum GetEnum() => EnemyStateEnum.SoundChase;
         public override void Enter()
         {
             _isCheckingSound = false;
             _waitTimer = 0f;
 
-            _context.CurrentStateEnum = EnemyStatesEnum.SoundChase;
+            _context.CurrentStateEnum = EnemyStateEnum.SoundChase;
             _hitDetector.Disable();
 
             _agent.isStopped = false;
@@ -29,6 +29,8 @@ namespace EchoCity
 
             //set as target the sound which triggered the state
             _targetSound.UpdatePerceivedSound(_attractionSystem.LastPerceivedSound);
+
+            _context.HeadMark?.ShowChaseMark();
         }
 
         public override void Update()
@@ -77,10 +79,14 @@ namespace EchoCity
                 }
             }
         }
-        public override void Exit() { }
+        public override void Exit()
+        {
+            _context.HeadMark?.ClearMarks();
+        }
         public override void DealDamage(IDamageable damageable) { }
         private void StartCheckingSound()
         {
+            _context.HeadMark?.ShowCheckMark();
             _isCheckingSound = true;
             _waitTimer = _context.EnemyData.CheckSoundPauseDuration;
             _agent.isStopped = true;

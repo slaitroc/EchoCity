@@ -22,8 +22,6 @@ namespace EchoCity
 
         public GameManagerFSM(IGMContext context)
         {
-
-
             LoadingState = new LoadingGameState(context, this);
             TitleState = new TitleGameState(context, this);
             PlayingState = new PlayingGameState(context, this);
@@ -38,6 +36,7 @@ namespace EchoCity
         public void Initialize()
         {
             CurrentState = TitleState;
+            PreviousState = TitleState;
             CurrentState.Enter();
             _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.None, GameStatesEnum.Title);
         }
@@ -85,12 +84,12 @@ namespace EchoCity
             _inLoadingState = null;
         }
 
-        public void SwitchToNarration(DialogData data)
+        public void SwitchToNarration(ToNarrationParams toNarrationParams)
         {
             CurrentState.Exit();
             PreviousState = CurrentState;
             CurrentState = NarrationState;
-            NarrationState.EnterNarration(data);
+            NarrationState.EnterNarration(toNarrationParams);
         }
 
         public void SwitchToHud(HudEnum hud)

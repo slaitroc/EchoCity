@@ -74,14 +74,14 @@ namespace EchoCity
     public interface IGameState : IStateWithLoading
     {
         GameStatesEnum GetEnum();
-        void SwitchToTitleHandler();
         void InitLevelHandler(SceneEnum scene);
-        void SwitchToPlayingHandler();
-        void SwitchToPauseHandler();
-        void SwitchToDeathHandler();
-        void SwitchToWinHandler();
-        void SwitchToNarrationHandler(DialogData data);
-        void SwitchToHudHandler(HudEnum hud);
+        void SwitchToTitleHandler(GameStatesEnum fromState);
+        void SwitchToPlayingHandler(GameStatesEnum fromState);
+        void SwitchToPauseHandler(GameStatesEnum fromState);
+        void SwitchToDeathHandler(GameStatesEnum fromState);
+        void SwitchToWinHandler(GameStatesEnum fromState);
+        void SwitchToNarrationHandler(GameStatesEnum fromState, ToNarrationParams @params);
+        void SwitchToHudHandler(GameStatesEnum fromState, HudEnum hud);
     }
 
     public interface IGameStatesFSM : IFSMWithLoading
@@ -100,7 +100,7 @@ namespace EchoCity
         // <summary> The enemy who owns the FSM </summary>
         IFSMOwner Owner { get; }
         // <summary> The enemy's FSM current state </summary>
-        EnemyStatesEnum CurrentStateEnum { get; set; }
+        EnemyStateEnum CurrentStateEnum { get; set; }
         // <summary> The enemy's audio source component</summary>
         AudioSource AudioSource { get; }
         // <summary> The enemy's animator component</summary>
@@ -115,6 +115,8 @@ namespace EchoCity
         PatrolArea CurrentPatrolArea { get; set; }
         // <summary> The enemy's hit detector component</summary>
         IHitDetector HitDetector { get; }
+        // <summary> The enemy's head mark </summary>
+        HeadMarkManager HeadMark { get; }
         // <summary> The enemy's last perceived sound </summary>
         PerceivedSound LastPerceivedSound { get; }
         // <summary> The enemy's target sound </summary>
@@ -127,12 +129,14 @@ namespace EchoCity
         SOSoundEmittedEvent SoundEmittedEvent { get; }
         // <summary> enemyAttraction event </summary>
         SOAttractionInfoEvent AttractionInfoEvent { get; }
+        // <summary> enemyStateTransition event </summary>
+        SOEnemyStateTransitionEvent EnemyStateTransitionEvent { get; }
     }
 
     public interface IEnemyState : IState, IDamageDealer //TODO
     {
         //<summary> Returns the enum associated with the state </summary>
-        EnemyStatesEnum GetEnum();
+        EnemyStateEnum GetEnum();
     }
 
     //TODO
@@ -263,7 +267,7 @@ namespace EchoCity
         //<summary> Adds a quest to the quest manager </summary>
         bool CheckTags(PuzzleTagState[] tagsToCheck);
         //<summary> Sets specific puzzle tags </summary>
-        void SetTags(PuzzleTagState[] tagsToSet);
+        void SetTags(PuzzleTagState[] tagsToSet, bool checkQuests = true);
         //<summary> Increments the count of a specific puzzle tag </summary>
         void IncrementTagCount(PuzzleTagEnum tag);
     }

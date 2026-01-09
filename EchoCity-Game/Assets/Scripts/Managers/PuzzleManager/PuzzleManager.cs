@@ -5,15 +5,35 @@ namespace EchoCity
     [System.Serializable]
     public enum PuzzleTagEnum
     {
+        NONE = 0,
+        //TUTORIAL TAGS
+        Move_TutorialCompleted = 1,
+        Look_TutorialCompleted = 2,
+        Sprint_TutorialCompleted = 3,
+        Jump_TutorialCompleted = 4,
+        Interact_TutorialCompleted = 5,
+        PickUp_TutorialCompleted = 6,
+        OpenInventory_TutorialCompleted = 7,
+        EquipItem_TutorialCompleted = 8,
+        UseItem_TutorialCompleted = 9,
+        DropItem_TutorialCompleted = 10,
+        SwitchLightsOff_TutorialCompleted = 11,
+        UseLowSO_TutorialCompleted = 12,
+        UseMidSO_TutorialCompleted = 13,
+        UseHighSO_TutorialCompleted = 14,
+        EnemySoundChase_TutorialCompleted = 15,
+        TutorialCompleted = 29,
         //FIRST LEVEL TAGS
-        NONE,
-        PhonePicked,
-        WalkieTalkiePicked,
-        BunkerDoorKeyPicked,
-        CablePicked,
-        FloppyDiskPicked,
-        CardReaderIsOn,
-        LightingEnabled,
+        // Picked
+        Lighting_On = 30, // if false echo material must be used
+        Phone_Picked = 31,
+        WalkieTalkie_Picked = 32,
+        BunkerDoorKey_Picked = 33,
+        Cable_Picked = 34,
+        FloppyDisk_Picked = 35,
+        // On / Activated
+        CardReader_On = 36,
+        WearingGlasses = 37,
         MAX
     }
 
@@ -82,7 +102,7 @@ namespace EchoCity
                 puzzleTags[i] = new PuzzleTagState((PuzzleTagEnum)i, false);
 
             // Set specific tags to active at the start
-            puzzleTags[(int)PuzzleTagEnum.LightingEnabled].IsActive = true;
+            puzzleTags[(int)PuzzleTagEnum.Lighting_On].IsActive = true;
         }
 
         // if tagsToCheck is null or empty, return false
@@ -108,7 +128,7 @@ namespace EchoCity
             return allTagsActive;
         }
 
-        public void SetTags(PuzzleTagState[] tagsToSet)
+        public void SetTags(PuzzleTagState[] tagsToSet, bool checkQuests = true)
         {
             if (tagsToSet == null || tagsToSet.Length == 0) return;
             for (int i = 0; i < tagsToSet.Length; i++)
@@ -117,7 +137,8 @@ namespace EchoCity
                 puzzleTags[(int)tagsToSet[i].Tag].IsActive = tagsToSet[i].IsActive;
                 puzzleTags[(int)tagsToSet[i].Tag].Count = tagsToSet[i].Count;
             }
-            questManager?.UpdateActiveQuests(this);
+            if (checkQuests)
+                questManager?.UpdateActiveQuests(this);
         }
     }
 

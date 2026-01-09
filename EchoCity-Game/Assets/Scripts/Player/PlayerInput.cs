@@ -53,6 +53,7 @@ namespace EchoCity
                 _playerActionMap["AreaInteract"].performed += OnAreaInteract;
                 _playerActionMap["DropItem"].performed += OnDropItem;
                 _playerActionMap["UseTool"].performed += OnUseTool;
+                _playerActionMap["HideTutorial"].performed += OnHideTutorial;
 
                 // UI
                 _playerActionMap["OpenInventory"].started += OnOpenInventory;
@@ -263,6 +264,14 @@ namespace EchoCity
             }
         }
 
+        private void OnHideTutorial(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.HUD, new HudParams(HudEnum.Tutorial));
+            }
+        }
+
         #region UI
         private void OnEnterPause(InputAction.CallbackContext context)
         {
@@ -315,7 +324,7 @@ namespace EchoCity
             //WARNING TEST
             if (context.performed)
             {
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("This is a test warning message!", Color.red));
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("This is a test warning message!", Color.red));
             }
         }
 
@@ -337,7 +346,14 @@ namespace EchoCity
             }
         }
 
-        private void OnTest4(InputAction.CallbackContext context) { }
+        private void OnTest4(InputAction.CallbackContext context)
+        {
+            //Subtitles TEST
+            if (context.performed)
+            {
+                showUIEvent?.RaiseEvent(this, ShowableUIEnum.Subtitles, new SubtitleParams("NPC Name", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 3f));
+            }
+        }
         #endregion
 
         private void PlayerInputHandler(IEventSender sender, InputEnum input, bool activate)

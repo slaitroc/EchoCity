@@ -10,9 +10,4 @@ namespace EchoCity
             base.RaiseEvent(sender, level, @params);
         }
     }
-
-    public class ToLevelParams : EventParams
-    {
-        //level difficulty
-    }
 }

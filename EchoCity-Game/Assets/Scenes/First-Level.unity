@@ -9432,6 +9432,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5595003298818426895}
     m_Modifications:
+    - target: {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+      propertyPath: showUIEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+    - target: {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+      propertyPath: PickableData
+      value: 
+      objectReference: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
+    - target: {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     - target: {fileID: 5855796167742410494, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.342
@@ -16373,6 +16389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
@@ -20128,6 +20145,14 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8193725294360524654, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 8193725294360524654, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -44475,6 +44500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 0}
+  interactionEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
@@ -44590,6 +44616,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5595003298818426895}
     m_Modifications:
+    - target: {fileID: 1305504470667882960, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
+      propertyPath: PickableData
+      value: 
+      objectReference: {fileID: 11400000, guid: e92a8ea5fa1a3476fba2644de9639cee, type: 2}
+    - target: {fileID: 1305504470667882960, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 1305504470667882960, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     - target: {fileID: 2787324953342941381, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
       propertyPath: m_Name
       value: SoundTool-Mid-Screwdriver_High
@@ -45272,6 +45310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  interactionEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
@@ -58745,6 +58784,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 440632, guid: 3fe1432999609684887983086f607637, type: 3}
   m_PrefabInstance: {fileID: 1769895992}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1772865352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1772865354}
+  - component: {fileID: 1772865353}
+  m_Layer: 0
+  m_Name: Initializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1772865353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772865352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b558e57ba9bdc0145b1004b73112bd41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
+  sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
+  initialTutorialQuest: {fileID: 0}
+--- !u!4 &1772865354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772865352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -38.79999, y: 1.03595, z: 40.299995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1773528576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62079,6 +62165,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300712160690107500, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 2300712160690107500, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     - target: {fileID: 3965556255802317529, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: m_Size.y
       value: 1.011677
@@ -72583,7 +72677,7 @@ MonoBehaviour:
   - {fileID: 134326033}
   - {fileID: 750047067}
   - {fileID: 1668477301}
-  wearEcholocatorEvent: {fileID: 11400000, guid: 0b9e4a9f6f91cd5498833b5e61a0d38c, type: 2}
+  setMaterialEvent: {fileID: 0}
 --- !u!4 &389656017341510262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5202283359270022541, guid: 6e3cdc8e14d9ea54791e69d5e7e8b7c3, type: 3}
@@ -72605,6 +72699,14 @@ PrefabInstance:
       propertyPath: puzzleManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6251220501324255516, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 6251220501324255516, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
+      propertyPath: newAudioSphereEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     - target: {fileID: 6530822660333683186, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.618094
@@ -72652,6 +72754,10 @@ PrefabInstance:
     - target: {fileID: 8329093095538863462, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8329093095538863462, guid: e2ef52da2a70fb646be2683165a885ad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -73310,6 +73416,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+    - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
       propertyPath: switchLinkedObject
       value: 
       objectReference: {fileID: 235136907}
@@ -73317,6 +73427,22 @@ PrefabInstance:
       propertyPath: newAudioSphereEvent
       value: 
       objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+    - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: checkTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: checkTags.Array.data[1]._tag
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751878935439191137, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
+      propertyPath: checkTags.Array.data[1]._isActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -73522,26 +73648,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Interactable-CardReader
       objectReference: {fileID: 0}
-    - target: {fileID: 6186665633294773876, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: showUIEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: puzzleManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: materialSetEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
-    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: newAudioSphereEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -73691,6 +73797,7 @@ SphereCollider:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1772865354}
   - {fileID: 1027140486}
   - {fileID: 335522809}
   - {fileID: 1154493047}

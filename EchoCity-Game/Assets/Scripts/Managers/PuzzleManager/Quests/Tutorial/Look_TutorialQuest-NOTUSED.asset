@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
+  m_Name: Look_TutorialQuest-NOTUSED
+  m_EditorClassIdentifier: 
+  questType: 0
+  quest: 1
+  tagsToCheck:
+  - _tag: 2
+    _isActive: 1
+    _count: 0
+  countToComplete: 3
+  subscribeToEvents:
+  - {fileID: 11400000, guid: eb10e54283279d1488d2959a694bad1c, type: 2}
+  nextQuests:
+  - {fileID: 11400000, guid: 76befa16118c2884591b4bad6a2e1d1a, type: 2}
+  description: Move the MOUSE to look around
+  questCompletedText: Pay attention to your surroundings
+  scriptContainer: {fileID: 11400000, guid: 88cd5fc4b276a42c1bc0fedc603631e6, type: 2}

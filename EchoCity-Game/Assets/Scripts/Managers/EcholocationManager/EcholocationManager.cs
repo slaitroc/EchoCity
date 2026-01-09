@@ -10,9 +10,17 @@ namespace EchoCity
         GridPoints = 2
     }
 
-    public class EcholocationManager : MonoBehaviour
+    public class EcholocationManager : MonoBehaviour, IEventSender
     {
         private const int MAX_AUDIO_SPHERES = 64;
+
+        [Header("Invoking Events")]
+        [SerializeField] private SOEchoMaterialUpdated echoMaterialUpdatedEvent;
+
+        string IEventSender.SenderName => gameObject.name;
+        int IEventSender.SenderID => GetInstanceID();
+        bool IEventSender.IsManager => true;
+        EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Echolocation };
 
         [Header("Observed Events")]
         [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
@@ -183,11 +191,13 @@ namespace EchoCity
             {
                 MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
                 Log.DLazy(() => "Toggle: Switched to Echolocation Material", this);
+                echoMaterialUpdatedEvent?.RaiseEvent(this, true);
             }
             else
             {
                 MaterialSwitcher.RestoreOriginalMaterials();
                 Log.DLazy(() => "Toggle: Restored Original Materials", this);
+                echoMaterialUpdatedEvent?.RaiseEvent(this, false);
             }
 
         }
@@ -203,6 +213,7 @@ namespace EchoCity
                         MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
                         Log.DLazy(() => "Switched to Echolocation Material", this);
                         useEcholocationMaterial = true;
+                        echoMaterialUpdatedEvent?.RaiseEvent(this, true);
                     }
                     break;
                 case EchoMaterialCodeEnum.Inactive:
@@ -212,6 +223,7 @@ namespace EchoCity
                         MaterialSwitcher.RestoreOriginalMaterials();
                         Log.DLazy(() => "Restored Original Materials", this);
                         useEcholocationMaterial = false;
+                        echoMaterialUpdatedEvent?.RaiseEvent(this, false);
                     }
                     break;
                 case EchoMaterialCodeEnum.ReApply:

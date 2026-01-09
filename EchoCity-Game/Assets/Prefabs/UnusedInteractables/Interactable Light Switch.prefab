@@ -227,7 +227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8044621206000757812}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.3941994, y: 0.38, z: -6.373}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -270,14 +270,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6674996b07d374e4abd5f451abdbc1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
-  - _tag: 7
+  - _tag: 10
     _isActive: 1
     _count: 0
   setTags: []
-  _description: 
+  _interactionDescription: turn on / off the lights
+  _InteractionSuccessMessage: lights toggled
+  _InteractionFailMessage: it is not the right moment to interact
+  interactionContainer: {fileID: 0}
   hasFixDetector: 0
   detector: {fileID: 0}
   switchLinkedObject: {fileID: 0}
@@ -285,8 +290,8 @@ MonoBehaviour:
   switchOffSound: {fileID: 11400000, guid: 84ef589eb69da9049864b213de88a162, type: 2}
   wallPanelSwitchAnimator: {fileID: 6301850958763504792}
   _isSwitchedOn: 1
-  triggeredQuest:
-  - {fileID: 11400000, guid: 334427379713f184fb35298c33878cfd, type: 2}
+  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
+  triggeredQuest: []
 --- !u!65 &4596036710810008860
 BoxCollider:
   m_ObjectHideFlags: 0
