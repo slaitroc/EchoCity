@@ -152,68 +152,6 @@ namespace EchoCity
             _narrationText.RemoveFromClassList("visible");
         }
 
-        private void AdvanceInstant()
-        {
-            if (_isFading)
-            {
-                _narrationText.UnregisterCallback<TransitionEndEvent>(OnFadeOutEnded);
-                _isFading = false;
-                _queuedNext = 0;
-            }
-
-            _index++;
-
-            if (_index >= _lines.Length)
-            {
-                Finish();
-                return;
-            }
-
-            RenderCurrentLine();
-
-            if (_narrationText != null && !_narrationText.ClassListContains("visible"))
-                _narrationText.AddToClassList("visible");
-        }
-
-
-        private void StartFadeToNextLine()
-        {
-            _isFading = true;
-
-            _narrationText.RegisterCallback<TransitionEndEvent>(OnFadeOutEnded);
-            _narrationText.RemoveFromClassList("visible");
-        }
-
-        private void OnFadeOutEnded(TransitionEndEvent evt)
-        {
-            if (!evt.stylePropertyNames.Contains("opacity")) return;
-
-            _narrationText.UnregisterCallback<TransitionEndEvent>(OnFadeOutEnded);
-            _index++;
-
-            if (_index >= _lines.Length)
-            {
-                Finish();
-                return;
-            }
-
-            RenderCurrentLine();
-
-            _narrationText.schedule.Execute(() =>
-            {
-                _narrationText.AddToClassList("visible");
-
-                _isFading = false;
-
-                if (_queuedNext > 0 && !_isClosed)
-                {
-                    _queuedNext--;
-                    NextDialog();
-                }
-            }).ExecuteLater(1);
-        }
-
-
         private void Finish()
         {
             if (_isClosed) return;
@@ -221,6 +159,7 @@ namespace EchoCity
             _isClosed = true;
             Hide();
 
+            uiManager.StopNarration();
             uiManager.SwitchToInitLevel(_destinationScene);
         }
 
