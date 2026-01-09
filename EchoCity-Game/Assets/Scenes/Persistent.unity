@@ -331,6 +331,7 @@ MonoBehaviour:
   setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
+  puzzleManager: {fileID: 8714278021380127983}
   scenesNames:
   - None
   - Persistent
@@ -1600,12 +1601,12 @@ MonoBehaviour:
   logEquippedItemChanged: 0
   gameManagerStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
   logGameManagerStateTransition: 0
-  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
   logInteraction: 0
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
   logInventoryChanged: 0
   itemUsedEvent: {fileID: 11400000, guid: 4fe41dcdfe7c3774eb6d383640386ad6, type: 2}
-  logItemUsed: 1
+  logItemUsed: 0
   levelActionEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
   logLevelAction: 0
   playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
@@ -1775,7 +1776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8460cd2814f456b4287f66d9f4528181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questManager: {fileID: 0}
+  questsManager: {fileID: 0}
   puzzleTags: []
 --- !u!114 &8734189390555504868
 MonoBehaviour:

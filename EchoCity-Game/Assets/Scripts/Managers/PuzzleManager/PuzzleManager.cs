@@ -71,7 +71,6 @@ namespace EchoCity
         void Awake()
         {
             puzzleTags = new PuzzleTagState[(int)PuzzleTagEnum.MAX];
-            InitializeTags();
             Debug.Assert(puzzleTags != null && puzzleTags.Length > 0, "Active puzzle tags array is null or empty");
         }
 
@@ -141,8 +140,16 @@ namespace EchoCity
                 questsManager?.UpdateActiveQuests(this);
         }
 
+        public void ClearQuestsManager()
+        {
+            if (this.questsManager != null)
+                this.questsManager.UnsubscribeAll();
+            this.questsManager = null;
+        }
         public void SetQuestsManager(QuestsManager questsManager)
         {
+            ClearQuestsManager();
+            InitializeTags();
             questsManager.SetPuzzleManager(this);
             this.questsManager = questsManager;
         }

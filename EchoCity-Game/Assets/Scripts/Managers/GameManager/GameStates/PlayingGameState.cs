@@ -21,6 +21,6 @@ namespace EchoCity
         public override void SwitchToNarrationHandler(GameStatesEnum previousState, ToNarrationParams @params) => _fsm.SwitchToNarration(@params);
         public override void SwitchToHudHandler(GameStatesEnum previousState, HudEnum hud) => _fsm.SwitchToHud(hud);
         public override void EnterLoading() { }
-        public override void ExitLoading() { }
+        public override void ExitLoading() { this.Enter(); }
     }
 }

@@ -69,6 +69,16 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
                     ((SOInventoryChangedEvent)eventBase).OnEventRaised += TestQuestHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.TestOne] = UnsubscribeTestOneHandler;
+        }
+
+        private void UnsubscribeTestOneHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= TestQuestHandler;
+            }
         }
 
         private void TestQuestHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
@@ -86,11 +96,7 @@ namespace EchoCity
         private void OnTestOneCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= TestQuestHandler;
-            }
+            UnsubscribeTestOneHandler(quest);
         }
         #endregion
 
@@ -102,6 +108,16 @@ namespace EchoCity
             {
                 if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
                     ((SOInventoryChangedEvent)eventBase).OnEventRaised += TestTwoQuestHandler;
+            }
+            _onUnsubscribeQuest[(int)QuestsEnum.TestTwo] = UnsubscribeTestTwoHandler;
+        }
+
+        private void UnsubscribeTestTwoHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= TestTwoQuestHandler;
             }
         }
 
@@ -119,11 +135,7 @@ namespace EchoCity
         private void OnTestTwoCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= TestTwoQuestHandler;
-            }
+            UnsubscribeTestTwoHandler(quest);
         }
         #endregion
 
@@ -136,7 +148,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
                     ((SOPlayerMovementEvent)eventBase).OnEventRaised += MoveTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.Move_Tutorial] = UnsubscribeMoveTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeMoveTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
+                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= MoveTutorialHandler;
+            }
         }
 
         private void MoveTutorialHandler(IEventSender sender, MovementCodeEnum code)
@@ -155,11 +177,7 @@ namespace EchoCity
         private void OnMove_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
-                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= MoveTutorialHandler;
-            }
+            UnsubscribeMoveTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -173,6 +191,16 @@ namespace EchoCity
             {
                 if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
                     ((SOPlayerMovementEvent)eventBase).OnEventRaised += LookTutorialHandler;
+            }
+            _onUnsubscribeQuest[(int)QuestsEnum.Look_Tutorial] = UnsubscribeLookTutorialHandler;
+        }
+
+        private void UnsubscribeLookTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
+                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= LookTutorialHandler;
             }
         }
 
@@ -191,11 +219,7 @@ namespace EchoCity
         private void OnLook_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
-                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= LookTutorialHandler;
-            }
+            UnsubscribeLookTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -210,7 +234,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
                     ((SOPlayerMovementEvent)eventBase).OnEventRaised += SprintTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.Sprint_Tutorial] = UnsubscribeSprintTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeSprintTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
+                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= SprintTutorialHandler;
+            }
         }
 
         private void SprintTutorialHandler(IEventSender sender, MovementCodeEnum code)
@@ -229,11 +263,7 @@ namespace EchoCity
         private void OnSprint_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
-                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= SprintTutorialHandler;
-            }
+            UnsubscribeSprintTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -248,7 +278,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
                     ((SOPlayerMovementEvent)eventBase).OnEventRaised += JumpTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.Jump_Tutorial] = UnsubscribeJumpTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeJumpTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
+                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= JumpTutorialHandler;
+            }
         }
 
         private void JumpTutorialHandler(IEventSender sender, MovementCodeEnum code)
@@ -267,11 +307,7 @@ namespace EchoCity
         private void OnJump_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
-                    ((SOPlayerMovementEvent)eventBase).OnEventRaised -= JumpTutorialHandler;
-            }
+            UnsubscribeJumpTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -286,7 +322,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
                     ((SOInteractionEvent)eventBase).OnEventRaised += InteractTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.Interact_Tutorial] = UnsubscribeInteractTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeInteractTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.Interaction)
+                    ((SOInteractionEvent)eventBase).OnEventRaised -= InteractTutorialHandler;
+            }
         }
 
         private void InteractTutorialHandler(IEventSender sender, InteractionEnum code)
@@ -305,11 +351,7 @@ namespace EchoCity
         private void OnInteract_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.Interaction)
-                    ((SOInteractionEvent)eventBase).OnEventRaised -= InteractTutorialHandler;
-            }
+            UnsubscribeInteractTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -324,7 +366,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
                     ((SOInteractionEvent)eventBase).OnEventRaised += PickUpTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.PickUp_Tutorial] = UnsubscribePickUpTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribePickUpTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.Interaction)
+                    ((SOInteractionEvent)eventBase).OnEventRaised -= PickUpTutorialHandler;
+            }
         }
 
         private void PickUpTutorialHandler(IEventSender sender, InteractionEnum code)
@@ -343,11 +395,7 @@ namespace EchoCity
         private void OnPickUp_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.Interaction)
-                    ((SOInteractionEvent)eventBase).OnEventRaised -= PickUpTutorialHandler;
-            }
+            UnsubscribePickUpTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -363,7 +411,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ShowUI)
                     ((SOShowUIEvent)eventBase).OnEventRaised += OpenInventoryTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.OpenInventory_Tutorial] = UnsubscribeOpenInventoryTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeOpenInventoryTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ShowUI)
+                    ((SOShowUIEvent)eventBase).OnEventRaised -= OpenInventoryTutorialHandler;
+            }
         }
 
         private void OpenInventoryTutorialHandler(IEventSender sender, ShowableUIEnum uiElement, EventParams eventParams)
@@ -384,11 +442,7 @@ namespace EchoCity
         private void OnOpenInventory_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.ShowUI)
-                    ((SOShowUIEvent)eventBase).OnEventRaised -= OpenInventoryTutorialHandler;
-            }
+            UnsubscribeOpenInventoryTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -403,7 +457,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.EquippedItemChanged)
                     ((SOEquippedItemChangedEvent)eventBase).OnEventRaised += EquipItemTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.EquipItem_Tutorial] = UnsubscribeEquipItemTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeEquipItemTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.EquippedItemChanged)
+                    ((SOEquippedItemChangedEvent)eventBase).OnEventRaised -= EquipItemTutorialHandler;
+            }
         }
 
         private void EquipItemTutorialHandler(IEventSender sender, PickablesEnum equippedItem)
@@ -422,11 +486,7 @@ namespace EchoCity
         private void OnEquipItem_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.EquippedItemChanged)
-                    ((SOEquippedItemChangedEvent)eventBase).OnEventRaised -= EquipItemTutorialHandler;
-            }
+            UnsubscribeEquipItemTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -441,7 +501,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
                     ((SOItemUsedEvent)eventBase).OnEventRaised += UseItemTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.UseItem_Tutorial] = UnsubscribeUseItemTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeUseItemTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseItemTutorialHandler;
+            }
         }
 
         private void UseItemTutorialHandler(IEventSender sender, SOPickable toolUsed)
@@ -457,11 +527,7 @@ namespace EchoCity
         private void OnUseItem_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
-                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseItemTutorialHandler;
-            }
+            UnsubscribeUseItemTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -476,7 +542,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
                     ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropItemTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.DropItem_Tutorial] = UnsubscribeDropItemTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeDropItemTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropItemTutorialHandler;
+            }
         }
 
         private void DropItemTutorialHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
@@ -495,11 +571,7 @@ namespace EchoCity
         private void OnDropItem_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropItemTutorialHandler;
-            }
+            UnsubscribeDropItemTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -514,7 +586,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.EchoMaterialUpdated)
                     ((SOEchoMaterialUpdated)eventBase).OnEventRaised += SwitchLightsOffTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.SwitchLightsOff_Tutorial] = UnsubscribeSwitchLightsOffTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeSwitchLightsOffTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.EchoMaterialUpdated)
+                    ((SOEchoMaterialUpdated)eventBase).OnEventRaised -= SwitchLightsOffTutorialHandler;
+            }
         }
 
         private void SwitchLightsOffTutorialHandler(IEventSender sender, bool active)
@@ -533,11 +615,7 @@ namespace EchoCity
         private void OnSwitchLightsOff_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.EchoMaterialUpdated)
-                    ((SOEchoMaterialUpdated)eventBase).OnEventRaised -= SwitchLightsOffTutorialHandler;
-            }
+            UnsubscribeSwitchLightsOffTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -553,7 +631,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
                     ((SOItemUsedEvent)eventBase).OnEventRaised += UseLowSOTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.UseLowSO_Tutorial] = UnsubscribeUseLowSOTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeUseLowSOTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseLowSOTutorialHandler;
+            }
         }
 
         private void UseLowSOTutorialHandler(IEventSender sender, SOPickable toolUsed)
@@ -571,11 +659,7 @@ namespace EchoCity
         private void OnUseLowSO_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
-                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseLowSOTutorialHandler;
-            }
+            UnsubscribeUseLowSOTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -590,7 +674,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
                     ((SOItemUsedEvent)eventBase).OnEventRaised += UseMidSOTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.UseMidSO_Tutorial] = UnsubscribeUseMidSOTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeUseMidSOTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseMidSOTutorialHandler;
+            }
         }
 
         private void UseMidSOTutorialHandler(IEventSender sender, SOPickable toolUsed)
@@ -608,11 +702,7 @@ namespace EchoCity
         private void OnUseMidSO_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
-                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseMidSOTutorialHandler;
-            }
+            UnsubscribeUseMidSOTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -627,7 +717,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
                     ((SOItemUsedEvent)eventBase).OnEventRaised += UseHighSOTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.UseHighSO_Tutorial] = UnsubscribeUseHighSOTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeUseHighSOTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
+                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseHighSOTutorialHandler;
+            }
         }
 
         private void UseHighSOTutorialHandler(IEventSender sender, SOPickable toolUsed)
@@ -645,11 +745,7 @@ namespace EchoCity
         private void OnUseHighSO_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
-                    ((SOItemUsedEvent)eventBase).OnEventRaised -= UseHighSOTutorialHandler;
-            }
+            UnsubscribeUseHighSOTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
@@ -664,7 +760,17 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
                     ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised += EnemySoundChaseTutorialHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = UnsubscribeEnemySoundChaseTutorialHandler;
             PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeEnemySoundChaseTutorialHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
+                    ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised -= EnemySoundChaseTutorialHandler;
+            }
         }
 
         private void EnemySoundChaseTutorialHandler(IEventSender sender, EnemyStateEnum newState, EnemyStateEnum previousState, Transform enemyTransform)
@@ -683,11 +789,7 @@ namespace EchoCity
         private void OnEnemySoundChase_TutorialCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
-                    ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised -= EnemySoundChaseTutorialHandler;
-            }
+            UnsubscribeEnemySoundChaseTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }

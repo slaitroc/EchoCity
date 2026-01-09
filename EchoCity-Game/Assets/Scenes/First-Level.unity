@@ -16388,12 +16388,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e78cc734cfab946a4391eaba1e0c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 0}
   interactionEvent: {fileID: 0}
+  showUIEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
-  _description: 
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   PickableData: {fileID: 0}
   showUIEvent: {fileID: 0}
   dialogContainer: {fileID: 11400000, guid: a9c25fc8f979844ea9f4dbd9d8d9e889, type: 2}
@@ -25632,22 +25636,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 845077175}
     m_Modifications:
-    - target: {fileID: 64127203487632410, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64319818633713098, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64412257994539516, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64854901349514842, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1592942470777406, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
       propertyPath: m_Name
       value: Interactable-CordBoard-Empty_Mid
@@ -25709,6 +25697,22 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 64978691957319536, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64127203487632410, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64319818633713098, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64412257994539516, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64854901349514842, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -44499,14 +44503,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e476a11bc7546d84490046e910a39b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 0}
+  soundEmittedEvent: {fileID: 0}
   interactionEvent: {fileID: 0}
+  showUIEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
-  _description: 
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   showUIEvent: {fileID: 0}
-  switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
+  interactionEvent: {fileID: 0}
+  switchToGameStateEvent: {fileID: 0}
   dialogContainerSuccess: {fileID: 11400000, guid: 497d0dcff38e244fbbc4da4c7828f067, type: 2}
   dialogContainerFail: {fileID: 11400000, guid: b564213884a29483a8dc86a9bfe98fad, type: 2}
 --- !u!1001 &1382945424
@@ -45309,12 +45318,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 0}
   interactionEvent: {fileID: 0}
+  showUIEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
-  _description: 
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   PickableData: {fileID: 0}
 --- !u!114 &1400720590
 MonoBehaviour:
@@ -58794,6 +58807,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1772865354}
   - component: {fileID: 1772865353}
+  - component: {fileID: 1772865355}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -58815,7 +58829,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
-  initialTutorialQuest: {fileID: 0}
+  questsManager: {fileID: 1772865355}
+  initialQuest: {fileID: 11400000, guid: 82fd8b87a7d42f74ab0d14ef97df8006, type: 2}
 --- !u!4 &1772865354
 Transform:
   m_ObjectHideFlags: 0
@@ -58831,6 +58846,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1772865355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772865352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6c3b97acd46e745add336fa6be8438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  activeQuests: []
+  questProgression: 
+  completeQuestMessageColor: {r: 0, g: 1, b: 0, a: 1}
+  startQuest: {fileID: 0}
+  finalQuest: {fileID: 0}
 --- !u!1001 &1773528576
 PrefabInstance:
   m_ObjectHideFlags: 0

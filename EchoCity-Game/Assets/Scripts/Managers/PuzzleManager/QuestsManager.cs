@@ -5,6 +5,7 @@ public enum QuestStateEnum
 {
     Inactive = -1,
     Completed = -100,
+    ResetQuestsManager = -999,
 }
 
 namespace EchoCity
@@ -25,6 +26,7 @@ namespace EchoCity
         [SerializeField] protected int[] questProgression;
         protected Action<SOQuest>[] _onAddQuest;
         protected Action<SOQuest>[] _onCompleteQuest;
+        protected Action<SOQuest>[] _onUnsubscribeQuest;
 
         [SerializeField] protected Color completeQuestMessageColor = Color.green;
 
@@ -40,6 +42,7 @@ namespace EchoCity
                 questProgression[i] = (int)QuestStateEnum.Inactive;
             _onAddQuest = new Action<SOQuest>[(int)QuestsEnum.MAX];
             _onCompleteQuest = new Action<SOQuest>[(int)QuestsEnum.MAX];
+            _onUnsubscribeQuest = new Action<SOQuest>[(int)QuestsEnum.MAX];
         }
 
         public void SetPuzzleManager(IPuzzleManager puzzleManager)
@@ -112,6 +115,17 @@ namespace EchoCity
             if (string.IsNullOrEmpty(quest.QuestCompletedText))
                 return;
             showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(quest.QuestCompletedText, completeQuestMessageColor));
+        }
+
+        public void UnsubscribeAll()
+        {
+            for (int i = 0; i < _onUnsubscribeQuest.Length; i++)
+                _onUnsubscribeQuest[i]?.Invoke(activeQuests[i]);
+            for (int i = 0; i < _onAddQuest.Length; i++)
+                _onAddQuest[i] = null;
+            for (int i = 0; i < _onCompleteQuest.Length; i++)
+                _onCompleteQuest[i] = null;
+            questsUpdatedEvent.RaiseEvent(this, 0, (int)QuestStateEnum.ResetQuestsManager);
         }
     }
 }

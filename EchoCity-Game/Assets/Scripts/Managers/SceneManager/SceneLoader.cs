@@ -22,6 +22,7 @@ namespace EchoCity
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
 
         [Header("Settings")]
+        [SerializeField] private PuzzleManager puzzleManager;
         [SerializeField]
         private string[] scenesNames ={
         "None",
@@ -87,15 +88,18 @@ namespace EchoCity
             switch (code)
             {
                 case LevelActionCodeEnum.LoadActiveLevel:
+                    puzzleManager?.ClearQuestsManager();
                     StartCoroutine(LoadLevelAdditiveWithLoading(scene));
                     break;
                 case LevelActionCodeEnum.LoadLevel:
+                    puzzleManager?.ClearQuestsManager();
                     StartCoroutine(LoadSceneAdditiveNoActiveWithLoading(scene));
                     break;
                 case LevelActionCodeEnum.UnloadLevel:
                     StartCoroutine(UnloadCurrentLevelWithLoading());
                     break;
                 case LevelActionCodeEnum.ReloadLevel:
+                    puzzleManager?.ClearQuestsManager();
                     StartCoroutine(ReloadCurrentLevelWithLoading());
                     break;
                 default:

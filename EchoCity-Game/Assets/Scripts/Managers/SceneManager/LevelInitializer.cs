@@ -17,7 +17,7 @@ namespace EchoCity
 
         [Header("Initialization Data")]
         [SerializeField] private QuestsManager questsManager;
-        [SerializeField] private SOQuest initialTutorialQuest;
+        [SerializeField] private SOQuest initialQuest;
 
         protected PuzzleManager puzzleManager;
 
@@ -36,10 +36,10 @@ namespace EchoCity
             setPlayerOnSpawnEvent.RaiseEvent(this);
             // add respawn quest to puzzle manager
             puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
-            if (puzzleManager != null && initialTutorialQuest != null)
+            if (puzzleManager != null && initialQuest != null)
             {
                 puzzleManager.SetQuestsManager(questsManager);
-                puzzleManager.AddQuest(initialTutorialQuest);
+                puzzleManager.AddQuest(initialQuest);
                 Log.DLazy(() => "Respawn quest added to PuzzleManager", this);
             }
             InitializeLevel();
