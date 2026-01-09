@@ -229,7 +229,7 @@ namespace EchoCity
                     HideAllElements();
                     _narration.SetActive(true);
                     narrationController.StartNarration(narrationParams);
-                    EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender, eventTime: 1f);
+                    if (!narrationParams.UseCached) EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender, eventTime: 1f);
                     break;
                 case ShowableUIEnum.Subtitles:
                     var subtitleParams = eventParams as SubtitleParams;
