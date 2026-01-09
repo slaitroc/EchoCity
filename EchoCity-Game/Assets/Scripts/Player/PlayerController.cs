@@ -86,8 +86,10 @@ namespace EchoCity
         [Header("Audio")]
         private AudioSource _playerAudioSource;
         private VoiceAudioSource _playerLinesAudioSource;
+        private VoiceAudioSource _playerSecondaryLinesAudioSource;
         public AudioSource PlayerAudioSource => _playerAudioSource;
         public VoiceAudioSource PlayerVoiceAudioSource => _playerLinesAudioSource;
+        public VoiceAudioSource PlayerSecondaryVoiceAudioSource => _playerSecondaryLinesAudioSource;
 
         public bool Compute { get => _attractionCompute; set => _attractionCompute = value; }
         public float CurrentAttraction => attractionTarget != null ? attractionTarget.AttractionData.CurrentAttraction : _A;
@@ -128,10 +130,15 @@ namespace EchoCity
             _playerAudioSource = playerAudio.AddComponent<AudioSource>();
             _playerAudioSource.spatialBlend = 1.0f; // 3D
 
-            var linesAudio = new GameObject("LinesAudioSource");
-            linesAudio.transform.SetParent(transform);
-            linesAudio.transform.localPosition = Vector3.zero;
-            _playerLinesAudioSource = linesAudio.AddComponent<VoiceAudioSource>();
+            var linesMainAudio = new GameObject("LinesMainAudioSource");
+            linesMainAudio.transform.SetParent(transform);
+            linesMainAudio.transform.localPosition = Vector3.zero;
+            _playerLinesAudioSource = linesMainAudio.AddComponent<VoiceAudioSource>();
+
+            var linesSecondaryAudio = new GameObject("LinesSecondaryAudioSource");
+            linesSecondaryAudio.transform.SetParent(transform);
+            linesSecondaryAudio.transform.localPosition = Vector3.zero;
+            _playerSecondaryLinesAudioSource = linesSecondaryAudio.AddComponent<VoiceAudioSource>();
         }
 
         void Update()

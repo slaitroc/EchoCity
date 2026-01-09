@@ -110,6 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 442881692552996386}
   - component: {fileID: 7503454576600777820}
+  - component: {fileID: 6779783619760420728}
   - component: {fileID: 2300712160690107500}
   m_Layer: 0
   m_Name: SoundTool-High-Carillon_Mid
@@ -126,7 +127,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2247218394706471733}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99288815, z: -0, w: 0.119051054}
+  m_LocalRotation: {x: 0, y: 0.9928878, z: 0, w: 0.119053885}
   m_LocalPosition: {x: 0.453, y: 0.501, z: -0.516}
   m_LocalScale: {x: 0.26, y: 0.26, z: 0.26}
   m_ConstrainProportionsScale: 1
@@ -160,6 +161,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6779783619760420728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247218394706471733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!114 &2300712160690107500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,8 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
@@ -181,6 +196,8 @@ MonoBehaviour:
     _count: 0
   setTags: []
   _description: Wow, a beautiful carillon
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
   PickableData: {fileID: 11400000, guid: ed686a97e9a2ee04c956828f8a62fbb2, type: 2}
 --- !u!1 &3101622509070129195
 GameObject:

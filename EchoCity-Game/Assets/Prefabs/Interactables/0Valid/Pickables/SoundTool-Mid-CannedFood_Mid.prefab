@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217014582648217325}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071099, z: -0, w: -0.70710367}
+  m_LocalRotation: {x: -0, y: -0.70711315, z: 0, w: -0.70710045}
   m_LocalPosition: {x: 47.98401, y: 0.308122, z: 5.609075}
-  m_LocalScale: {x: 0.78, y: 0.78, z: 0.78}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -269.999, z: 0}
 --- !u!33 &7539660182771694578
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -104,7 +104,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
@@ -146,4 +147,6 @@ MonoBehaviour:
     _count: 0
   setTags: []
   _description: Just a can...
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
   PickableData: {fileID: 11400000, guid: b0d27fab71d05e449919984589991233, type: 2}

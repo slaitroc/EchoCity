@@ -47,13 +47,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
-  - _tag: 0
-    _isActive: 0
+  - _tag: 29
+    _isActive: 1
     _count: 0
   setTags: []
-  _description: Exit Tutorial
+  _interactionDescription: Exit
+  _InteractionSuccessMessage: Bye Bue
+  _InteractionFailMessage: You need to complete the tutorial
+  interactionContainer: {fileID: 11400000, guid: ae4201d7f7674014fbbf9c8815897d11, type: 2}
   linkedInteractable: {fileID: 7420656736931412561}
 --- !u!65 &8877476444992295686
 BoxCollider:
@@ -239,13 +243,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
-  - _tag: 29
+  - _tag: 0
     _isActive: 1
     _count: 0
   setTags: []
-  _description: Exit Tutorial
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   hasFixDetector: 1
   detector: {fileID: 2961428877365973352}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}

@@ -183,49 +183,101 @@ namespace EchoCity
         //## IN GAME VOICE LINES MANAGEMENT  ##
         //#####################################
 
-        private static Queue<DialogLine> _voicePlayQueue = new();
+        private static Queue<DialogLine> _voiceMainPlayQueue = new();
+        private static DialogLine _currentMainVoiceLine;
+        private static Queue<DialogLine> _voiceSecondaryPlayQueue = new();
         private static SOShowUIEvent _showUIEvent;
-        private static Coroutine _voiceCoroutine;
-
-        public static void AddInVoicePlayQueue(SODialogContainer container, SOShowUIEvent @event, int lineIndex, bool @override = false)
+        private static Coroutine _voiceMainCoroutine;
+        private static Coroutine _voiceSecondaryCoroutine;
+        private static bool _paused = false;
+        private static bool _stopMainVoice = false;
+        private static bool AddInVoiceQueueChecks(SODialogContainer container, SOShowUIEvent @event, int lineIndex)
         {
             if (!container || !@event || container.DialogLines.Length == 0)
-                return;
+                return false;
             if (playerController == null)
                 playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
             if (_showUIEvent == null)
                 _showUIEvent = @event;
             if (lineIndex < 0 || lineIndex >= container.DialogLines.Length)
-                return;
+                return false;
             if (container.DialogLines[lineIndex].AudioClip == null)
+                return false;
+            return true;
+        }
+        public static void AddInVoicePlayQueue(SODialogContainer container, SOShowUIEvent @event, int lineIndex, bool @override = false)
+        {
+            if (!AddInVoiceQueueChecks(container, @event, lineIndex))
                 return;
-            if (@override && _voiceCoroutine != null)
+            if (@override && _voiceMainCoroutine != null)
             {
-                playerController.StopCoroutine(_voiceCoroutine);
-                _voiceCoroutine = null;
+                playerController.StopCoroutine(_voiceMainCoroutine);
                 playerController.PlayerVoiceAudioSource.AudioSource.Stop();
-                _voicePlayQueue.Clear();
+                _voiceMainCoroutine = null;
+                _voiceMainPlayQueue.Clear();
             }
-            if (_voiceCoroutine == null)
+            if (_voiceMainCoroutine == null)
             {
-                _voicePlayQueue.Enqueue(container.DialogLines[lineIndex]);
-                _voiceCoroutine = playerController.StartCoroutine(PlayVoiceQueueCoroutine());
+                _voiceMainPlayQueue.Enqueue(container.DialogLines[lineIndex]);
+                _voiceMainCoroutine = playerController.StartCoroutine(PlayVoiceMainQueueCoroutine());
             }
             else
-                _voicePlayQueue.Enqueue(container.DialogLines[lineIndex]);
+                _voiceMainPlayQueue.Enqueue(container.DialogLines[lineIndex]);
         }
 
-        private static IEnumerator PlayVoiceQueueCoroutine()
+        public static void AddInSecondaryVoicePlayQueue(SODialogContainer container, SOShowUIEvent @event, int lineIndex, bool @override = false)
+        {
+            if (!AddInVoiceQueueChecks(container, @event, lineIndex))
+                return;
+            if (@override && _voiceSecondaryCoroutine != null)
+            {
+                playerController.StopCoroutine(_voiceSecondaryCoroutine);
+                playerController.PlayerSecondaryVoiceAudioSource.AudioSource.Stop();
+                _voiceSecondaryCoroutine = null;
+                _voiceSecondaryPlayQueue.Clear();
+            }
+            if (_voiceSecondaryCoroutine == null)
+            {
+                _voiceSecondaryPlayQueue.Enqueue(container.DialogLines[lineIndex]);
+                _voiceSecondaryCoroutine = playerController.StartCoroutine(PlayVoiceSecondaryQueueCoroutine());
+            }
+            else
+                _voiceSecondaryPlayQueue.Enqueue(container.DialogLines[lineIndex]);
+        }
+
+        private static IEnumerator PlayVoiceMainQueueCoroutine()
         {
             var aSource = playerController.PlayerVoiceAudioSource.AudioSource;
-            while (_voicePlayQueue.Count > 0)
+            while (_voiceMainPlayQueue.Count > 0)
             {
-                var line = _voicePlayQueue.Dequeue();
+                Debug.Log($"Playing Main voice line. Queue count: {_voiceMainPlayQueue.Count}");
+                _currentMainVoiceLine = _voiceMainPlayQueue.Dequeue();
+                PlayInAudioSource(_currentMainVoiceLine.AudioClip, 1f, aSource, MixerGroupEnum.Voice);
+                _showUIEvent?.RaiseEvent(playerController, ShowableUIEnum.Subtitles, new SubtitleParams(_currentMainVoiceLine.SpeakerName, _currentMainVoiceLine.DialogText, _currentMainVoiceLine.AudioClip.length)); //FIX add timer to stop printing subtitles
+                yield return new WaitWhile(() => aSource.isPlaying || _paused || _stopMainVoice);
+            }
+            aSource.clip = null;
+            _voiceMainCoroutine = null;
+        }
+
+        private static IEnumerator PlayVoiceSecondaryQueueCoroutine()
+        {
+            _stopMainVoice = true;
+            playerController.PlayerVoiceAudioSource.AudioSource.Pause();
+            var aSource = playerController.PlayerSecondaryVoiceAudioSource.AudioSource;
+            while (_voiceSecondaryPlayQueue.Count > 0)
+            {
+                Debug.Log($"Playing Secondary voice line. Queue count: {_voiceSecondaryPlayQueue.Count}");
+                var line = _voiceSecondaryPlayQueue.Dequeue();
                 PlayInAudioSource(line.AudioClip, 1f, aSource, MixerGroupEnum.Voice);
                 _showUIEvent?.RaiseEvent(playerController, ShowableUIEnum.Subtitles, new SubtitleParams(line.SpeakerName, line.DialogText, line.AudioClip.length));
-                yield return new WaitWhile(() => aSource.isPlaying);
+                yield return new WaitWhile(() => aSource.isPlaying || _paused);
             }
-            _voiceCoroutine = null;
+            aSource.clip = null;
+            _stopMainVoice = false;
+            playerController.PlayerVoiceAudioSource.AudioSource.UnPause();
+            _showUIEvent?.RaiseEvent(playerController, ShowableUIEnum.Subtitles, new SubtitleParams(_currentMainVoiceLine.SpeakerName, _currentMainVoiceLine.DialogText, _currentMainVoiceLine.AudioClip.length));
+            _voiceSecondaryCoroutine = null;
         }
 
         //##########################
@@ -247,12 +299,12 @@ namespace EchoCity
             _narrationIndex = 0;
             if (_timerEvent == null)
                 _timerEvent = @event;
-            if (_voiceCoroutine != null)
+            if (_voiceMainCoroutine != null)
             {
-                playerController.StopCoroutine(_voiceCoroutine);
-                _voiceCoroutine = null;
+                playerController.StopCoroutine(_voiceMainCoroutine);
+                _voiceMainCoroutine = null;
                 playerController.PlayerVoiceAudioSource.AudioSource.Stop();
-                _voicePlayQueue.Clear();
+                _voiceMainPlayQueue.Clear();
             }
             if (_narrationCoroutine == null)
             {
@@ -286,7 +338,7 @@ namespace EchoCity
                 PlayInAudioSource(audio, 1f, aSource, MixerGroupEnum.Voice);
                 yield return new WaitForSeconds(eTime);
                 _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineHalfway);
-                yield return new WaitWhile(() => aSource.isPlaying);
+                yield return new WaitWhile(() => aSource.isPlaying || _paused);
                 _timerEvent?.RaiseEvent(_narrationSender, TimerEventEnum.NarrationLineEnded);
             }
             _narrationCoroutine = null;
@@ -306,6 +358,7 @@ namespace EchoCity
         {
             if (playerController == null)
                 playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
+            _paused = true;
             playerController.PlayerAudioSource.Pause();
             playerController.PlayerVoiceAudioSource.AudioSource.Pause();
         }
@@ -314,6 +367,7 @@ namespace EchoCity
         {
             if (playerController == null)
                 playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
+            _paused = false;
             playerController.PlayerAudioSource.UnPause();
             playerController.PlayerVoiceAudioSource.AudioSource.UnPause();
         }

@@ -29,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8313728767077907126}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.0967621, z: -0, w: 0.99530756}
+  m_LocalRotation: {x: 0, y: 0.09676646, z: 0, w: 0.99530715}
   m_LocalPosition: {x: 13.784996, y: -2.7379744, z: -39.0438}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -104,7 +104,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -137,8 +137,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
   _description: Noah's ID card
+  _InteractionSuccessMessage: Card ID Picked
+  _InteractionFailMessage: 
   PickableData: {fileID: 11400000, guid: 3c35e17812793904d9c748aa8b1e142f, type: 2}

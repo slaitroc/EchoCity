@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 4635031646445670}
   - component: {fileID: 33182664261524666}
   - component: {fileID: 23106454830646864}
+  - component: {fileID: 8215111173290092187}
   m_Layer: 0
   m_Name: SM_Prop_Fan_Desk_01_Blades
   m_TagString: Untagged
@@ -187,6 +188,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8215111173290092187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612551216724222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!1 &1867817907611388
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,12 +361,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
-  - _tag: 0
-    _isActive: 0
+  - _tag: 4
+    _isActive: 1
     _count: 0
   setTags: []
-  _description: A not fully working desk fan-
+  _interactionDescription: An old, not fully working desk fan
+  _InteractionSuccessMessage: desk fan turned on
+  _InteractionFailMessage: it is not the right moment to interact
+  interactionContainer: {fileID: 0}
   deskFanSoundSource: {fileID: 11400000, guid: c20adc5058704334ba7deb18aba1be2a, type: 2}
   deskFanStopSoundSource: {fileID: 11400000, guid: 84ef589eb69da9049864b213de88a162, type: 2}
