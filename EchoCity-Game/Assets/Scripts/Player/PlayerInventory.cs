@@ -70,6 +70,21 @@ namespace EchoCity
             return added;
         }
 
+        public bool TryAddItem()
+        {
+            // For now it will be non-stacking: each item is a separate entry
+            bool added = false;
+            for (int i = 0; i < itemsArray.Length; i++)
+            {
+                if (itemsArray[i] == null)
+                {
+                    added = true;
+                    break;
+                }
+            }
+            return added;
+        }
+
         public void DropItem(int itemIndex)
         {
             var item = itemsArray[itemIndex];

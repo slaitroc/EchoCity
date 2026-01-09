@@ -59,13 +59,14 @@ namespace EchoCity
             Debug.Assert(puzzleManager != null, "PuzzleManager not found in the scene");
             _audioContext = new AudioContext(this, soundEmittedEvent);
         }
-        public virtual void Interact()
+        public virtual bool Interact()
         {
             bool outcome = puzzleManager?.TryUpdateTagsHandler(checkTags, setTags) ?? false;
             if (outcome)
                 if (interactionEvent != null) interactionEvent.RaiseEvent(this, _interactionCode);
             OutcomeMessages(outcome);
             ResolveInteraction(outcome);
+            return outcome;
         }
 
         protected abstract void ResolveInteraction(bool outcome);

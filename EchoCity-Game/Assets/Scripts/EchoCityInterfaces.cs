@@ -248,7 +248,7 @@ namespace EchoCity
     public interface IInteractable
     {
         //<summary> Triggers the interactable's interaction logic </summary>
-        void Interact();
+        bool Interact();
     }
 
     public interface IHasDescription

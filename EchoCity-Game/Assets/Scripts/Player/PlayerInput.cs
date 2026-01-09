@@ -222,8 +222,11 @@ namespace EchoCity
                     if (pickable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
                     {
                         Log.DLazy(() => $"Interacting with Pickable: {pickable.name}", this);
-                        if (pickable.PickableData == null || playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab))
-                            pickable.Interact();
+                        if (pickable.PickableData == null || playerController.playerInventory.TryAddItem())
+                        {
+                            if (pickable.Interact())
+                                playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab);
+                        }
                         else playerController.EmitFullInventorySound();
                     }
                     else
@@ -231,7 +234,6 @@ namespace EchoCity
                         var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
                         if (interactable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
                             interactable.Interact();
-
                     }
                 }
             }
