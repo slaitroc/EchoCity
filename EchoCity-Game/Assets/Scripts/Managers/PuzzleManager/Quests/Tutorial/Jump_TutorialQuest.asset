@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
+  m_Name: Jump_TutorialQuest
+  m_EditorClassIdentifier: 
+  questType: 0
+  quest: 3
+  tagsToCheck:
+  - _tag: 4
+    _isActive: 1
+    _count: 0
+  countToComplete: 2
+  subscribeToEvents:
+  - {fileID: 11400000, guid: eb10e54283279d1488d2959a694bad1c, type: 2}
+  nextQuests:
+  - {fileID: 11400000, guid: f03def73ca873fa4eb0dccf8a5eebacf, type: 2}
+  description: Jump with SPACE
+  questCompletedText: 'Tutorial: Jump Completed'
+  scriptContainer: {fileID: 11400000, guid: 3cc0535bb6d123f4e85dba2f08a2a696, type: 2}

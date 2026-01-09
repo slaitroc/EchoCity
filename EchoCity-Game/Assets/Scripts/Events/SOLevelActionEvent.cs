@@ -7,10 +7,14 @@ namespace EchoCity
     {
         //NOTE: numbers must match scene loader's scenes array indices
         None = 0,
-        Persistent = 1,
-        Playground = 2,
-        Level1 = 3,
-        Level2 = 4,
+        Persistent,
+        Playground,
+        InitialNarration,
+        Tutorial,
+        AfterTutorialNarration,
+        FirstLevel,
+        SecondLevel,
+        MAX
     }
 
     public enum LevelActionCodeEnum

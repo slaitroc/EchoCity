@@ -29,19 +29,19 @@
 .title-menu-content {
     position: relative;
     width: 80%;
+    height: 80%
     padding: 80px 120px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 32px;
 }
 
 .title-menu-title {
     position: relative;
-    top: 100px;
-    bottom: 50px;
+    top: 32px;
     align-self: center;
-    margin-bottom: 80px;
+    /* margin-bottom: 10px; */
     font-size: 150px;
     -unity-font-style: bold;
     color: rgb(255, 240, 240);
@@ -53,18 +53,20 @@
 }
 
 .title-menu-buttons-container {
-    position: relative;
-    top: 50px;
+    /* position: relative; */
+    top: 80px;
+    flex: 1;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 24px;
 }
 
 .title-menu-button {
-    height: 20%;
+    height: 120px;
     width: 100%;
     align-self: center;
     font-size: 500%;
@@ -106,7 +108,7 @@
     right: 0;
     bottom: 0;
     -unity-background-scale-mode: scale-and-crop;
-    opacity: 0;
+    /* opacity: 0; */
     picking-mode: Ignore;
     background-image: resource('Images/EchoCity-BackgroundRed');
     transition-property: opacity, background-image;
@@ -121,7 +123,7 @@
     right: 0;
     bottom: 0;
     -unity-background-scale-mode: scale-and-crop;
-    opacity: 0;
+    /* opacity: 0; */
     picking-mode: Ignore;
     background-image: resource('Images/EchoCity-BackgroundBlue');
     transition-property: opacity, background-image;

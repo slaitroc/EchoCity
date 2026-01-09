@@ -11,6 +11,30 @@ namespace EchoCity
 
     public enum QuestsEnum
     {
+        //TUTORIAL QUESTS
+        Move_Tutorial,
+        Look_Tutorial,
+        Sprint_Tutorial,
+        Jump_Tutorial,
+        Interact_Tutorial,
+        PickUp_Tutorial,
+        OpenInventory_Tutorial,
+        EquipItem_Tutorial,
+        UseItem_Tutorial,
+        DropItem_Tutorial,
+        SwitchLightsOff_Tutorial,
+        UseLowSO_Tutorial,
+        UseMidSO_Tutorial,
+        UseHighSO_Tutorial,
+        EnemySoundChase_Tutorial,
+        //FIRST LEVEL QUESTS
+
+        //OLD QUESTS
+        TestOne,
+        TestTwo,
+        FindTheKey,
+        OpenTheDoor,
+        FixTheGenerator,
         TryEscape,
         FindPry,
         FindFloppy,
@@ -21,17 +45,18 @@ namespace EchoCity
         MAX
     }
 
-    [CreateAssetMenu(fileName = "QuestSO", menuName = "ECHO CITY/Puzzle/QuestSO")]
+    [CreateAssetMenu(fileName = "Quest", menuName = "ECHO CITY/Puzzle/Quest")]
     public class SOQuest : ScriptableObject
     {
         [SerializeField] private QuestsTypeEnum questType = QuestsTypeEnum.Main;
         [SerializeField] private QuestsEnum quest = QuestsEnum.Escape;
-        [TextArea, SerializeField] private string description;
-        [TextArea, SerializeField] private string questCompletedText;
         [SerializeField] private PuzzleTagState[] tagsToCheck;
         [SerializeField] private int countToComplete = 1;
         [SerializeField] private SOEventBase[] subscribeToEvents;
         [SerializeField] private SOQuest[] nextQuests;
+        [TextArea, SerializeField] private string description;
+        [TextArea, SerializeField] private string questCompletedText;
+        [SerializeField] private SODialogContainer scriptContainer;
 
         public QuestsTypeEnum QuestType => questType;
         public QuestsEnum Quest => quest;
@@ -41,6 +66,7 @@ namespace EchoCity
         public int CountToComplete => countToComplete;
         public SOEventBase[] SubscribeToEvents => subscribeToEvents;
         public SOQuest[] NextQuests => nextQuests;
+        public SODialogContainer ScriptContainer => scriptContainer;
 
 
         void OnValidate()

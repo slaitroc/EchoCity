@@ -2,18 +2,24 @@ using UnityEngine;
 
 namespace EchoCity
 {
-
-    public enum InteractionsEnum
+    public enum InteractionEnum
     {
+        None,
+        Radio,
+        DeskFan,
+        Pickable,
+        LightSwitch,
         EndDoor,
-        CardReader,
-        Generator,
     }
 
-    [CreateAssetMenu(fileName = "SOInteractionEvent", menuName = "ECHO CITY/Events/Interaction")]
-    public class SOInteractionEvent : SOSingleParamEvent<InteractionsEnum>
+    public enum InteractionObjectTypeEnum
     {
-        public override void RaiseEvent(IEventSender sender, InteractionsEnum interaction)
+
+    }
+    [CreateAssetMenu(fileName = "InteractionEvent", menuName = "ECHO CITY/Events/Interaction")]
+    public class SOInteractionEvent : SOEventSingleParam<InteractionEnum>
+    {
+        public override void RaiseEvent(IEventSender sender, InteractionEnum interaction)
         {
             base.RaiseEvent(sender, interaction);
         }

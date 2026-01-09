@@ -14,13 +14,14 @@ namespace EchoCity
 
         [Header("Music Sliders")]
         [SerializeField] private AudioMixer masterMixer;
-        [SerializeField] private string[] _mixerGroupsVolumes = { "Master", "Soundtrack", "SFX" };
+        [SerializeField] private string[] _mixerGroupsVolumes = { "Master", "Soundtrack", "SFX", "Voice" };
 
         #region Private Fields
         private VisualElement _root;
         private Slider _masterSlider;
         private Slider _musicSlider;
         private Slider _sfxSlider;
+        private Slider _voiceSlider;
         private Button _backButton;
         #endregion
 
@@ -36,6 +37,7 @@ namespace EchoCity
             _masterSlider = _root.Q<Slider>("MasterSlider");
             _musicSlider = _root.Q<Slider>("MusicSlider");
             _sfxSlider = _root.Q<Slider>("SfxSlider");
+            _voiceSlider = _root.Q<Slider>("VoiceSlider");
             _backButton = _root.Q<Button>("BackButton");
 
             _masterSlider.lowValue = 0f;
@@ -44,12 +46,15 @@ namespace EchoCity
             _musicSlider.highValue = 10f;
             _sfxSlider.lowValue = 0f;
             _sfxSlider.highValue = 10f;
+            _voiceSlider.lowValue = 0f;
+            _voiceSlider.highValue = 10f;
             yield return null;
             SetupVolumeSliders();
 
             _masterSlider.RegisterValueChangedCallback(OnMasterVolumeChanged);
             _musicSlider.RegisterValueChangedCallback(OnMusicVolumeChanged);
             _sfxSlider.RegisterValueChangedCallback(OnSfxVolumeChanged);
+            _voiceSlider.RegisterValueChangedCallback(OnVoiceVolumeChanged);
             if (_backButton != null) _backButton.clicked += BackClickHandler;
         }
 
@@ -84,6 +89,13 @@ namespace EchoCity
                 linearValue = Mathf.Pow(10f, currentDB / 20f);
                 _sfxSlider.value = linearValue * 10f;
             }
+
+            // VOICE
+            if (masterMixer.GetFloat(_mixerGroupsVolumes[3], out currentDB))
+            {
+                linearValue = Mathf.Pow(10f, currentDB / 20f);
+                _voiceSlider.value = linearValue * 10f;
+            }
         }
 
         private void OnMasterVolumeChanged(ChangeEvent<float> evt)
@@ -117,6 +129,15 @@ namespace EchoCity
 
             float dBValue = Mathf.Log10(Mathf.Clamp(normalizedValue, 0.0001f, 1f)) * 20f;
             masterMixer.SetFloat(_mixerGroupsVolumes[2], dBValue);
+        }
+
+        private void OnVoiceVolumeChanged(ChangeEvent<float> evt)
+        {
+            float rawValue = evt.newValue;
+            float normalizedValue = rawValue / 10f;
+
+            float dBValue = Mathf.Log10(Mathf.Clamp(normalizedValue, 0.0001f, 1f)) * 20f;
+            masterMixer.SetFloat(_mixerGroupsVolumes[3], dBValue);
         }
 
         private void OnDisable()

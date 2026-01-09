@@ -19,7 +19,7 @@ namespace EchoCity
             this._id = id;
         }
     }
-    [CreateAssetMenu(fileName = "New Google Form Settings", menuName = "ECHO CITY/Google Form Settings")]
+    [CreateAssetMenu(fileName = "New Google Form Settings", menuName = "ECHO CITY/Others/Google Form Settings")]
     public class SOGoogleFormSettings : ScriptableObject
     {
         [SerializeField] private string url;

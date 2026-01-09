@@ -13,13 +13,13 @@ namespace EchoCity
 
         public PatrolEnemyState(IEnemyContext context, EnemyFSM fsm) : base(context, fsm) { }
 
-        public override EnemyStatesEnum GetEnum() => EnemyStatesEnum.Patrol;
+        public override EnemyStateEnum GetEnum() => EnemyStateEnum.Patrol;
         public override void Enter()
         {
             _isWaitingAtWaypoint = false;
             _waitTimer = 0f;
 
-            _context.CurrentStateEnum = EnemyStatesEnum.Patrol;
+            _context.CurrentStateEnum = EnemyStateEnum.Patrol;
             _hitDetector.Disable();
 
             _currentWaypointIndex = EchoCityUtils.SelectClosestWaypoint(_patrolAreas, _owner.Transform, out _tempCurrentPatrolArea);
@@ -94,15 +94,16 @@ namespace EchoCity
 
         private void StartWaitAtWaypoint()
         {
+            _context.HeadMark?.ShowCheckMark();
             _isWaitingAtWaypoint = true;
             _waitTimer = _context.EnemyData.WaypointPauseDuration;
 
-            _agent.isStopped = true;
-            _agent.ResetPath();
+            _animator.SetFloat(_animSpeedParameter, 0f, _enemyData.PatrolSpeedDampTime, Time.deltaTime);
         }
 
         private void GotoNextWaypoint()
         {
+            _context.HeadMark?.ClearMarks();
             _isWaitingAtWaypoint = false;
             _agent.isStopped = false;
             _agent.SetDestination(_waypoints[_currentWaypointIndex].position);

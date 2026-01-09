@@ -103,7 +103,7 @@ namespace EchoCity
         private void RestartGameClickHandler()
         {
             _showCursor = false;
-            uiManager.SwitchToInitLevel(SceneEnum.Level1);
+            uiManager.SwitchToInitLevel(SceneEnum.FirstLevel);
         }
 
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();

@@ -56,9 +56,9 @@ namespace EchoCity
             }
         }
 
-        private void TryEscapeQuestHandler(IEventSender sender, InteractionsEnum interaction)
+        private void TryEscapeQuestHandler(IEventSender sender, InteractionEnum interaction)
         {
-            if (interaction == InteractionsEnum.EndDoor)
+            if (interaction == InteractionEnum.EndDoor)
                 CompleteQuest(activeQuests[(int)QuestsEnum.TryEscape]);
         }
 
@@ -116,9 +116,9 @@ namespace EchoCity
             }
         }
 
-        private void EscapeQuestHandler(IEventSender sender, InteractionsEnum interaction)
+        private void EscapeQuestHandler(IEventSender sender, InteractionEnum interaction)
         {
-            if (interaction == InteractionsEnum.EndDoor)
+            if (interaction == InteractionEnum.EndDoor)
                 CompleteQuest(activeQuests[(int)QuestsEnum.Escape]);
         }
 
