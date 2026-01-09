@@ -8,7 +8,6 @@ namespace EchoCity
         [SerializeField] private SOShowUIEvent showUIEvent;
         [Header("Messages")]
         [SerializeField] private SODialogContainer dialogContainer;
-
         protected override void ResolveInteraction(bool outcome)
         {
             base.ResolveInteraction(outcome);

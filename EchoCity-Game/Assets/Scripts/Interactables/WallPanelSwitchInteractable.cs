@@ -3,7 +3,6 @@ using static EchoCity.EchoCitySound;
 
 namespace EchoCity
 {
-
     [RequireComponent(typeof(Animator))]
 
     public class WallPanelSwitchInteractable : LinkableInteractable
@@ -16,6 +15,9 @@ namespace EchoCity
         [SerializeField] private Animator wallPanelSwitchAnimator;
         private readonly int _hashIsSwitchedOn = Animator.StringToHash("isSwitchedOn");
         [SerializeField] private bool _isSwitchedOn = true;
+        private bool _firstInteractionDone = false;
+        [Header("Invoking Events")]
+        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
         private bool isSwitchedOn
         {
             get { return _isSwitchedOn; }
@@ -30,11 +32,11 @@ namespace EchoCity
                 {
                     PlayAtPosition(transform.position, switchOffSound, _audioContext, MixerGroupEnum.SFX);
                 }
+                _isSwitchedOn = value;
                 if (switchLinkedObject)
                 {
                     switchLinkedObject.SetActive(isSwitchedOn);
                 }
-                _isSwitchedOn = value;
                 wallPanelSwitchAnimator?.SetBool(_hashIsSwitchedOn, _isSwitchedOn);
             }
         }
@@ -56,12 +58,16 @@ namespace EchoCity
             if (outcome)
             {
                 isSwitchedOn = !isSwitchedOn;
+                if (!_firstInteractionDone)
+                {
+                    _firstInteractionDone = true;
+                }
+                setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Toggle);
                 foreach (var quest in triggeredQuest)
                 {
                     puzzleManager?.AddQuest(quest);
                 }
             }
-
         }
     }
 }

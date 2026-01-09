@@ -287,7 +287,7 @@ namespace EchoCity
 
         private void InteractTutorialHandler(IEventSender sender, InteractionEnum code)
         {
-            if (code != InteractionEnum.Interactable)
+            if (code == InteractionEnum.Pickable)
                 return;
 
             IncrementQuestProgress(QuestsEnum.Interact_Tutorial);

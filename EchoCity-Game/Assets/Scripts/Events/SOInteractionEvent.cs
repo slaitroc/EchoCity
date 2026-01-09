@@ -4,8 +4,16 @@ namespace EchoCity
 {
     public enum InteractionEnum
     {
-        Interactable,
-        Pickable
+        None,
+        Radio,
+        DeskFan,
+        Pickable,
+        LightSwitch,
+    }
+
+    public enum InteractionObjectTypeEnum
+    {
+
     }
     [CreateAssetMenu(fileName = "InteractionEvent", menuName = "ECHO CITY/Events/Interaction")]
     public class SOInteractionEvent : SOEventSingleParam<InteractionEnum>

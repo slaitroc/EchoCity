@@ -4,7 +4,7 @@ namespace EchoCity
     public abstract class Interactable : MonoBehaviour, IEventSender, IInteractable, IHasDescription
     {
         [Header("Invoking Events")]
-        [SerializeField] protected SOSoundEmittedEvent newAudioSphereEvent;
+        [SerializeField] protected SOSoundEmittedEvent soundEmittedEvent;
         [SerializeField] protected SOInteractionEvent interactionEvent;
         [Header("Interactable Settings")]
         [SerializeField] protected PuzzleManager puzzleManager;
@@ -23,7 +23,7 @@ namespace EchoCity
         public virtual bool HasRaycastDescription => true;
         public bool IsInteractable => true;
 
-        protected virtual InteractionEnum _interactionCode => InteractionEnum.Interactable;
+        protected virtual InteractionEnum _interactionCode { get; }
 
         protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
 
@@ -50,7 +50,7 @@ namespace EchoCity
             if (puzzleManager == null)
                 puzzleManager = GameObject.FindWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
             Debug.Assert(puzzleManager != null, "PuzzleManager not found in the scene");
-            _audioContext = new AudioContext(this, newAudioSphereEvent);
+            _audioContext = new AudioContext(this, soundEmittedEvent);
         }
         public virtual void Interact()
         {

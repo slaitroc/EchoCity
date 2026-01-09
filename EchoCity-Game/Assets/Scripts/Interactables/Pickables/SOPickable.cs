@@ -26,6 +26,7 @@ namespace EchoCity
         Cable,
         ElectricityCable,
         FloppyDisk,
+        LowGeneratorRadio,
     }
     public abstract class SOPickable : ScriptableObject
     {
