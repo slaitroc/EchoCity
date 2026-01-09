@@ -35,7 +35,7 @@ namespace EchoCity
         [Header("HUD")]
         [SerializeField] private CrosshairController crosshairController;
         [SerializeField] private RadialMenuController radialMenuController;
-        [SerializeField] private WarningController warningController;
+        [SerializeField] private PopUpController popUpController;
         [SerializeField] private EquippedPanelController equippedPanelController;
         [SerializeField] private TutorialPanelController tutorialPanelController;
         [SerializeField] private QuestController questController;
@@ -248,8 +248,8 @@ namespace EchoCity
                     _winMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.PopUpMessage:
-                    var warningParams = eventParams as PopUpMessageParams;
-                    warningController.SpawnWarning(warningParams.Message, warningParams.Color);
+                    var popUpParams = eventParams as PopUpMessageParams;
+                    popUpController.SpawnPopUp(popUpParams.Message, popUpParams.Color);
                     break;
                 default:
                     break;
