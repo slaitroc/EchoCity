@@ -48,9 +48,9 @@ namespace EchoCity
             _quitButton = _root.Q<Button>("QuitButton");
             _buttons = new Button[] { _resumeButton, _playgroundButton, _settingsButton, _feedbackButton, _quitButton };
 
-            yield return null;
+            if (_playgroundButton != null) _playgroundButton.style.display = DisplayStyle.None;
 
-            _playgroundButton.style.display = DisplayStyle.None;
+            yield return null;
 
             _root.RegisterCallback<MouseMoveEvent>(evt =>
             {

@@ -261,15 +261,15 @@ namespace EchoCity
         private void HideAllElements(bool title = false, bool hud = false, bool pause = false, bool dialog = false,
             bool subtitles = false, bool death = false, bool loading = false, bool win = false, bool narration = false)
         {
-            _titleMenu.SetActive(title);
-            _hud.SetActive(hud);
-            _pauseMenu.SetActive(pause);
-            _dialog.SetActive(dialog);
-            _subtitles.SetActive(subtitles);
-            _deathMenu.SetActive(death);
-            _loadingScreen.SetActive(loading);
-            _winMenu.SetActive(win);
-            _narration.SetActive(narration);
+            if (!title) _titleMenu.SetActive(false);
+            if (!hud) _hud.SetActive(false);
+            if (!pause) _pauseMenu.SetActive(false);
+            if (!dialog) _dialog.SetActive(false);
+            if (!subtitles) _subtitles.SetActive(false);
+            if (!death) _deathMenu.SetActive(false);
+            if (!loading) _loadingScreen.SetActive(false);
+            if (!win) _winMenu.SetActive(false);
+            if (!narration) _narration.SetActive(false);
         }
 
 

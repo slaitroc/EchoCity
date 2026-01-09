@@ -57,9 +57,9 @@ namespace EchoCity
             _redBlinkOverlay = _root.Q<VisualElement>("RedBlinkOverlay");
             _blueBlinkOverlay = _root.Q<VisualElement>("BlueBlinkOverlay");
 
-            yield return null;
+            if (_playgroundButton != null) _playgroundButton.style.display = DisplayStyle.None;
 
-            _playgroundButton.style.display = DisplayStyle.None;
+            yield return null;
 
             _root.RegisterCallback<MouseMoveEvent>(evt =>
             {

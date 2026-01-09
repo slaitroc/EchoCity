@@ -51,9 +51,9 @@ namespace EchoCity
             _quitButton = _root.Q<Button>("QuitButton");
             _buttons = new Button[] { _restartButton, _feedbackButton, _quitButton };
 
-            yield return null;
+            if (_playgroundButton != null) _playgroundButton.style.display = DisplayStyle.None;
 
-            _playgroundButton.style.display = DisplayStyle.None;
+            yield return null;
 
             _deathBgAnimated.style.translate = new Translate(0, 0);
 
