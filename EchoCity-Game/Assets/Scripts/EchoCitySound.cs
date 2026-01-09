@@ -292,6 +292,16 @@ namespace EchoCity
             _narrationCoroutine = null;
         }
 
+        public static void StopNarration()
+        {
+            if (_narrationCoroutine != null)
+            {
+                playerController.StopCoroutine(_narrationCoroutine);
+                _narrationCoroutine = null;
+            }
+            playerController.PlayerVoiceAudioSource.AudioSource.Stop();
+        }
+
         public static void PauseAllPlayingAudioSources()
         {
             if (playerController == null)
