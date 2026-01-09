@@ -7,16 +7,12 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] protected SOSetMaterialEvent setMaterialEvent;
-        [SerializeField] private SOShowUIEvent showUIEvent;
         [Header("Sound")]
         [SerializeField] private SOSoundSource useSoundSource;
 
         [Header("Prefabs")]
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private Transform cardSpawnPoint;
-        [Header("Messages")]
-        [SerializeField] private SODialogContainer dialogContainerSuccess;
-        [SerializeField] private SODialogContainer dialogContainerFail;
 
         [Header("Quest")]
         [SerializeField] private SOQuest triggeredQuestIfFail;
