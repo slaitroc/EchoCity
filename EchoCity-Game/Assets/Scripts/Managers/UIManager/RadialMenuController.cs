@@ -25,6 +25,8 @@ namespace EchoCity
         [TextArea(3, 10)]
         [SerializeField] private string tutorialTextHighFreq;
         [TextArea(3, 10)]
+        [SerializeField] private string tutorialTextGeneral;
+        [TextArea(3, 10)]
         [SerializeField] private string tutorialTextTransient;
         [TextArea(3, 10)]
         [SerializeField] private string tutorialTextRange;
@@ -55,6 +57,7 @@ namespace EchoCity
         private Label _toolsTutTextLow;
         private Label _toolsTutTextMid;
         private Label _toolsTutTextHigh;
+        private Label _toolsTutGeneral;
         private Label _toolsTutTextTransient;
         private Label _toolsTutTextRange;
 
@@ -105,6 +108,7 @@ namespace EchoCity
             _toolsTutTextLow = _root.Q<Label>("ToolsTutTextLow");
             _toolsTutTextMid = _root.Q<Label>("ToolsTutTextMid");
             _toolsTutTextHigh = _root.Q<Label>("ToolsTutTextHigh");
+            _toolsTutGeneral = _root.Q<Label>("ToolsTutTextGeneral");
             _toolsTutTextTransient = _root.Q<Label>("ToolsTutTextTransient");
             _toolsTutTextRange = _root.Q<Label>("ToolsTutTextRange");
 
@@ -147,6 +151,7 @@ namespace EchoCity
             if (_toolsTutTextLow != null) _toolsTutTextLow.text = tutorialTextLowFreq;
             if (_toolsTutTextMid != null) _toolsTutTextMid.text = tutorialTextMidFreq;
             if (_toolsTutTextHigh != null) _toolsTutTextHigh.text = tutorialTextHighFreq;
+            if (_toolsTutGeneral != null) _toolsTutGeneral.text = tutorialTextGeneral;
             if (_toolsTutTextTransient != null) _toolsTutTextTransient.text = tutorialTextTransient;
             if (_toolsTutTextRange != null) _toolsTutTextRange.text = tutorialTextRange;
 

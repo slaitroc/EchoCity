@@ -441,17 +441,31 @@ MonoBehaviour:
   midFreqIcon: {fileID: 21300000, guid: 503b493d40c874401915913ca5f42f24, type: 3}
   highFreqIcon: {fileID: 21300000, guid: 3de2d7170e93a41cd93f31baea0c8d05, type: 3}
   transientIcon: {fileID: 21300000, guid: 2f304dc3e10a04d239d3d723dd1f3933, type: 3}
-  tutorialTextLowFreq: These tools resonate with deep, low-frequency echoes, revealing
-    heavy and grounded objects hidden in the environment.
-  tutorialTextMidFreq: Mid-frequency tools tune into balanced echoes, uncovering
-    objects that exist between structure and motion.
-  tutorialTextHighFreq: High-frequency tools resonate with sharp, piercing echoes,
-    exposing small, fragile, or distant elements.
-  tutorialTextTransient: Transient echoes are brief and unstable, appearing only
-    at the moment of impact before quickly fading away.
-  tutorialTextRange: Range defines how far an echo can spread through the environment.
-    Greater range reveals more distant objects, but also increases the chance of
-    alerting nearby enemies.
+  tutorialTextLowFreq: 'Low-frequency tools reveal big objects.
+
+    Big objects
+    are shown in a light blue color.
+
+    Enemies will hear the sound from far away,
+    but they are less attracted by it.'
+  tutorialTextMidFreq: "Mid-frequency tools reveal mid-sized objects.\nMid-sized
+    objects are shown in an orange color. \nEnemies will hear the sound from a mid-range
+    and will be attracted by it."
+  tutorialTextHighFreq: 'High-frequency tools reveal small and tiny objects.
+
+    Small
+    objects will be shown in a red color.
+
+    Enemies will only hear the sound when
+    you are close by, but they will chase you down immediately.'
+  tutorialTextGeneral: Higher frequencies reveal objects responsive to their own
+    frequency and all lower ones.
+  tutorialTextTransient: Transient echoes are not continuous and appear only at the
+    moment of impact.
+  tutorialTextRange: 'Range defines how far an echo can propagate.
+
+    Higher range
+    reveals objects at greater distance.'
 --- !u!1 &650754761998031046
 GameObject:
   m_ObjectHideFlags: 3

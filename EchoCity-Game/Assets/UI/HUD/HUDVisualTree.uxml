@@ -141,6 +141,14 @@
                         </ui:VisualElement>
                         <ui:Label name="ToolsTutTextHigh" class="tools-tutorial-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
                     </ui:VisualElement>
+                    <!-- GENERAL FREQUENCY -->
+                    <ui:VisualElement class="tools-tutorial-entry">
+                        <ui:VisualElement class="tools-tutorial-header">
+                            <!-- <ui:VisualElement name="ToolsTutIconGeneral" class="tools-tutorial-icon" /> -->
+                            <ui:Label name="ToolsTutTitleGeneral" text="General rules:" class="tools-tutorial-title" />
+                        </ui:VisualElement>
+                        <ui:Label name="ToolsTutTextGeneral" class="tools-tutorial-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                    </ui:VisualElement>
                     <!-- TRANSIENT -->
                     <ui:VisualElement class="tools-tutorial-entry">
                         <ui:VisualElement class="tools-tutorial-header">
