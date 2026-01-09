@@ -23,9 +23,9 @@ namespace EchoCity
         public virtual bool HasRaycastDescription => true;
         public bool IsInteractable => true;
         [SerializeField] protected string _InteractionSuccessMessage;
-        private Color _successMessageColor = Color.green;
+        protected Color _successMessageColor = Color.green;
         [SerializeField] protected string _InteractionFailMessage;
-        private Color _failMessageColor = Color.red;
+        protected Color _failMessageColor = Color.red;
         [SerializeField] SODialogContainer interactionContainer;
 
         protected virtual InteractionEnum _interactionCode { get; }
@@ -79,16 +79,32 @@ namespace EchoCity
 
         private void OutcomeMessages(bool outcome)
         {
+            ShowInteractionLines(outcome);
+            ShowPopUpMessage(outcome);
+        }
+
+        protected virtual void ShowInteractionLines(bool outcome)
+        {
             if (outcome)
             {
                 if (interactionContainer)
                     EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 1, true);
-                if (showUIEvent && !string.IsNullOrEmpty(_InteractionSuccessMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(_InteractionSuccessMessage, _successMessageColor));
             }
             else
             {
                 if (interactionContainer)
                     EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 0, true);
+            }
+        }
+
+        protected virtual void ShowPopUpMessage(bool outcome)
+        {
+            if (outcome)
+            {
+                if (showUIEvent && !string.IsNullOrEmpty(_InteractionSuccessMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(_InteractionSuccessMessage, _successMessageColor));
+            }
+            else
+            {
                 if (showUIEvent && !string.IsNullOrEmpty(_InteractionFailMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(_InteractionFailMessage, _failMessageColor));
             }
         }
