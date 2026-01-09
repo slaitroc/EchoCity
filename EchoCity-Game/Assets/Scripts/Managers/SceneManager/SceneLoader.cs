@@ -9,6 +9,7 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
+        [SerializeField] private SOSceneLoaderTriggerEvent sceneLoaderTriggerEvent;
         [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
         string IEventSender.SenderName => gameObject.name;
@@ -26,8 +27,11 @@ namespace EchoCity
         "None",
         "Persistent",
         "Playground",
+        "InitialNarration",
+        "Tutorial",
+        "AfterTutorialNarration",
         "First-Level",
-        "Second-Level"
+        "Second-Level",
     };
         private SceneEnum _currentLevelEnum = SceneEnum.None;
 
@@ -58,8 +62,6 @@ namespace EchoCity
             var pc = _player?.GetComponent<PlayerController>();
             var cc = _player?.GetComponent<CharacterController>();
 
-            // FIXME: Will always disable ecolocation material when respawning
-            setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Inactive);
 
             if (_spawnPoint != null && _player != null && pc != null)
             {
@@ -113,6 +115,10 @@ namespace EchoCity
                 SceneManager.SetActiveScene(existingScene);
                 // yield return StartCoroutine(UnloadOtherLevels(scene));
                 Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, this);
+                if (_currentLevelEnum == SceneEnum.FirstLevel)
+                {
+                    setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Active);
+                }
                 yield break;
             }
 #endif
@@ -134,6 +140,10 @@ namespace EchoCity
                 _currentLevelEnum = scene;
             }
             Log.DLazy(() => "Loaded active scene: " + sceneName, this);
+            if (_currentLevelEnum == SceneEnum.FirstLevel)
+            {
+                setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Active);
+            }
         }
 
         public IEnumerator LoadSceneAdditiveNoActive(SceneEnum scene)
@@ -205,6 +215,7 @@ namespace EchoCity
             yield return StartCoroutine(StartLoading());
             yield return StartCoroutine(LoadSceneAdditiveNoActive(scene));
             yield return StartCoroutine(StopLoading());
+            // sceneLoaderTriggerEvent?.RaiseEvent(this, SceneLoaderTriggerEnum.InitLevel);
         }
 
         private IEnumerator LoadLevelAdditiveWithLoading(SceneEnum scene)
@@ -212,6 +223,7 @@ namespace EchoCity
             yield return StartCoroutine(StartLoading());
             yield return StartCoroutine(LoadLevelAdditive(scene));
             yield return StartCoroutine(StopLoading());
+            sceneLoaderTriggerEvent?.RaiseEvent(this, SceneLoaderTriggerEnum.InitLevel);
         }
 
         private IEnumerator ReloadCurrentLevelWithLoading()
@@ -219,7 +231,7 @@ namespace EchoCity
             yield return StartCoroutine(StartLoading());
             yield return StartCoroutine(ReloadCurrentLevel());
             yield return StartCoroutine(StopLoading());
-            SetPlayerOnSpawnHandler(this);
+            sceneLoaderTriggerEvent?.RaiseEvent(this, SceneLoaderTriggerEnum.InitLevel);
         }
 
         private IEnumerator UnloadCurrentLevelWithLoading()
@@ -239,6 +251,7 @@ namespace EchoCity
         {
             yield return new WaitForSecondsRealtime(0.5f);
             switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Loading, new ToLoadingStateParams(false));
+            yield return null;
         }
     }
 }

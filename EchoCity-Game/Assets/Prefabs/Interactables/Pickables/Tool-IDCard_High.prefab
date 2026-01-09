@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4428316945064892760}
   - component: {fileID: 7970496805935376818}
   - component: {fileID: 617612938161999522}
-  - component: {fileID: 7126215551774324446}
-  - component: {fileID: 2722942055468084890}
   - component: {fileID: 2428376950413015190}
+  - component: {fileID: 2722942055468084890}
+  - component: {fileID: 5309350973114077361}
   m_Layer: 0
   m_Name: Tool-IDCard_High
   m_TagString: Untagged
@@ -29,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8313728767077907126}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.0967621, z: -0, w: 0.99530756}
+  m_LocalRotation: {x: 0, y: 0.09676646, z: 0, w: 0.99530715}
   m_LocalPosition: {x: 13.784996, y: -2.7379744, z: -39.0438}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -89,41 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7126215551774324446
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8313728767077907126}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43823013787372246, guid: 17f40c94169e934429a67956cb6f5ed8, type: 2}
---- !u!114 &2722942055468084890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8313728767077907126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectFrequency: 2
 --- !u!65 &2428376950413015190
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -145,3 +110,42 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.15087791, y: 0.007880498, z: 0.09261871}
   m_Center: {x: 0, y: 0.003940249, z: 0}
+--- !u!114 &2722942055468084890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8313728767077907126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 2
+--- !u!114 &5309350973114077361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8313728767077907126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags:
+  - _tag: 5
+    _isActive: 1
+    _count: 0
+  setTags: []
+  _interactionDescription: Noah's Card ID
+  _InteractionSuccessMessage: Card ID Picked
+  _InteractionFailMessage: it is not the right moment to interact
+  interactionContainer: {fileID: 0}
+  PickableData: {fileID: 11400000, guid: 3c35e17812793904d9c748aa8b1e142f, type: 2}

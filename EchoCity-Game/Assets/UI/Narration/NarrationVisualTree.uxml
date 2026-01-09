@@ -1,0 +1,19 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Narration/NarrationStyleSheet.uss?fileID=7433441132597879392&amp;guid=50c138d75c7e740aea0d343bd4d89345&amp;type=3#NarrationStyleSheet" />
+
+    <ui:VisualElement name="NarrationRoot" class="narration-root">
+
+        <!-- Center text -->
+        <ui:VisualElement name="NarrationCenter" class="narration-center">
+            <ui:Label name="NarrationText" class="narration-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+        </ui:VisualElement>
+
+        <!-- Bottom controls -->
+        <ui:VisualElement name="NarrationControls" class="narration-controls">
+            <ui:Button name="SkipButton" class="narration-button narration-skip" text="SKIP" />
+            <ui:Button name="ContinueButton" class="narration-button narration-continue" text="CONTINUE" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+    
+</ui:UXML>

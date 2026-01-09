@@ -62,7 +62,7 @@ namespace EchoCity
         {
             if (_currentLineIndex < _currentDialogData.DialogLines.Length)
             {
-                DialogLines currentLine = _currentDialogData.DialogLines[_currentLineIndex];
+                DialogLine currentLine = _currentDialogData.DialogLines[_currentLineIndex];
                 _speakerLabel.text = currentLine.SpeakerName;
                 _dialogueLabel.text = currentLine.DialogText;
             }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TutorialLineSO", menuName = "ECHO CITY/Tutorials/Tutorial Line SO")]
+[CreateAssetMenu(fileName = "TutorialLineSO", menuName = "ECHO CITY/Text Lines/Tutorial Line")]
 public class SOTutorialLine : ScriptableObject
 {
     [TextArea(3, 10)]

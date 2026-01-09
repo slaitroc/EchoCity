@@ -1,3 +1,6 @@
+using System;
+using Unity.VisualScripting;
+
 namespace EchoCity
 {
     [System.Serializable]
@@ -11,9 +14,11 @@ namespace EchoCity
         public IEnemyState PlayerChaseState;
         public IEnemyState AttackState;
 
+        private IEnemyContext _context;
 
         public EnemyFSM(IEnemyContext context)
         {
+            _context = context;
             PatrolState = new PatrolEnemyState(context, this);
             SoundChaseState = new SoundChaseEnemyState(context, this);
             PlayerChaseState = new PlayerChaseEnemyState(context, this);
@@ -37,6 +42,7 @@ namespace EchoCity
             PreviousState = CurrentState;
             CurrentState = newState;
             CurrentState.Enter();
+            _context.EnemyStateTransitionEvent.RaiseEvent(_context, PreviousState.GetEnum(), CurrentState.GetEnum(), _context.Owner.Transform);
         }
     }
 }

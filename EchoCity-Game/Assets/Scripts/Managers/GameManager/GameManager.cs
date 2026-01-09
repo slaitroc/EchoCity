@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEditor.Search;
 using UnityEngine;
 
@@ -77,29 +78,29 @@ namespace EchoCity
                     Log.ELazy(() => "SwitchToGameStateHandler - Cannot switch to None state.", this);
                     break;
                 case GameStatesEnum.Title:
-                    _fsm.CurrentState.SwitchToTitleHandler();
+                    _fsm.CurrentState.SwitchToTitleHandler(_fsm.PreviousState.GetEnum());
                     break;
                 case GameStatesEnum.Playing:
-                    _fsm.CurrentState.SwitchToPlayingHandler();
+                    _fsm.CurrentState.SwitchToPlayingHandler(_fsm.PreviousState.GetEnum());
                     break;
                 case GameStatesEnum.Pause:
-                    _fsm.CurrentState.SwitchToPauseHandler();
+                    _fsm.CurrentState.SwitchToPauseHandler(_fsm.PreviousState.GetEnum());
                     break;
                 case GameStatesEnum.Death:
-                    _fsm.CurrentState.SwitchToDeathHandler();
+                    _fsm.CurrentState.SwitchToDeathHandler(_fsm.PreviousState.GetEnum());
                     break;
                 case GameStatesEnum.Win:
-                    _fsm.CurrentState.SwitchToWinHandler();
+                    _fsm.CurrentState.SwitchToWinHandler(_fsm.PreviousState.GetEnum());
                     break;
                 case GameStatesEnum.Narration:
-                    if (@params is ToDialogueStateParams dialogParams)
-                        _fsm.CurrentState.SwitchToNarrationHandler(dialogParams.DialogData);
+                    if (@params is ToNarrationParams narrationParams)
+                        _fsm.CurrentState.SwitchToNarrationHandler(_fsm.PreviousState.GetEnum(), narrationParams);
                     else
                         Log.ELazy(() => "GameManager: SwitchToGameStateHandler - Missing DialogData for Narration state.", this);
                     break;
                 case GameStatesEnum.Hud:
                     if (@params is ToHUDStateParams hudParams)
-                        _fsm.CurrentState.SwitchToHudHandler(hudParams.HudState);
+                        _fsm.CurrentState.SwitchToHudHandler(_fsm.PreviousState.GetEnum(), hudParams.HudState);
                     else
                         Log.ELazy(() => "GameManager: SwitchToGameStateHandler - Missing HudParams for Hud state.", this);
                     break;

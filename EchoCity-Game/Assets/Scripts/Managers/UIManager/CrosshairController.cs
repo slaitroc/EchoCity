@@ -15,6 +15,10 @@ namespace EchoCity
         private TextElement _interactionText;
         private VisualElement _interactionKey;
 
+        #region Public Properties
+        public float InteractionPanelHeight => _interactionPanel?.resolvedStyle.height ?? 0f;
+        #endregion
+
 
         void OnEnable()
         {

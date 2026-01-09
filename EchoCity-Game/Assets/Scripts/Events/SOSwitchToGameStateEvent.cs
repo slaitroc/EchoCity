@@ -22,14 +22,17 @@ namespace EchoCity
         }
     }
 
-    public class ToDialogueStateParams : EventParams
+    public class ToNarrationParams : EventParams
     {
-        private readonly DialogData _dialogData;
-        public DialogData DialogData => _dialogData;
+        private readonly SODialogContainer _narrationContainer;
+        private readonly SceneEnum _destinationScene = SceneEnum.None;
+        public SODialogContainer NarrationContainer => _narrationContainer;
+        public SceneEnum DestinationScene => _destinationScene;
 
-        public ToDialogueStateParams(DialogData dialogData)
+        public ToNarrationParams(SODialogContainer narrationContainer, SceneEnum destinationScene)
         {
-            _dialogData = dialogData;
+            _narrationContainer = narrationContainer;
+            _destinationScene = destinationScene;
         }
     }
 

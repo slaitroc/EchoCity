@@ -10,8 +10,8 @@ namespace EchoCity
     {
         [Header("UI")]
         [SerializeField] private UIDocument hudDocument;
-        [SerializeField] private QuestsManager questsManager;
-        private IQuestsManager _questsManager => questsManager as IQuestsManager;
+        [SerializeField] private PuzzleManager puzzleManager;
+        private IQuestsManager _questsManager => puzzleManager.QuestsManager as IQuestsManager;
 
         [SerializeField] private float completedVisibleSeconds = 5.0f;
         [SerializeField] private float fadeOutSeconds = 2.0f;

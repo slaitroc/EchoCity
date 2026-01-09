@@ -78,38 +78,123 @@
                     </ui:VisualElement>
                 </ui:Button>
 
-                <!-- INFO PANEL -->
+                <!-- RADIAL INFO PANEL -->
                 <ui:VisualElement name="RadialInfoPanel" class="radial-info-panel">
                     <ui:Label name="RadialInfoTitle" text="No Item Selected" class="radial-info-title" />
                     <ui:Label name="RadialInfoText" text="Select an Item and release the button to equip" class="radial-info-text" />
-                </ui:VisualElement>
+                    <ui:VisualElement name="RadialInfoProperties" class="radial-info-properties">
+                        <ui:VisualElement name="RadialInfoClass" class="radial-info-class" >
+                            <ui:Label name="RadialInfoClassLabel" text="Class:" class="radial-info-class-label" />
+                            <ui:VisualElement name="RadialInfoClassIcon" class="radial-info-class-icon" />
+                            <ui:VisualElement name="RadialInfoTransientIcon" class="radial-info-transient-icon" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="RadialInfoRange" class="radial-info-range" >
+                            <ui:Label name="RadialInfoRangeLabel" text="Range:" class="radial-info-range-label" />
+                            <ui:VisualElement name="RadialInfoRangeBar" class="radial-info-range-bar">
+                                <ui:VisualElement name="RadialInfoRangeFill" class="radial-info-range-fill" />
 
+                                <!-- TICKS OVERLAY -->
+                                <ui:VisualElement name="RadialInfoRangeTicks" class="radial-info-range-ticks">
+                                    <!-- number of ticks (segments - 1) -->
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                    <ui:VisualElement class="radial-info-range-tick" />
+                                </ui:VisualElement>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <!-- RADIAL TOOLS TUTORIAL PANEL -->
+            <ui:VisualElement name="ToolsTutorialPanel" class="tools-tutorial-panel">
+
+                <ui:Label text="Tools Properties" class="tools-properties-title" />
+                <ui:VisualElement class="tools-tutorial-list">
+                    <!-- LOW -->
+                    <ui:VisualElement class="tools-tutorial-entry">
+                        <ui:VisualElement class="tools-tutorial-header">
+                            <ui:VisualElement name="ToolsTutIconLow" class="tools-tutorial-icon" />
+                            <ui:Label name="ToolsTutTitleLow" text="Low Frequency:" class="tools-tutorial-title" />
+                        </ui:VisualElement>
+                        <ui:Label name="ToolsTutTextLow" class="tools-tutorial-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                    </ui:VisualElement>
+                    <!-- MID -->
+                    <ui:VisualElement class="tools-tutorial-entry">
+                        <ui:VisualElement class="tools-tutorial-header">
+                            <ui:VisualElement name="ToolsTutIconMid" class="tools-tutorial-icon" />
+                            <ui:Label name="ToolsTutTitleMid" text="Mid Frequency:" class="tools-tutorial-title" />
+                        </ui:VisualElement>
+                        <ui:Label name="ToolsTutTextMid" class="tools-tutorial-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."/>
+                    </ui:VisualElement>
+                    <!-- HIGH -->
+                    <ui:VisualElement class="tools-tutorial-entry">
+                        <ui:VisualElement class="tools-tutorial-header">
+                            <ui:VisualElement name="ToolsTutIconHigh" class="tools-tutorial-icon" />
+                            <ui:Label name="ToolsTutTitleHigh" text="High Frequency:" class="tools-tutorial-title" />
+                        </ui:VisualElement>
+                        <ui:Label name="ToolsTutTextHigh" class="tools-tutorial-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                    </ui:VisualElement>
+                    <!-- GENERAL FREQUENCY -->
+                    <ui:VisualElement class="tools-tutorial-entry">
+                        <ui:VisualElement class="tools-tutorial-header">
+                            <!-- <ui:VisualElement name="ToolsTutIconGeneral" class="tools-tutorial-icon" /> -->
+                            <ui:Label name="ToolsTutTitleGeneral" text="General rules:" class="tools-tutorial-title" />
+                        </ui:VisualElement>
+                        <ui:Label name="ToolsTutTextGeneral" class="tools-tutorial-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                    </ui:VisualElement>
+                    <!-- TRANSIENT -->
+                    <ui:VisualElement class="tools-tutorial-entry">
+                        <ui:VisualElement class="tools-tutorial-header">
+                            <ui:VisualElement name="ToolsTutIconTransient" class="tools-tutorial-icon" />
+                            <ui:Label name="ToolsTutTitleTransient" text="Transient:" class="tools-tutorial-title" />
+                        </ui:VisualElement>
+                        <ui:Label name="ToolsTutTextTransient" class="tools-tutorial-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                    </ui:VisualElement>
+                    <!-- RANGE -->
+                    <ui:VisualElement class="tools-tutorial-entry">
+                        <ui:VisualElement class="tools-tutorial-header">
+                            <!-- <ui:VisualElement name="ToolsTutRangeBar" class="radial-info-range-bar">
+                                <ui:VisualElement name="ToolsTutRangeFill" class="radial-info-range-fill" />
+                            </ui:VisualElement> -->
+                            <ui:Label name="ToolsTutTitleRange" text="Range:" class="tools-tutorial-title" />
+                        </ui:VisualElement>
+                        <ui:Label name="ToolsTutTextRange" class="tools-tutorial-text" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." />
+                    </ui:VisualElement>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
 
-        <!-- WARNING PANEL -->
-        <ui:VisualElement name="WarningPanel" class="warning-panel">
-            <ui:VisualElement name="WarningBox" class="warning-box">
-                <ui:Label name="WarningText" class="warning-text" text="Warning text placeholder"/>
+        <!-- POP UP PANEL -->
+        <ui:VisualElement name="PopUpPanel" class="pop-up-panel">
+            <ui:VisualElement name="PopUpBox" class="pop-up-box">
+                <ui:Label name="PopUpText" class="pop-up-text" text="Pop up text placeholder"/>
             </ui:VisualElement>
         </ui:VisualElement>
 
         <!-- TUTORIAL PANEL -->
         <ui:VisualElement name="TutorialPanel" class="tutorial-panel">
-            <ui:Label name="TutorialTitle" class="tutorial-title" text="Tutorial" />
+            <ui:VisualElement name="TutorialTitleLine" class="tutorial-title-line" >
+                <ui:Label name="TutorialTitle" class="tutorial-title" text="Tutorial" />
+                <ui:VisualElement name="KeyIcon_T" class="tutorial-key-icon" style="background-image: resource(&apos;Icons/Keyboard/t&apos;);" />
+            </ui:VisualElement>
 
             <ui:VisualElement name="TutorialLines" class="tutorial-lines">
 
                 <ui:VisualElement class="tutorial-line">
-                    <ui:Label text="Press" class="tutorial-text" />
                     <ui:VisualElement name="KeyIcon_E" class="tutorial-key-icon" />
-                    <ui:Label text="to interact" class="tutorial-text" />
+                    <ui:Label text="Interact" class="tutorial-text" />
                 </ui:VisualElement>
 
                 <ui:VisualElement class="tutorial-line">
-                    <ui:Label text="Hold" class="tutorial-text" />
                     <ui:VisualElement name="KeyIcon_Q" class="tutorial-key-icon" />
-                    <ui:Label text="to open the menu" class="tutorial-text" />
+                    <ui:Label text="[HOLD] Inventory" class="tutorial-text" />
                 </ui:VisualElement>
 
             </ui:VisualElement>

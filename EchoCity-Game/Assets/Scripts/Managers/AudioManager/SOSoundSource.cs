@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "SoundSourceSO", menuName = "ECHO CITY/Sound/SoundSourceSO")]
+[CreateAssetMenu(fileName = "SoundSourceSO", menuName = "ECHO CITY/Sound/Sound Source")]
 public class SOSoundSource : ScriptableObject
 {
     [SerializeField] private SOSoundClass soundClass;

@@ -22,14 +22,15 @@ namespace EchoCity
         private VisualElement _titleMenuContainer;
         private VisualElement _redBlinkOverlay;
         private VisualElement _blueBlinkOverlay;
-        private Button startGameButton;
-        private Button playgroundButton;
-        private Button settingsButton;
-        private Button quitButton;
-        private Button feedbackButton;
-        private Button[] buttons;
+        private Button _startGameButton;
+        private Button _playgroundButton;
+        private Button _settingsButton;
+        private Button _quitButton;
+        private Button _feedbackButton;
+        private Button[] _buttons;
         private bool _isNavMode = false;
         private bool _showCursor;
+        private bool _showPlaygroundButton = false;
         #endregion
 
         private void OnEnable()
@@ -47,14 +48,16 @@ namespace EchoCity
         IEnumerator InitCallbacksNextFrame()
         {
             _titleMenuContainer = _root.Q<VisualElement>("TitleMenuContainer");
-            startGameButton = _root.Q<Button>("StartGameButton");
-            playgroundButton = _root.Q<Button>("PlaygroundButton");
-            settingsButton = _root.Q<Button>("SettingsButton");
+            _startGameButton = _root.Q<Button>("StartGameButton");
+            _playgroundButton = _root.Q<Button>("PlaygroundButton");
+            _settingsButton = _root.Q<Button>("SettingsButton");
             // quitButton = _root.Q<Button>("QuitButton");
-            feedbackButton = _root.Q<Button>("FeedbackButton");
-            buttons = new Button[] { startGameButton, playgroundButton, settingsButton, feedbackButton };
+            _feedbackButton = _root.Q<Button>("FeedbackButton");
+            _buttons = new Button[] { _startGameButton, _playgroundButton, _settingsButton, _feedbackButton };
             _redBlinkOverlay = _root.Q<VisualElement>("RedBlinkOverlay");
             _blueBlinkOverlay = _root.Q<VisualElement>("BlueBlinkOverlay");
+
+            if (_playgroundButton != null) _playgroundButton.style.display = DisplayStyle.None;
 
             yield return null;
 
@@ -62,7 +65,7 @@ namespace EchoCity
             {
                 if (_isNavMode)
                 {
-                    foreach (var button in buttons)
+                    foreach (var button in _buttons)
                         button.pickingMode = PickingMode.Position;
                     DisableFocusHandler();
                     _showCursor = true;
@@ -72,7 +75,7 @@ namespace EchoCity
 
             _root.RegisterCallback<MouseOverEvent>(evt =>
             {
-                foreach (var button in buttons)
+                foreach (var button in _buttons)
                     if (button.worldBound.Contains(evt.mousePosition))
                     {
                         button.Focus();
@@ -82,17 +85,17 @@ namespace EchoCity
 
             _root.RegisterCallback<NavigationMoveEvent>(evt =>
             {
-                foreach (var button in buttons)
+                foreach (var button in _buttons)
                     button.pickingMode = PickingMode.Ignore;
                 _isNavMode = true;
                 _showCursor = false;
             });
 
-            if (startGameButton != null) startGameButton.clicked += StartGameClickHandler;
-            if (playgroundButton != null) playgroundButton.clicked += PlaygroundClickHandler;
-            if (settingsButton != null) settingsButton.clicked += SettingsClickHandler;
-            if (quitButton != null) quitButton.clicked += QuitClickHandler;
-            if (feedbackButton != null) feedbackButton.clicked += FeedbackClickHandler;
+            if (_startGameButton != null) _startGameButton.clicked += StartGameClickHandler;
+            if (_playgroundButton != null) _playgroundButton.clicked += PlaygroundClickHandler;
+            if (_settingsButton != null) _settingsButton.clicked += SettingsClickHandler;
+            if (_quitButton != null) _quitButton.clicked += QuitClickHandler;
+            if (_feedbackButton != null) _feedbackButton.clicked += FeedbackClickHandler;
         }
 
         IEnumerator RedBlinkLoop()
@@ -136,14 +139,14 @@ namespace EchoCity
 
         private void DisableFocusHandler()
         {
-            foreach (var button in buttons)
+            foreach (var button in _buttons)
                 button?.Blur();
         }
 
         private void StartGameClickHandler()
         {
             _titleMenuContainer.AddToClassList("hide");
-            uiManager.SwitchToInitLevel(SceneEnum.Level1);
+            uiManager.SwitchToInitLevel(SceneEnum.InitialNarration);
         }
 
         private void PlaygroundClickHandler()
@@ -161,13 +164,19 @@ namespace EchoCity
 
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
 
+        public void ShowPlaygroundButton()
+        {
+            _playgroundButton.style.display = _showPlaygroundButton ? DisplayStyle.None : DisplayStyle.Flex;
+            _showPlaygroundButton = !_showPlaygroundButton;
+        }
+
         private void OnDisable()
         {
-            if (startGameButton != null) startGameButton.clicked -= StartGameClickHandler;
-            if (playgroundButton != null) playgroundButton.clicked -= PlaygroundClickHandler;
-            if (settingsButton != null) settingsButton.clicked -= SettingsClickHandler;
-            if (quitButton != null) quitButton.clicked -= QuitClickHandler;
-            if (feedbackButton != null) feedbackButton.clicked -= FeedbackClickHandler;
+            if (_startGameButton != null) _startGameButton.clicked -= StartGameClickHandler;
+            if (_playgroundButton != null) _playgroundButton.clicked -= PlaygroundClickHandler;
+            if (_settingsButton != null) _settingsButton.clicked -= SettingsClickHandler;
+            if (_quitButton != null) _quitButton.clicked -= QuitClickHandler;
+            if (_feedbackButton != null) _feedbackButton.clicked -= FeedbackClickHandler;
 
             _showCursor = false;
         }

@@ -19,6 +19,7 @@ namespace EchoCity
         private VisualElement _root;
         private VisualElement _tutorialPanel;
         private VisualElement _tutorialLinesContainer;
+
         #endregion
 
         private void OnEnable()
@@ -27,7 +28,6 @@ namespace EchoCity
             _root = tutorialDocument.rootVisualElement;
 
             StartCoroutine(InitCallbacksNextFrame());
-            BuildFromLines(tutorialLines);
         }
 
         IEnumerator InitCallbacksNextFrame()
@@ -36,6 +36,7 @@ namespace EchoCity
             _tutorialLinesContainer = _root.Q<VisualElement>("TutorialLines");
 
             yield return null;
+            _tutorialPanel.style.display = DisplayStyle.Flex;
         }
 
         public void BuildFromLines(SOTutorialLine[] lines)
@@ -75,7 +76,29 @@ namespace EchoCity
 
                 _tutorialLinesContainer.Add(line);
             }
-        }
-    }
 
+        }
+        public void ShowHideLines(bool showTutorial = true)
+        {
+            if (showTutorial)
+            {
+                _tutorialLinesContainer.AddToClassList("expanded");
+                BuildFromLines(tutorialLines);
+            }
+            else
+                HideLines();
+        }
+
+        private void HideLines()
+        {
+            _tutorialLinesContainer.Clear();
+            _tutorialLinesContainer.RemoveFromClassList("expanded");
+        }
+
+        private void OnDisable()
+        {
+            _tutorialPanel.style.display = DisplayStyle.None;
+        }
+
+    }
 }

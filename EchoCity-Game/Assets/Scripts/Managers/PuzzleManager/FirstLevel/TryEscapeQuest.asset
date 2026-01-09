@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
+  m_Name: TryEscapeQuest
+  m_EditorClassIdentifier: 
+  questType: 0
+  quest: 0
+  description: Escape the lab facilities
+  questCompletedText: 
+  tagsToCheck:
+  - _tag: 0
+    _isActive: 1
+    _count: 0
+  countToComplete: 1
+  subscribeToEvents:
+  - {fileID: 11400000, guid: cd279e72d3a374e43b4f4efb60bcd339, type: 2}
+  nextQuests:
+  - {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
+  - {fileID: 11400000, guid: f15192193da090647ae567a057f7a609, type: 2}
+  - {fileID: 11400000, guid: ece9602826883f6428db83540c384119, type: 2}

@@ -41,7 +41,8 @@ namespace EchoCity
         [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
         [SerializeField] private SOSetMaterialEvent setMaterialEvent;
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
-        [SerializeField] private SOEquippedItemChanged equippedItemChanged;
+        [SerializeField] private SOEquippedItemChangedEvent equippedItemChanged;
+        [SerializeField] private SOItemUsedEvent itemUsedEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -83,8 +84,12 @@ namespace EchoCity
         private AudioContext _audioContext;
 
         [Header("Audio")]
-        private GameObject _playerToolsAudio;
         private AudioSource _playerAudioSource;
+        private VoiceAudioSource _playerLinesAudioSource;
+        private VoiceAudioSource _playerSecondaryLinesAudioSource;
+        public AudioSource PlayerAudioSource => _playerAudioSource;
+        public VoiceAudioSource PlayerVoiceAudioSource => _playerLinesAudioSource;
+        public VoiceAudioSource PlayerSecondaryVoiceAudioSource => _playerSecondaryLinesAudioSource;
 
         public bool Compute { get => _attractionCompute; set => _attractionCompute = value; }
         public float CurrentAttraction => attractionTarget != null ? attractionTarget.AttractionData.CurrentAttraction : _A;
@@ -119,11 +124,21 @@ namespace EchoCity
             currentHealth = maxHealth;
             _lastTimeDamaged = float.NegativeInfinity;
 
-            _playerToolsAudio = new GameObject("ToolsAudioSource");
-            _playerToolsAudio.transform.SetParent(transform);
-            _playerToolsAudio.transform.localPosition = Vector3.zero;
-            _playerAudioSource = _playerToolsAudio.AddComponent<AudioSource>();
-            _playerAudioSource.spatialBlend = 1.0f; // 3D sound
+            var playerAudio = new GameObject("ToolsAudioSource");
+            playerAudio.transform.SetParent(transform);
+            playerAudio.transform.localPosition = Vector3.zero;
+            _playerAudioSource = playerAudio.AddComponent<AudioSource>();
+            _playerAudioSource.spatialBlend = 1.0f; // 3D
+
+            var linesMainAudio = new GameObject("LinesMainAudioSource");
+            linesMainAudio.transform.SetParent(transform);
+            linesMainAudio.transform.localPosition = Vector3.zero;
+            _playerLinesAudioSource = linesMainAudio.AddComponent<VoiceAudioSource>();
+
+            var linesSecondaryAudio = new GameObject("LinesSecondaryAudioSource");
+            linesSecondaryAudio.transform.SetParent(transform);
+            linesSecondaryAudio.transform.localPosition = Vector3.zero;
+            _playerSecondaryLinesAudioSource = linesSecondaryAudio.AddComponent<VoiceAudioSource>();
         }
 
         void Update()
@@ -173,14 +188,18 @@ namespace EchoCity
             if (data == null)
                 Log.ELazy(() => $"EquipItem received null data for item at index {index}", this);
             if (prefab == null)
-                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
-            equippedItemChanged?.RaiseEvent(this);
+            {
+                if (data.PickableEnum != PickablesEnum.Hands)
+                    Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
+            }
+            equippedItemChanged?.RaiseEvent(this, data.PickableEnum);
         }
 
         public void UseTool()
         {
             if (equippedItem != null)
             {
+                itemUsedEvent?.RaiseEvent(this, equippedItem.Data);
                 if (equippedItem.Data.PickableType == PickableTypeEnum.SoundTool)
                 {
                     PlayRandomInAudioSource(equippedItem.Data.ToolSound, _audioContext, _playerAudioSource, MixerGroupEnum.SFX);
@@ -188,7 +207,9 @@ namespace EchoCity
                 }
                 else if (equippedItem.Data.PickableType == PickableTypeEnum.Tool)
                 {
-                    //use tool only when pointing interacting objects
+                    //DANGER
+                    //TODO
+                    //NOTE now it only uses tag to check if an interaction is possible
                 }
             }
             else

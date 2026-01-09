@@ -24,9 +24,10 @@ namespace EchoCity
         private Button _playgroundButton;
         private Button _feedbackButton;
         private Button _quitButton;
-        private Button[] buttons;
+        private Button[] _buttons;
         private bool _isNavMode = false;
         private bool _showCursor;
+        private bool _showPlaygroundButton = false;
         #endregion
 
         private void OnEnable()
@@ -48,7 +49,9 @@ namespace EchoCity
             _playgroundButton = _root.Q<Button>("PlaygroundButton");
             _feedbackButton = _root.Q<Button>("FeedbackButton");
             _quitButton = _root.Q<Button>("QuitButton");
-            buttons = new Button[] { _restartButton, _feedbackButton, _quitButton };
+            _buttons = new Button[] { _restartButton, _feedbackButton, _quitButton };
+
+            if (_playgroundButton != null) _playgroundButton.style.display = DisplayStyle.None;
 
             yield return null;
 
@@ -58,7 +61,7 @@ namespace EchoCity
             {
                 if (_isNavMode)
                 {
-                    foreach (var button in buttons)
+                    foreach (var button in _buttons)
                         button.pickingMode = PickingMode.Position;
                     DisableFocusHandler();
                     _showCursor = true;
@@ -68,7 +71,7 @@ namespace EchoCity
 
             _root.RegisterCallback<MouseOverEvent>(evt =>
             {
-                foreach (var button in buttons)
+                foreach (var button in _buttons)
                     if (button.worldBound.Contains(evt.mousePosition))
                     {
                         button.Focus();
@@ -78,7 +81,7 @@ namespace EchoCity
 
             _root.RegisterCallback<NavigationMoveEvent>(evt =>
             {
-                foreach (var button in buttons)
+                foreach (var button in _buttons)
                     button.pickingMode = PickingMode.Ignore;
                 _isNavMode = true;
                 _showCursor = false;
@@ -99,14 +102,20 @@ namespace EchoCity
 
         private void DisableFocusHandler()
         {
-            foreach (var button in buttons)
+            foreach (var button in _buttons)
                 button?.Blur();
         }
 
-        private void RestartGameClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.Level1);
+        private void RestartGameClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.FirstLevel);
         private void PlaygroundClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.Playground);
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
         private void QuitClickHandler() => uiManager.SwitchToTitleState();
+
+        public void ShowPlaygroundButton()
+        {
+            _playgroundButton.style.display = _showPlaygroundButton ? DisplayStyle.None : DisplayStyle.Flex;
+            _showPlaygroundButton = !_showPlaygroundButton;
+        }
 
         private void OnDisable()
         {

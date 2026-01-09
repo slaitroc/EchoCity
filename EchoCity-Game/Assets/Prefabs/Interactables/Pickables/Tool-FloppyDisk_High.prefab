@@ -158,11 +158,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327671a88ba00264eb63534826ba88bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
-  setTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 0
+    _count: 0
+  setTags:
+  - _tag: 5
+    _isActive: 1
+    _count: 0
   _description: 
-  PickableData: {fileID: 0}
-  showUIEvent: {fileID: 0}
+  PickableData: {fileID: 11400000, guid: 61fc36d83e190414cac0f070f42ec318, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   dialogContainer: {fileID: 11400000, guid: 7a37dd4918bd84d8b9a19ff1a4f3be47, type: 2}

@@ -117,6 +117,7 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] private SOSoundEmittedEvent soundEmittedEvent;
         [SerializeField] private SOAttractionInfoEvent attractionInfoEvent;
+        [SerializeField] private SOEnemyStateTransitionEvent enemyStateTransitionEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -133,9 +134,10 @@ namespace EchoCity
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private Animator animator;
         [SerializeField] private AudioSource audioSource;
+        [SerializeField] private HeadMarkManager headMark;
 
         [Header("Runtime")]
-        [SerializeField] private EnemyStatesEnum currentState;
+        [SerializeField] private EnemyStateEnum currentState;
         [SerializeField] private PatrolArea currentPatrolArea;
         [SerializeField] private PatrolArea[] patrolAreas;
         [SerializeField] private PerceivedSound lastPS;
@@ -152,7 +154,7 @@ namespace EchoCity
         // ENEMY CONTEXT
         public IFSMOwner Owner => this;
         public IFOV FOV => fov;
-        public EnemyStatesEnum CurrentStateEnum { get => currentState; set => currentState = value; }
+        public EnemyStateEnum CurrentStateEnum { get => currentState; set => currentState = value; }
         public SOEnemyData EnemyData => enemyData;
         public NavMeshAgent Agent => agent;
         public PatrolArea[] PatrolAreas => patrolAreas;
@@ -160,12 +162,14 @@ namespace EchoCity
         public Animator Animator => animator;
         public AudioSource AudioSource => audioSource;
         public IHitDetector HitDetector => hitDetector;
+        public HeadMarkManager HeadMark => headMark;
         public PerceivedSound LastPerceivedSound => lastPS;
         public PerceivedSound TargetSound => targetSound;
         public IAttractionSystem AttractionSystem => this;
         public IConfusionSystem ConfusionSystem => this;
         public SOSoundEmittedEvent SoundEmittedEvent => soundEmittedEvent;
         public SOAttractionInfoEvent AttractionInfoEvent => attractionInfoEvent;
+        public SOEnemyStateTransitionEvent EnemyStateTransitionEvent => enemyStateTransitionEvent;
 
         // ATTRACTION System
         [SerializeField] private float _A = 0f; //attraction
@@ -212,6 +216,7 @@ namespace EchoCity
             InitializeFOV(enemyData.FOVData); // Initialize FOV with enemy data
             InitPerceivedSounds();
             FindPatrolAreas();
+            if (headMark) headMark.Initialize(transform);
             _fsm = new EnemyFSM(this);
             _fsm.Initialize();
         }

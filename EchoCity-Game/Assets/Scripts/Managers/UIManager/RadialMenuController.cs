@@ -11,6 +11,25 @@ namespace EchoCity
         [SerializeField] private UIDocument hudDocument;
         [SerializeField] UIManager uiManager;
         [SerializeField] private PlayerInventory playerInventory;
+        [Header("Sound Tool Info")]
+        [Header("Sound Class Icon")]
+        [SerializeField] private Sprite lowFreqIcon;
+        [SerializeField] private Sprite midFreqIcon;
+        [SerializeField] private Sprite highFreqIcon;
+        [SerializeField] private Sprite transientIcon;
+        [Header("Tools Tutorial Info")]
+        [TextArea(3, 10)]
+        [SerializeField] private string tutorialTextLowFreq;
+        [TextArea(3, 10)]
+        [SerializeField] private string tutorialTextMidFreq;
+        [TextArea(3, 10)]
+        [SerializeField] private string tutorialTextHighFreq;
+        [TextArea(3, 10)]
+        [SerializeField] private string tutorialTextGeneral;
+        [TextArea(3, 10)]
+        [SerializeField] private string tutorialTextTransient;
+        [TextArea(3, 10)]
+        [SerializeField] private string tutorialTextRange;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
@@ -24,10 +43,26 @@ namespace EchoCity
         private VisualElement _radialRoot;
         private VisualElement _radialCenter;
         private VisualElement _infoPanel;
-
         private Label _infoTitle;
         private Label _infoText;
+        private VisualElement _infoProperties;
+        private VisualElement _infoClassIcon;
+        private VisualElement _infoTransientIcon;
+        private VisualElement _infoRangeFill;
+        private VisualElement _toolsTutorialPanel;
+        private VisualElement _toolsTutIconLow;
+        private VisualElement _toolsTutIconMid;
+        private VisualElement _toolsTutIconHigh;
+        private VisualElement _toolsTutIconTransient;
+        private Label _toolsTutTextLow;
+        private Label _toolsTutTextMid;
+        private Label _toolsTutTextHigh;
+        private Label _toolsTutGeneral;
+        private Label _toolsTutTextTransient;
+        private Label _toolsTutTextRange;
+
         #endregion
+
         #region Private Fields Inventory
         private InventoryItem[] _inventoryItems;
         private GameObject[] _itemsPrefabs;
@@ -54,11 +89,30 @@ namespace EchoCity
         IEnumerator InitCallbacksNextFrame()
         {
             _crosshair = _root.Q<VisualElement>("crosshair");
+
             _radialRoot = _root.Q<VisualElement>("RadialMenuRoot");
             _radialCenter = _root.Q<VisualElement>("RadialCenter");
             _infoPanel = _root.Q<VisualElement>("RadialInfoPanel");
             _infoTitle = _root.Q<Label>("RadialInfoTitle");
             _infoText = _root.Q<Label>("RadialInfoText");
+            _infoProperties = _root.Q<VisualElement>("RadialInfoProperties");
+            _infoClassIcon = _root.Q<VisualElement>("RadialInfoClassIcon");
+            _infoTransientIcon = _root.Q<VisualElement>("RadialInfoTransientIcon");
+            _infoRangeFill = _root.Q<VisualElement>("RadialInfoRangeFill");
+
+            _toolsTutorialPanel = _root.Q<VisualElement>("ToolsTutorialPanel");
+            _toolsTutIconLow = _root.Q<VisualElement>("ToolsTutIconLow");
+            _toolsTutIconMid = _root.Q<VisualElement>("ToolsTutIconMid");
+            _toolsTutIconHigh = _root.Q<VisualElement>("ToolsTutIconHigh");
+            _toolsTutIconTransient = _root.Q<VisualElement>("ToolsTutIconTransient");
+            _toolsTutTextLow = _root.Q<Label>("ToolsTutTextLow");
+            _toolsTutTextMid = _root.Q<Label>("ToolsTutTextMid");
+            _toolsTutTextHigh = _root.Q<Label>("ToolsTutTextHigh");
+            _toolsTutGeneral = _root.Q<Label>("ToolsTutTextGeneral");
+            _toolsTutTextTransient = _root.Q<Label>("ToolsTutTextTransient");
+            _toolsTutTextRange = _root.Q<Label>("ToolsTutTextRange");
+
+
 
             for (int i = 0; i < _inventoryItems.Length; i++)
             {
@@ -85,6 +139,22 @@ namespace EchoCity
             RebuildFromInventory(); // moved here before the yield because otherwise the menu would open with all the items for a frame
 
             yield return null;
+
+            if (_infoProperties != null)
+                _infoProperties.style.display = DisplayStyle.None; // Hide properties until an item is selected
+
+            if (_toolsTutIconLow != null) _toolsTutIconLow.style.backgroundImage = lowFreqIcon != null ? new StyleBackground(lowFreqIcon) : StyleKeyword.None;
+            if (_toolsTutIconMid != null) _toolsTutIconMid.style.backgroundImage = midFreqIcon != null ? new StyleBackground(midFreqIcon) : StyleKeyword.None;
+            if (_toolsTutIconHigh != null) _toolsTutIconHigh.style.backgroundImage = highFreqIcon != null ? new StyleBackground(highFreqIcon) : StyleKeyword.None;
+            if (_toolsTutIconTransient != null) _toolsTutIconTransient.style.backgroundImage = transientIcon != null ? new StyleBackground(transientIcon) : StyleKeyword.None;
+
+            if (_toolsTutTextLow != null) _toolsTutTextLow.text = tutorialTextLowFreq;
+            if (_toolsTutTextMid != null) _toolsTutTextMid.text = tutorialTextMidFreq;
+            if (_toolsTutTextHigh != null) _toolsTutTextHigh.text = tutorialTextHighFreq;
+            if (_toolsTutGeneral != null) _toolsTutGeneral.text = tutorialTextGeneral;
+            if (_toolsTutTextTransient != null) _toolsTutTextTransient.text = tutorialTextTransient;
+            if (_toolsTutTextRange != null) _toolsTutTextRange.text = tutorialTextRange;
+
         }
 
 
@@ -107,9 +177,7 @@ namespace EchoCity
         }
 
 
-
-
-        void Update()
+        private void Update()
         {
             MethodsUI.SetCursorState(true);
         }
@@ -141,6 +209,7 @@ namespace EchoCity
                 InventoryItem invItem = item.userData as InventoryItem;
                 _infoTitle.text = invItem.Data.Name;
                 _infoText.text = invItem.Data.Description;
+                UpdateInfoProperties(invItem.Data);
             }
             else if (!clear)
             {
@@ -151,17 +220,7 @@ namespace EchoCity
             {
                 _infoTitle.text = "No Item Selected";
                 _infoText.text = "Select an Item and release the button to equip";
-            }
-        }
-
-
-        public void RebuildFromInventory()
-        {
-            if (playerInventory == null) return;
-
-            for (int i = 0; i < _inventoryItems.Length; i++)
-            {
-                UpdateRadialItem(_inventoryItems[i], i);
+                ClearInfoProperties();
             }
         }
 
@@ -187,6 +246,71 @@ namespace EchoCity
                 }
 
                 itemButton.style.display = DisplayStyle.Flex;
+            }
+        }
+
+        private void UpdateInfoProperties(SOPickable data)
+        {
+            if (_infoProperties == null || data.PickableType != PickableTypeEnum.SoundTool) return;
+
+            _infoProperties.style.display = DisplayStyle.Flex;
+
+            SOSoundClass soundClass = data.ToolSound.SoundClass;
+            Sprite classIcon;
+            float volume = Mathf.Clamp01(data.ToolSound.Radius / 25f);
+
+            switch (soundClass.Frequency)
+            {
+                case Frequency.Low:
+                    classIcon = lowFreqIcon;
+                    break;
+                case Frequency.Mid:
+                    classIcon = midFreqIcon;
+                    break;
+                case Frequency.High:
+                    classIcon = highFreqIcon;
+                    break;
+                default:
+                    classIcon = null;
+                    break;
+            }
+
+            if (_infoClassIcon != null)
+                _infoClassIcon.style.backgroundImage = classIcon != null ? new StyleBackground(classIcon) : StyleKeyword.None;
+
+            if (_infoTransientIcon != null && soundClass.IsTransient)
+                _infoTransientIcon.style.backgroundImage = transientIcon != null ? new StyleBackground(transientIcon) : StyleKeyword.None;
+
+            if (_infoRangeFill != null)
+            {
+                _infoRangeFill.style.width = Length.Percent(volume * 100f);
+            }
+        }
+
+        private void ClearInfoProperties()
+        {
+            if (_infoProperties != null)
+                _infoProperties.style.display = DisplayStyle.None;
+
+            if (_infoClassIcon != null)
+                _infoClassIcon.style.backgroundImage = StyleKeyword.None;
+
+            if (_infoTransientIcon != null)
+                _infoTransientIcon.style.backgroundImage = StyleKeyword.None;
+
+            if (_infoRangeFill != null)
+            {
+                _infoRangeFill.style.width = Length.Percent(0f);
+            }
+        }
+
+        public void RebuildFromInventory()
+        {
+            if (playerInventory == null) return;
+
+            for (int i = 0; i < _inventoryItems.Length; i++)
+            {
+                UpdateRadialItem(_inventoryItems[i], i);
             }
         }
 

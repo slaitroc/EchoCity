@@ -50,7 +50,7 @@ namespace EchoCity
             _enemyAttractionEvent = _context.AttractionInfoEvent;
         }
 
-        public abstract EnemyStatesEnum GetEnum();
+        public abstract EnemyStateEnum GetEnum();
         public abstract void Enter();
         public abstract void Update();
         public abstract void Exit();
