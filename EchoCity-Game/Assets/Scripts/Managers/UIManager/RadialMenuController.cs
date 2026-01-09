@@ -60,7 +60,6 @@ namespace EchoCity
         private Label _toolsTutGeneral;
         private Label _toolsTutTextTransient;
         private Label _toolsTutTextRange;
-
         #endregion
 
         #region Private Fields Inventory
@@ -239,9 +238,11 @@ namespace EchoCity
                 SOPickable data = invItem.Data;
                 itemButton.userData = invItem;
 
+                VisualElement iconElement = itemButton.Q<VisualElement>(className: "radial-item-icon");
+
                 if (data.Icon != null)
                 {
-                    itemButton.style.backgroundImage = new StyleBackground(data.Icon);
+                    iconElement.style.backgroundImage = new StyleBackground(data.Icon);
                     itemButton.Q<Label>().text = "";
                 }
 
