@@ -182,7 +182,6 @@ namespace EchoCity
         public void CloseFeedbackMenu() => _feedbackMenu.SetActive(false);
         public void EquipItem(int index, SOPickable pickableData, GameObject obj) => playerController.EquipItem(index, pickableData, obj);
         public void PlayNextNarrationLine(int index) => EchoCitySound.PlayNarrationLine(index);
-        public void WarningHidden() => subtitlesController.ApplyOffset(0f);
         public void StopNarration() => EchoCitySound.StopNarration();
         public void ShowPlaygroundButton()
         {
@@ -251,7 +250,6 @@ namespace EchoCity
                 case ShowableUIEnum.PopUpMessage:
                     var warningParams = eventParams as PopUpMessageParams;
                     warningController.SpawnWarning(warningParams.Message, warningParams.Color);
-                    subtitlesController.ApplyOffset(warningController.WarningPanelHeight + _subtitlesBottomGapPx);
                     break;
                 default:
                     break;
@@ -303,7 +301,6 @@ namespace EchoCity
                     break;
             }
         }
-
         #endregion
 
         private void OnDisable()

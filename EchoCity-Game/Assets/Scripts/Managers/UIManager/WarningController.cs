@@ -5,10 +5,8 @@ using UnityEngine.UIElements;
 
 namespace EchoCity
 {
-
     public class WarningController : MonoBehaviour
     {
-
         [Header("UI")]
         [SerializeField] private UIDocument hudDocument;
         [SerializeField] private UIManager uIManager;
@@ -22,11 +20,6 @@ namespace EchoCity
         private VisualElement _warningBox;
         private Label _warningText;
         #endregion
-
-        #region Public Properties
-        public float WarningPanelHeight => _warningPanel?.resolvedStyle.height ?? 0f;
-        #endregion
-
 
         private void OnEnable()
         {
@@ -56,8 +49,6 @@ namespace EchoCity
         {
             yield return new WaitForSeconds(delay);
             _warningPanel.RemoveFromClassList("show");
-            yield return new WaitForSeconds(0.5f);
-            uIManager.WarningHidden();
         }
     }
 }
