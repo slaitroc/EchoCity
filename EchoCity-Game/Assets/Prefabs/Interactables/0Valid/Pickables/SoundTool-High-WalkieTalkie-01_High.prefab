@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3815544884769076997}
   - component: {fileID: 232060965265570860}
   - component: {fileID: 4645055897433672366}
-  - component: {fileID: 2897895215895834478}
   - component: {fileID: 3434314612403230416}
+  - component: {fileID: -7152644826731902427}
   m_Layer: 0
   m_Name: SoundTool-High-WalkieTalkie-01_High
   m_TagString: Untagged
@@ -124,26 +124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectFrequency: 1
---- !u!114 &2897895215895834478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931390142878105525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f60c6968c9d21d46972dcefc77aeb97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  puzzleManager: {fileID: 0}
-  checkTags: []
-  setTags: []
-  _description: 
-  PickableData: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  dialogContainer: {fileID: 11400000, guid: 34163aab2457843ea8925c9c6556bb99, type: 2}
 --- !u!65 &3434314612403230416
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -165,3 +145,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12172793, y: 0.3721778, z: 0.19091101}
   m_Center: {x: 0.0053491574, y: 0.13603492, z: 0.058646612}
+--- !u!114 &-7152644826731902427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931390142878105525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags: []
+  setTags: []
+  _interactionDescription: it looks like a walkie talkie
+  _InteractionSuccessMessage: walkie talkie
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
+  PickableData: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
