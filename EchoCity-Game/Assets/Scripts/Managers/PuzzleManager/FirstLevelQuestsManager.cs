@@ -662,7 +662,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.EnemySoundChase_Tutorial] < activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.EnemySoundChase_TutorialCompleted, true) }, false);
+            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.EnemySoundChase_TutorialCompleted, true), new PuzzleTagState(PuzzleTagEnum.TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial]);
         }
 

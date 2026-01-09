@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2961428877365973352}
   - component: {fileID: 8877476444992295686}
   m_Layer: 6
-  m_Name: Interactable-DoorArea-CageRoom
+  m_Name: Interactable-Detector-CageRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,13 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8d5097618a2e64bbaa820bb1beb363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 0}
-  interactionEvent: {fileID: 0}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 0
+    _count: 0
   setTags: []
-  _description: 
-  linkedInteractable: {fileID: 7380992368286325754}
+  _description: Exit Tutorial
+  linkedInteractable: {fileID: 7420656736931412561}
 --- !u!65 &8877476444992295686
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -86,8 +89,8 @@ GameObject:
   - component: {fileID: 9086455410581585553}
   - component: {fileID: 6028099583902861548}
   - component: {fileID: 1407012306536157803}
-  - component: {fileID: 7380992368286325754}
   - component: {fileID: 5729185255874795443}
+  - component: {fileID: 7420656736931412561}
   m_Layer: 0
   m_Name: Interactable-Door-CageRoom
   m_TagString: Untagged
@@ -206,30 +209,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.9698564, y: 2.9545457, z: 0.55051243}
   m_Center: {x: -0.9849277, y: 1.4772727, z: -0.00000166893}
---- !u!114 &7380992368286325754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7440424254173198217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9e678db85a445b4e969d25af3218c95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
-  puzzleManager: {fileID: 0}
-  checkTags: []
-  setTags: []
-  _description: 
-  hasFixDetector: 1
-  detector: {fileID: 2961428877365973352}
-  doorAnimator: {fileID: 0}
-  openSound: {fileID: 11400000, guid: 7b8f46bc19fdaad4b9d786240093af2b, type: 2}
-  closeSound: {fileID: 11400000, guid: cd9b1aa808ca0a047ac4760e331e46fa, type: 2}
-  _isOpen: 0
 --- !u!208 &5729185255874795443
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -246,6 +225,30 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.9850001, y: 1.4770001, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &7420656736931412561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440424254173198217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da622d40dacb18b46b28fc4fbfa6e19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags:
+  - _tag: 29
+    _isActive: 1
+    _count: 0
+  setTags: []
+  _description: Exit Tutorial
+  hasFixDetector: 1
+  detector: {fileID: 2961428877365973352}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
 --- !u!1 &9157734107336810167
 GameObject:
   m_ObjectHideFlags: 0
