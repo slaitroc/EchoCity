@@ -231,6 +231,7 @@ namespace EchoCity
             {
                 var dropped = Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
                 dropped.AddComponent<Rigidbody>();
+                dropped.GetComponent<Collider>().isTrigger = false;
             }
             playerInventory.DropItem(equippedItem.Index);
             EquipItem(0, playerInventory.Items[0]?.Data, playerInventory.Prefabs[0]);
