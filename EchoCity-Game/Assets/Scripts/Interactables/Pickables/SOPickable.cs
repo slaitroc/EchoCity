@@ -17,17 +17,20 @@ namespace EchoCity
         //Special Sound Tools
         Hands,
         // Sound Tools
-        Screwdriver,
+        AirHorn,
         Carillon,
         CannedFood,
+        Crowbar,
+        LowGeneratorRadio,
         MetalBar,
+        PowerDrill,
+        Screwdriver,
         WalkieTalkie,
         // Tools
         Battery,
         Cable,
         ElectricityCable,
         FloppyDisk,
-        LowGeneratorRadio,
     }
     public abstract class SOPickable : ScriptableObject
     {

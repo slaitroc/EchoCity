@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 5714337183056653460}
   - component: {fileID: 4086911524213826474}
   m_Layer: 0
-  m_Name: SoundTool-Mid-Trapano_Mid
+  m_Name: SoundTool-Mid-PowerDrill_Mid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,19 +384,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
-  showUIEvent: {fileID: 0}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
     _isActive: 0
     _count: 0
   setTags: []
-  _interactionDescription: 
-  _InteractionSuccessMessage: 
+  _interactionDescription: I wonder how I could use it
+  _InteractionSuccessMessage: power drill picked
   _InteractionFailMessage: 
   interactionContainer: {fileID: 0}
-  PickableData: {fileID: 11400000, guid: e92a8ea5fa1a3476fba2644de9639cee, type: 2}
+  PickableData: {fileID: 11400000, guid: da824190e22bc4c30a1ff9b3646e0de0, type: 2}
 --- !u!1 &3566691466988170590
 GameObject:
   m_ObjectHideFlags: 0
