@@ -214,7 +214,7 @@ namespace EchoCity
                     }
                     break;
                 case ShowableUIEnum.PauseMenu:
-                    HideAllElements(narration: false);
+                    HideAllElements(narration: true);
                     _pauseMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.Narration:

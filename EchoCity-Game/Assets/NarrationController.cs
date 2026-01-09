@@ -21,6 +21,7 @@ namespace EchoCity
         #region Narration Data
         private DialogLine[] _lines;
         private int _index;
+        private int _cachedIndex;
         private bool _isClosed;
         private bool _isReady;
         private SceneEnum _destinationScene;
@@ -77,7 +78,16 @@ namespace EchoCity
             }
 
             _lines = narrationParams.NarrationContainer.DialogLines;
-            _index = 0;
+            if (!narrationParams.UseCached)
+            {
+                _index = 0;
+                _cachedIndex = 0;
+            }
+            else
+            {
+                _index = _cachedIndex;
+            }
+
             _isClosed = false;
             _isFading = false;
 
@@ -113,6 +123,7 @@ namespace EchoCity
             }
 
             _index++;
+            _cachedIndex = _index;
             RenderCurrentLine();
 
             if (instant)
