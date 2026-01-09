@@ -188,7 +188,10 @@ namespace EchoCity
             if (data == null)
                 Log.ELazy(() => $"EquipItem received null data for item at index {index}", this);
             if (prefab == null)
-                Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
+            {
+                if (data.PickableEnum != PickablesEnum.Hands)
+                    Log.ELazy(() => $"EquipItem received null prefab for item '{data.Name}' (index {index})", this);
+            }
             equippedItemChanged?.RaiseEvent(this, data.PickableEnum);
         }
 

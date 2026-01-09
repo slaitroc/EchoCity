@@ -27,6 +27,8 @@ namespace EchoCity
         protected Action<SOQuest>[] _onAddQuest;
         protected Action<SOQuest>[] _onCompleteQuest;
 
+        [SerializeField] protected Color completeQuestMessageColor = Color.green;
+
         SOQuest[] IQuestsManager.ActiveQuests => activeQuests;
         int[] IQuestsManager.QuestProgression => questProgression;
 
@@ -99,6 +101,13 @@ namespace EchoCity
         protected void PlayLine(SOQuest quest, int lineIndex, bool @override = false)
         {
             EchoCitySound.AddInVoicePlayQueue(quest.ScriptContainer, showUIEvent, lineIndex, @override);
+        }
+
+        protected void ShowCompletedMessage(SOQuest quest)
+        {
+            if (string.IsNullOrEmpty(quest.QuestCompletedText))
+                return;
+            showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(quest.QuestCompletedText, completeQuestMessageColor));
         }
     }
 }

@@ -160,6 +160,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
                     ((SOPlayerMovementEvent)eventBase).OnEventRaised -= MoveTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -195,6 +196,8 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
                     ((SOPlayerMovementEvent)eventBase).OnEventRaised -= LookTutorialHandler;
             }
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
         }
         #endregion
 
@@ -231,7 +234,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
                     ((SOPlayerMovementEvent)eventBase).OnEventRaised -= SprintTutorialHandler;
             }
-
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -269,6 +272,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.PlayerMovement)
                     ((SOPlayerMovementEvent)eventBase).OnEventRaised -= JumpTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -306,6 +310,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
                     ((SOInteractionEvent)eventBase).OnEventRaised -= InteractTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -343,6 +348,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
                     ((SOInteractionEvent)eventBase).OnEventRaised -= PickUpTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -383,7 +389,8 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ShowUI)
                     ((SOShowUIEvent)eventBase).OnEventRaised -= OpenInventoryTutorialHandler;
             }
-            // PlayLine(quest, 1, true);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
         }
         #endregion
 
@@ -396,7 +403,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.EquippedItemChanged)
                     ((SOEquippedItemChangedEvent)eventBase).OnEventRaised += EquipItemTutorialHandler;
             }
-            // PlayLine(quest, 0);
+            PlayLine(quest, 0);
         }
 
         private void EquipItemTutorialHandler(IEventSender sender, PickablesEnum equippedItem)
@@ -420,6 +427,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.EquippedItemChanged)
                     ((SOEquippedItemChangedEvent)eventBase).OnEventRaised -= EquipItemTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -454,6 +462,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
                     ((SOItemUsedEvent)eventBase).OnEventRaised -= UseItemTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -491,6 +500,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
                     ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropItemTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -528,6 +538,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.EchoMaterialUpdated)
                     ((SOEchoMaterialUpdated)eventBase).OnEventRaised -= SwitchLightsOffTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -565,6 +576,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
                     ((SOItemUsedEvent)eventBase).OnEventRaised -= UseLowSOTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -601,6 +613,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
                     ((SOItemUsedEvent)eventBase).OnEventRaised -= UseMidSOTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -637,6 +650,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.ItemUsed)
                     ((SOItemUsedEvent)eventBase).OnEventRaised -= UseHighSOTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
@@ -674,6 +688,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
                     ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised -= EnemySoundChaseTutorialHandler;
             }
+            ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion

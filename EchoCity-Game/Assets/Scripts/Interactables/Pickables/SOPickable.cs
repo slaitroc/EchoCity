@@ -14,11 +14,12 @@ namespace EchoCity
     public enum PickablesEnum
     {
         None,
+        //Special Sound Tools
+        Hands,
         // Sound Tools
         Screwdriver,
         Carillon,
         CannedFood,
-        Hands,
         MetalBar,
         WalkieTalkie,
         // Tools
