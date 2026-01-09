@@ -13,7 +13,7 @@ namespace EchoCity
     public abstract class QuestsManager : MonoBehaviour, IEventSender, IQuestsManager
     {
         [Header("Invoking Events")]
-        [SerializeField] private SOQuestUpdatedEvent questsUpdatedEvent;
+        [SerializeField] protected SOQuestUpdatedEvent questsUpdatedEvent;
         [SerializeField] protected SOShowUIEvent showUIEvent;
 
         string IEventSender.SenderName => gameObject.name;
@@ -62,8 +62,8 @@ namespace EchoCity
             // Initialize the quest progression counter
             questProgression[(int)quest.Quest] = 0;
             // Invoke any specific event handlers for the quest
+            questsUpdatedEvent?.RaiseEvent(this, (int)quest.Quest, 0);
             _onAddQuest[(int)quest.Quest]?.Invoke(quest);
-            questsUpdatedEvent?.RaiseEvent(this, (int)quest.Quest, questProgression[(int)quest.Quest]);
         }
 
         public void CompleteQuest(SOQuest quest)
@@ -71,10 +71,10 @@ namespace EchoCity
             // Reset the quest progression counter
             questProgression[(int)quest.Quest] = (int)QuestStateEnum.Completed;
             // Invoke any specific event handlers for quest completion
+            questsUpdatedEvent?.RaiseEvent(this, (int)quest.Quest, questProgression[(int)quest.Quest]);
             _onCompleteQuest[(int)quest.Quest]?.Invoke(quest);
             foreach (var nextQuest in quest.NextQuests)
                 AddQuest(nextQuest);
-            questsUpdatedEvent?.RaiseEvent(this, (int)quest.Quest, questProgression[(int)quest.Quest]);
         }
 
         public void UpdateActiveQuests(IPuzzleManager puzzleManager)

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace EchoCity
@@ -755,13 +756,7 @@ namespace EchoCity
         private void OnEnemySoundChase_TutorialAdded(SOQuest quest)
         {
             Log.DLazy(() => $"Quest EnemySoundChase_Tutorial added.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
-                    ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised += EnemySoundChaseTutorialHandler;
-            }
-            _onUnsubscribeQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = UnsubscribeEnemySoundChaseTutorialHandler;
-            PlayLine(quest, 0);
+            StartCoroutine(StartEnemyQuestDelay(quest));
         }
 
         private void UnsubscribeEnemySoundChaseTutorialHandler(SOQuest quest)
@@ -792,6 +787,20 @@ namespace EchoCity
             UnsubscribeEnemySoundChaseTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
+        }
+
+        private IEnumerator StartEnemyQuestDelay(SOQuest quest)
+        {
+            questsUpdatedEvent.RaiseEvent(this, 0, (int)QuestStateEnum.ResetQuestsManager);
+            yield return new WaitForSeconds(activeQuests[(int)QuestsEnum.UseHighSO_Tutorial].ScriptContainer.DialogLines[1].AudioClip.length);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
+                    ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised += EnemySoundChaseTutorialHandler;
+            }
+            questsUpdatedEvent.RaiseEvent(this, (int)QuestsEnum.EnemySoundChase_Tutorial, 0);
+            _onUnsubscribeQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = UnsubscribeEnemySoundChaseTutorialHandler;
+            PlayLine(quest, 0);
         }
         #endregion
     }
