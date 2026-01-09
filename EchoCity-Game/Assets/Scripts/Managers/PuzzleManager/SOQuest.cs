@@ -11,11 +11,13 @@ namespace EchoCity
 
     public enum QuestsEnum
     {
-        TestOne,
-        TestTwo,
-        FindTheKey,
-        OpenTheDoor,
-        FixTheGenerator,
+        TryEscape,
+        FindPry,
+        FindFloppy,
+        FindPhone,
+        FixGenerator,
+        FindCable,
+        Escape,
         MAX
     }
 
@@ -23,7 +25,7 @@ namespace EchoCity
     public class SOQuest : ScriptableObject
     {
         [SerializeField] private QuestsTypeEnum questType = QuestsTypeEnum.Main;
-        [SerializeField] private QuestsEnum quest = QuestsEnum.TestOne;
+        [SerializeField] private QuestsEnum quest = QuestsEnum.Escape;
         [TextArea, SerializeField] private string description;
         [TextArea, SerializeField] private string questCompletedText;
         [SerializeField] private PuzzleTagState[] tagsToCheck;

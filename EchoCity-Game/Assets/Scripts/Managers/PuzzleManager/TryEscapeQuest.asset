@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
-  m_Name: TestOneQuest
+  m_Name: TryEscapeQuest
   m_EditorClassIdentifier: 
   questType: 0
   quest: 0
-  description: Test Quest Description
-  questCompletedText: Test Quest COMPLETED
+  description: Escape the lab facilities
+  questCompletedText: 
   tagsToCheck:
-  - _tag: 1
+  - _tag: 0
     _isActive: 1
     _count: 0
-  countToComplete: 2
+  countToComplete: 1
   subscribeToEvents:
-  - {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
+  - {fileID: 11400000, guid: cd279e72d3a374e43b4f4efb60bcd339, type: 2}
   nextQuests:
-  - {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  - {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
+  - {fileID: 11400000, guid: f15192193da090647ae567a057f7a609, type: 2}
+  - {fileID: 11400000, guid: ece9602826883f6428db83540c384119, type: 2}

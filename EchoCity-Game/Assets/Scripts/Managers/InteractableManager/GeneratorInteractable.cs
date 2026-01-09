@@ -7,10 +7,14 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] private SOShowUIEvent showUIEvent;
+        [SerializeField] protected SOInteractionEvent interactionEvent;
 
         [Header("Messages")]
         [SerializeField] private SODialogContainer dialogContainerSuccess;
         [SerializeField] private SODialogContainer dialogContainerFail;
+
+        [Header("Quest")]
+        [SerializeField] private SOQuest triggeredQuestIfFail;
 
         private AudioEmitter audioEmitter;
 
@@ -32,6 +36,8 @@ namespace EchoCity
             {
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("Can not start generator without cable!", new Color(1f, 0.5f, 0f, 1f)));
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainerFail)));
+                if (puzzleManager?.QuestsManager?.ActiveQuests[(int)triggeredQuestIfFail.Quest] == null)
+                    puzzleManager?.AddQuest(triggeredQuestIfFail);
             }
         }
     }

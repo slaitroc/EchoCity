@@ -153,6 +153,8 @@ MonoBehaviour:
   puzzleManager: {fileID: 744512548}
   activeQuests: []
   questProgression: 
+  startQuest: {fileID: 11400000, guid: 334427379713f184fb35298c33878cfd, type: 2}
+  finalQuest: {fileID: 11400000, guid: 7859632264aa2d44d932d7a8f5e86c67, type: 2}
 --- !u!114 &744512548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2046,7 +2048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudDocument: {fileID: 557246910997754761}
-  questsManager: {fileID: 0}
+  questsManager: {fileID: 744512547}
   completedVisibleSeconds: 5
   fadeOutSeconds: 2
 --- !u!1 &8271982753614926909

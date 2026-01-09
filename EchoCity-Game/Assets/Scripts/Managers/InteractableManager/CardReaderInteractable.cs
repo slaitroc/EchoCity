@@ -18,6 +18,9 @@ namespace EchoCity
         [SerializeField] private SODialogContainer dialogContainerSuccess;
         [SerializeField] private SODialogContainer dialogContainerFail;
 
+        [Header("Quest")]
+        [SerializeField] private SOQuest triggeredQuestIfFail;
+
         protected override void ResolveInteraction(bool outcome)
         {
             if (outcome)
@@ -32,6 +35,8 @@ namespace EchoCity
             {
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("CardReader can not be used!", new Color(1f, 0.5f, 0f, 1f)));
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainerFail)));
+                if (puzzleManager?.QuestsManager?.ActiveQuests[(int)triggeredQuestIfFail.Quest] == null)
+                    puzzleManager?.AddQuest(triggeredQuestIfFail);
             }
         }
     }

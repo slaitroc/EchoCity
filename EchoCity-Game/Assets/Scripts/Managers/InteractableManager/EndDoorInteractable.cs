@@ -6,6 +6,7 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] private SOShowUIEvent showUIEvent;
+        [SerializeField] protected SOInteractionEvent interactionEvent;
         [Header("End Game Event")]
         [SerializeField] SOSwitchToGameStateEvent switchToGameStateEvent;
 
@@ -25,6 +26,7 @@ namespace EchoCity
             {
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Warning, new WarningParams("Can not open door yet!", new Color(1f, 0.5f, 0f, 1f)));
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.Dialog, new DialogParams(new DialogData(dialogContainerFail)));
+                interactionEvent?.RaiseEvent(this, InteractionsEnum.EndDoor);
             }
         }
     }
