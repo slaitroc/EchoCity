@@ -111,7 +111,7 @@ namespace EchoCity
             {
                 _currentLevelEnum = scene;
                 SceneManager.SetActiveScene(existingScene);
-                yield return StartCoroutine(UnloadOtherLevels(scene));
+                // yield return StartCoroutine(UnloadOtherLevels(scene));
                 Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, this);
                 yield break;
             }

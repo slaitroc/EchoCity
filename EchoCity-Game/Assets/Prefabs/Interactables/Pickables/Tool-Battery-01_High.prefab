@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 585637594990957069}
   - component: {fileID: -8120182750725486910}
   - component: {fileID: 2906716552119026294}
+  - component: {fileID: -6558168578882006918}
   m_Layer: 0
   m_Name: Tool-Battery-01_High
   m_TagString: Untagged
@@ -122,3 +123,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectFrequency: 2
+--- !u!114 &-6558168578882006918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609219379033550390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags: []
+  setTags: []
+  _description: Battery. What needs a battery?
+  PickableData: {fileID: 11400000, guid: 3c35e17812793904d9c748aa8b1e142f, type: 2}
