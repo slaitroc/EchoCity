@@ -32,13 +32,8 @@ namespace EchoCity
             {
                 _uiActionMap = inputActionAsset.FindActionMap("UI");
                 _uiActionMap["ExitPause"].performed += OnExitPause;
+                _uiActionMap["ShowPlayground"].performed += OnShowPlayground;
             }
-        }
-
-        private void OnExitPause(InputAction.CallbackContext context)
-        {
-            if (!context.performed) return;
-            if (uiManager.IsPauseMenuActive) uiManager.SwitchToPlayState();
         }
 
         private void OnEnable()
@@ -58,6 +53,18 @@ namespace EchoCity
                     _uiActionMap.Enable();
                 else
                     _uiActionMap.Disable();
+        }
+
+        private void OnExitPause(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return;
+            if (uiManager.IsPauseMenuActive) uiManager.SwitchToPlayState();
+        }
+
+        private void OnShowPlayground(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return;
+            uiManager.ShowPlaygroundButton();
         }
     }
 }

@@ -184,6 +184,12 @@ namespace EchoCity
         public void PlayNextNarrationLine(int index) => EchoCitySound.PlayNarrationLine(index);
         public void WarningHidden() => subtitlesController.ApplyOffset(0f);
         public void StopNarration() => EchoCitySound.StopNarration();
+        public void ShowPlaygroundButton()
+        {
+            if (_titleMenu.activeSelf) titleMenuController.ShowPlaygroundButton();
+            if (_pauseMenu.activeSelf) pauseMenuController.ShowPlaygroundButton();
+            if (_deathMenu.activeSelf) deathMenuController.ShowPlaygroundButton();
+        }
         #endregion
 
 
