@@ -257,7 +257,7 @@ namespace EchoCity
 
             SOSoundClass soundClass = data.ToolSound.SoundClass;
             Sprite classIcon;
-            float volume = Mathf.Clamp01(data.ToolSound.Radius / 50f);
+            float volume = Mathf.Clamp01(data.ToolSound.Radius / 25f);
 
             switch (soundClass.Frequency)
             {
