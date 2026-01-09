@@ -63,8 +63,8 @@ namespace EchoCity
 
 
         [Header("Quests Management")]
-        [SerializeField] private QuestsManager questManager;
-        public IQuestsManager QuestsManager => questManager;
+        [SerializeField] private QuestsManager questsManager;
+        public IQuestsManager QuestsManager => questsManager;
         [Header("Puzzle Tags")]
         [SerializeField] private PuzzleTagState[] puzzleTags;
 
@@ -85,14 +85,14 @@ namespace EchoCity
 
         public void AddQuest(SOQuest quest)
         {
-            questManager?.AddQuest(quest);
+            questsManager?.AddQuest(quest);
         }
 
         public void IncrementTagCount(PuzzleTagEnum tag)
         {
             if (tag == PuzzleTagEnum.NONE || tag == PuzzleTagEnum.MAX) return;
             puzzleTags[(int)tag].Count = puzzleTags[(int)tag].Count + 1;
-            questManager?.UpdateActiveQuests(this);
+            questsManager?.UpdateActiveQuests(this);
         }
 
         private void InitializeTags()
@@ -138,7 +138,13 @@ namespace EchoCity
                 puzzleTags[(int)tagsToSet[i].Tag].Count = tagsToSet[i].Count;
             }
             if (checkQuests)
-                questManager?.UpdateActiveQuests(this);
+                questsManager?.UpdateActiveQuests(this);
+        }
+
+        public void SetQuestsManager(QuestsManager questsManager)
+        {
+            questsManager.SetPuzzleManager(this);
+            this.questsManager = questsManager;
         }
     }
 

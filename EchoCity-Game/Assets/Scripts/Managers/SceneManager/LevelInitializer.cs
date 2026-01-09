@@ -16,7 +16,10 @@ namespace EchoCity
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Initializer };
 
         [Header("Initialization Data")]
+        [SerializeField] private QuestsManager questsManager;
         [SerializeField] private SOQuest initialTutorialQuest;
+
+        protected PuzzleManager puzzleManager;
 
         void OnEnable()
         {
@@ -32,14 +35,15 @@ namespace EchoCity
             if (triggerCode != SceneLoaderTriggerEnum.InitLevel) return;
             setPlayerOnSpawnEvent.RaiseEvent(this);
             // add respawn quest to puzzle manager
-            var puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
+            puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
             if (puzzleManager != null && initialTutorialQuest != null)
             {
+                puzzleManager.SetQuestsManager(questsManager);
                 puzzleManager.AddQuest(initialTutorialQuest);
                 Log.DLazy(() => "Respawn quest added to PuzzleManager", this);
             }
+            InitializeLevel();
         }
-
-
+        protected virtual void InitializeLevel() { }
     }
 }

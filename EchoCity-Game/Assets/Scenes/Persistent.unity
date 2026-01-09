@@ -1775,7 +1775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8460cd2814f456b4287f66d9f4528181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questManager: {fileID: 8861211339865653366}
+  questManager: {fileID: 0}
   puzzleTags: []
 --- !u!114 &8734189390555504868
 MonoBehaviour:
@@ -1799,7 +1799,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3005479713171637389}
   - component: {fileID: 8714278021380127983}
-  - component: {fileID: 8861211339865653366}
   m_Layer: 0
   m_Name: Puzzle Manager
   m_TagString: PuzzleManager
@@ -1807,24 +1806,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8861211339865653366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8861211339865653365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c695d890f465d8439f86b6a010789ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  puzzleManager: {fileID: 8714278021380127983}
-  activeQuests: []
-  questProgression: 
-  completeQuestMessageColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &8883209508520622200
 MonoBehaviour:
   m_ObjectHideFlags: 0

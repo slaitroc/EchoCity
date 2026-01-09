@@ -4,18 +4,12 @@ namespace EchoCity
 {
     public class TutorialDoorInteractable : LinkableInteractable
     {
-
-        [SerializeField] private SOShowUIEvent showUIEvent;
+        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
+        [SerializeField] private SceneEnum targetScene;
         protected override void ResolveInteraction(bool outcome)
         {
             if (outcome)
-            {
-                //TODO trigger next level logic
-            }
-            else
-            {
-                showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("Finish the tutorial before proceeding.", Color.blue));
-            }
+                switchLevelEvent?.RaiseEvent(this, targetScene);
         }
     }
 }

@@ -15216,6 +15216,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8193725294360524654, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+    - target: {fileID: 8193725294360524654, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
       propertyPath: _InteractionFailMessage
       value: it is not the right moment to interact
       objectReference: {fileID: 0}
@@ -16670,6 +16674,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundTool-High-Carillon_Mid
       objectReference: {fileID: 0}
+    - target: {fileID: 2300712160690107500, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
     - target: {fileID: 2300712160690107500, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: _InteractionFailMessage
       value: it is not the right moment to interact
@@ -22413,6 +22421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2063805829}
   - component: {fileID: 2063805828}
+  - component: {fileID: 2063805830}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -22434,6 +22443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
+  questsManager: {fileID: 2063805830}
   initialTutorialQuest: {fileID: 11400000, guid: 82fd8b87a7d42f74ab0d14ef97df8006, type: 2}
 --- !u!4 &2063805829
 Transform:
@@ -22450,6 +22460,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2063805830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063805827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c695d890f465d8439f86b6a010789ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  activeQuests: []
+  questProgression: 
+  completeQuestMessageColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &2064806103 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 134528, guid: 1c138a5909a8ccf48a7792d7ee197b9d, type: 3}
@@ -23227,11 +23254,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6315056863803901366, guid: 5f69eee86fc4bbb4699ed2bae0b29bf4, type: 3}
   m_PrefabInstance: {fileID: 4106821346953113310}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &4966803252873546 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-  m_PrefabInstance: {fileID: 4260650228301239703}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &222470643580307208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23396,6 +23418,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 341382729906382144}
     m_Modifications:
+    - target: {fileID: 2961428877365973352, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
     - target: {fileID: 6248155892855548661, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
       propertyPath: m_LocalPosition.x
       value: -28.814758
@@ -23436,6 +23462,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7420656736931412561, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
+      propertyPath: targetScene
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420656736931412561, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+    - target: {fileID: 7420656736931412561, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
+      propertyPath: switchLevelEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
     - target: {fileID: 9157734107336810167, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
       propertyPath: m_Name
       value: Interactable-DoorAndArea-CageRoom
@@ -23457,6 +23495,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundTool-Low-LowGeneratorRadio_Mid
       objectReference: {fileID: 0}
+    - target: {fileID: 4816817231411925918, guid: 5f69eee86fc4bbb4699ed2bae0b29bf4, type: 3}
+      propertyPath: interactionEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
     - target: {fileID: 6315056863803901366, guid: 5f69eee86fc4bbb4699ed2bae0b29bf4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.537
@@ -23502,79 +23544,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f69eee86fc4bbb4699ed2bae0b29bf4, type: 3}
---- !u!1001 &4260650228301239703
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 5595003298818426895}
-    m_Modifications:
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.223
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.09
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.192
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.019936947
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.9998012
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -177.715
-      objectReference: {fileID: 0}
-    - target: {fileID: 4428316945064892760, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5309350973114077361, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: _InteractionFailMessage
-      value: it is not the right moment to interact
-      objectReference: {fileID: 0}
-    - target: {fileID: 5309350973114077361, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: _interactionDescription
-      value: Noah's Card ID
-      objectReference: {fileID: 0}
-    - target: {fileID: 5309350973114077361, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: checkTags.Array.data[0]._tag
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5309350973114077361, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: checkTags.Array.data[0]._isActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8313728767077907126, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
-      propertyPath: m_Name
-      value: Tool-IDCard_High
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 963c9fb5d6c9af943855f4f297f4e214, type: 3}
 --- !u!1 &4681631109052705149
 GameObject:
   m_ObjectHideFlags: 0
@@ -23683,7 +23652,6 @@ Transform:
   - {fileID: 4729941350257074}
   - {fileID: 1114417389}
   - {fileID: 1316527811}
-  - {fileID: 4966803252873546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5602306004617204830

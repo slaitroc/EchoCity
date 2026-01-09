@@ -80,7 +80,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.TestOne] < activeQuests[(int)QuestsEnum.TestOne].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Phone_Picked, true) });
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Phone_Picked, true) });
         }
 
         private void OnTestOneCompleted(SOQuest quest)
@@ -113,7 +113,7 @@ namespace EchoCity
             IncrementQuestProgress(QuestsEnum.TestTwo);
             if (questProgression[(int)QuestsEnum.TestTwo] < activeQuests[(int)QuestsEnum.TestTwo].CountToComplete)
                 return;
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.BunkerDoorKey_Picked, true) });
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.BunkerDoorKey_Picked, true) });
         }
 
         private void OnTestTwoCompleted(SOQuest quest)
@@ -148,7 +148,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.Move_Tutorial] < activeQuests[(int)QuestsEnum.Move_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Move_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Move_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.Move_Tutorial]);
         }
 
@@ -185,7 +185,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.Look_Tutorial] < activeQuests[(int)QuestsEnum.Look_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Look_TutorialCompleted, true) });
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Look_TutorialCompleted, true) });
         }
 
         private void OnLook_TutorialCompleted(SOQuest quest)
@@ -222,7 +222,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.Sprint_Tutorial] < activeQuests[(int)QuestsEnum.Sprint_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Sprint_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Sprint_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.Sprint_Tutorial]);
         }
 
@@ -260,7 +260,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.Jump_Tutorial] < activeQuests[(int)QuestsEnum.Jump_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Jump_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Jump_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.Jump_Tutorial]);
         }
 
@@ -298,7 +298,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.Interact_Tutorial] < activeQuests[(int)QuestsEnum.Interact_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Interact_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Interact_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.Interact_Tutorial]);
         }
 
@@ -336,7 +336,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.PickUp_Tutorial] < activeQuests[(int)QuestsEnum.PickUp_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PickUp_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PickUp_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.PickUp_Tutorial]);
         }
 
@@ -377,7 +377,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.OpenInventory_Tutorial] < activeQuests[(int)QuestsEnum.OpenInventory_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.OpenInventory_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.OpenInventory_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.OpenInventory_Tutorial]);
         }
 
@@ -415,7 +415,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.EquipItem_Tutorial] < activeQuests[(int)QuestsEnum.EquipItem_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.EquipItem_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.EquipItem_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.EquipItem_Tutorial]);
         }
 
@@ -450,7 +450,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.UseItem_Tutorial] < activeQuests[(int)QuestsEnum.UseItem_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseItem_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseItem_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.UseItem_Tutorial]);
         }
 
@@ -488,7 +488,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.DropItem_Tutorial] < activeQuests[(int)QuestsEnum.DropItem_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.DropItem_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.DropItem_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.DropItem_Tutorial]);
         }
 
@@ -526,7 +526,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.SwitchLightsOff_Tutorial] < activeQuests[(int)QuestsEnum.SwitchLightsOff_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.SwitchLightsOff_TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.SwitchLightsOff_TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.SwitchLightsOff_Tutorial]);
         }
 
@@ -564,7 +564,7 @@ namespace EchoCity
             IncrementQuestProgress(QuestsEnum.UseLowSO_Tutorial);
             if (questProgression[(int)QuestsEnum.UseLowSO_Tutorial] < activeQuests[(int)QuestsEnum.UseLowSO_Tutorial].CountToComplete)
                 return;
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseLowSO_TutorialCompleted, true) });
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseLowSO_TutorialCompleted, true) });
             CompleteQuest(activeQuests[(int)QuestsEnum.UseLowSO_Tutorial]);
         }
 
@@ -601,7 +601,7 @@ namespace EchoCity
             IncrementQuestProgress(QuestsEnum.UseMidSO_Tutorial);
             if (questProgression[(int)QuestsEnum.UseMidSO_Tutorial] < activeQuests[(int)QuestsEnum.UseMidSO_Tutorial].CountToComplete)
                 return;
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseMidSO_TutorialCompleted, true) });
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseMidSO_TutorialCompleted, true) });
             CompleteQuest(activeQuests[(int)QuestsEnum.UseMidSO_Tutorial]);
         }
 
@@ -638,7 +638,7 @@ namespace EchoCity
             IncrementQuestProgress(QuestsEnum.UseHighSO_Tutorial);
             if (questProgression[(int)QuestsEnum.UseHighSO_Tutorial] < activeQuests[(int)QuestsEnum.UseHighSO_Tutorial].CountToComplete)
                 return;
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseHighSO_TutorialCompleted, true) });
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.UseHighSO_TutorialCompleted, true) });
             CompleteQuest(activeQuests[(int)QuestsEnum.UseHighSO_Tutorial]);
         }
 
@@ -676,7 +676,7 @@ namespace EchoCity
             if (questProgression[(int)QuestsEnum.EnemySoundChase_Tutorial] < activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial].CountToComplete)
                 return;
 
-            puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.EnemySoundChase_TutorialCompleted, true), new PuzzleTagState(PuzzleTagEnum.TutorialCompleted, true) }, false);
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.EnemySoundChase_TutorialCompleted, true), new PuzzleTagState(PuzzleTagEnum.TutorialCompleted, true) }, false);
             CompleteQuest(activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial]);
         }
 

@@ -20,8 +20,7 @@ namespace EchoCity
         bool IEventSender.IsManager => true;
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Puzzle };
 
-        [SerializeField] protected PuzzleManager puzzleManager;
-        protected IPuzzleManager _puzzleManager => puzzleManager;
+        protected IPuzzleManager _puzzleManager;
         [SerializeField] protected SOQuest[] activeQuests;
         [SerializeField] protected int[] questProgression;
         protected Action<SOQuest>[] _onAddQuest;
@@ -41,6 +40,11 @@ namespace EchoCity
                 questProgression[i] = (int)QuestStateEnum.Inactive;
             _onAddQuest = new Action<SOQuest>[(int)QuestsEnum.MAX];
             _onCompleteQuest = new Action<SOQuest>[(int)QuestsEnum.MAX];
+        }
+
+        public void SetPuzzleManager(IPuzzleManager puzzleManager)
+        {
+            this._puzzleManager = puzzleManager;
         }
 
         public void AddQuest(SOQuest quest)
