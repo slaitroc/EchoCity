@@ -8907,17 +8907,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 341382729906382144}
     m_Modifications:
     - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
-      propertyPath: _isSwitchedOn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
       propertyPath: switchLinkedObject
       value: 
       objectReference: {fileID: 1394374492}
-    - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
-      propertyPath: checkTags.Array.data[0]._tag
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7351107638752198056, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -46.559
@@ -9185,29 +9177,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 341382729906382144}
     m_Modifications:
     - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
-      propertyPath: _isSwitchedOn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
       propertyPath: switchLinkedObject
       value: 
       objectReference: {fileID: 1394374492}
-    - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
-      propertyPath: _InteractionFailMessage
-      value: it is not the right moment to interact
-      objectReference: {fileID: 0}
-    - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
-      propertyPath: _interactionDescription
-      value: turn on / off the lights
-      objectReference: {fileID: 0}
-    - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
-      propertyPath: _InteractionSuccessMessage
-      value: lights toggled
-      objectReference: {fileID: 0}
-    - target: {fileID: 3839138378753685118, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
-      propertyPath: checkTags.Array.data[0]._tag
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 7351107638752198056, guid: 3d97cb6330051064ea1b951de962664e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -22.157
@@ -24150,26 +24122,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Interactable-CardReader
       objectReference: {fileID: 0}
-    - target: {fileID: 6186665633294773876, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: showUIEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: puzzleManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: materialSetEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
-    - target: {fileID: 7376426708341033886, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
-      propertyPath: newAudioSphereEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
