@@ -107,6 +107,15 @@ namespace EchoCity
                 StartFade(questID);
                 return;
             }
+            else if (progression == (int)QuestStateEnum.ResetQuestsManager)
+            {
+                _cache.Clear();
+                _list.Clear();
+                _rows.Clear();
+                _index = 0;
+                UpdatePanelVisibility();
+                return;
+            }
 
             string counterText = "";
 
