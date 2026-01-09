@@ -1,5 +1,5 @@
 using UnityEngine;
-public static class WarningColor
+public static class PopUpColor
 {
     public static readonly Color Message = Color.white;
     public static readonly Color Warning = Color.yellow;
