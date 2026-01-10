@@ -43,12 +43,12 @@ namespace EchoCity
 
         void OnEnable()
         {
-            if (switchLevelEvent) switchLevelEvent.OnEventRaised += ClearHandler;
+            // if (switchLevelEvent) switchLevelEvent.OnEventRaised += ClearHandler;
         }
 
         void OnDisable()
         {
-            if (switchLevelEvent) switchLevelEvent.OnEventRaised -= ClearHandler;
+            // if (switchLevelEvent) switchLevelEvent.OnEventRaised -= ClearHandler;
         }
 
         public bool AddItem(SOPickable data, GameObject pickablePrefab)
@@ -106,7 +106,7 @@ namespace EchoCity
             inventoryChangedEvent?.RaiseEvent(this, PickablesEnum.None, PickableTypeEnum.None, InventoryCodesEnum.Cleared);
         }
 
-        public void ClearHandler(IEventSender sender, SceneEnum scene, EventParams @params) => Clear();
+        // public void ClearHandler(IEventSender sender, SceneEnum scene, EventParams @params) => Clear();
 
     }
 }
