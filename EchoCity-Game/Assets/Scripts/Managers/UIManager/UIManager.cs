@@ -138,12 +138,10 @@ namespace EchoCity
             _winMenu = winMenuController.gameObject;
             _narration = narrationController.gameObject;
 
-
             if (playerController == null)
             {
                 Log.ELazy(() => "PlayerController reference is missing in UIManager!", this);
             }
-
         }
 
         private void OnEnable()
@@ -241,7 +239,7 @@ namespace EchoCity
                     _hud.SetActive(true);
                     if (!_subtitles.activeSelf) _subtitles.SetActive(true);
                     tutorialPanelController.ShowHideLines(_showTutorial);
-                    EquippedItemHandler(this, PickablesEnum.None);
+                    EquippedItemHandler(this, PickablesEnum.Hands);
                     ShowInteractionHandler(this, _cachedInteractParams.IsInteractable, _cachedInteractParams.ShowDescription, _cachedInteractParams.Text);
                     break;
                 default:
