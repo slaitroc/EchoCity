@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questType: 0
   quest: 3
+  tagsToActivate: []
   tagsToCheck:
   - _tag: 4
     _isActive: 1
@@ -22,7 +23,7 @@ MonoBehaviour:
   subscribeToEvents:
   - {fileID: 11400000, guid: eb10e54283279d1488d2959a694bad1c, type: 2}
   nextQuests:
-  - {fileID: 11400000, guid: f03def73ca873fa4eb0dccf8a5eebacf, type: 2}
+  - {fileID: 11400000, guid: 76befa16118c2884591b4bad6a2e1d1a, type: 2}
   description: Jump with SPACE
   questCompletedText: 'Tutorial: Jump Completed'
   scriptContainer: {fileID: 11400000, guid: 3cc0535bb6d123f4e85dba2f08a2a696, type: 2}

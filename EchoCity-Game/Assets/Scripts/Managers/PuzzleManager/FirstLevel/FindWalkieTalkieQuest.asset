@@ -10,20 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
-  m_Name: Sprint_TutorialQuest
+  m_Name: FindWalkieTalkieQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 2
-  tagsToActivate: []
-  tagsToCheck:
-  - _tag: 3
+  quest: 24
+  tagsToActivate:
+  - _tag: 30
     _isActive: 1
     _count: 0
-  countToComplete: 2
+  - _tag: 32
+    _isActive: 0
+    _count: 0
+  tagsToCheck:
+  - _tag: 32
+    _isActive: 1
+    _count: 0
+  countToComplete: 1
   subscribeToEvents:
-  - {fileID: 11400000, guid: eb10e54283279d1488d2959a694bad1c, type: 2}
-  nextQuests:
-  - {fileID: 11400000, guid: f03def73ca873fa4eb0dccf8a5eebacf, type: 2}
-  description: Sprint with SHIFT
-  questCompletedText: 'Tutorial: Sprint Completed'
-  scriptContainer: {fileID: 11400000, guid: 5c46fdef42d1c414b8923e59b52a3758, type: 2}
+  - {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
+  nextQuests: []
+  description: Find the WalkieTalkie
+  questCompletedText: 
+  scriptContainer: {fileID: 0}

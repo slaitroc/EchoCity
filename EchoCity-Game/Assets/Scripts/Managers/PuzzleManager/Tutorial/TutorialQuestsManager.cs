@@ -59,6 +59,10 @@ namespace EchoCity
 
             _onAddQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = OnEnemySoundChase_TutorialAdded;
             _onCompleteQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = OnEnemySoundChase_TutorialCompleted;
+
+            //tests
+            _onAddQuest[(int)QuestsEnum.FindWalkieTalkie] = OnFindWalkieTalkieAdded;
+            _onCompleteQuest[(int)QuestsEnum.FindWalkieTalkie] = OnFindWalkieTalkieCompleted;
         }
 
         #region TestOne
@@ -793,6 +797,8 @@ namespace EchoCity
         {
             questsUpdatedEvent.RaiseEvent(this, 0, (int)QuestStateEnum.ResetQuestsManager);
             yield return new WaitForSeconds(activeQuests[(int)QuestsEnum.UseHighSO_Tutorial].ScriptContainer.DialogLines[1].AudioClip.length);
+            PlayLine(quest, 0);
+            yield return new WaitForSeconds(activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial].ScriptContainer.DialogLines[0].AudioClip.length);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
                 if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
@@ -800,8 +806,68 @@ namespace EchoCity
             }
             questsUpdatedEvent.RaiseEvent(this, (int)QuestsEnum.EnemySoundChase_Tutorial, 0);
             _onUnsubscribeQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = UnsubscribeEnemySoundChaseTutorialHandler;
-            PlayLine(quest, 0);
         }
         #endregion
+
+        #region FindWalkieTalkie
+
+        private void OnFindWalkieTalkieAdded(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                {
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropWalkieTalkieHandler;
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += FindWalkieTalkieHandler;
+                }
+            }
+            Log.DLazy(() => $"Quest FindWalkieTalkie added.", this);
+
+            _onUnsubscribeQuest[(int)QuestsEnum.FindWalkieTalkie] = UnsubscribeFindWalkieTalkieHandler;
+            PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeFindWalkieTalkieHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                {
+
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= FindWalkieTalkieHandler;
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropWalkieTalkieHandler;
+                }
+            }
+        }
+
+        private void FindWalkieTalkieHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.WalkieTalkie)
+                return;
+
+            IncrementQuestProgress(QuestsEnum.FindWalkieTalkie);
+            if (questProgression[(int)QuestsEnum.FindWalkieTalkie] < activeQuests[(int)QuestsEnum.FindWalkieTalkie].CountToComplete)
+                return;
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.WalkieTalkie_Picked, true) });
+            CompleteQuest(activeQuests[(int)QuestsEnum.FindWalkieTalkie]);
+        }
+
+        private void DropWalkieTalkieHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (inventoryCodes != InventoryCodesEnum.ItemDropped || pickable != PickablesEnum.WalkieTalkie)
+                return;
+
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.WalkieTalkie_Picked, false) }, true);
+        }
+
+        private void OnFindWalkieTalkieCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            UnsubscribeFindWalkieTalkieHandler(quest);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
+        }
+        #endregion  
+
     }
 }

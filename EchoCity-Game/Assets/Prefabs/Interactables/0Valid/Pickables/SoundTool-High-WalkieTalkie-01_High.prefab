@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5855796167742410494}
   - component: {fileID: 3943915463905521218}
   - component: {fileID: 3815544884769076997}
-  - component: {fileID: 232060965265570860}
   - component: {fileID: 4645055897433672366}
   - component: {fileID: 3434314612403230416}
   - component: {fileID: -7152644826731902427}
@@ -30,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7931390142878105525}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6672665, y: 0.23399882, z: 0.23399882, w: 0.6672665}
+  m_LocalRotation: {x: -0.6672661, y: 0.23400013, z: 0.23400013, w: 0.6672661}
   m_LocalPosition: {x: 9.342, y: -0.89, z: -1.050119}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
@@ -90,27 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &232060965265570860
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931390142878105525}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.12172791, y: 0.37217778, z: 0.07359533}
-  m_Center: {x: 0.005348204, y: 0.13603303, z: 0}
 --- !u!114 &4645055897433672366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectFrequency: 1
+  objectFrequency: 2
 --- !u!65 &3434314612403230416
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -139,7 +117,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -161,8 +139,14 @@ MonoBehaviour:
   interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
-  setTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 0
+    _count: 0
+  setTags:
+  - _tag: 32
+    _isActive: 1
+    _count: 0
   _interactionDescription: it looks like a walkie talkie
   _InteractionSuccessMessage: walkie talkie
   _InteractionFailMessage: 

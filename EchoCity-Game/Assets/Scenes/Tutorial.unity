@@ -9862,9 +9862,37 @@ PrefabInstance:
       propertyPath: _InteractionSuccessMessage
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: setTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: setTags.Array.data[0]._tag
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
       propertyPath: _InteractionFailMessage
       value: it is not the right moment to interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._isActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11821,14 +11849,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundTool-High-WalkieTalkie-01_High
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2897895215895834478, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7931390142878105525, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2141475304}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
 --- !u!1001 &717757538
 PrefabInstance:
@@ -22663,6 +22687,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  tagsTriggeredQuests:
+  - {fileID: 11400000, guid: 76befa16118c2884591b4bad6a2e1d1a, type: 2}
+  - {fileID: 11400000, guid: de8e5832d71f5094c94609ebed7031fa, type: 2}
   activeQuests: []
   questProgression: 
   completeQuestMessageColor: {r: 0, g: 1, b: 0, a: 1}
@@ -23438,39 +23465,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 462970, guid: b9e6c0671747a994a9a380230900cb16, type: 3}
   m_PrefabInstance: {fileID: 1975986510}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2141475302 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7931390142878105525, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
-  m_PrefabInstance: {fileID: 716127834}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2141475303 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5855796167742410494, guid: 438abf1ba7ddb0f4fbd3692934765eea, type: 3}
   m_PrefabInstance: {fileID: 716127834}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2141475304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2141475302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  puzzleManager: {fileID: 0}
-  checkTags: []
-  setTags: []
-  _interactionDescription: is looks like a walkie talkie
-  _InteractionSuccessMessage: walkie talkie picked
-  _InteractionFailMessage: 
-  interactionContainer: {fileID: 0}
-  PickableData: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
 --- !u!4 &4729941350257074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6315056863803901366, guid: 5f69eee86fc4bbb4699ed2bae0b29bf4, type: 3}

@@ -22,6 +22,7 @@ namespace EchoCity
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Puzzle };
 
         protected IPuzzleManager _puzzleManager;
+        [SerializeField] protected SOQuest[] tagsTriggeredQuests;
         [SerializeField] protected SOQuest[] activeQuests;
         [SerializeField] protected int[] questProgression;
         protected Action<SOQuest>[] _onAddQuest;
@@ -36,6 +37,8 @@ namespace EchoCity
 
         protected virtual void Awake()
         {
+            if (tagsTriggeredQuests == null)
+                tagsTriggeredQuests = new SOQuest[0];
             activeQuests = new SOQuest[(int)QuestsEnum.MAX];
             questProgression = new int[(int)QuestsEnum.MAX];
             for (int i = 0; i < questProgression.Length; i++)
@@ -50,10 +53,10 @@ namespace EchoCity
             this._puzzleManager = puzzleManager;
         }
 
-        public void AddQuest(SOQuest quest)
+        public void AddQuest(SOQuest quest, bool reAdd = false)
         {
             // Add the quest to the active quests array
-            if (activeQuests[(int)quest.Quest] != null)
+            if (activeQuests[(int)quest.Quest] != null && !reAdd)
             {
                 Log.DLazy(() => $"Quest {quest.name} is already active.", this);
                 return;
@@ -66,8 +69,17 @@ namespace EchoCity
             _onAddQuest[(int)quest.Quest]?.Invoke(quest);
         }
 
+        private void DisableQuest(SOQuest quest)
+        {
+            questProgression[(int)quest.Quest] = (int)QuestStateEnum.Inactive;
+            _onUnsubscribeQuest[(int)quest.Quest]?.Invoke(quest);
+            questsUpdatedEvent?.RaiseEvent(this, (int)quest.Quest, questProgression[(int)quest.Quest]);
+        }
+
         public void CompleteQuest(SOQuest quest)
         {
+            if (questProgression[(int)quest.Quest] == (int)QuestStateEnum.Completed)
+                return;
             // Reset the quest progression counter
             questProgression[(int)quest.Quest] = (int)QuestStateEnum.Completed;
             // Invoke any specific event handlers for quest completion
@@ -93,6 +105,19 @@ namespace EchoCity
                     if (puzzleManager.CheckTags(quest.TagsToCheck))
                         CompleteQuest(quest);
                 }
+            }
+            for (int i = 0; i < tagsTriggeredQuests.Length; i++)
+            {
+                var quest = tagsTriggeredQuests[i];
+                if (quest == null)
+                    continue;
+                if (quest.TagsToActivate == null || quest.TagsToActivate.Length == 0)
+                    continue;
+                // Check if the quest conditions are met
+                if (puzzleManager.CheckTags(quest.TagsToActivate))
+                    AddQuest(quest, true);
+                else
+                    DisableQuest(quest);
             }
         }
 

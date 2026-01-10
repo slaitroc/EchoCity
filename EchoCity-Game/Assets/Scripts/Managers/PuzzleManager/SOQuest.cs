@@ -39,6 +39,7 @@ namespace EchoCity
         FindPry,
         FindFloppy,
         FindPhone,
+        FindWalkieTalkie,
         FixGenerator,
         FindCable,
         Escape,
@@ -50,6 +51,7 @@ namespace EchoCity
     {
         [SerializeField] private QuestsTypeEnum questType = QuestsTypeEnum.Main;
         [SerializeField] private QuestsEnum quest = QuestsEnum.Escape;
+        [SerializeField] private PuzzleTagState[] tagsToActivate;
         [SerializeField] private PuzzleTagState[] tagsToCheck;
         [SerializeField] private int countToComplete = 1;
         [SerializeField] private SOEventBase[] subscribeToEvents;
@@ -62,6 +64,7 @@ namespace EchoCity
         public QuestsEnum Quest => quest;
         public string Description => description;
         public string QuestCompletedText => questCompletedText;
+        public PuzzleTagState[] TagsToActivate => tagsToActivate;
         public PuzzleTagState[] TagsToCheck => tagsToCheck;
         public int CountToComplete => countToComplete;
         public SOEventBase[] SubscribeToEvents => subscribeToEvents;
