@@ -23,7 +23,7 @@ namespace EchoCity
         private int _index;
         private int _cachedIndex;
         private bool _isClosed;
-        private bool _isReady;
+        // private bool _isReady;
         private SceneEnum _destinationScene;
         private bool _isFading;
         private int _queuedNext;
@@ -37,7 +37,7 @@ namespace EchoCity
 
             _index = 0;
             _isClosed = false;
-            _isReady = false;
+            // _isReady = false;
 
             StartCoroutine(InitCallbacksNextFrame());
         }
