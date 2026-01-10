@@ -105,6 +105,15 @@ namespace EchoCity
         private GameObject _narration;
 
         private bool _showTutorial = true;
+        private struct InteractableParams
+        {
+            public bool IsInteractable;
+            public bool ShowDescription;
+            public string Text;
+            public float PanelHeight;
+        }
+        private InteractableParams _cachedInteractParams;
+        private bool _isCachedInteractPanel;
 
         #endregion
         #region Public Properties
@@ -149,24 +158,9 @@ namespace EchoCity
         }
 
         #region Public Methods
-        public void SwitchToPlayState()
-        {
-            EquippedItemHandler(this, PickablesEnum.None);
-            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
-        }
-
-        public void SwitchToTitleState()
-        {
-            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Title, null);
-        }
-
-        public void SwitchToInitLevel(SceneEnum scene)
-        {
-            EquippedItemHandler(this, PickablesEnum.None);
-            switchLevelEvent?.RaiseEvent(this, scene, null);
-        }
-
-
+        public void SwitchToPlayState() => switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
+        public void SwitchToTitleState() => switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Title, null);
+        public void SwitchToInitLevel(SceneEnum scene) => switchLevelEvent?.RaiseEvent(this, scene, null);
         public void OpenSettingsMenu() => _settingsMenu.SetActive(true);
         public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
         public void OpenFeedbackMenu() => _feedbackMenu.SetActive(true);
@@ -247,6 +241,8 @@ namespace EchoCity
                     _hud.SetActive(true);
                     if (!_subtitles.activeSelf) _subtitles.SetActive(true);
                     tutorialPanelController.ShowHideLines(_showTutorial);
+                    EquippedItemHandler(this, PickablesEnum.None);
+                    ShowInteractionHandler(this, _cachedInteractParams.IsInteractable, _cachedInteractParams.ShowDescription, _cachedInteractParams.Text);
                     break;
                 default:
                     break;
@@ -270,11 +266,24 @@ namespace EchoCity
 
         private void ShowInteractionHandler(IEventSender sender, bool isInteractable, bool showDescription, string text)
         {
+            float panelHeight = _isCachedInteractPanel ? _cachedInteractParams.PanelHeight : crosshairController.InteractionPanelHeight;
+
             crosshairController.IsInteractable(showDescription, isInteractable, text);
             if (showDescription)
-                subtitlesController.ApplyOffset(crosshairController.InteractionPanelHeight + _subtitlesBottomGapPx);
+            {
+                subtitlesController.ApplyOffset(panelHeight + _subtitlesBottomGapPx);
+                _isCachedInteractPanel = true;
+            }
             else
+            {
                 subtitlesController.ApplyOffset(0f);
+                _isCachedInteractPanel = false;
+            }
+
+            _cachedInteractParams.IsInteractable = isInteractable;
+            _cachedInteractParams.ShowDescription = showDescription;
+            _cachedInteractParams.Text = text;
+            _cachedInteractParams.PanelHeight = panelHeight;
         }
         private void EquippedItemHandler(IEventSender sender, PickablesEnum newEquippedItem) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
         private void InventoryChangedHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum code)
