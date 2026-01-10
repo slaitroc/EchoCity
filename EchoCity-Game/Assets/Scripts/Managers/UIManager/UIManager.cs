@@ -7,15 +7,15 @@ namespace EchoCity
     public enum ShowableUIEnum
     {
         TitleMenu,
-        LoadingScreen,
-        Play,
         HUD,
+        PopUpMessage,
         PauseMenu,
+        Subtitles,
         DeathMenu,
+        LoadingScreen,
         WinMenu,
         Narration,
-        PopUpMessage,
-        Subtitles,
+        Play,
     }
 
     [System.Serializable]
@@ -151,27 +151,17 @@ namespace EchoCity
         #region Public Methods
         public void SwitchToPlayState()
         {
-            HideAllElements();
-            _hud.SetActive(true);
-            _subtitles.SetActive(true);
-            tutorialPanelController.ShowHideLines(_showTutorial);
             EquippedItemHandler(this, PickablesEnum.None);
             switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
         }
 
         public void SwitchToTitleState()
         {
-            HideAllElements();
-            _titleMenu.SetActive(true);
             switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Title, null);
         }
 
         public void SwitchToInitLevel(SceneEnum scene)
         {
-            HideAllElements();
-            _hud.SetActive(true);
-            _subtitles.SetActive(true);
-            tutorialPanelController.ShowHideLines(_showTutorial);
             EquippedItemHandler(this, PickablesEnum.None);
             switchLevelEvent?.RaiseEvent(this, scene, null);
         }
@@ -221,16 +211,13 @@ namespace EchoCity
                             break;
                     }
                     break;
-                case ShowableUIEnum.PauseMenu:
-                    HideAllElements(narration: true);
-                    _pauseMenu.SetActive(true);
+                case ShowableUIEnum.PopUpMessage:
+                    var popUpParams = eventParams as PopUpMessageParams;
+                    popUpController.SpawnPopUp(popUpParams.Message, popUpParams.Color);
                     break;
-                case ShowableUIEnum.Narration:
-                    var narrationParams = eventParams as NarrationParams;
-                    HideAllElements();
-                    _narration.SetActive(true);
-                    narrationController.StartNarration(narrationParams);
-                    if (!narrationParams.UseCached) EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender, eventTime: 1f);
+                case ShowableUIEnum.PauseMenu:
+                    HideAllElements(narration: true, subtitles: true);
+                    _pauseMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.Subtitles:
                     var subtitleParams = eventParams as SubtitleParams;
@@ -248,9 +235,18 @@ namespace EchoCity
                     HideAllElements();
                     _winMenu.SetActive(true);
                     break;
-                case ShowableUIEnum.PopUpMessage:
-                    var popUpParams = eventParams as PopUpMessageParams;
-                    popUpController.SpawnPopUp(popUpParams.Message, popUpParams.Color);
+                case ShowableUIEnum.Narration:
+                    var narrationParams = eventParams as NarrationParams;
+                    HideAllElements();
+                    _narration.SetActive(true);
+                    narrationController.StartNarration(narrationParams);
+                    if (!narrationParams.UseCached) EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender, eventTime: 1f);
+                    break;
+                case ShowableUIEnum.Play:
+                    HideAllElements(subtitles: true);
+                    _hud.SetActive(true);
+                    if (!_subtitles.activeSelf) _subtitles.SetActive(true);
+                    tutorialPanelController.ShowHideLines(_showTutorial);
                     break;
                 default:
                     break;
