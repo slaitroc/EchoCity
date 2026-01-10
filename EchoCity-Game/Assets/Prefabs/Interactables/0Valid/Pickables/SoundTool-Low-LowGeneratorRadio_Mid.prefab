@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2439349568433151353}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9004197, z: -0, w: -0.43502235}
+  m_LocalRotation: {x: 0, y: 0.9004213, z: -0, w: -0.43501893}
   m_LocalPosition: {x: -0.537, y: 0.102, z: 2.395}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 0
@@ -140,8 +140,8 @@ MonoBehaviour:
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
-  - _tag: 5
-    _isActive: 1
+  - _tag: 0
+    _isActive: 0
     _count: 0
   setTags: []
   _interactionDescription: A radio capable of generating low frequency sounds
