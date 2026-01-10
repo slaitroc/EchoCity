@@ -288,7 +288,7 @@ namespace EchoCity
         private void EquippedItemHandler(IEventSender sender, PickablesEnum newEquippedItem) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
         private void InventoryChangedHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum code)
         {
-            if (code == InventoryCodesEnum.ItemDropped) equippedPanelController.ClearEquipped();
+            if (code == InventoryCodesEnum.ItemDropped || code == InventoryCodesEnum.Cleared) equippedPanelController.ClearEquipped();
         }
         private void QuestUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
         private void TimerEventHandler(IEventSender sender, TimerEventEnum timerEventEnum)
