@@ -10,6 +10,8 @@ namespace EchoCity
 
         private AudioEmitter audioEmitter;
 
+        public override InteractionEnum InteractionCode => InteractionEnum.Generator;
+
         protected override void Awake()
         {
             base.Awake();

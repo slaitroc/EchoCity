@@ -27,7 +27,7 @@ namespace EchoCity
             _onCompleteQuest[(int)QuestsEnum.Escape] = OnEscapeCompleted;
         }
 
-        //####################################################################
+        #region Try Escape Quest
         private void OnTryEscapeAdded(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} added.", this);
@@ -36,11 +36,12 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
                     ((SOInteractionEvent)eventBase).OnEventRaised += TryEscapeQuestHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.TryEscape] = UnsubscribeTryEscapeHandler;
+            PlayLine(quest, 0);
         }
 
-        private void OnTryEscapeCompleted(SOQuest quest)
+        private void UnsubscribeTryEscapeHandler(SOQuest quest)
         {
-            Log.DLazy(() => $"Quest {quest.name} completed.", this);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
@@ -55,18 +56,130 @@ namespace EchoCity
                 CompleteQuest(activeQuests[(int)QuestsEnum.TryEscape]);
         }
 
-        //####################################################################
+        private void OnTryEscapeCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            UnsubscribeTryEscapeHandler(quest);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
+        }
 
-        private void OnFindPryAdded(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} added.", this);
-        private void OnFindPryCompleted(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} completed.", this);
+        #endregion
 
-        //####################################################################
+        #region Find Pry Quest
+        private void OnFindPryAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                {
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropPryHandler;
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += FindPryHandler;
+                }
+            }
+            _onUnsubscribeQuest[(int)QuestsEnum.FindPry] = UnsubscribeFindPryHandler;
+            PlayLine(quest, 0);
+        }
 
-        private void OnFindFloppyAdded(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} added.", this);
-        private void OnFindFloppyCompleted(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} completed.", this);
+        private void UnsubscribeFindPryHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                {
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= FindPryHandler;
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropPryHandler;
+                }
+            }
+        }
 
-        //####################################################################
+        private void FindPryHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.CrowBar)
+                return;
 
+            IncrementQuestProgress(QuestsEnum.FindPry);
+            if (questProgression[(int)QuestsEnum.FindPry] < activeQuests[(int)QuestsEnum.FindPry].CountToComplete)
+                return;
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PryTool_Picked, true) });
+            CompleteQuest(activeQuests[(int)QuestsEnum.FindPry]);
+        }
+
+        private void DropPryHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (inventoryCodes != InventoryCodesEnum.ItemDropped || pickable != PickablesEnum.CrowBar)
+                return;
+
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PryTool_Picked, false) }, true);
+        }
+
+        private void OnFindPryCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            UnsubscribeFindPryHandler(quest);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
+        }
+        #endregion
+
+        #region Find Floppy Quest
+        private void OnFindFloppyAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} added.", this);
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                {
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropFloppyHandler;
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += FindFloppyHandler;
+                }
+            }
+            _onUnsubscribeQuest[(int)QuestsEnum.FindFloppy] = UnsubscribeFindFloppyHandler;
+            PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeFindFloppyHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                {
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= FindFloppyHandler;
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropFloppyHandler;
+                }
+            }
+        }
+
+        private void FindFloppyHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.FloppyDisk)
+                return;
+
+            IncrementQuestProgress(QuestsEnum.FindFloppy);
+            if (questProgression[(int)QuestsEnum.FindFloppy] < activeQuests[(int)QuestsEnum.FindFloppy].CountToComplete)
+                return;
+            CompleteQuest(activeQuests[(int)QuestsEnum.FindFloppy]);
+        }
+
+        private void DropFloppyHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (inventoryCodes != InventoryCodesEnum.ItemDropped || pickable != PickablesEnum.FloppyDisk)
+                return;
+
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.FloppyDisk_Picked, false) }, true);
+        }
+
+        private void OnFindFloppyCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            UnsubscribeFindFloppyHandler(quest);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
+        }
+        #endregion
+
+        #region Find Phone Quest
         private void OnFindPhoneAdded(SOQuest quest)
         {
             foreach (var eventBase in quest.SubscribeToEvents)
@@ -78,7 +191,6 @@ namespace EchoCity
                 }
             }
             Log.DLazy(() => $"Quest FindPhone added.", this);
-
             _onUnsubscribeQuest[(int)QuestsEnum.FindPhone] = UnsubscribeFindPhoneHandler;
             PlayLine(quest, 0);
         }
@@ -89,7 +201,6 @@ namespace EchoCity
             {
                 if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
                 {
-
                     ((SOInventoryChangedEvent)eventBase).OnEventRaised -= FindPhoneHandler;
                     ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropPhoneHandler;
                 }
@@ -123,14 +234,27 @@ namespace EchoCity
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
+        #endregion
 
-        //####################################################################
+        #region Fix Generator Quest
+        private void OnFixGeneratorAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} added.", this);
+            _onUnsubscribeQuest[(int)QuestsEnum.FixGenerator] = UnsubscribeFixGeneratorHandler;
+            PlayLine(quest, 0);
+        }
+        private void UnsubscribeFixGeneratorHandler(SOQuest quest) { }
 
-        private void OnFixGeneratorAdded(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} added.", this);
-        private void OnFixGeneratorCompleted(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} completed.", this);
+        private void OnFixGeneratorCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            UnsubscribeFixGeneratorHandler(quest);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
+        }
+        #endregion
 
-        //####################################################################
-
+        #region Escape Quest
         private void OnEscapeAdded(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} added.", this);
@@ -139,11 +263,12 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
                     ((SOInteractionEvent)eventBase).OnEventRaised += EscapeQuestHandler;
             }
+            _onUnsubscribeQuest[(int)QuestsEnum.Escape] = UnsubscribeEscapeHandler;
+            PlayLine(quest, 0);
         }
 
-        private void OnEscapeCompleted(SOQuest quest)
+        private void UnsubscribeEscapeHandler(SOQuest quest)
         {
-            Log.DLazy(() => $"Quest {quest.name} completed.", this);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
@@ -156,5 +281,15 @@ namespace EchoCity
             if (interaction == InteractionEnum.EndDoor)
                 CompleteQuest(activeQuests[(int)QuestsEnum.Escape]);
         }
+
+        private void OnEscapeCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            UnsubscribeEscapeHandler(quest);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
+        }
+
+        #endregion
     }
 }

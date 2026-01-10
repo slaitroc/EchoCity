@@ -22,6 +22,8 @@ namespace EchoCity
             }
         }
 
+        public override InteractionEnum InteractionCode => InteractionEnum.DoorArea;
+
         protected override void Awake()
         {
             base.Awake();

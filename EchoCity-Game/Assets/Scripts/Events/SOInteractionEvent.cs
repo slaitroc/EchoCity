@@ -7,9 +7,15 @@ namespace EchoCity
         None,
         Radio,
         DeskFan,
-        Pickable,
-        LightSwitch,
+        Generator,
+        CardReader,
+        Door,
+        TutorialDoor,
         EndDoor,
+        DoorArea,
+        Pickable,
+        WallLightSwitch,
+        TutorialTrigger
     }
 
     public enum InteractionObjectTypeEnum

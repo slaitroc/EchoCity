@@ -7,10 +7,10 @@ namespace EchoCity
         [SerializeField] protected SOSoundEmittedEvent soundEmittedEvent;
         [SerializeField] protected SOInteractionEvent interactionEvent;
         [SerializeField] protected SOShowUIEvent showUIEvent;
-        public string SenderName => gameObject.name;
-        public int SenderID => GetInstanceID();
-        public bool IsManager => false;
-        public EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Interactable };
+        public virtual string SenderName => gameObject.name;
+        public virtual int SenderID => GetInstanceID();
+        public virtual bool IsManager => false;
+        public virtual EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Interactable };
 
         [Header("Interactable Settings")]
         [SerializeField] protected PuzzleManager puzzleManager;
@@ -28,7 +28,7 @@ namespace EchoCity
         protected Color _failMessageColor = Color.red;
         [SerializeField] SODialogContainer interactionContainer;
 
-        protected virtual InteractionEnum _interactionCode { get; }
+        public abstract InteractionEnum InteractionCode { get; }
         protected AudioContext _audioContext;
         protected Renderer[] _cachedRenderers;
 
@@ -63,7 +63,7 @@ namespace EchoCity
         {
             bool outcome = puzzleManager?.TryUpdateTagsHandler(checkTags, setTags) ?? false;
             if (outcome)
-                if (interactionEvent != null) interactionEvent.RaiseEvent(this, _interactionCode);
+                if (interactionEvent != null) interactionEvent.RaiseEvent(this, InteractionCode);
             OutcomeMessages(outcome);
             ResolveInteraction(outcome);
             return outcome;

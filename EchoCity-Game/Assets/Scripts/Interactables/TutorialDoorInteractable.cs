@@ -9,6 +9,9 @@ namespace EchoCity
 
         private int _exitTutorialConfirmations = 0;
         private const int _requiredConfirmations = 3;
+
+        public override InteractionEnum InteractionCode => InteractionEnum.TutorialDoor;
+
         protected override void ResolveInteraction(bool outcome)
         {
             if (outcome)

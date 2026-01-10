@@ -20,9 +20,11 @@ namespace EchoCity
         [Header("Initialization Data")]
         [SerializeField] private QuestsManager questsManager;
         [SerializeField] private SOQuest initialQuest;
+        [SerializeField] private SOPickable equippedItemOnStart;
 
         protected PuzzleManager puzzleManager;
         protected PlayerInventory playerInventory;
+        protected PlayerController playerController;
 
         void OnEnable()
         {
@@ -35,14 +37,17 @@ namespace EchoCity
         }
         void InitializeHandler(IEventSender sender, SceneLoaderTriggerEnum triggerCode)
         {
+            EchoCitySound.StopAllVoices();
             if (triggerCode != SceneLoaderTriggerEnum.InitLevel) return;
             setPlayerOnSpawnEvent.RaiseEvent(this);
             // add respawn quest to puzzle manager
             puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
             playerInventory = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerInventory>();
+            playerController = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
             if (initInventoryOnStart && playerInventory != null)
             {
                 playerInventory.Clear();
+                playerController.EquipItem(0, equippedItemOnStart, null);
                 Log.DLazy(() => "Player inventory initialized on level start.", this);
             }
             if (puzzleManager != null && initialQuest != null)

@@ -31,9 +31,10 @@ namespace EchoCity
         BunkerDoorKey_Picked = 33,
         Cable_Picked = 34,
         FloppyDisk_Picked = 35,
-        // On / Activated
+        // On / Activated   
         CardReader_On = 36,
         WearingGlasses = 37,
+        PryTool_Picked = 38,
         MAX
     }
 

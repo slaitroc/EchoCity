@@ -20,7 +20,7 @@ namespace EchoCity
         AirHorn,
         Carillon,
         CannedFood,
-        Crowbar,
+        CrowBar,
         LowGeneratorRadio,
         MetalBar,
         PowerDrill,

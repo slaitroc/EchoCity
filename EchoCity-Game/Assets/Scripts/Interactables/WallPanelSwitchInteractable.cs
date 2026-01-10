@@ -42,6 +42,8 @@ namespace EchoCity
             }
         }
 
+        public override InteractionEnum InteractionCode => InteractionEnum.WallLightSwitch;
+
         protected override void Awake()
         {
             base.Awake();

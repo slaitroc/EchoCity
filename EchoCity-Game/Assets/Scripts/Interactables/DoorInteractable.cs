@@ -31,6 +31,8 @@ public class DoorInteractable : LinkableInteractable
         }
     }
 
+    public override InteractionEnum InteractionCode => InteractionEnum.Door;
+
     protected override void Awake()
     {
         base.Awake();

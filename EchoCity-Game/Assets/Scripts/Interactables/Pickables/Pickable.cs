@@ -10,7 +10,7 @@ namespace EchoCity
         [Header("Pickable Data")]
         [SerializeField] public SOPickable PickableData;
 
-        protected override InteractionEnum _interactionCode => InteractionEnum.Pickable;
+        public override InteractionEnum InteractionCode => InteractionEnum.Pickable;
 
         protected override void Awake() => gameObject.layer = 9; // Set to Pickable layer
 

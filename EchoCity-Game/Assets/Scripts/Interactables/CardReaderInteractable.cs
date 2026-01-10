@@ -17,6 +17,8 @@ namespace EchoCity
         [Header("Quest")]
         [SerializeField] private SOQuest triggeredQuestIfFail;
 
+        public override InteractionEnum InteractionCode => InteractionEnum.CardReader;
+
         protected override void ResolveInteraction(bool outcome)
         {
             if (outcome)
