@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum QuestStateEnum
@@ -22,7 +23,7 @@ namespace EchoCity
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Puzzle };
 
         protected IPuzzleManager _puzzleManager;
-        [SerializeField] protected SOQuest[] tagsTriggeredQuests;
+        [SerializeField] protected List<SOQuest> tagsTriggeredQuests;
         [SerializeField] protected SOQuest[] activeQuests;
         [SerializeField] protected int[] questProgression;
         protected Action<SOQuest>[] _onAddQuest;
@@ -38,7 +39,7 @@ namespace EchoCity
         protected virtual void Awake()
         {
             if (tagsTriggeredQuests == null)
-                tagsTriggeredQuests = new SOQuest[0];
+                tagsTriggeredQuests = new List<SOQuest>();
             activeQuests = new SOQuest[(int)QuestsEnum.MAX];
             questProgression = new int[(int)QuestsEnum.MAX];
             for (int i = 0; i < questProgression.Length; i++)
@@ -67,6 +68,12 @@ namespace EchoCity
             // Invoke any specific event handlers for the quest
             questsUpdatedEvent?.RaiseEvent(this, (int)quest.Quest, 0);
             _onAddQuest[(int)quest.Quest]?.Invoke(quest);
+        }
+
+        public void AddToTagsTriggeredQuests(SOQuest quest)
+        {
+            if (!tagsTriggeredQuests.Contains(quest))
+                tagsTriggeredQuests.Add(quest);
         }
 
         private void DisableQuest(SOQuest quest)
@@ -106,9 +113,8 @@ namespace EchoCity
                         CompleteQuest(quest);
                 }
             }
-            for (int i = 0; i < tagsTriggeredQuests.Length; i++)
+            foreach (SOQuest quest in tagsTriggeredQuests)
             {
-                var quest = tagsTriggeredQuests[i];
                 if (quest == null)
                     continue;
                 if (quest.TagsToActivate == null || quest.TagsToActivate.Length == 0)
