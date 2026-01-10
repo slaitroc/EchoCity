@@ -35,6 +35,7 @@ namespace EchoCity
         CardReader_On = 36,
         WearingGlasses = 37,
         PryTool_Picked = 38,
+        ExitFirstArea = 39,
         MAX
     }
 
@@ -91,6 +92,11 @@ namespace EchoCity
         public void AddToTagsTriggeredQuests(SOQuest quest)
         {
             questsManager?.AddToTagsTriggeredQuests(quest);
+        }
+
+        public void RemoveFromTagsTriggeredQuests(SOQuest quest)
+        {
+            questsManager?.RemoveFromTagsTriggeredQuests(quest);
         }
 
         public void IncrementTagCount(PuzzleTagEnum tag)

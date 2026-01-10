@@ -30,7 +30,7 @@ namespace EchoCity
             }
             else
             {
-                puzzleManager?.AddToTagsTriggeredQuests(triggeredQuestIfFail);
+                PuzzleManager?.AddToTagsTriggeredQuests(triggeredQuestIfFail);
             }
         }
     }

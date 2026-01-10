@@ -270,6 +270,12 @@ namespace EchoCity
         void SetTags(PuzzleTagState[] tagsToSet, bool checkQuests = true);
         //<summary> Increments the count of a specific puzzle tag </summary>
         void IncrementTagCount(PuzzleTagEnum tag);
+        //<summary> Add an active quest</summary>
+        void AddQuest(SOQuest quest);
+        //<summary> Adds a quests to the tags triggered quests list </summary>
+        void AddToTagsTriggeredQuests(SOQuest quest);
+        //<summary> Removes a quest from the tags triggered quests list </summary>
+        void RemoveFromTagsTriggeredQuests(SOQuest quest);
     }
 
     public interface IQuestsManager

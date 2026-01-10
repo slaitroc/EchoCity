@@ -26,7 +26,7 @@ namespace EchoCity
         UseLowSO_Tutorial,
         UseMidSO_Tutorial,
         UseHighSO_Tutorial,
-        EnemySoundChase_Tutorial,
+        AttractEnemy_Tutorial,
         //FIRST LEVEL QUESTS
 
         //OLD QUESTS
@@ -35,7 +35,7 @@ namespace EchoCity
         FindTheKey,
         OpenTheDoor,
         FixTheGenerator,
-        TryEscape,
+        EscapeFirstArea,
         FindPry,
         FindFloppy,
         FindPhone,
@@ -74,11 +74,6 @@ namespace EchoCity
 
         void OnValidate()
         {
-            if (tagsToCheck == null || tagsToCheck.Length == 0)
-            {
-                tagsToCheck = new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.NONE, true) };
-            }
-
             string assetName = this.name;
 
             if (!string.IsNullOrEmpty(assetName))

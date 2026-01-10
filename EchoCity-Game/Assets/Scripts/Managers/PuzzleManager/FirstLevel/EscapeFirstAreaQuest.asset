@@ -10,22 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
-  m_Name: TryEscapeQuest
+  m_Name: EscapeFirstAreaQuest
   m_EditorClassIdentifier: 
   questType: 0
   quest: 20
-  tagsToActivate: []
+  tagsToActivate:
+  - _tag: 31
+    _isActive: 1
+    _count: 0
+  - _tag: 35
+    _isActive: 1
+    _count: 0
+  - _tag: 38
+    _isActive: 1
+    _count: 0
+  - _tag: 38
+    _isActive: 1
+    _count: 0
   tagsToCheck:
-  - _tag: 0
-    _isActive: 0
+  - _tag: 39
+    _isActive: 1
     _count: 0
   countToComplete: 1
   subscribeToEvents:
   - {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
   nextQuests:
   - {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
-  - {fileID: 11400000, guid: f15192193da090647ae567a057f7a609, type: 2}
-  - {fileID: 11400000, guid: ece9602826883f6428db83540c384119, type: 2}
   description: Escape the lab facilities
   questCompletedText: 
   scriptContainer: {fileID: 0}

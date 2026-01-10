@@ -6,6 +6,7 @@ public enum QuestStateEnum
 {
     Inactive = -1,
     Completed = -100,
+    Failed = -200,
     ResetQuestsManager = -999,
 }
 
@@ -74,6 +75,12 @@ namespace EchoCity
         {
             if (!tagsTriggeredQuests.Contains(quest))
                 tagsTriggeredQuests.Add(quest);
+        }
+
+        public void RemoveFromTagsTriggeredQuests(SOQuest quest)
+        {
+            if (tagsTriggeredQuests.Contains(quest))
+                tagsTriggeredQuests.Remove(quest);
         }
 
         private void DisableQuest(SOQuest quest)

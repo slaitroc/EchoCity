@@ -57,8 +57,8 @@ namespace EchoCity
             _onAddQuest[(int)QuestsEnum.UseHighSO_Tutorial] = OnUseHighSO_TutorialAdded;
             _onCompleteQuest[(int)QuestsEnum.UseHighSO_Tutorial] = OnUseHighSO_TutorialCompleted;
 
-            _onAddQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = OnEnemySoundChase_TutorialAdded;
-            _onCompleteQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = OnEnemySoundChase_TutorialCompleted;
+            _onAddQuest[(int)QuestsEnum.AttractEnemy_Tutorial] = OnEnemySoundChase_TutorialAdded;
+            _onCompleteQuest[(int)QuestsEnum.AttractEnemy_Tutorial] = OnEnemySoundChase_TutorialCompleted;
 
             //tests
             _onAddQuest[(int)QuestsEnum.FindWalkieTalkie] = OnFindWalkieTalkieAdded;
@@ -777,12 +777,12 @@ namespace EchoCity
             if (newState != EnemyStateEnum.SoundChase)
                 return;
 
-            IncrementQuestProgress(QuestsEnum.EnemySoundChase_Tutorial);
-            if (questProgression[(int)QuestsEnum.EnemySoundChase_Tutorial] < activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial].CountToComplete)
+            IncrementQuestProgress(QuestsEnum.AttractEnemy_Tutorial);
+            if (questProgression[(int)QuestsEnum.AttractEnemy_Tutorial] < activeQuests[(int)QuestsEnum.AttractEnemy_Tutorial].CountToComplete)
                 return;
 
             _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.EnemySoundChase_TutorialCompleted, true), new PuzzleTagState(PuzzleTagEnum.TutorialCompleted, true) }, false);
-            CompleteQuest(activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial]);
+            CompleteQuest(activeQuests[(int)QuestsEnum.AttractEnemy_Tutorial]);
         }
 
         private void OnEnemySoundChase_TutorialCompleted(SOQuest quest)
@@ -798,14 +798,14 @@ namespace EchoCity
             questsUpdatedEvent.RaiseEvent(this, 0, (int)QuestStateEnum.ResetQuestsManager);
             yield return new WaitForSeconds(activeQuests[(int)QuestsEnum.UseHighSO_Tutorial].ScriptContainer.DialogLines[1].AudioClip.length);
             PlayLine(quest, 0);
-            yield return new WaitForSeconds(activeQuests[(int)QuestsEnum.EnemySoundChase_Tutorial].ScriptContainer.DialogLines[0].AudioClip.length);
+            yield return new WaitForSeconds(activeQuests[(int)QuestsEnum.AttractEnemy_Tutorial].ScriptContainer.DialogLines[0].AudioClip.length);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
                 if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
                     ((SOEnemyStateTransitionEvent)eventBase).OnEventRaised += EnemySoundChaseTutorialHandler;
             }
-            questsUpdatedEvent.RaiseEvent(this, (int)QuestsEnum.EnemySoundChase_Tutorial, 0);
-            _onUnsubscribeQuest[(int)QuestsEnum.EnemySoundChase_Tutorial] = UnsubscribeEnemySoundChaseTutorialHandler;
+            questsUpdatedEvent.RaiseEvent(this, (int)QuestsEnum.AttractEnemy_Tutorial, 0);
+            _onUnsubscribeQuest[(int)QuestsEnum.AttractEnemy_Tutorial] = UnsubscribeEnemySoundChaseTutorialHandler;
         }
         #endregion
 

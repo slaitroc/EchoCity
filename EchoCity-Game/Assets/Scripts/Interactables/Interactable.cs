@@ -13,7 +13,8 @@ namespace EchoCity
         public virtual EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Interactable };
 
         [Header("Interactable Settings")]
-        [SerializeField] protected PuzzleManager puzzleManager;
+        [SerializeField] private PuzzleManager puzzleManager;
+        protected IPuzzleManager PuzzleManager => puzzleManager;
         [SerializeField] protected PuzzleTagState[] checkTags;
         [SerializeField] protected PuzzleTagState[] setTags;
 

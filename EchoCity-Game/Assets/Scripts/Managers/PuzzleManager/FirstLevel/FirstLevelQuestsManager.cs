@@ -8,9 +8,6 @@ namespace EchoCity
         {
             base.Awake();
             // Register level specific quest event handlers
-            _onAddQuest[(int)QuestsEnum.TryEscape] = OnTryEscapeAdded;
-            _onCompleteQuest[(int)QuestsEnum.TryEscape] = OnTryEscapeCompleted;
-
             _onAddQuest[(int)QuestsEnum.FindPry] = OnFindPryAdded;
             _onCompleteQuest[(int)QuestsEnum.FindPry] = OnFindPryCompleted;
 
@@ -23,48 +20,9 @@ namespace EchoCity
             _onAddQuest[(int)QuestsEnum.FixGenerator] = OnFixGeneratorAdded;
             _onCompleteQuest[(int)QuestsEnum.FixGenerator] = OnFixGeneratorCompleted;
 
-            _onAddQuest[(int)QuestsEnum.Escape] = OnEscapeAdded;
-            _onCompleteQuest[(int)QuestsEnum.Escape] = OnEscapeCompleted;
+            _onAddQuest[(int)QuestsEnum.EscapeFirstArea] = OnEscapeAdded;
+            _onCompleteQuest[(int)QuestsEnum.EscapeFirstArea] = OnEscapeCompleted;
         }
-
-        #region Try Escape Quest
-        private void OnTryEscapeAdded(SOQuest quest)
-        {
-            Log.DLazy(() => $"Quest {quest.name} added.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.Interaction)
-                    ((SOInteractionEvent)eventBase).OnEventRaised += TryEscapeQuestHandler;
-            }
-            _onUnsubscribeQuest[(int)QuestsEnum.TryEscape] = UnsubscribeTryEscapeHandler;
-            PlayLine(quest, 0);
-        }
-
-        private void UnsubscribeTryEscapeHandler(SOQuest quest)
-        {
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.Interaction)
-                    ((SOInteractionEvent)eventBase).OnEventRaised -= TryEscapeQuestHandler;
-            }
-        }
-
-        private void TryEscapeQuestHandler(IEventSender sender, InteractionEnum interaction)
-        {
-            Log.DLazy(() => $"TryEscapeQuestHandler received interaction: {interaction}", this);
-            if (interaction == InteractionEnum.EndDoor)
-                CompleteQuest(activeQuests[(int)QuestsEnum.TryEscape]);
-        }
-
-        private void OnTryEscapeCompleted(SOQuest quest)
-        {
-            Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            UnsubscribeTryEscapeHandler(quest);
-            ShowCompletedMessage(quest);
-            PlayLine(quest, 1, true);
-        }
-
-        #endregion
 
         #region Find Pry Quest
         private void OnFindPryAdded(SOQuest quest)
@@ -263,7 +221,7 @@ namespace EchoCity
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
                     ((SOInteractionEvent)eventBase).OnEventRaised += EscapeQuestHandler;
             }
-            _onUnsubscribeQuest[(int)QuestsEnum.Escape] = UnsubscribeEscapeHandler;
+            _onUnsubscribeQuest[(int)QuestsEnum.EscapeFirstArea] = UnsubscribeEscapeHandler;
             PlayLine(quest, 0);
         }
 
@@ -278,14 +236,22 @@ namespace EchoCity
 
         private void EscapeQuestHandler(IEventSender sender, InteractionEnum interaction)
         {
-            if (interaction == InteractionEnum.EndDoor)
-                CompleteQuest(activeQuests[(int)QuestsEnum.Escape]);
+            if (interaction != InteractionEnum.EndDoor)
+                return;
+            if (questProgression[(int)QuestsEnum.EscapeFirstArea] >= activeQuests[(int)QuestsEnum.EscapeFirstArea].CountToComplete)
+                return;
+            if (_puzzleManager.CheckTags(activeQuests[(int)QuestsEnum.EscapeFirstArea].TagsToActivate) == true)
+            {
+                _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.ExitFirstArea, true) }, true);
+                CompleteQuest(activeQuests[(int)QuestsEnum.EscapeFirstArea]);
+            }
         }
 
         private void OnEscapeCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
             UnsubscribeEscapeHandler(quest);
+            _puzzleManager.RemoveFromTagsTriggeredQuests(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }

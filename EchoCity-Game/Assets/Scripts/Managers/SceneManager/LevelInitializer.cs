@@ -44,17 +44,21 @@ namespace EchoCity
             puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
             playerInventory = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerInventory>();
             playerController = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
+            Debug.Assert(puzzleManager != null, "PuzzleManager not found in the scene");
+            Debug.Assert(playerInventory != null, "PlayerInventory not found in the scene");
+            Debug.Assert(playerController != null, "PlayerController not found in the scene");
             if (initInventoryOnStart && playerInventory != null)
             {
                 playerInventory.Clear();
                 playerController.EquipItem(0, equippedItemOnStart, null);
                 Log.DLazy(() => "Player inventory initialized on level start.", this);
             }
-            if (puzzleManager != null && initialQuest != null)
+            if (puzzleManager != null)
             {
                 puzzleManager.SetQuestsManager(questsManager);
-                puzzleManager.AddQuest(initialQuest);
-                Log.DLazy(() => "Respawn quest added to PuzzleManager", this);
+                if (initialQuest != null)
+                    puzzleManager.AddQuest(initialQuest);
+                Log.DLazy(() => "PuzzleManager initialized on level start.", this);
             }
             InitializeLevel();
         }

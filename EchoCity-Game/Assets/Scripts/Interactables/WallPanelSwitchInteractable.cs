@@ -68,7 +68,7 @@ namespace EchoCity
                 }
                 else
                 {
-                    puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Lighting_On, true) }, true);
+                    PuzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Lighting_On, true) }, true);
                     _firstInteractionDone = false;
                 }
             }
