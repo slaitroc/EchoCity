@@ -10,18 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: CannedFoodToolSound
+  m_Name: DropRadio
   m_EditorClassIdentifier: 
-  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
-  soundClassIntensityFactorMultiplier: 1
-  audioClip: {fileID: 0}
-  audioLengthReference: 0.7623356
-  audioLengthOverride: 0.05
+  soundClass: {fileID: 11400000, guid: d4a43699c88e5f44494578a69af37aff, type: 2}
+  soundClassIntensityFactorMultiplier: 3
+  audioClip: {fileID: 8300000, guid: 281ab3d71825d471f8de5dce5afe6fda, type: 3}
+  audioLengthReference: 0.40798187
+  audioLengthOverride: 0.4
   intensity: 1
-  volume: 1
-  radius: 6
+  volume: 0.683
+  radius: 12.5
   minEchoDuration: 0.1
   isEnvironmental: 0
-  randomAudioClips:
-  - {fileID: 8300000, guid: 5d9e1a28e162d1c498e07808baf437e9, type: 3}
-  - {fileID: 8300000, guid: c012d9ecbbd7a2343a74f1602ed64c91, type: 3}
+  randomAudioClips: []

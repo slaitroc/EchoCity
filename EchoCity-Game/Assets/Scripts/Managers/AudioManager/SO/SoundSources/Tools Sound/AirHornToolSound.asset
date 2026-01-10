@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: AirHornToolSound
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 3f893443eee871a41bbf5dd6a660e10e, type: 2}
-  soundClassIntensityFactorMultiplier: 1
+  soundClassIntensityFactorMultiplier: 100
   audioClip: {fileID: 0}
   audioLengthReference: 4.2
   audioLengthOverride: 1.5
   intensity: 1
   volume: 1
-  radius: 18.8
+  radius: 50
   minEchoDuration: 0.1
   isEnvironmental: 0
   randomAudioClips:

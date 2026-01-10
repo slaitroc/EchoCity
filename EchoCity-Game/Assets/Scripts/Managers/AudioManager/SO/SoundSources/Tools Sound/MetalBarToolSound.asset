@@ -16,13 +16,12 @@ MonoBehaviour:
   soundClassIntensityFactorMultiplier: 1
   audioClip: {fileID: 0}
   audioLengthReference: 3.8750114
-  audioLengthOverride: 2
+  audioLengthOverride: 0.1
   intensity: 1
   volume: 0.661
   radius: 7.7
-  gapBetweenSounds: 0
-  minimumDuration: 0.1
-  emitOnStart: 0
+  minEchoDuration: 0.1
+  isEnvironmental: 0
   randomAudioClips:
   - {fileID: 8300000, guid: 064278b15044d8c41b089dc59247119e, type: 3}
   - {fileID: 8300000, guid: 34a3f1922b967c5469d77e10aefd8369, type: 3}
