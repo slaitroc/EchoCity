@@ -28,8 +28,7 @@ namespace EchoCity
             }
             else
             {
-                if (puzzleManager?.QuestsManager?.QuestProgression[(int)triggeredQuestIfFail.Quest] == (int)QuestStateEnum.Inactive)
-                    puzzleManager?.AddQuest(triggeredQuestIfFail);
+                puzzleManager?.AddToTagsTriggeredQuests(triggeredQuestIfFail);
             }
         }
     }

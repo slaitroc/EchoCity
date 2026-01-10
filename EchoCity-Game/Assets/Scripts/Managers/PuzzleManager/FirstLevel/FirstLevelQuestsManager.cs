@@ -4,7 +4,6 @@ namespace EchoCity
 {
     public class FirstLevelQuestManager : QuestsManager
     {
-        [SerializeField] private SOQuest finalQuest;
         protected override void Awake()
         {
             base.Awake();
@@ -59,28 +58,70 @@ namespace EchoCity
         //####################################################################
 
         private void OnFindPryAdded(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} added.", this);
-        private void OnFindPryCompleted(SOQuest quest)
-        {
-            Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            TryStartFinalQuest();
-        }
+        private void OnFindPryCompleted(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} completed.", this);
 
         //####################################################################
 
         private void OnFindFloppyAdded(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} added.", this);
-        private void OnFindFloppyCompleted(SOQuest quest)
-        {
-            Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            TryStartFinalQuest();
-        }
+        private void OnFindFloppyCompleted(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} completed.", this);
 
         //####################################################################
 
-        private void OnFindPhoneAdded(SOQuest quest) => Log.DLazy(() => $"Quest {quest.name} added.", this);
+        private void OnFindPhoneAdded(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                {
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropPhoneHandler;
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += FindPhoneHandler;
+                }
+            }
+            Log.DLazy(() => $"Quest FindPhone added.", this);
+
+            _onUnsubscribeQuest[(int)QuestsEnum.FindPhone] = UnsubscribeFindPhoneHandler;
+            PlayLine(quest, 0);
+        }
+
+        private void UnsubscribeFindPhoneHandler(SOQuest quest)
+        {
+            foreach (var eventBase in quest.SubscribeToEvents)
+            {
+                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
+                {
+
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= FindPhoneHandler;
+                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropPhoneHandler;
+                }
+            }
+        }
+
+        private void FindPhoneHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.WalkieTalkie)
+                return;
+
+            IncrementQuestProgress(QuestsEnum.FindPhone);
+            if (questProgression[(int)QuestsEnum.FindPhone] < activeQuests[(int)QuestsEnum.FindPhone].CountToComplete)
+                return;
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.WalkieTalkie_Picked, true) });
+            CompleteQuest(activeQuests[(int)QuestsEnum.FindPhone]);
+        }
+
+        private void DropPhoneHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
+        {
+            if (inventoryCodes != InventoryCodesEnum.ItemDropped || pickable != PickablesEnum.WalkieTalkie)
+                return;
+
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.WalkieTalkie_Picked, false) }, true);
+        }
+
         private void OnFindPhoneCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            TryStartFinalQuest();
+            UnsubscribeFindPhoneHandler(quest);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
         }
 
         //####################################################################
@@ -114,23 +155,6 @@ namespace EchoCity
         {
             if (interaction == InteractionEnum.EndDoor)
                 CompleteQuest(activeQuests[(int)QuestsEnum.Escape]);
-        }
-
-        //####################################################################
-
-        private void TryStartFinalQuest()
-        {
-            bool pryCompleted = questProgression[(int)QuestsEnum.FindPry] == (int)QuestStateEnum.Completed;
-            bool floppyCompleted = questProgression[(int)QuestsEnum.FindFloppy] == (int)QuestStateEnum.Completed;
-            bool phoneCompleted = questProgression[(int)QuestsEnum.FindPhone] == (int)QuestStateEnum.Completed;
-
-            if (!pryCompleted || !floppyCompleted || !phoneCompleted)
-                return;
-
-            if (questProgression[(int)finalQuest.Quest] != (int)QuestStateEnum.Inactive)
-                return;
-
-            AddQuest(finalQuest);
         }
     }
 }

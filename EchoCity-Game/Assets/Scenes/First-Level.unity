@@ -44591,7 +44591,7 @@ MonoBehaviour:
   _InteractionSuccessMessage: 
   _InteractionFailMessage: 
   interactionContainer: {fileID: 0}
-  switchToGameStateEvent: {fileID: 0}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
 --- !u!1001 &1382945424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59013,11 +59013,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  tagsTriggeredQuests: []
+  tagsTriggeredQuests:
+  - {fileID: 11400000, guid: 4809ea2c457bf054bb667e1570d3ae37, type: 2}
+  - {fileID: 11400000, guid: f15192193da090647ae567a057f7a609, type: 2}
+  - {fileID: 11400000, guid: ece9602826883f6428db83540c384119, type: 2}
+  - {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
   activeQuests: []
   questProgression: 
   completeQuestMessageColor: {r: 0, g: 1, b: 0, a: 1}
-  finalQuest: {fileID: 11400000, guid: 7859632264aa2d44d932d7a8f5e86c67, type: 2}
 --- !u!1001 &1773528576
 PrefabInstance:
   m_ObjectHideFlags: 0

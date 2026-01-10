@@ -87,6 +87,11 @@ namespace EchoCity
             questsManager?.AddQuest(quest);
         }
 
+        public void AddToTagsTriggeredQuests(SOQuest quest)
+        {
+            questsManager?.AddToTagsTriggeredQuests(quest);
+        }
+
         public void IncrementTagCount(PuzzleTagEnum tag)
         {
             if (tag == PuzzleTagEnum.NONE || tag == PuzzleTagEnum.MAX) return;
