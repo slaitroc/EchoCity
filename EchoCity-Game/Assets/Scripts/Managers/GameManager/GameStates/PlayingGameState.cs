@@ -8,6 +8,7 @@ namespace EchoCity
         public PlayingGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
         public override void Enter()
         {
+            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.Play);
             Time.timeScale = 1;
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, false);
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, true);

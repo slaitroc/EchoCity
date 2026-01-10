@@ -8,6 +8,7 @@ namespace EchoCity
     {
         TitleMenu,
         LoadingScreen,
+        Play,
         HUD,
         PauseMenu,
         DeathMenu,
