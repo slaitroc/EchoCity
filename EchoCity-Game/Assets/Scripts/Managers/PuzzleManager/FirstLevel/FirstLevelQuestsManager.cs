@@ -4,7 +4,6 @@ namespace EchoCity
 {
     public class FirstLevelQuestManager : QuestsManager
     {
-        [SerializeField] private SOQuest startQuest;
         [SerializeField] private SOQuest finalQuest;
         protected override void Awake()
         {
@@ -29,12 +28,6 @@ namespace EchoCity
             _onCompleteQuest[(int)QuestsEnum.Escape] = OnEscapeCompleted;
         }
 
-        private void Start()
-        {
-            if (startQuest != null) AddQuest(startQuest);
-        }
-
-
         //####################################################################
         private void OnTryEscapeAdded(SOQuest quest)
         {
@@ -58,6 +51,7 @@ namespace EchoCity
 
         private void TryEscapeQuestHandler(IEventSender sender, InteractionEnum interaction)
         {
+            Log.DLazy(() => $"TryEscapeQuestHandler received interaction: {interaction}", this);
             if (interaction == InteractionEnum.EndDoor)
                 CompleteQuest(activeQuests[(int)QuestsEnum.TryEscape]);
         }

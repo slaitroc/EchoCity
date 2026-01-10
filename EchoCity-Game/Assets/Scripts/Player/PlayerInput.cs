@@ -233,7 +233,10 @@ namespace EchoCity
                     {
                         var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
                         if (interactable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
+                        {
+                            Log.DLazy(() => $"Interacting with Interactable: {interactable?.name}", this);
                             interactable.Interact();
+                        }
                     }
                 }
             }

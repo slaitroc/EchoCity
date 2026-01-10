@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: FindFloppyQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 2
-  description: Find the Floppy Disk
-  questCompletedText: 
+  quest: 22
   tagsToCheck:
-  - _tag: 5
+  - _tag: 35
     _isActive: 1
     _count: 0
   countToComplete: 1
   subscribeToEvents: []
   nextQuests: []
+  description: Find the Floppy Disk
+  questCompletedText: 
+  scriptContainer: {fileID: 0}

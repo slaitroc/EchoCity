@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: FindPryQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 1
-  description: Find something to pry the door open
-  questCompletedText: 
+  quest: 21
   tagsToCheck:
-  - _tag: 3
+  - _tag: 33
     _isActive: 1
     _count: 0
   countToComplete: 1
   subscribeToEvents: []
   nextQuests: []
+  description: Find something to pry the door open
+  questCompletedText: 
+  scriptContainer: {fileID: 0}

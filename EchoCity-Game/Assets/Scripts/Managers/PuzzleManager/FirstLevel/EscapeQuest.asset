@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: EscapeQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 6
-  description: Escape the lab facilities
-  questCompletedText: 
+  quest: 26
   tagsToCheck:
   - _tag: 0
     _isActive: 1
     _count: 0
   countToComplete: 1
   subscribeToEvents:
-  - {fileID: 11400000, guid: cd279e72d3a374e43b4f4efb60bcd339, type: 2}
+  - {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
   nextQuests: []
+  description: Escape the lab facilities
+  questCompletedText: 
+  scriptContainer: {fileID: 0}

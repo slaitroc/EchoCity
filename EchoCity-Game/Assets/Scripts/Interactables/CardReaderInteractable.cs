@@ -26,6 +26,11 @@ namespace EchoCity
                 Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
                 setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.ReApply);
             }
+            else
+            {
+                if (puzzleManager?.QuestsManager?.QuestProgression[(int)triggeredQuestIfFail.Quest] == (int)QuestStateEnum.Inactive)
+                    puzzleManager?.AddQuest(triggeredQuestIfFail);
+            }
         }
     }
 }

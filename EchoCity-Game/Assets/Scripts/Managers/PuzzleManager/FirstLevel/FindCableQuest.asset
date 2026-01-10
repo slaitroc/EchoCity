@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: FindCableQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 5
-  description: Find a cable for the generator
-  questCompletedText: 
+  quest: 25
   tagsToCheck:
-  - _tag: 4
+  - _tag: 34
     _isActive: 1
     _count: 0
   countToComplete: 1
   subscribeToEvents: []
   nextQuests: []
+  description: Find a cable for the generator
+  questCompletedText: 
+  scriptContainer: {fileID: 0}

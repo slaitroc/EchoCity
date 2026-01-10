@@ -22,7 +22,11 @@ namespace EchoCity
             {
                 audioEmitter?.EmitSound();
             }
-            //TODO add quest
+            else
+            {
+                if (puzzleManager?.QuestsManager?.QuestProgression[(int)triggeredQuestIfFail.Quest] == (int)QuestStateEnum.Inactive)
+                    puzzleManager?.AddQuest(triggeredQuestIfFail);
+            }
         }
     }
 }

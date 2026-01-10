@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: TryEscapeQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 0
-  description: Escape the lab facilities
-  questCompletedText: 
+  quest: 20
   tagsToCheck:
   - _tag: 0
-    _isActive: 1
+    _isActive: 0
     _count: 0
   countToComplete: 1
   subscribeToEvents:
-  - {fileID: 11400000, guid: cd279e72d3a374e43b4f4efb60bcd339, type: 2}
+  - {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
   nextQuests:
   - {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
   - {fileID: 11400000, guid: f15192193da090647ae567a057f7a609, type: 2}
   - {fileID: 11400000, guid: ece9602826883f6428db83540c384119, type: 2}
+  description: Escape the lab facilities
+  questCompletedText: 
+  scriptContainer: {fileID: 0}
