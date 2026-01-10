@@ -44513,11 +44513,7 @@ MonoBehaviour:
   _InteractionSuccessMessage: 
   _InteractionFailMessage: 
   interactionContainer: {fileID: 0}
-  showUIEvent: {fileID: 0}
-  interactionEvent: {fileID: 0}
   switchToGameStateEvent: {fileID: 0}
-  dialogContainerSuccess: {fileID: 11400000, guid: 497d0dcff38e244fbbc4da4c7828f067, type: 2}
-  dialogContainerFail: {fileID: 11400000, guid: b564213884a29483a8dc86a9bfe98fad, type: 2}
 --- !u!1001 &1382945424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58829,6 +58825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
+  initInventoryOnStart: 1
   questsManager: {fileID: 1772865355}
   initialQuest: {fileID: 11400000, guid: 82fd8b87a7d42f74ab0d14ef97df8006, type: 2}
 --- !u!4 &1772865354
@@ -58860,6 +58857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  tagsTriggeredQuests: []
   activeQuests: []
   questProgression: 
   completeQuestMessageColor: {r: 0, g: 1, b: 0, a: 1}

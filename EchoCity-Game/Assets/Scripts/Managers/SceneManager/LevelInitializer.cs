@@ -15,11 +15,14 @@ namespace EchoCity
         bool IEventSender.IsManager => true;
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Initializer };
 
+        [Header("Initialization Settings")]
+        [SerializeField] protected bool initInventoryOnStart = true;
         [Header("Initialization Data")]
         [SerializeField] private QuestsManager questsManager;
         [SerializeField] private SOQuest initialQuest;
 
         protected PuzzleManager puzzleManager;
+        protected PlayerInventory playerInventory;
 
         void OnEnable()
         {
@@ -36,6 +39,12 @@ namespace EchoCity
             setPlayerOnSpawnEvent.RaiseEvent(this);
             // add respawn quest to puzzle manager
             puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
+            playerInventory = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerInventory>();
+            if (initInventoryOnStart && playerInventory != null)
+            {
+                playerInventory.Clear();
+                Log.DLazy(() => "Player inventory initialized on level start.", this);
+            }
             if (puzzleManager != null && initialQuest != null)
             {
                 puzzleManager.SetQuestsManager(questsManager);
