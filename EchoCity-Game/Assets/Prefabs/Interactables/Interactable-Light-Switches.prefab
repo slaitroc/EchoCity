@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 445314637539620486}
   - component: {fileID: 5934896919237915648}
   m_Layer: 6
-  m_Name: Interactable-Lights-TutorialRoom
+  m_Name: Interactable-Light-Switches
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ MonoBehaviour:
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
-  - _tag: 10
+  - _tag: 0
     _isActive: 1
     _count: 0
   setTags: []
@@ -90,7 +90,6 @@ MonoBehaviour:
   wallPanelSwitchAnimator: {fileID: 445314637539620486}
   _isSwitchedOn: 1
   setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
-  triggeredQuest: []
 --- !u!1 &2619457602497720063
 GameObject:
   m_ObjectHideFlags: 0
