@@ -232,7 +232,7 @@ namespace EchoCity
                 var dropped = Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
                 dropped.AddComponent<Rigidbody>();
                 dropped.GetComponent<Collider>().isTrigger = false;
-                PlayAtPosition(transform.position, equippedItem.Data.PickUpSound, _audioContext, MixerGroupEnum.SFX);
+                PlayAtPosition(transform.position, equippedItem.Data.DropSound, _audioContext, MixerGroupEnum.SFX);
             }
             playerInventory.DropItem(equippedItem.Index);
             EquipItem(0, playerInventory.Items[0]?.Data, playerInventory.Prefabs[0]);
