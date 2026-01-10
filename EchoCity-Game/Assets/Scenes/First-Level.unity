@@ -25705,22 +25705,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 845077175}
     m_Modifications:
-    - target: {fileID: 64127203487632410, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64319818633713098, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64412257994539516, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64854901349514842, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1592942470777406, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
       propertyPath: m_Name
       value: Interactable-CordBoard-Empty_Mid
@@ -25782,6 +25766,22 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 64978691957319536, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64127203487632410, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64319818633713098, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64412257994539516, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64854901349514842, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -37979,6 +37979,87 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1046174508}
   m_SourcePrefab: {fileID: 100100000, guid: 1c138a5909a8ccf48a7792d7ee197b9d, type: 3}
+--- !u!1 &1158266183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1158266184}
+  - component: {fileID: 1158266186}
+  - component: {fileID: 1158266185}
+  m_Layer: 0
+  m_Name: 'Find Floppy Quest Trigger '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1158266184
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158266183}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -19.64, y: 2.86, z: 5.98}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3747455724604693448}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158266185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158266183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9971106eeef714a8c503f5dab12e55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags:
+  - _tag: 0
+    _isActive: 0
+    _count: 0
+  setTags: []
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
+  triggerCollider: {fileID: 1158266186}
+  associatedQuest: {fileID: 11400000, guid: f15192193da090647ae567a057f7a609, type: 2}
+--- !u!135 &1158266186
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158266183}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3.44
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1159383638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44706,7 +44787,7 @@ PrefabInstance:
     - target: {fileID: 1305504470667882960, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
       propertyPath: interactionEvent
       value: 
-      objectReference: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+      objectReference: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
     - target: {fileID: 1305504470667882960, guid: 456d2bb393af8d443a1b9aaeb570467d, type: 3}
       propertyPath: newAudioSphereEvent
       value: 
@@ -63023,6 +63104,40 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 358518615}
   m_SourcePrefab: {fileID: 100100000, guid: 1c138a5909a8ccf48a7792d7ee197b9d, type: 3}
+--- !u!1 &1874629119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1874629120}
+  m_Layer: 0
+  m_Name: Enemies Entering Bunker Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1874629120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874629119}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1725303052667209048}
+  - {fileID: 7746068421758965967}
+  - {fileID: 8092441189859911968}
+  m_Father: {fileID: 3747455724604693448}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1875855849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -73063,26 +73178,6 @@ MonoBehaviour:
   _InteractionFailMessage: 
   interactionContainer: {fileID: 0}
   triggeredQuestIfFail: {fileID: 11400000, guid: 4809ea2c457bf054bb667e1570d3ae37, type: 2}
---- !u!114 &222470643580307208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8552016646535962905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd9971106eeef714a8c503f5dab12e55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialDialogContainer: {fileID: 11400000, guid: 00ca6e6856df8446fa9a760e40f892fe, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  puzzleManager: {fileID: 0}
-  checkTags:
-  - _tag: 0
-    _isActive: 0
-    _count: 0
-  setTags: []
 --- !u!4 &341382729906382144
 Transform:
   m_ObjectHideFlags: 0
@@ -73115,26 +73210,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e422a7df2eca324aa574291255e2058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialDialogContainer: {fileID: 11400000, guid: dedaf29724f3947f2a5f771d96c8acd7, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 0
     _isActive: 0
     _count: 0
   setTags: []
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
+  triggerCollider: {fileID: 0}
+  associatedQuest: {fileID: 0}
+  _audioCount: 2
   audioClips:
   - {fileID: 8300000, guid: f89d9b35269df57458946f04f4720d14, type: 3}
   - {fileID: 8300000, guid: 9113b55c178e70a45a17fc11c6e5080e, type: 3}
   _audioPositions:
   - {fileID: 7746068421758965967}
   - {fileID: 8092441189859911968}
-  _lightsToTurnOff:
-  - {fileID: 1394374492}
-  - {fileID: 134326033}
-  - {fileID: 750047067}
-  - {fileID: 1668477301}
-  setMaterialEvent: {fileID: 0}
+  _toggleObjects: []
+  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
 --- !u!4 &389656017341510262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5202283359270022541, guid: 6e3cdc8e14d9ea54791e69d5e7e8b7c3, type: 3}
@@ -73381,11 +73480,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd9971106eeef714a8c503f5dab12e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialDialogContainer: {fileID: 11400000, guid: 966a108269fbb421294261e2b494f211, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 0
+    _count: 0
   setTags: []
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
+  triggerCollider: {fileID: 6106493700801797084}
+  associatedQuest: {fileID: 11400000, guid: ece9602826883f6428db83540c384119, type: 2}
 --- !u!1 &1389643478446433827
 GameObject:
   m_ObjectHideFlags: 0
@@ -73411,11 +73520,11 @@ Transform:
   m_GameObject: {fileID: 5192227300745957690}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.98, y: 1.12, z: 1.01}
+  m_LocalPosition: {x: -8.57, y: 3.07, z: 5.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3747455724604693448}
+  m_Father: {fileID: 1874629120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3613779297349060513
 GameObject:
@@ -73508,11 +73617,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5685134293285620591}
-  - {fileID: 1725303052667209048}
-  - {fileID: 7746068421758965967}
-  - {fileID: 8092441189859911968}
-  - {fileID: 7089483879322350375}
-  - {fileID: 5923590658516406281}
+  - {fileID: 1158266184}
+  - {fileID: 1874629120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4260650228301239703
@@ -73586,33 +73692,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3747455724604693448}
   m_Layer: 0
-  m_Name: Tutorial
+  m_Name: Triggers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!135 &4751633018157295732
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065225557091446583}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 4.14
-  m_Center: {x: 0, y: 0, z: 0}
+  m_IsActive: 1
 --- !u!1 &4933308667494021938
 GameObject:
   m_ObjectHideFlags: 0
@@ -73678,7 +73763,7 @@ GameObject:
   - component: {fileID: 5029663274772535743}
   - component: {fileID: 387419468361899297}
   m_Layer: 0
-  m_Name: T (1)
+  m_Name: SoundTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73707,26 +73792,6 @@ Transform:
   - {fileID: 1397852216}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5602306004617204830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065225557091446583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd9971106eeef714a8c503f5dab12e55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialDialogContainer: {fileID: 11400000, guid: 105ec83c002644b01a253a9b517b1aa3, type: 2}
-  switchToNarrationStateEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
-  puzzleManager: {fileID: 0}
-  checkTags:
-  - _tag: 0
-    _isActive: 0
-    _count: 0
-  setTags: []
 --- !u!4 &5685134293285620591
 Transform:
   m_ObjectHideFlags: 0
@@ -73736,7 +73801,7 @@ Transform:
   m_GameObject: {fileID: 5854420951191839977}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.43, y: -0.029999971, z: 0.76}
+  m_LocalPosition: {x: -19.64, y: 2.86, z: 5.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -73754,27 +73819,12 @@ GameObject:
   - component: {fileID: 6106493700801797084}
   - component: {fileID: 1074441061156067414}
   m_Layer: 0
-  m_Name: T (0)
+  m_Name: Find Phone Quest Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5923590658516406281
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8552016646535962905}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.29, y: -0.029999971, z: 10.66}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3747455724604693448}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5983218351279531348 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 665789710060934686, guid: d643ed6b40410fb49ae32ec6e06d4736, type: 3}
@@ -73877,24 +73927,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
---- !u!1 &6065225557091446583
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7089483879322350375}
-  - component: {fileID: 4751633018157295732}
-  - component: {fileID: 5602306004617204830}
-  m_Layer: 0
-  m_Name: T (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!135 &6106493700801797084
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -74009,21 +74041,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 825a653c22d824a42a10736eb67297a7, type: 3}
---- !u!4 &7089483879322350375
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6065225557091446583}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.54, y: -0.029999971, z: 4.57}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3747455724604693448}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7138872817385686593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74126,11 +74143,11 @@ Transform:
   m_GameObject: {fileID: 3613779297349060513}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.3, y: 1.1200001, z: 2.99}
+  m_LocalPosition: {x: -71.3, y: 1.1200001, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3747455724604693448}
+  m_Father: {fileID: 1874629120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7896699215925785198
 PrefabInstance:
@@ -74207,56 +74224,17 @@ Transform:
   m_GameObject: {fileID: 6131945327051617440}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.89, y: 1.1200001, z: 7.9}
+  m_LocalPosition: {x: -40.4, y: 1.1200001, z: 38.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3747455724604693448}
+  m_Father: {fileID: 1874629120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8552016646535962905
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5923590658516406281}
-  - component: {fileID: 9066172747539045178}
-  - component: {fileID: 222470643580307208}
-  m_Layer: 0
-  m_Name: T (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!4 &8661997686577489822 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2069496690966816132, guid: 9c4918108df52604e879744ba937f7f1, type: 3}
   m_PrefabInstance: {fileID: 6057308031052765879}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &9066172747539045178
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8552016646535962905}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 4.12
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
