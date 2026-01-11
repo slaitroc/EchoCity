@@ -50,6 +50,8 @@ namespace EchoCity
 
             yield return null;
 
+            _restartButton.style.display = DisplayStyle.None;
+
             // _winBgAnimated.style.translate = new Translate(0, 0);
 
             _root.RegisterCallback<MouseMoveEvent>(evt =>
