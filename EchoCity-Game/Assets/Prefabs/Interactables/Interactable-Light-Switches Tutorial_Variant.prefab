@@ -50,11 +50,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2207197369276049000, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
       propertyPath: m_Name
-      value: Interactable-Light-Switches TutorialVariant
+      value: Interactable-Light-Switches Tutorial_Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
       propertyPath: _InteractionFailMessage
       value: it is not the right moment to interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _interactionDescription
+      value: Turn on/off the lights
       objectReference: {fileID: 0}
     - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
       propertyPath: _InteractionSuccessMessage
@@ -73,6 +77,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _interactionDescription
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
       propertyPath: setTags.Array.data[0]._tag
       value: 30
       objectReference: {fileID: 0}
@@ -83,6 +91,10 @@ PrefabInstance:
     - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
       propertyPath: _InteractionFailMessage
       value: it is not the right moment to interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _interactionDescription
+      value: Turn on/off the lights
       objectReference: {fileID: 0}
     - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
       propertyPath: checkTags.Array.data[0]._tag
