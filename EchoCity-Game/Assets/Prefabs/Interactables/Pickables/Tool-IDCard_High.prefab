@@ -147,9 +147,13 @@ MonoBehaviour:
   - _tag: 33
     _isActive: 1
     _count: 0
-  _interactionDescription: Noah's Card ID
-  _InteractionSuccessMessage: Card ID Picked
+  _interactionDescription: Noah's ID Card
+  _InteractionSuccessMessage: ID Card Picked
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
-  PickableData: {fileID: 11400000, guid: 3c35e17812793904d9c748aa8b1e142f, type: 2}
+  PickableData: {fileID: 11400000, guid: b67b9761def6545ee967ee26a68574ef, type: 2}
   undoTagsOnDrop: 1
