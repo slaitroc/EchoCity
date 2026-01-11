@@ -164,9 +164,13 @@ MonoBehaviour:
     _isActive: 1
     _count: 0
   setTags: []
-  _interactionDescription: 
+  _interactionDescription: Card Reader
   _InteractionSuccessMessage: 'Car reader: floppy disk ejected'
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: Card reader needs power supply to workcorrectly
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
