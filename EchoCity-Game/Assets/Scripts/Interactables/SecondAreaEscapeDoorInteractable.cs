@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace EchoCity
 {
-    public class SecondAreaEscapeInteractable : PlainInteractable
+    public class SecondAreaEscapeDoorInteractable : PlainInteractable
     {
         [Header("End Game Event")]
         [SerializeField] SOSwitchToGameStateEvent switchToGameStateEvent;
 
-        public override InteractionEnum InteractionCode => InteractionEnum.LaboratoryAreaDoor;
+        public override InteractionEnum InteractionCode => InteractionEnum.SecondAreaEscapeDoor;
 
         protected override void ResolveInteraction(bool outcome)
         {
@@ -17,7 +17,7 @@ namespace EchoCity
             }
             else
             {
-                interactionEvent?.RaiseEvent(this, InteractionEnum.LaboratoryAreaDoor);
+                interactionEvent?.RaiseEvent(this, InteractionEnum.FirstAreaEscapeDoor);
             }
         }
     }

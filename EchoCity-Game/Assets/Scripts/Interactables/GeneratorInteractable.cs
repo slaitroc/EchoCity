@@ -5,9 +5,6 @@ namespace EchoCity
     [RequireComponent(typeof(AudioEmitter))]
     public class GeneratorInteractable : PlainInteractable
     {
-        [Header("Quest")]
-        [SerializeField] private SOQuest triggeredQuestIfFail;
-
         private AudioEmitter audioEmitter;
 
         public override InteractionEnum InteractionCode => InteractionEnum.Generator;
@@ -23,11 +20,6 @@ namespace EchoCity
             if (outcome)
             {
                 audioEmitter.EmitSound();
-            }
-            else
-            {
-                PuzzleManager.AddQuest(triggeredQuestIfFail);
-                PuzzleManager.CheckQuests();
             }
         }
     }

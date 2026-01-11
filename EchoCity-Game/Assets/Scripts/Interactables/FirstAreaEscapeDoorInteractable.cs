@@ -2,12 +2,11 @@ using EchoCity;
 using UnityEngine;
 using static EchoCity.EchoCitySound;
 
-public class ExitLabAreaDoorInteractable : DoorInteractable
+public class FirstAreaEscapeDoorInteractable : DoorInteractable
 {
     [SerializeField] private SOSoundSource lockedSound;
-    [SerializeField] private SOQuest triggeredQuestIfFail;
 
-    public override InteractionEnum InteractionCode => InteractionEnum.LaboratoryAreaDoor;
+    public override InteractionEnum InteractionCode => InteractionEnum.FirstAreaEscapeDoor;
 
     protected override void ResolveInteraction(bool outcome)
     {

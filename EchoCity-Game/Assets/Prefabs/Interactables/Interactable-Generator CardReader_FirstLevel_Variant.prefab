@@ -9,13 +9,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2756363359783736069, guid: 53e044d1ecdc42f40a4807bba3387dae, type: 3}
+      propertyPath: OnFailAddTagsQuest
+      value: 
+      objectReference: {fileID: 11400000, guid: 4809ea2c457bf054bb667e1570d3ae37, type: 2}
+    - target: {fileID: 2756363359783736069, guid: 53e044d1ecdc42f40a4807bba3387dae, type: 3}
       propertyPath: setTags.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2756363359783736069, guid: 53e044d1ecdc42f40a4807bba3387dae, type: 3}
-      propertyPath: triggeredQuestIfFail
-      value: 
-      objectReference: {fileID: 11400000, guid: 4809ea2c457bf054bb667e1570d3ae37, type: 2}
     - target: {fileID: 2756363359783736069, guid: 53e044d1ecdc42f40a4807bba3387dae, type: 3}
       propertyPath: _InteractionFailMessage
       value: To use the emergency generator you need a power cable

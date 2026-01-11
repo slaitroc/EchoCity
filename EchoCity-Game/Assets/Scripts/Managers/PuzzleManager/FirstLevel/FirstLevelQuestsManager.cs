@@ -211,36 +211,11 @@ namespace EchoCity
         {
             UnsubscribeEscapeFirstAreaHandler(quest);
             Log.DLazy(() => $"Quest {quest.name} added.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.Interaction)
-                    ((SOInteractionEvent)eventBase).OnEventRaised += EscapeFirstAreaHandler;
-            }
             _onUnsubscribeQuest[(int)QuestsEnum.EscapeFirstArea] = UnsubscribeEscapeFirstAreaHandler;
             PlayLine(quest, 0);
         }
 
-        private void UnsubscribeEscapeFirstAreaHandler(SOQuest quest)
-        {
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.Interaction)
-                    ((SOInteractionEvent)eventBase).OnEventRaised -= EscapeFirstAreaHandler;
-            }
-        }
-
-        private void EscapeFirstAreaHandler(IEventSender sender, InteractionEnum interaction)
-        {
-            if (interaction != InteractionEnum.LaboratoryAreaDoor)
-                return;
-            if (questProgression[(int)QuestsEnum.EscapeFirstArea] >= activeQuests[(int)QuestsEnum.EscapeFirstArea].CountToComplete)
-                return;
-            if (_puzzleManager.CheckTags(activeQuests[(int)QuestsEnum.EscapeFirstArea].TagsToActivate) == true)
-            {
-                _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.ExitFirstArea, true) }, true);
-                CompleteQuest(activeQuests[(int)QuestsEnum.EscapeFirstArea]);
-            }
-        }
+        private void UnsubscribeEscapeFirstAreaHandler(SOQuest quest) { }
 
         private void OnEscapeFirstAreaCompleted(SOQuest quest)
         {

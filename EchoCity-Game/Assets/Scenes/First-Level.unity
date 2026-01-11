@@ -46143,14 +46143,17 @@ MonoBehaviour:
   - _tag: 38
     _isActive: 1
     _count: 0
-  setTags: []
+  setTags:
+  - _tag: 39
+    _isActive: 1
+    _count: 0
   _interactionDescription: Escape the bunker's laboratory area
   _InteractionSuccessMessage: Escaped bunker's laboratory area
   OnSuccessAddQuest: {fileID: 0}
   OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: 'Missing required items to escape '
   OnFailAddQuest: {fileID: 0}
-  OnFailAddTagsQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
   interactionContainer: {fileID: 0}
   hasFixDetector: 0
   detector: {fileID: 1811282132764794606}
@@ -46159,7 +46162,6 @@ MonoBehaviour:
   closeSound: {fileID: 11400000, guid: cd9b1aa808ca0a047ac4760e331e46fa, type: 2}
   _isOpen: 0
   lockedSound: {fileID: 0}
-  triggeredQuestIfFail: {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
 --- !u!1001 &3419578988547171210
 PrefabInstance:
   m_ObjectHideFlags: 0

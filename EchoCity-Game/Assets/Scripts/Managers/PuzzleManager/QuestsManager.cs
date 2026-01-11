@@ -85,6 +85,8 @@ namespace EchoCity
 
         private void DisableQuest(SOQuest quest)
         {
+            if (questProgression[(int)quest.Quest] == (int)QuestStateEnum.Completed)
+                return;
             questProgression[(int)quest.Quest] = (int)QuestStateEnum.Inactive;
             _onUnsubscribeQuest[(int)quest.Quest]?.Invoke(quest);
             questsUpdatedEvent?.RaiseEvent(this, (int)quest.Quest, questProgression[(int)quest.Quest]);
@@ -129,7 +131,7 @@ namespace EchoCity
                 // Check if the quest conditions are met
                 if (puzzleManager.CheckTags(quest.TagsToActivate))
                     AddQuest(quest, true);
-                else
+                else if (questProgression[(int)quest.Quest] != (int)QuestStateEnum.Inactive && questProgression[(int)quest.Quest] != (int)QuestStateEnum.Completed)
                     DisableQuest(quest);
             }
         }
