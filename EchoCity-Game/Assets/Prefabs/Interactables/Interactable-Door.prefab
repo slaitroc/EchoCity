@@ -154,9 +154,13 @@ MonoBehaviour:
     _isActive: 1
     _count: 0
   setTags: []
-  _interactionDescription: 
+  _interactionDescription: maaaan
   _InteractionSuccessMessage: 
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: 
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   hasFixDetector: 1
   detector: {fileID: 6251220501324255516}
@@ -236,7 +240,11 @@ MonoBehaviour:
   setTags: []
   _interactionDescription: 
   _InteractionSuccessMessage: 
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: 
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   linkedInteractable: {fileID: 1427749870895449881}
 --- !u!65 &4603515817695437712
