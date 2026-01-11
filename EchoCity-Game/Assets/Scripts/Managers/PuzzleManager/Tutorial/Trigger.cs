@@ -7,10 +7,13 @@ namespace EchoCity
     public class Trigger : PlainInteractable
     {
         [SerializeField] private Collider triggerCollider;
-        [SerializeField] private SOQuest associatedQuest;
         public override string SenderName => gameObject.name;
         public override int SenderID => GetInstanceID();
         public override bool IsManager => false;
+
+        public override bool HasRaycastDescription => false;
+        public override bool IsInteractable => false;
+
         public override EventSenderCategoriesEnum[] SenderCategory => new EventSenderCategoriesEnum[] {
             EventSenderCategoriesEnum.Puzzle,
             EventSenderCategoriesEnum.ColliderTrigger
@@ -36,12 +39,6 @@ namespace EchoCity
             if (outcome)
             {
                 triggerCollider.enabled = false;
-                if (associatedQuest != null)
-                {
-                    PuzzleManager.AddToTagsTriggeredQuests(associatedQuest);
-                    PuzzleManager.CheckQuests();
-                }
-
             }
         }
     }

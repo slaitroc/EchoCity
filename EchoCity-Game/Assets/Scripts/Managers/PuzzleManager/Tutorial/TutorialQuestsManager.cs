@@ -9,11 +9,6 @@ namespace EchoCity
         {
             base.Awake();
             // Register level specific quest event handlers
-            _onAddQuest[(int)QuestsEnum.TestOne] = OnTestOneAdded;
-            _onCompleteQuest[(int)QuestsEnum.TestOne] = OnTestOneCompleted;
-
-            _onAddQuest[(int)QuestsEnum.TestTwo] = OnTestTwoAdded;
-            _onCompleteQuest[(int)QuestsEnum.TestTwo] = OnTestTwoCompleted;
 
             _onAddQuest[(int)QuestsEnum.Move_Tutorial] = OnMove_TutorialAdded;
             _onCompleteQuest[(int)QuestsEnum.Move_Tutorial] = OnMove_TutorialCompleted;
@@ -64,85 +59,6 @@ namespace EchoCity
             _onAddQuest[(int)QuestsEnum.FindWalkieTalkie] = OnFindWalkieTalkieAdded;
             _onCompleteQuest[(int)QuestsEnum.FindWalkieTalkie] = OnFindWalkieTalkieCompleted;
         }
-
-        #region TestOne
-        private void OnTestOneAdded(SOQuest quest)
-        {
-            Log.DLazy(() => $"Quest {quest.name} added.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += TestQuestHandler;
-            }
-            _onUnsubscribeQuest[(int)QuestsEnum.TestOne] = UnsubscribeTestOneHandler;
-        }
-
-        private void UnsubscribeTestOneHandler(SOQuest quest)
-        {
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= TestQuestHandler;
-            }
-        }
-
-        private void TestQuestHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
-        {
-            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.CannedFood)
-                return;
-
-            IncrementQuestProgress(QuestsEnum.TestOne);
-            if (questProgression[(int)QuestsEnum.TestOne] < activeQuests[(int)QuestsEnum.TestOne].CountToComplete)
-                return;
-
-            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Phone_Picked, true) });
-        }
-
-        private void OnTestOneCompleted(SOQuest quest)
-        {
-            Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            UnsubscribeTestOneHandler(quest);
-        }
-        #endregion
-
-        #region TestTwo
-        private void OnTestTwoAdded(SOQuest quest)
-        {
-            Log.DLazy(() => $"Quest {quest.name} added.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += TestTwoQuestHandler;
-            }
-            _onUnsubscribeQuest[(int)QuestsEnum.TestTwo] = UnsubscribeTestTwoHandler;
-        }
-
-        private void UnsubscribeTestTwoHandler(SOQuest quest)
-        {
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= TestTwoQuestHandler;
-            }
-        }
-
-        private void TestTwoQuestHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
-        {
-            if (inventoryCodes != InventoryCodesEnum.ItemDropped || pickable != PickablesEnum.CannedFood)
-                return;
-            Log.DLazy(() => $"TestTwoQuestHandler called from sender {sender.SenderName} with value {pickable}.", this);
-            IncrementQuestProgress(QuestsEnum.TestTwo);
-            if (questProgression[(int)QuestsEnum.TestTwo] < activeQuests[(int)QuestsEnum.TestTwo].CountToComplete)
-                return;
-            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.KaelID_Picked, true) });
-        }
-
-        private void OnTestTwoCompleted(SOQuest quest)
-        {
-            Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            UnsubscribeTestTwoHandler(quest);
-        }
-        #endregion
 
         #region Move_Tutorial
         private void OnMove_TutorialAdded(SOQuest quest)

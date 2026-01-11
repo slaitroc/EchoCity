@@ -11,17 +11,9 @@ public class ExitLabAreaDoorInteractable : DoorInteractable
 
     protected override void ResolveInteraction(bool outcome)
     {
-        if (outcome)
-        {
-            base.ResolveInteraction(outcome);
-        }
-        else
-        {
+        base.ResolveInteraction(outcome);
+        if (!outcome)
             if (lockedSound != null)
                 PlayAtPosition(transform.position, lockedSound, _audioContext, MixerGroupEnum.SFX);
-            PuzzleManager.AddToTagsTriggeredQuests(triggeredQuestIfFail);
-            PuzzleManager.CheckQuests();
-        }
     }
-
 }

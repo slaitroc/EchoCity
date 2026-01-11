@@ -32,11 +32,6 @@ namespace EchoCity
                 Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
                 setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.ReApply);
             }
-            else
-            {
-                PuzzleManager.AddToTagsTriggeredQuests(triggeredQuestIfFail);
-                PuzzleManager.CheckQuests();
-            }
         }
     }
 }

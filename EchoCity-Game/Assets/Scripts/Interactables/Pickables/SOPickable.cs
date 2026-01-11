@@ -30,8 +30,9 @@ namespace EchoCity
         // Tools
         Battery,
         Cable,
-        ElectricityCable,
         FloppyDisk,
+        DataCenterLaptop,
+        BadgeID,
     }
     public abstract class SOPickable : ScriptableObject
     {

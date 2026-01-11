@@ -36,7 +36,7 @@ namespace EchoCity
         ExitFirstArea = 39,
         Generator_On = 40,
         DataCenterPC_Picked = 41,
-        CardReaderInteracted = 42,
+        EscapeDoor_Enabled = 42,
         MAX
     }
 
@@ -181,6 +181,11 @@ namespace EchoCity
             }
             return oppositeTags;
         }
-    }
 
+        public PuzzleTagState[] GetCurrentTags()
+        {
+            return (PuzzleTagState[])puzzleTags.Clone();
+        }
+    }
 }
+

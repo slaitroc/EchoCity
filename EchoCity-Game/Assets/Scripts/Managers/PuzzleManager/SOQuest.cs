@@ -28,19 +28,15 @@ namespace EchoCity
         UseHighSO_Tutorial,
         AttractEnemy_Tutorial,
         //FIRST LEVEL QUESTS
-
-        //OLD QUESTS
-        TestOne,
-        TestTwo,
-        FindTheKey,
-        OpenTheDoor,
-        UseTheGenerator,
         EscapeFirstArea,
         FindPry,
         FindFloppy,
         FindPhone,
+        FindID,
+        FindDataCenterLaptop,
         FindWalkieTalkie,
-        FixGenerator,
+        UseGenerator,
+        EnableEscapeDoorGenerator,
         FindCable,
         Escape,
         MAX

@@ -22,7 +22,7 @@ namespace EchoCity
         [SerializeField] protected string _interactionDescription;
         public string Description => _interactionDescription;
         public virtual bool HasRaycastDescription => true;
-        public bool IsInteractable => true;
+        public virtual bool IsInteractable => true;
         [SerializeField] protected string _InteractionSuccessMessage;
         private Color _successMessageColor = Color.green;
         protected virtual Color SuccessMessageColor => _successMessageColor;
@@ -39,6 +39,7 @@ namespace EchoCity
         public abstract InteractionEnum InteractionCode { get; }
         protected AudioContext _audioContext;
         protected Renderer[] _cachedRenderers;
+
 
         protected virtual void Awake() => gameObject.layer = 6; // Set to Interactable layer
 
@@ -74,6 +75,7 @@ namespace EchoCity
                 if (interactionEvent != null) interactionEvent.RaiseEvent(this, InteractionCode);
             OutcomeMessages(outcome);
             ResolveInteraction(outcome);
+            AddQuest(outcome);
             return outcome;
         }
 
@@ -116,18 +118,31 @@ namespace EchoCity
                 if (showUIEvent && !string.IsNullOrEmpty(_InteractionFailMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(_InteractionFailMessage, FailMessageColor));
             }
         }
-        protected virtual void AddQuest(bool outcome)
+        protected virtual void DefaultAddQuest(bool outcome)
         {
             if (outcome)
             {
                 if (OnSuccessAddQuest) puzzleManager.AddQuest(OnSuccessAddQuest);
-                if (OnSuccessAddTagsQuest) puzzleManager.AddToTagsTriggeredQuests(OnSuccessAddTagsQuest);
+                if (OnSuccessAddTagsQuest)
+                {
+                    puzzleManager.AddToTagsTriggeredQuests(OnSuccessAddTagsQuest);
+                    puzzleManager.CheckQuests();
+                }
             }
             else
             {
                 if (OnFailAddQuest) puzzleManager.AddQuest(OnFailAddQuest);
-                if (OnFailAddTagsQuest) puzzleManager.AddToTagsTriggeredQuests(OnFailAddTagsQuest);
+                if (OnFailAddTagsQuest)
+                {
+                    puzzleManager.AddToTagsTriggeredQuests(OnFailAddTagsQuest);
+                    puzzleManager.CheckQuests();
+                }
             }
+        }
+
+        protected virtual void AddQuest(bool outcome)
+        {
+            DefaultAddQuest(outcome);
         }
     }
 }
