@@ -170,8 +170,9 @@ MonoBehaviour:
   - _tag: 35
     _isActive: 1
     _count: 0
-  _interactionDescription: 
-  _InteractionSuccessMessage: Floppy Disk Picked
-  _InteractionFailMessage: 
+  _interactionDescription: This is it! The floppy disk!
+  _InteractionSuccessMessage: Floppy disk Picked
+  _InteractionFailMessage: There's a time and place for everything but not now!
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 61fc36d83e190414cac0f070f42ec318, type: 2}
+  undoTagsOnDrop: 1

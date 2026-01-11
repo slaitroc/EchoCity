@@ -17,12 +17,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2961428877365973352, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
+      propertyPath: _InteractionFailMessage
+      value: You need to complete the tutorial first
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961428877365973352, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
       propertyPath: _interactionDescription
       value: Interact 3 times to exit the tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 2961428877365973352, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
       propertyPath: _InteractionSuccessMessage
-      value: 
+      value: You finished the tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 2961428877365973352, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
       propertyPath: checkTags.Array.data[0]._tag
@@ -86,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9157734107336810167, guid: 7b314b8d3e838804ca5d7d7349f16429, type: 3}
       propertyPath: m_Name
-      value: Interactable-DoorAndArea-CageRoom TutorialVariant
+      value: Interactable-Door-ExitTutorial TutorialVariant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

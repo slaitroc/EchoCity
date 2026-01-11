@@ -101,7 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ee0d2a0c63778498f08e64df8881c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 3
@@ -111,10 +113,12 @@ MonoBehaviour:
   - _tag: 3
     _isActive: 1
     _count: 0
-  _description: 
+  _interactionDescription: A metal... rod?
+  _InteractionSuccessMessage: Metal bar picked
+  _InteractionFailMessage: There's a time and place for everything but not now!
+  interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 39a6fbb27c8f5c94eb0507387ae4cca4, type: 2}
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  dialogContainer: {fileID: 11400000, guid: 97e74a292ad7946da84e750fc3360aa4, type: 2}
+  undoTagsOnDrop: 1
 --- !u!64 &4460635407122736099
 MeshCollider:
   m_ObjectHideFlags: 0
