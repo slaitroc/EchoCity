@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7180411356243875458, guid: f503e899b1b2a844f82217209bf669ac, type: 3}
       propertyPath: m_Name
-      value: Interactable-EscapeBunkerAuth Variant
+      value: Interactable-EscapeBunkerAuth_Mid FirstLevel_Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7436125667595534758, guid: f503e899b1b2a844f82217209bf669ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,8 +52,63 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5023790004312919468, guid: f503e899b1b2a844f82217209bf669ac, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7180411356243875458, guid: f503e899b1b2a844f82217209bf669ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6605021694721633505}
   m_SourcePrefab: {fileID: 100100000, guid: f503e899b1b2a844f82217209bf669ac, type: 3}
+--- !u!1 &7204600175964983871 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7180411356243875458, guid: f503e899b1b2a844f82217209bf669ac, type: 3}
+  m_PrefabInstance: {fileID: 26480251412726973}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6605021694721633505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7204600175964983871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e6a37717e1abcb4284136853c3c5eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags:
+  - _tag: 43
+    _isActive: 1
+    _count: 0
+  - _tag: 42
+    _isActive: 1
+    _count: 0
+  - _tag: 33
+    _isActive: 1
+    _count: 0
+  - _tag: 35
+    _isActive: 1
+    _count: 0
+  - _tag: 31
+    _isActive: 1
+    _count: 0
+  - _tag: 41
+    _isActive: 1
+    _count: 0
+  setTags: []
+  _interactionDescription: Check the ID to unlock the door
+  _InteractionSuccessMessage: ID checke  - Door unlocked
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
+  _InteractionFailMessage: You are missing something
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 11400000, guid: a552ac088ac4292448a2af5e8e925594, type: 2}
+  interactionContainer: {fileID: 0}
+  successSoundSource: {fileID: 0}
+  switchToGameStateEvent: {fileID: 0}

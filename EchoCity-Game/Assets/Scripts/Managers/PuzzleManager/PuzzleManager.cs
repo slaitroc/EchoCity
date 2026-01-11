@@ -37,6 +37,7 @@ namespace EchoCity
         Generator_On = 40,
         DataCenterPC_Picked = 41,
         EscapeDoor_Enabled = 42,
+        Fence_Removed = 43,
         MAX
     }
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace EchoCity
@@ -35,8 +36,8 @@ namespace EchoCity
             _onAddQuest[(int)QuestsEnum.EscapeFirstArea] = OnEscapeFirstAreaAdded;
             _onCompleteQuest[(int)QuestsEnum.EscapeFirstArea] = OnEscapeFirstAreaCompleted;
 
-            _onAddQuest[(int)QuestsEnum.Escape] = OnEnableEscapeDoorGeneratorAdded;
-            _onCompleteQuest[(int)QuestsEnum.Escape] = OnEnableEscapeDoorGeneratorCompleted;
+            _onAddQuest[(int)QuestsEnum.EnableEscapeDoorGenerator] = OnEnableEscapeDoorGeneratorAdded;
+            _onCompleteQuest[(int)QuestsEnum.EnableEscapeDoorGenerator] = OnEnableEscapeDoorGeneratorCompleted;
 
             _onAddQuest[(int)QuestsEnum.Escape] = OnEscapeAdded;
             _onCompleteQuest[(int)QuestsEnum.Escape] = OnEscapeCompleted;
@@ -233,8 +234,14 @@ namespace EchoCity
         {
             UnsubscribeEnableEscapeDoorGeneratorHandler(quest);
             Log.DLazy(() => $"Quest {quest.name} added.", this);
-            _onUnsubscribeQuest[(int)QuestsEnum.Escape] = UnsubscribeEnableEscapeDoorGeneratorHandler;
+            _onUnsubscribeQuest[(int)QuestsEnum.EnableEscapeDoorGenerator] = UnsubscribeEnableEscapeDoorGeneratorHandler;
             PlayLine(quest, 0);
+        }
+
+        private IEnumerator TimeToReactivateGeneratorCoroutine(SOQuest quest)
+        {
+            yield return new WaitForSeconds(10f);
+            _puzzleManager.SetTags(activeQuests[(int)QuestsEnum.EnableEscapeDoorGenerator].TagsToActivate);
         }
 
         private void UnsubscribeEnableEscapeDoorGeneratorHandler(SOQuest quest) { }
@@ -245,6 +252,7 @@ namespace EchoCity
             UnsubscribeEnableEscapeDoorGeneratorHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
+            StartCoroutine(TimeToReactivateGeneratorCoroutine(quest));
         }
         #endregion
 
@@ -267,5 +275,6 @@ namespace EchoCity
             PlayLine(quest, 1, true);
         }
         #endregion
+
     }
 }

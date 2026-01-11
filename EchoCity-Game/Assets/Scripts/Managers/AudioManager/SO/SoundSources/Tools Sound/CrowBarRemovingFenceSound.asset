@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
+  m_Name: CrowBarRemovingFenceSound
+  m_EditorClassIdentifier: 
+  soundClass: {fileID: 11400000, guid: 648d07ea32e723048811d7f6d2fe849f, type: 2}
+  soundClassIntensityFactorMultiplier: 1
+  audioClip: {fileID: 8300000, guid: e1bf480c17584a241a4194e237742e75, type: 3}
+  audioLengthReference: 4.25
+  audioLengthOverride: 0.1
+  intensity: 1
+  volume: 0.661
+  radius: 9
+  minEchoDuration: 0.1
+  isEnvironmental: 0
+  randomAudioClips: []

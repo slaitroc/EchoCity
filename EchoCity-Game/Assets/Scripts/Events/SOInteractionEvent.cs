@@ -13,6 +13,8 @@ namespace EchoCity
         ChangeSceneDoor,
         FirstAreaEscapeDoor,
         SecondAreaEscapeDoor,
+        SecondAreaEscapeDoorFence,
+        SecondAreaIDChecker,
         DoorArea,
         Pickable,
         WallLightSwitch,

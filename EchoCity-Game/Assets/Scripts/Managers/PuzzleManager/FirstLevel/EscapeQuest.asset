@@ -13,29 +13,30 @@ MonoBehaviour:
   m_Name: EscapeQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 27
+  quest: 25
   tagsToActivate:
-  - _tag: 31
-    _isActive: 1
-    _count: 0
-  - _tag: 38
-    _isActive: 1
-    _count: 0
-  - _tag: 35
+  - _tag: 43
     _isActive: 1
     _count: 0
   - _tag: 33
     _isActive: 1
     _count: 0
+  - _tag: 31
+    _isActive: 1
+    _count: 0
+  - _tag: 35
+    _isActive: 1
+    _count: 0
+  - _tag: 41
+    _isActive: 1
+    _count: 0
   tagsToCheck:
-  - _tag: 39
+  - _tag: 44
     _isActive: 1
     _count: 0
   countToComplete: 1
-  subscribeToEvents:
-  - {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
-  nextQuests:
-  - {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
+  subscribeToEvents: []
+  nextQuests: []
   description: Escape the lab facilities
   questCompletedText: 
   scriptContainer: {fileID: 0}
