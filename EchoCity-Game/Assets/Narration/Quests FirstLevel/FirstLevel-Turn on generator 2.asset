@@ -10,9 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Generator timer
+  m_Name: FirstLevel-Turn on generator 2
   m_EditorClassIdentifier: 
   dialogLines:
+  - speakerName: Noah
+    dialogText: "I need to turn on the other emergency generator,\Land then I\u2019ll
+      need a manager\u2019s ID badge to get out of here."
+    audioClip: {fileID: 8300000, guid: f9e7353b335214a0f84ba76b8672227e, type: 3}
   - speakerName: Noah
     dialogText: "Let\u2019s hope this runs long enough...\Lthere\u2019s a timer,\Lso
       we need to get out of the room in time."

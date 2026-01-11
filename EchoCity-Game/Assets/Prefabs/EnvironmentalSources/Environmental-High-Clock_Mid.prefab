@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 5202283359270022541}
   - component: {fileID: 81496138771100952}
   - component: {fileID: 3145343770351278786}
-  - component: {fileID: 2136979447764814180}
-  - component: {fileID: 6046043887851785429}
   - component: {fileID: 3079638199908643002}
   - component: {fileID: 2534098630805436563}
   - component: {fileID: 620383490892441654}
@@ -31,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527089061979779913}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.80267787, y: 4.3862667, z: 15.282913}
   m_LocalScale: {x: 1.5000002, y: 1.5, z: 1.5000002}
   m_ConstrainProportionsScale: 1
@@ -93,49 +91,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2136979447764814180
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527089061979779913}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43305215248143578, guid: 11167c2f4aa840945bacf7a8894f2b5f, type: 2}
---- !u!65 &6046043887851785429
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 527089061979779913}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.39129496, y: 0.37214386, z: 0.054172277}
-  m_Center: {x: 0.000000007450581, y: 0.000000007450581, z: 0.027086139}
 --- !u!114 &3079638199908643002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectFrequency: 1
+  objectFrequency: 2
 --- !u!82 &2534098630805436563
 AudioSource:
   m_ObjectHideFlags: 0
@@ -258,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61993809d763062a4a9ff0e6b4227239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   soundSource: {fileID: 11400000, guid: 553e8324492489f40b78d5fcddcb4254, type: 2}
   emitOnStart: 1
   gapBetweenSounds: 1

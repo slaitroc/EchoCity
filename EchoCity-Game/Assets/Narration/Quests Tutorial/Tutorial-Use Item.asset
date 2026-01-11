@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Sprint
+  m_Name: Tutorial-Use Item
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: If you need to move faster, hold SHIFT to sprint.
-    audioClip: {fileID: 8300000, guid: f046d983711c245889e42703901dc842, type: 3}
+    dialogText: To use the object you have equipped, press the right mouse button.
+    audioClip: {fileID: 8300000, guid: 859526a8a7ee04021b4b493d5d4ed612, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: 'Sprint can save your life
+    dialogText: 'Use tools to interact with the environment.
 
-      Great, now we can move on to interactions.'
-    audioClip: {fileID: 8300000, guid: a1189d5bfa5364185922529de811f0c7, type: 3}
+      Use sound tools
+      to generate noise.'
+    audioClip: {fileID: 8300000, guid: 92ac529ff85e14e4aa6bbba30e08d1ad, type: 3}

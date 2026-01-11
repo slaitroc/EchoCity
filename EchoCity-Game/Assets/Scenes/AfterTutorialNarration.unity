@@ -148,8 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f958cc3620cd10d448517cbcd57a85ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  container: {fileID: 11400000, guid: da38f02e36d0249158e9061e386a1735, type: 2}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
+  sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
+  container: {fileID: 11400000, guid: a7e02ee8571d849a38da09a41005a13b, type: 2}
+  destinationScene: 6
 --- !u!4 &970504522
 Transform:
   m_ObjectHideFlags: 0

@@ -98,12 +98,14 @@ namespace EchoCity
             if (outcome)
             {
                 if (interactionContainer)
-                    EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 1, true);
+                    if (interactionContainer.DialogLines != null && interactionContainer.DialogLines.Length > 0)
+                        EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 1, true);
             }
             else
             {
                 if (interactionContainer)
-                    EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 0, true);
+                    if (interactionContainer.DialogLines != null && interactionContainer.DialogLines.Length > 1)
+                        EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 0, true);
             }
         }
 

@@ -7,6 +7,7 @@ namespace EchoCity
     public class Trigger : PlainInteractable
     {
         [SerializeField] private Collider triggerCollider;
+
         public override string SenderName => gameObject.name;
         public override int SenderID => GetInstanceID();
         public override bool IsManager => false;

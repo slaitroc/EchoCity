@@ -7,6 +7,7 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
         [SerializeField] private SOSetMaterialEvent setMaterialEvent;
+        [SerializeField] private SOShowUIEvent showUIEvent;
 
 
         [Header("Observing Events")]
@@ -24,6 +25,7 @@ namespace EchoCity
         [SerializeField] private QuestsManager questsManager;
         [SerializeField] private SOQuest initialQuest;
         [SerializeField] private SOPickable equippedItemOnStart;
+        [SerializeField] private SODialogContainer initialDialogContainer;
 
         protected PuzzleManager puzzleManager;
         protected PlayerInventory playerInventory;
@@ -69,6 +71,10 @@ namespace EchoCity
                     setMaterialEvent.RaiseEvent(this, EchoMaterialCodeEnum.Active);
                 else
                     setMaterialEvent.RaiseEvent(this, EchoMaterialCodeEnum.Inactive);
+            }
+            if (initialDialogContainer != null)
+            {
+                EchoCitySound.AddInVoicePlayQueue(initialDialogContainer, showUIEvent, 0, true);
             }
             InitializeLevel();
         }

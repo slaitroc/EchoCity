@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Wear the echolocator
+  m_Name: Tutorial-Drop Item
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: "Echolocator activated.\nConnection established. Hi Noah, I am the
-      assistance unit of the Resonance Project. Your heart rate is high, don't worry
-      it\u2019s completely normal.\nWe will now begin the training procedure, just
-      follow my voice."
-    audioClip: {fileID: 8300000, guid: efa496cfa4bcf4ddab0e655b97040028, type: 3}
+    dialogText: 'Drop an item:
+
+      If you want to drop it on the ground, press
+      Q.'
+    audioClip: {fileID: 8300000, guid: fda61551af32847a5b4e216c635b9c94, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: 
-    audioClip: {fileID: 0}
+    dialogText: You now know how to get rid of useless items
+    audioClip: {fileID: 8300000, guid: 59c3857352580451d9b8219e4bd3443a, type: 3}

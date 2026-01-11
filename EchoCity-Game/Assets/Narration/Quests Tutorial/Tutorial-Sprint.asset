@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Drop Item
+  m_Name: Tutorial-Sprint
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: 'Drop an item:
-
-      If you want to drop it on the ground, press
-      Q.'
-    audioClip: {fileID: 8300000, guid: fda61551af32847a5b4e216c635b9c94, type: 3}
+    dialogText: If you need to move faster, hold SHIFT to sprint.
+    audioClip: {fileID: 8300000, guid: f046d983711c245889e42703901dc842, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: You now know how to get rid of useless items
-    audioClip: {fileID: 8300000, guid: 59c3857352580451d9b8219e4bd3443a, type: 3}
+    dialogText: 'Sprint can save your life
+
+      Great, now we can move on to interactions.'
+    audioClip: {fileID: 8300000, guid: a1189d5bfa5364185922529de811f0c7, type: 3}

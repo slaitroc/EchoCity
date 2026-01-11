@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Jump
+  m_Name: Tutorial-Wear the echolocator
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: Try jumping. Press the SPACE bar to go over small obstacles and platforms
-    audioClip: {fileID: 8300000, guid: 7f98e787dff2f48419f56b1cd3488c53, type: 3}
+    dialogText: "Echolocator activated.\nConnection established. Hi Noah, I am the
+      assistance unit of the Resonance Project. Your heart rate is high, don't worry
+      it\u2019s completely normal.\nWe will now begin the training procedure, just
+      follow my voice."
+    audioClip: {fileID: 8300000, guid: efa496cfa4bcf4ddab0e655b97040028, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: 'Very good, landing generates additional noise...
-
-      If the legend
-      in the bottom right gets in your way, press T to toggle it.'
-    audioClip: {fileID: 8300000, guid: d799b5d8712574e88aabaef3a8248d0f, type: 3}
+    dialogText: 
+    audioClip: {fileID: 0}

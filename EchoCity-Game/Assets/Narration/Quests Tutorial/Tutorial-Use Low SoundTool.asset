@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Move and look around
+  m_Name: Tutorial-Use Low SoundTool
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: Now take a few steps and look around. Use W, A, S, D to move and
-      the MOUSE to look.
-    audioClip: {fileID: 8300000, guid: 30f35ccb56a3747cdb7475a29285ea48, type: 3}
+    dialogText: 'Equip the low frequency tool.
+
+      Use it to orient yourself and
+      move through the environment.
+
+      It reveals only essential shapes.'
+    audioClip: {fileID: 8300000, guid: 6b5f8e78a58854b3bac1b8c6631cdbff, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: Well done! Keep moving carefully...
-    audioClip: {fileID: 8300000, guid: 19f04d27de0984ba1abb239fe8d4e3aa, type: 3}
+    dialogText: Very good.
+    audioClip: {fileID: 8300000, guid: 38b8449656bdf4a809331db597882cec, type: 3}

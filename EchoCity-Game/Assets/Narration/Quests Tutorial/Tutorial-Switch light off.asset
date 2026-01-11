@@ -10,18 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Pick up an object
+  m_Name: Tutorial-Switch light off
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: 'Pick up objects:
-
-      Go to the central table and collect all
-      objects placed on it.'
-    audioClip: {fileID: 8300000, guid: a7c9a022743904d538dc770cb78bde1e, type: 3}
+    dialogText: "Let\u2019s really test the echolocator. Go and turn off the lights
+      \u2014 it works best in the dark."
+    audioClip: {fileID: 8300000, guid: 6500d2821a4dd42d0bbaf91c35edc145, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: 'The object are now in your inventory.
+    dialogText: 'Lights turned off.
 
-      Collect tools that
-      might be useful. '
-    audioClip: {fileID: 8300000, guid: 7b3c649021d57407c83c64e1dcc4ee22, type: 3}
+'
+    audioClip: {fileID: 8300000, guid: e7608274e616248229cdd4aa331962eb, type: 3}

@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Switch light off
+  m_Name: Tutorial-Open inventory and equip
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: "Let\u2019s really test the echolocator. Go and turn off the lights
-      \u2014 it works best in the dark."
-    audioClip: {fileID: 8300000, guid: 6500d2821a4dd42d0bbaf91c35edc145, type: 3}
+    dialogText: "Open the inventory, press E. \nMove the mouse over an item in the
+      inventory to equip it."
+    audioClip: {fileID: 8300000, guid: 05889548427d34a02b6317ca519c7aa8, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: 'Lights turned off.
-
-'
-    audioClip: {fileID: 8300000, guid: e7608274e616248229cdd4aa331962eb, type: 3}
+    dialogText: Good! Remember to equip the tool you want to use.
+    audioClip: {fileID: 8300000, guid: 561cb64eb7e184890af36b1702dd50c8, type: 3}

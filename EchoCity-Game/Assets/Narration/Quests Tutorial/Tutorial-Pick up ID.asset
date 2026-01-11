@@ -10,21 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0711db1b03ce448c93419c25aa574d8, type: 3}
-  m_Name: Switch light off (ID version)
+  m_Name: Tutorial-Pick up ID
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: "Let\u2019s really test the echolocator. Go and turn off the lights
-      \u2014 it works best in the dark."
+    dialogText: "Now pick up your ID badge, on the table in the center.\nIt certifies
+      your role as an engineer of the Resonance Project.\nOnly a few ever make it
+      this far \u2014 it takes real talent to wear it."
     audioClip: {fileID: 8300000, guid: ee7d0d39903274e89af637a31c9dbc04, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: 'Lights turned off.
+    dialogText: 'The object is now in your inventory.
 
-      Before we continue, collect all remaining
-      pickable objects in the room.
-
-      There are seven in total.
-
-      Use the
-      echolocator to find them.'
+      Collect tools that might
+      be useful. '
     audioClip: {fileID: 8300000, guid: 4f13192969b3ed843ac0d079dc6513df, type: 3}
