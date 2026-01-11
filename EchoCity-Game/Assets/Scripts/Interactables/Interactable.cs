@@ -24,9 +24,16 @@ namespace EchoCity
         public virtual bool HasRaycastDescription => true;
         public bool IsInteractable => true;
         [SerializeField] protected string _InteractionSuccessMessage;
-        protected Color _successMessageColor = Color.green;
+        private Color _successMessageColor = Color.green;
+        protected virtual Color SuccessMessageColor => _successMessageColor;
+        [SerializeField] SOQuest OnSuccessAddQuest;
+        [SerializeField] SOQuest OnSuccessAddTagsQuest;
         [SerializeField] protected string _InteractionFailMessage;
-        protected Color _failMessageColor = Color.red;
+        private Color _failMessageColor = Color.red;
+        protected virtual Color FailMessageColor => _failMessageColor;
+        [SerializeField] SOQuest OnFailAddQuest;
+        [SerializeField] SOQuest OnFailAddTagsQuest;
+
         [SerializeField] SODialogContainer interactionContainer;
 
         public abstract InteractionEnum InteractionCode { get; }
@@ -102,11 +109,24 @@ namespace EchoCity
         {
             if (outcome)
             {
-                if (showUIEvent && !string.IsNullOrEmpty(_InteractionSuccessMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(_InteractionSuccessMessage, _successMessageColor));
+                if (showUIEvent && !string.IsNullOrEmpty(_InteractionSuccessMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(_InteractionSuccessMessage, SuccessMessageColor));
             }
             else
             {
-                if (showUIEvent && !string.IsNullOrEmpty(_InteractionFailMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(_InteractionFailMessage, _failMessageColor));
+                if (showUIEvent && !string.IsNullOrEmpty(_InteractionFailMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams(_InteractionFailMessage, FailMessageColor));
+            }
+        }
+        protected virtual void AddQuest(bool outcome)
+        {
+            if (outcome)
+            {
+                if (OnSuccessAddQuest) puzzleManager.AddQuest(OnSuccessAddQuest);
+                if (OnSuccessAddTagsQuest) puzzleManager.AddToTagsTriggeredQuests(OnSuccessAddTagsQuest);
+            }
+            else
+            {
+                if (OnFailAddQuest) puzzleManager.AddQuest(OnFailAddQuest);
+                if (OnFailAddTagsQuest) puzzleManager.AddToTagsTriggeredQuests(OnFailAddTagsQuest);
             }
         }
     }

@@ -10,7 +10,7 @@ namespace EchoCity
         Generator,
         CardReader,
         Door,
-        TutorialDoor,
+        ChangeSceneDoor,
         LaboratoryAreaDoor,
         DoorArea,
         Pickable,
