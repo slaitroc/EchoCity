@@ -235,8 +235,8 @@ namespace EchoCity
                     if (!narrationParams.UseCached) EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender, eventTime: 1f);
                     break;
                 case ShowableUIEnum.Play:
-                    HideAllElements(subtitles: true);
-                    _hud.SetActive(true);
+                    HideAllElements(subtitles: true, hud: true);
+                    if (!_hud.activeSelf) _hud.SetActive(true);
                     if (!_subtitles.activeSelf) _subtitles.SetActive(true);
                     tutorialPanelController.ShowHideLines(_showTutorial);
                     EquippedItemHandler(this, PickablesEnum.Hands);
