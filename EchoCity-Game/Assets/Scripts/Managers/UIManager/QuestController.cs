@@ -161,7 +161,6 @@ namespace EchoCity
 
         private void StartFade(QuestsEnum id)
         {
-            if (_fadeCoroutines.ContainsKey(id)) return;
             if (!_rows.TryGetValue(id, out var row)) return;
 
             if (!row.ClassListContains("completed"))
