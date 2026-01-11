@@ -15,24 +15,27 @@ MonoBehaviour:
   questType: 0
   quest: 27
   tagsToActivate:
-  - _tag: 32
+  - _tag: 31
     _isActive: 1
     _count: 0
-  - _tag: 33
+  - _tag: 38
+    _isActive: 1
+    _count: 0
+  - _tag: 35
     _isActive: 1
     _count: 0
   - _tag: 33
     _isActive: 1
     _count: 0
   tagsToCheck:
-  - _tag: 0
+  - _tag: 39
     _isActive: 1
     _count: 0
   countToComplete: 1
   subscribeToEvents:
   - {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
-  - {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
-  nextQuests: []
+  nextQuests:
+  - {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
   description: Escape the lab facilities
   questCompletedText: 
   scriptContainer: {fileID: 0}

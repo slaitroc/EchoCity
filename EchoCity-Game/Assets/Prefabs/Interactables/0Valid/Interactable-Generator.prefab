@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 8717067175697555747}
   - component: {fileID: 1033117141249208788}
   - component: {fileID: 5097462607116816502}
+  - component: {fileID: 2756363359783736069}
   m_Layer: 0
-  m_Name: Environmental-Low-Generator
+  m_Name: Interactable-Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5024404230840252557}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.13052595, z: -0, w: 0.99144495}
+  m_LocalRotation: {x: 0, y: -0.13052624, z: 0, w: 0.9914449}
   m_LocalPosition: {x: -7.7866783, y: 2.2182665, z: 20.022913}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 75, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -15, z: 0}
 --- !u!33 &2937097033298855989
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -219,7 +220,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61993809d763062a4a9ff0e6b4227239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   soundSource: {fileID: 11400000, guid: b764989168d9473418a05fba947022df, type: 2}
-  emitOnStart: 1
+  emitOnStart: 0
   gapBetweenSounds: 0
+--- !u!114 &2756363359783736069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5024404230840252557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62bfc3fa96efbf346b0c1e31a2db9993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags:
+  - _tag: 34
+    _isActive: 1
+    _count: 0
+  setTags:
+  - _tag: 36
+    _isActive: 1
+    _count: 0
+  _interactionDescription: 
+  _InteractionSuccessMessage: Generator plugged to the card reader
+  _InteractionFailMessage: To use the emergency generator you need to use a cable
+  interactionContainer: {fileID: 0}
+  triggeredQuestIfFail: {fileID: 11400000, guid: 4809ea2c457bf054bb667e1570d3ae37, type: 2}

@@ -7,7 +7,7 @@ namespace EchoCity
         [Header("End Game Event")]
         [SerializeField] SOSwitchToGameStateEvent switchToGameStateEvent;
 
-        public override InteractionEnum InteractionCode => InteractionEnum.EndDoor;
+        public override InteractionEnum InteractionCode => InteractionEnum.LaboratoryAreaDoor;
 
         protected override void ResolveInteraction(bool outcome)
         {
@@ -17,7 +17,7 @@ namespace EchoCity
             }
             else
             {
-                interactionEvent?.RaiseEvent(this, InteractionEnum.EndDoor);
+                interactionEvent?.RaiseEvent(this, InteractionEnum.LaboratoryAreaDoor);
             }
         }
     }

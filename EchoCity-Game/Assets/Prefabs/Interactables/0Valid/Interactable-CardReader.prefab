@@ -156,25 +156,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
   showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
-  - _tag: 0
-    _isActive: 0
+  - _tag: 36
+    _isActive: 1
     _count: 0
   setTags: []
   _interactionDescription: 
-  _InteractionSuccessMessage: 
-  _InteractionFailMessage: 
+  _InteractionSuccessMessage: 'Car reader: floppy disk ejected'
+  _InteractionFailMessage: Card reader needs power supply to workcorrectly
   interactionContainer: {fileID: 0}
-  setMaterialEvent: {fileID: 0}
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
   cardPrefab: {fileID: 2224368390549605647, guid: f16ddeba5edac764da33972634453b46, type: 3}
   cardSpawnPoint: {fileID: 3462270299063593959}
-  dialogContainerSuccess: {fileID: 11400000, guid: d655277bb95a044298af0252e627d062, type: 2}
-  dialogContainerFail: {fileID: 11400000, guid: 588cbaac87d82400880f434fb0dd7c96, type: 2}
+  triggeredQuestIfFail: {fileID: 0}
 --- !u!114 &3988382643267803885
 MonoBehaviour:
   m_ObjectHideFlags: 0

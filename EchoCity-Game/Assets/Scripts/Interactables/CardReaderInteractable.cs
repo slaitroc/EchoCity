@@ -17,12 +17,16 @@ namespace EchoCity
         [Header("Quest")]
         [SerializeField] private SOQuest triggeredQuestIfFail;
 
+        private bool _used = false;
+
         public override InteractionEnum InteractionCode => InteractionEnum.CardReader;
 
         protected override void ResolveInteraction(bool outcome)
         {
             if (outcome)
             {
+                if (_used) return;
+                _used = true;
                 showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("CardReader Used!", new Color(1f, 0.5f, 0f, 1f)));
                 PlayAtPosition(transform.position, useSoundSource, _audioContext, MixerGroupEnum.SFX);
                 Instantiate(cardPrefab, cardSpawnPoint.position, cardSpawnPoint.rotation);
@@ -30,7 +34,8 @@ namespace EchoCity
             }
             else
             {
-                PuzzleManager?.AddToTagsTriggeredQuests(triggeredQuestIfFail);
+                PuzzleManager.AddToTagsTriggeredQuests(triggeredQuestIfFail);
+                PuzzleManager.CheckQuests();
             }
         }
     }

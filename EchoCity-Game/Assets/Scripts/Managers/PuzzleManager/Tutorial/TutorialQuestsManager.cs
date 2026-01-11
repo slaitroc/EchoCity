@@ -134,7 +134,7 @@ namespace EchoCity
             IncrementQuestProgress(QuestsEnum.TestTwo);
             if (questProgression[(int)QuestsEnum.TestTwo] < activeQuests[(int)QuestsEnum.TestTwo].CountToComplete)
                 return;
-            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.BunkerDoorKey_Picked, true) });
+            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.KaelID_Picked, true) });
         }
 
         private void OnTestTwoCompleted(SOQuest quest)

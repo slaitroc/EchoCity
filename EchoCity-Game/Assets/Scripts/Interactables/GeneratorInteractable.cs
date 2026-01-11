@@ -22,11 +22,12 @@ namespace EchoCity
         {
             if (outcome)
             {
-                audioEmitter?.EmitSound();
+                audioEmitter.EmitSound();
             }
             else
             {
-                PuzzleManager?.AddToTagsTriggeredQuests(triggeredQuestIfFail);
+                PuzzleManager.AddQuest(triggeredQuestIfFail);
+                PuzzleManager.CheckQuests();
             }
         }
     }

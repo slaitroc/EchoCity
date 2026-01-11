@@ -24,18 +24,19 @@ namespace EchoCity
         EnemySoundChase_TutorialCompleted = 15,
         TutorialCompleted = 29,
         //FIRST LEVEL TAGS
-        // Picked
         Lighting_On = 30, // if false echo material must be used
         Phone_Picked = 31,
         WalkieTalkie_Picked = 32,
-        BunkerDoorKey_Picked = 33,
+        KaelID_Picked = 33,
         Cable_Picked = 34,
         FloppyDisk_Picked = 35,
-        // On / Activated   
         CardReader_On = 36,
         WearingGlasses = 37,
         PryTool_Picked = 38,
         ExitFirstArea = 39,
+        Generator_On = 40,
+        DataCenterPC_Picked = 41,
+        CardReaderInteracted = 42,
         MAX
     }
 
@@ -149,7 +150,12 @@ namespace EchoCity
                 puzzleTags[(int)tagsToSet[i].Tag].Count = tagsToSet[i].Count;
             }
             if (checkQuests)
-                questsManager?.UpdateActiveQuests(this);
+                CheckQuests();
+        }
+
+        public void CheckQuests()
+        {
+            questsManager?.UpdateActiveQuests(this);
         }
 
         public void ClearQuestsManager()
@@ -164,6 +170,16 @@ namespace EchoCity
             InitializeTags();
             questsManager.SetPuzzleManager(this);
             this.questsManager = questsManager;
+        }
+
+        public PuzzleTagState[] ConstructOppositeTags(PuzzleTagState[] puzzleTags)
+        {
+            PuzzleTagState[] oppositeTags = new PuzzleTagState[puzzleTags.Length];
+            for (int i = 0; i < puzzleTags.Length; i++)
+            {
+                oppositeTags[i] = new PuzzleTagState(puzzleTags[i].Tag, !puzzleTags[i].IsActive, puzzleTags[i].Count);
+            }
+            return oppositeTags;
         }
     }
 

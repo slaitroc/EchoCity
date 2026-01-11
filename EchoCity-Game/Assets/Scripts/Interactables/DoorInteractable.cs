@@ -39,14 +39,10 @@ public class DoorInteractable : LinkableInteractable
         TryGetComponent(out doorAnimator);
     }
 
-    //skips puzzle interaction to just toggle door open/close
-    public override bool Interact()
+    protected override void ResolveInteraction(bool outcome)
     {
-        isOpen = !isOpen;
-        return true;
+        if (outcome)
+            isOpen = !isOpen;
     }
-
-
-    protected override void ResolveInteraction(bool outcome) { }
 
 }

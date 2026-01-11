@@ -37,7 +37,11 @@ namespace EchoCity
             {
                 triggerCollider.enabled = false;
                 if (associatedQuest != null)
-                    PuzzleManager.AddQuest(associatedQuest);
+                {
+                    PuzzleManager.AddToTagsTriggeredQuests(associatedQuest);
+                    PuzzleManager.CheckQuests();
+                }
+
             }
         }
     }

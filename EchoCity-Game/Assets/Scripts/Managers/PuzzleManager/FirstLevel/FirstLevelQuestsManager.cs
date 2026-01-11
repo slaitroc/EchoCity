@@ -17,60 +17,24 @@ namespace EchoCity
             _onAddQuest[(int)QuestsEnum.FindPhone] = OnFindPhoneAdded;
             _onCompleteQuest[(int)QuestsEnum.FindPhone] = OnFindPhoneCompleted;
 
-            _onAddQuest[(int)QuestsEnum.FixGenerator] = OnFixGeneratorAdded;
-            _onCompleteQuest[(int)QuestsEnum.FixGenerator] = OnFixGeneratorCompleted;
+            _onAddQuest[(int)QuestsEnum.FixGenerator] = OnUseGeneratorAdded;
+            _onCompleteQuest[(int)QuestsEnum.FixGenerator] = OnUseGeneratorCompleted;
 
-            _onAddQuest[(int)QuestsEnum.EscapeFirstArea] = OnEscapeAdded;
-            _onCompleteQuest[(int)QuestsEnum.EscapeFirstArea] = OnEscapeCompleted;
+            _onAddQuest[(int)QuestsEnum.EscapeFirstArea] = OnEscapeFirstAreaAdded;
+            _onCompleteQuest[(int)QuestsEnum.EscapeFirstArea] = OnEscapeFirstAreaCompleted;
+
+            _onAddQuest[(int)QuestsEnum.FindCable] = OnFindCableAdded;
+            _onCompleteQuest[(int)QuestsEnum.FindCable] = OnFindCableCompleted;
         }
 
         #region Find Pry Quest
         private void OnFindPryAdded(SOQuest quest)
         {
-            Log.DLazy(() => $"Quest {quest.name} added.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                {
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropPryHandler;
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += FindPryHandler;
-                }
-            }
             _onUnsubscribeQuest[(int)QuestsEnum.FindPry] = UnsubscribeFindPryHandler;
             PlayLine(quest, 0);
         }
 
-        private void UnsubscribeFindPryHandler(SOQuest quest)
-        {
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                {
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= FindPryHandler;
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropPryHandler;
-                }
-            }
-        }
-
-        private void FindPryHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
-        {
-            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.CrowBar)
-                return;
-
-            IncrementQuestProgress(QuestsEnum.FindPry);
-            if (questProgression[(int)QuestsEnum.FindPry] < activeQuests[(int)QuestsEnum.FindPry].CountToComplete)
-                return;
-            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PryTool_Picked, true) });
-            CompleteQuest(activeQuests[(int)QuestsEnum.FindPry]);
-        }
-
-        private void DropPryHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
-        {
-            if (inventoryCodes != InventoryCodesEnum.ItemDropped || pickable != PickablesEnum.CrowBar)
-                return;
-
-            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PryTool_Picked, false) }, true);
-        }
+        private void UnsubscribeFindPryHandler(SOQuest quest) { }
 
         private void OnFindPryCompleted(SOQuest quest)
         {
@@ -85,48 +49,11 @@ namespace EchoCity
         private void OnFindFloppyAdded(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} added.", this);
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                {
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropFloppyHandler;
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += FindFloppyHandler;
-                }
-            }
             _onUnsubscribeQuest[(int)QuestsEnum.FindFloppy] = UnsubscribeFindFloppyHandler;
             PlayLine(quest, 0);
         }
 
-        private void UnsubscribeFindFloppyHandler(SOQuest quest)
-        {
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                {
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= FindFloppyHandler;
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropFloppyHandler;
-                }
-            }
-        }
-
-        private void FindFloppyHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
-        {
-            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.FloppyDisk)
-                return;
-
-            IncrementQuestProgress(QuestsEnum.FindFloppy);
-            if (questProgression[(int)QuestsEnum.FindFloppy] < activeQuests[(int)QuestsEnum.FindFloppy].CountToComplete)
-                return;
-            CompleteQuest(activeQuests[(int)QuestsEnum.FindFloppy]);
-        }
-
-        private void DropFloppyHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
-        {
-            if (inventoryCodes != InventoryCodesEnum.ItemDropped || pickable != PickablesEnum.FloppyDisk)
-                return;
-
-            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.FloppyDisk_Picked, false) }, true);
-        }
+        private void UnsubscribeFindFloppyHandler(SOQuest quest) { }
 
         private void OnFindFloppyCompleted(SOQuest quest)
         {
@@ -140,50 +67,12 @@ namespace EchoCity
         #region Find Phone Quest
         private void OnFindPhoneAdded(SOQuest quest)
         {
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                {
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= DropPhoneHandler;
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += FindPhoneHandler;
-                }
-            }
             Log.DLazy(() => $"Quest FindPhone added.", this);
             _onUnsubscribeQuest[(int)QuestsEnum.FindPhone] = UnsubscribeFindPhoneHandler;
             PlayLine(quest, 0);
         }
 
-        private void UnsubscribeFindPhoneHandler(SOQuest quest)
-        {
-            foreach (var eventBase in quest.SubscribeToEvents)
-            {
-                if (eventBase.EventType == EchoCityEventsEnum.InventoryChanged)
-                {
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised -= FindPhoneHandler;
-                    ((SOInventoryChangedEvent)eventBase).OnEventRaised += DropPhoneHandler;
-                }
-            }
-        }
-
-        private void FindPhoneHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
-        {
-            if (inventoryCodes != InventoryCodesEnum.ItemAdded || pickable != PickablesEnum.WalkieTalkie)
-                return;
-
-            IncrementQuestProgress(QuestsEnum.FindPhone);
-            if (questProgression[(int)QuestsEnum.FindPhone] < activeQuests[(int)QuestsEnum.FindPhone].CountToComplete)
-                return;
-            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.WalkieTalkie_Picked, true) });
-            CompleteQuest(activeQuests[(int)QuestsEnum.FindPhone]);
-        }
-
-        private void DropPhoneHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum inventoryCodes)
-        {
-            if (inventoryCodes != InventoryCodesEnum.ItemDropped || pickable != PickablesEnum.WalkieTalkie)
-                return;
-
-            _puzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.WalkieTalkie_Picked, false) }, true);
-        }
+        private void UnsubscribeFindPhoneHandler(SOQuest quest) { }
 
         private void OnFindPhoneCompleted(SOQuest quest)
         {
@@ -194,49 +83,49 @@ namespace EchoCity
         }
         #endregion
 
-        #region Fix Generator Quest
-        private void OnFixGeneratorAdded(SOQuest quest)
+        #region Use Generator Quest
+        private void OnUseGeneratorAdded(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} added.", this);
-            _onUnsubscribeQuest[(int)QuestsEnum.FixGenerator] = UnsubscribeFixGeneratorHandler;
+            _onUnsubscribeQuest[(int)QuestsEnum.FixGenerator] = UnsubscribeUseGeneratorHandler;
             PlayLine(quest, 0);
         }
-        private void UnsubscribeFixGeneratorHandler(SOQuest quest) { }
+        private void UnsubscribeUseGeneratorHandler(SOQuest quest) { }
 
-        private void OnFixGeneratorCompleted(SOQuest quest)
+        private void OnUseGeneratorCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            UnsubscribeFixGeneratorHandler(quest);
+            UnsubscribeUseGeneratorHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
         #endregion
 
-        #region Escape Quest
-        private void OnEscapeAdded(SOQuest quest)
+        #region Escape First Area Quest
+        private void OnEscapeFirstAreaAdded(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} added.", this);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
-                    ((SOInteractionEvent)eventBase).OnEventRaised += EscapeQuestHandler;
+                    ((SOInteractionEvent)eventBase).OnEventRaised += EscapeFirstAreaHandler;
             }
-            _onUnsubscribeQuest[(int)QuestsEnum.EscapeFirstArea] = UnsubscribeEscapeHandler;
+            _onUnsubscribeQuest[(int)QuestsEnum.EscapeFirstArea] = UnsubscribeEscapeFirstAreaHandler;
             PlayLine(quest, 0);
         }
 
-        private void UnsubscribeEscapeHandler(SOQuest quest)
+        private void UnsubscribeEscapeFirstAreaHandler(SOQuest quest)
         {
             foreach (var eventBase in quest.SubscribeToEvents)
             {
                 if (eventBase.EventType == EchoCityEventsEnum.Interaction)
-                    ((SOInteractionEvent)eventBase).OnEventRaised -= EscapeQuestHandler;
+                    ((SOInteractionEvent)eventBase).OnEventRaised -= EscapeFirstAreaHandler;
             }
         }
 
-        private void EscapeQuestHandler(IEventSender sender, InteractionEnum interaction)
+        private void EscapeFirstAreaHandler(IEventSender sender, InteractionEnum interaction)
         {
-            if (interaction != InteractionEnum.EndDoor)
+            if (interaction != InteractionEnum.LaboratoryAreaDoor)
                 return;
             if (questProgression[(int)QuestsEnum.EscapeFirstArea] >= activeQuests[(int)QuestsEnum.EscapeFirstArea].CountToComplete)
                 return;
@@ -247,15 +136,33 @@ namespace EchoCity
             }
         }
 
-        private void OnEscapeCompleted(SOQuest quest)
+        private void OnEscapeFirstAreaCompleted(SOQuest quest)
         {
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
-            UnsubscribeEscapeHandler(quest);
+            UnsubscribeEscapeFirstAreaHandler(quest);
             _puzzleManager.RemoveFromTagsTriggeredQuests(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
         }
 
+        #endregion
+
+        #region Find Cable Quest
+        private void OnFindCableAdded(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} added.", this);
+            _onUnsubscribeQuest[(int)QuestsEnum.FindCable] = UnsubscribeFindCableHandler;
+            PlayLine(quest, 0);
+        }
+        private void UnsubscribeFindCableHandler(SOQuest quest) { }
+
+        private void OnFindCableCompleted(SOQuest quest)
+        {
+            Log.DLazy(() => $"Quest {quest.name} completed.", this);
+            UnsubscribeFindCableHandler(quest);
+            ShowCompletedMessage(quest);
+            PlayLine(quest, 1, true);
+        }
         #endregion
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1427749870895449881}
   - component: {fileID: 376965731670739785}
   m_Layer: 0
-  m_Name: Interactable-Door-Bedroom
+  m_Name: Interactable-Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,12 +145,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e678db85a445b4e969d25af3218c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 1
+    _count: 0
   setTags: []
-  _description: 
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   hasFixDetector: 1
   detector: {fileID: 6251220501324255516}
   doorAnimator: {fileID: 726024739530871753}
@@ -185,7 +192,7 @@ GameObject:
   - component: {fileID: 6251220501324255516}
   - component: {fileID: 4603515817695437712}
   m_Layer: 6
-  m_Name: Interactable-DoorArea-Bedroom
+  m_Name: Interactable-Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,12 +225,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8d5097618a2e64bbaa820bb1beb363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 0}
-  interactionEvent: {fileID: 0}
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
   puzzleManager: {fileID: 0}
-  checkTags: []
+  checkTags:
+  - _tag: 0
+    _isActive: 1
+    _count: 0
   setTags: []
-  _description: 
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   linkedInteractable: {fileID: 1427749870895449881}
 --- !u!65 &4603515817695437712
 BoxCollider:
@@ -256,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6530822660333683186}
   m_Layer: 0
-  m_Name: Interactable-DoorAndArea-Bedroom
+  m_Name: Interactable-Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

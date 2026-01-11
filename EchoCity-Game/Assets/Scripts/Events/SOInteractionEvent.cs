@@ -11,7 +11,7 @@ namespace EchoCity
         CardReader,
         Door,
         TutorialDoor,
-        EndDoor,
+        LaboratoryAreaDoor,
         DoorArea,
         Pickable,
         WallLightSwitch,

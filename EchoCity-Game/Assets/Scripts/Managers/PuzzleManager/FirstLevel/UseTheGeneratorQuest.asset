@@ -10,10 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
-  m_Name: FixGeneratorQuest
+  m_Name: UseTheGeneratorQuest
   m_EditorClassIdentifier: 
   questType: 0
-  quest: 24
+  quest: 19
+  tagsToActivate:
+  - _tag: 36
+    _isActive: 0
+    _count: 0
   tagsToCheck:
   - _tag: 36
     _isActive: 1
@@ -21,6 +25,6 @@ MonoBehaviour:
   countToComplete: 1
   subscribeToEvents: []
   nextQuests: []
-  description: Fix the generator
+  description: Use the generator
   questCompletedText: 
   scriptContainer: {fileID: 0}

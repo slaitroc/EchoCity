@@ -34,7 +34,7 @@ namespace EchoCity
         TestTwo,
         FindTheKey,
         OpenTheDoor,
-        FixTheGenerator,
+        UseTheGenerator,
         EscapeFirstArea,
         FindPry,
         FindFloppy,

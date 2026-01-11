@@ -84,6 +84,7 @@ namespace EchoCity
         private AudioContext _audioContext;
 
         [Header("Audio")]
+        [SerializeField] private Transform soundEmissionPoint;
         private AudioSource _playerAudioSource;
         private VoiceAudioSource _playerLinesAudioSource;
         private VoiceAudioSource _playerSecondaryLinesAudioSource;
@@ -125,7 +126,7 @@ namespace EchoCity
             _lastTimeDamaged = float.NegativeInfinity;
 
             var playerAudio = new GameObject("ToolsAudioSource");
-            playerAudio.transform.SetParent(transform);
+            playerAudio.transform.SetParent(soundEmissionPoint);
             playerAudio.transform.localPosition = Vector3.zero;
             _playerAudioSource = playerAudio.AddComponent<AudioSource>();
             _playerAudioSource.spatialBlend = 1.0f; // 3D
@@ -233,6 +234,8 @@ namespace EchoCity
                 dropped.AddComponent<Rigidbody>();
                 dropped.GetComponent<Collider>().isTrigger = false;
                 PlayAtPosition(transform.position, equippedItem.Data.DropSound, _audioContext, MixerGroupEnum.SFX);
+                dropped.TryGetComponent<Pickable>(out var pickableComponent);
+                pickableComponent?.Drop();
             }
             playerInventory.DropItem(equippedItem.Index);
             EquipItem(0, playerInventory.Items[0]?.Data, playerInventory.Prefabs[0]);
