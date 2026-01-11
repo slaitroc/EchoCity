@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2825628802368381764}
   - component: {fileID: 4816817231411925918}
   m_Layer: 0
-  m_Name: SoundTool-Low-LowGeneratorRadio_Mid
+  m_Name: SoundTool-Low-Radio_Mid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,8 +144,9 @@ MonoBehaviour:
     _isActive: 0
     _count: 0
   setTags: []
-  _interactionDescription: A radio capable of generating low frequency sounds
-  _InteractionSuccessMessage: low generator radio picked
-  _InteractionFailMessage: it is not the right moment to interact
+  _interactionDescription: A radio tuned to low frequencies
+  _InteractionSuccessMessage: Radio picked
+  _InteractionFailMessage: There's a time and place for everything but not now!
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 8c8e91bd46bef51409e868c42dd9ba7f, type: 2}
+  undoTagsOnDrop: 1

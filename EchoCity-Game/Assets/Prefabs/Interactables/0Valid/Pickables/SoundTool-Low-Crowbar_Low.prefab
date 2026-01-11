@@ -131,8 +131,9 @@ MonoBehaviour:
     _isActive: 0
     _count: 0
   setTags: []
-  _interactionDescription: crowbar
-  _InteractionSuccessMessage: crowbar picked
-  _InteractionFailMessage: 
+  _interactionDescription: I may need one of these
+  _InteractionSuccessMessage: Crowbar picked
+  _InteractionFailMessage: There's a time and place for everything but not now!
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 994ae997b12f041b58e1fcf109670541, type: 2}
+  undoTagsOnDrop: 1

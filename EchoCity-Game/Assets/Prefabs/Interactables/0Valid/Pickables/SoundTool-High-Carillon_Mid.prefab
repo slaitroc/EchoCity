@@ -196,10 +196,11 @@ MonoBehaviour:
     _count: 0
   setTags: []
   _interactionDescription: A beautiful carillon
-  _InteractionSuccessMessage: carillon picked
-  _InteractionFailMessage: 
+  _InteractionSuccessMessage: Carillon picked
+  _InteractionFailMessage: There's a time and place for everything but not now!
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: ed686a97e9a2ee04c956828f8a62fbb2, type: 2}
+  undoTagsOnDrop: 1
 --- !u!1 &3101622509070129195
 GameObject:
   m_ObjectHideFlags: 0

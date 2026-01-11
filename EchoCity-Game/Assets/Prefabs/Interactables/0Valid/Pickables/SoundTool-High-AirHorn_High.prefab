@@ -130,8 +130,9 @@ MonoBehaviour:
     _isActive: 0
     _count: 0
   setTags: []
-  _interactionDescription: is this a air horn?
-  _InteractionSuccessMessage: air horn picked
-  _InteractionFailMessage: 
+  _interactionDescription: Is this a air horn?
+  _InteractionSuccessMessage: Air horn picked
+  _InteractionFailMessage: There's a time and place for everything but not now!
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: e42171ffa5dcf4a49bc303be8dbb6a3e, type: 2}
+  undoTagsOnDrop: 1

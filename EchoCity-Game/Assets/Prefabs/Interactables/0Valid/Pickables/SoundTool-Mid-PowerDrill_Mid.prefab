@@ -392,11 +392,12 @@ MonoBehaviour:
     _isActive: 0
     _count: 0
   setTags: []
-  _interactionDescription: I wonder how I could use it
-  _InteractionSuccessMessage: power drill picked
-  _InteractionFailMessage: 
+  _interactionDescription: I wonder how I could use this
+  _InteractionSuccessMessage: Power drill picked
+  _InteractionFailMessage: There's a time and place for everything but not now!
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: da824190e22bc4c30a1ff9b3646e0de0, type: 2}
+  undoTagsOnDrop: 1
 --- !u!1 &3566691466988170590
 GameObject:
   m_ObjectHideFlags: 0
