@@ -10,7 +10,6 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private SOSceneLoaderTriggerEvent sceneLoaderTriggerEvent;
-        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
@@ -119,10 +118,6 @@ namespace EchoCity
                 SceneManager.SetActiveScene(existingScene);
                 yield return StartCoroutine(UnloadOtherLevels(scene));
                 Log.DLazy(() => "Scene already loaded in editor, just activated: " + sceneName, this);
-                if (_currentLevelEnum == SceneEnum.FirstLevel)
-                {
-                    setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Active);
-                }
                 yield break;
             }
 #endif
@@ -144,10 +139,6 @@ namespace EchoCity
                 _currentLevelEnum = scene;
             }
             Log.DLazy(() => "Loaded active scene: " + sceneName, this);
-            if (_currentLevelEnum == SceneEnum.FirstLevel)
-            {
-                setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Active);
-            }
         }
 
         public IEnumerator LoadSceneAdditiveNoActive(SceneEnum scene)

@@ -6,6 +6,8 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
+        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
+
 
         [Header("Observing Events")]
         [SerializeField] private SOSceneLoaderTriggerEvent sceneLoaderTriggerEvent;
@@ -17,6 +19,7 @@ namespace EchoCity
 
         [Header("Initialization Settings")]
         [SerializeField] protected bool initInventoryOnStart = true;
+        [SerializeField] protected bool setMaterialsActiveOnStart = true;
         [Header("Initialization Data")]
         [SerializeField] private QuestsManager questsManager;
         [SerializeField] private SOQuest initialQuest;
@@ -59,6 +62,13 @@ namespace EchoCity
                 if (initialQuest != null)
                     puzzleManager.AddQuest(initialQuest);
                 Log.DLazy(() => "PuzzleManager initialized on level start.", this);
+            }
+            if (setMaterialEvent != null)
+            {
+                if (setMaterialsActiveOnStart)
+                    setMaterialEvent.RaiseEvent(this, EchoMaterialCodeEnum.Active);
+                else
+                    setMaterialEvent.RaiseEvent(this, EchoMaterialCodeEnum.Inactive);
             }
             InitializeLevel();
         }
