@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogLines:
   - speakerName: EcholocalizerAI
-    dialogText: 'Try jumping. Press the SPACE bar '
+    dialogText: Try jumping. Press the SPACE bar to go over small obstacles and platforms
     audioClip: {fileID: 8300000, guid: 7f98e787dff2f48419f56b1cd3488c53, type: 3}
   - speakerName: EcholocalizerAI
-    dialogText: Very good, landing generates additional noise...
+    dialogText: 'Very good, landing generates additional noise...
+
+      If the legend
+      in the bottom right gets in your way, press T to toggle it.'
     audioClip: {fileID: 8300000, guid: d799b5d8712574e88aabaef3a8248d0f, type: 3}
