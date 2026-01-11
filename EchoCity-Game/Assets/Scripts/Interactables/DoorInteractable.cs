@@ -1,5 +1,6 @@
 using EchoCity;
 using UnityEngine;
+using UnityEngine.AI;
 using static EchoCity.EchoCitySound;
 
 public class DoorInteractable : LinkableInteractable
@@ -10,6 +11,8 @@ public class DoorInteractable : LinkableInteractable
     [SerializeField] private SOSoundSource closeSound;
     private readonly int _hashIsOpen = Animator.StringToHash("isOpen");
     [SerializeField] private bool _isOpen = false;
+    [Header("Nav Mesh Obstacle")]
+    [SerializeField] private NavMeshObstacle navMeshObstacle;
 
     private bool isOpen
     {
@@ -42,7 +45,11 @@ public class DoorInteractable : LinkableInteractable
     protected override void ResolveInteraction(bool outcome)
     {
         if (outcome)
+        {
             isOpen = !isOpen;
+            navMeshObstacle.enabled = !isOpen;
+        }
+
     }
 
 }

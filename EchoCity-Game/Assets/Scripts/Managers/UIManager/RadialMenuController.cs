@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace EchoCity
 {
@@ -206,7 +207,8 @@ namespace EchoCity
             if (item != null)
             {
                 InventoryItem invItem = item.userData as InventoryItem;
-                _infoTitle.text = invItem.Data.Name;
+                string parsedName = Regex.Replace(invItem.Data.Name, "(?<!^)([A-Z0-9])", " $1");
+                _infoTitle.text = parsedName;
                 _infoText.text = invItem.Data.Description;
                 UpdateInfoProperties(invItem.Data);
             }
