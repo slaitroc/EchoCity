@@ -4487,6 +4487,10 @@ PrefabInstance:
       value: AI_Prop_Desk_Reception
       objectReference: {fileID: 0}
     - target: {fileID: 185836, guid: 79ef218125be3324ebfe7ad690e645a1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 185836, guid: 79ef218125be3324ebfe7ad690e645a1, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -16388,12 +16392,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e78cc734cfab946a4391eaba1e0c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 0}
   interactionEvent: {fileID: 0}
+  showUIEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
-  _description: 
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   PickableData: {fileID: 0}
   showUIEvent: {fileID: 0}
   dialogContainer: {fileID: 11400000, guid: a9c25fc8f979844ea9f4dbd9d8d9e889, type: 2}
@@ -19890,6 +19898,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SA_Prop_Workbench_01
       objectReference: {fileID: 0}
+    - target: {fileID: 178308, guid: 9997d8d2728631741a35e22a3d64cc65, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 456994, guid: 9997d8d2728631741a35e22a3d64cc65, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.8
@@ -20103,7 +20115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3952836284584442148, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 45.894
+      value: 47.77
       objectReference: {fileID: 0}
     - target: {fileID: 3952836284584442148, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
       propertyPath: m_LocalPosition.y
@@ -20111,7 +20123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3952836284584442148, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.238
+      value: 5.14
       objectReference: {fileID: 0}
     - target: {fileID: 3952836284584442148, guid: ddc64fa64f8ebb3489a3bba75fdee571, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25632,22 +25644,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 845077175}
     m_Modifications:
-    - target: {fileID: 64127203487632410, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64319818633713098, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64412257994539516, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 64854901349514842, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1592942470777406, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
       propertyPath: m_Name
       value: Interactable-CordBoard-Empty_Mid
@@ -25709,6 +25705,22 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 64978691957319536, guid: 330389311d43d4ae4acf1625060b6b4e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64127203487632410, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64319818633713098, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64412257994539516, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64854901349514842, guid: 502b43293809db94dbd35e7279f3629d, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -35954,6 +35966,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SA_Prop_Cage_01
       objectReference: {fileID: 0}
+    - target: {fileID: 139292, guid: 6095854d7139a324da97fe2e31dd4e2c, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 455140, guid: 6095854d7139a324da97fe2e31dd4e2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.97
@@ -39476,7 +39492,7 @@ Transform:
   m_GameObject: {fileID: 1201708736}
   serializedVersion: 2
   m_LocalRotation: {x: -0.20791169, y: 0, z: 0, w: 0.9781476}
-  m_LocalPosition: {x: -0.15, y: -1.4017144, z: -2}
+  m_LocalPosition: {x: -0.15, y: -1.456, z: -2.09}
   m_LocalScale: {x: 2.6, y: 0.5, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -39509,8 +39525,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1.0266944}
+  m_Center: {x: 0, y: 0.0000000024505518, z: -0.013347234}
 --- !u!1001 &1202790862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44499,14 +44515,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e476a11bc7546d84490046e910a39b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 0}
+  soundEmittedEvent: {fileID: 0}
   interactionEvent: {fileID: 0}
+  showUIEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
-  _description: 
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   showUIEvent: {fileID: 0}
-  switchToWinStateEvent: {fileID: 11400000, guid: e5a6bff19740e4764a0b43f99988b521, type: 2}
+  interactionEvent: {fileID: 0}
+  switchToGameStateEvent: {fileID: 0}
   dialogContainerSuccess: {fileID: 11400000, guid: 497d0dcff38e244fbbc4da4c7828f067, type: 2}
   dialogContainerFail: {fileID: 11400000, guid: b564213884a29483a8dc86a9bfe98fad, type: 2}
 --- !u!1001 &1382945424
@@ -45309,12 +45330,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
+  soundEmittedEvent: {fileID: 0}
   interactionEvent: {fileID: 0}
+  showUIEvent: {fileID: 0}
   puzzleManager: {fileID: 0}
   checkTags: []
   setTags: []
-  _description: 
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
   PickableData: {fileID: 0}
 --- !u!114 &1400720590
 MonoBehaviour:
@@ -49598,6 +49623,10 @@ PrefabInstance:
       value: AI_Prop_Bed_Stained
       objectReference: {fileID: 0}
     - target: {fileID: 136718, guid: 8f9c8a8fa71b103438251d6dfe2b1b2f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 136718, guid: 8f9c8a8fa71b103438251d6dfe2b1b2f, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -51394,6 +51423,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 869859235}
     m_Modifications:
     - target: {fileID: 1250731774977814, guid: b6e1a4ce864593c46b880ce4aafbadac, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250731774977814, guid: b6e1a4ce864593c46b880ce4aafbadac, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -51402,8 +51435,16 @@ PrefabInstance:
       value: SM_Prop_Bed_Hospital_01 (2)
       objectReference: {fileID: 0}
     - target: {fileID: 1266594610114530, guid: b6e1a4ce864593c46b880ce4aafbadac, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266594610114530, guid: b6e1a4ce864593c46b880ce4aafbadac, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698188850558816, guid: b6e1a4ce864593c46b880ce4aafbadac, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1698188850558816, guid: b6e1a4ce864593c46b880ce4aafbadac, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -58815,6 +58856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
   sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
+  questsManager: {fileID: 0}
   initialTutorialQuest: {fileID: 0}
 --- !u!4 &1772865354
 Transform:
@@ -62161,9 +62203,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5595003298818426895}
     m_Modifications:
+    - target: {fileID: 442881692552996386, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.136
+      objectReference: {fileID: 0}
+    - target: {fileID: 951223843659440290, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2247218394706471733, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2300712160690107500, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: interactionEvent
@@ -62173,6 +62223,14 @@ PrefabInstance:
       propertyPath: newAudioSphereEvent
       value: 
       objectReference: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+    - target: {fileID: 3101622509070129195, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565886106092380522, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3965556255802317529, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: m_Size.y
       value: 1.011677
@@ -62189,6 +62247,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4755233454315700392, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5337908310112159342, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: m_Name
       value: SoundTool-High-Carillon_Mid
@@ -62196,6 +62258,14 @@ PrefabInstance:
     - target: {fileID: 5337908310112159342, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6421855001300360962, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465675883202481447, guid: 51debe0fffea83c42a170d912244593e, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8884299772005818300, guid: 51debe0fffea83c42a170d912244593e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -62612,6 +62682,10 @@ PrefabInstance:
       value: AI_Prop_Boiler
       objectReference: {fileID: 0}
     - target: {fileID: 162680, guid: 0e3f3cad60263e54d90a151a728634f1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 162680, guid: 0e3f3cad60263e54d90a151a728634f1, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -62954,6 +63028,10 @@ PrefabInstance:
     - target: {fileID: 191756, guid: 5001a1d53852b054585c8ffd07fdfaa1, type: 3}
       propertyPath: m_Name
       value: AI_Prop_Surgery_Table_Body
+      objectReference: {fileID: 0}
+    - target: {fileID: 191756, guid: 5001a1d53852b054585c8ffd07fdfaa1, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 414654, guid: 5001a1d53852b054585c8ffd07fdfaa1, type: 3}
       propertyPath: m_LocalScale.x
@@ -73694,7 +73772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5202283359270022541, guid: 6e3cdc8e14d9ea54791e69d5e7e8b7c3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.282913
+      value: 17.57
       objectReference: {fileID: 0}
     - target: {fileID: 5202283359270022541, guid: 6e3cdc8e14d9ea54791e69d5e7e8b7c3, type: 3}
       propertyPath: m_LocalRotation.w

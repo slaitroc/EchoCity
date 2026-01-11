@@ -709,6 +709,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Book_Group_04 (2)_Mid
       objectReference: {fileID: 0}
+    - target: {fileID: 1330891398512194, guid: 8f0587a2938cc0641ba7cba661d83bbe, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4122709468772024, guid: 8f0587a2938cc0641ba7cba661d83bbe, type: 3}
       propertyPath: m_RootOrder
       value: 470
@@ -3799,6 +3803,70 @@ Transform:
   - {fileID: 2096571981}
   m_Father: {fileID: 2040786746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &165850387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 165850389}
+  - component: {fileID: 165850388}
+  m_Layer: 0
+  m_Name: NavMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &165850388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165850387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 1919
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 904b184e1e740fa46b63f08f15e0ecc1, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &165850389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165850387}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &166451637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5692,6 +5760,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 364500491}
     m_Modifications:
+    - target: {fileID: 1009811025234856, guid: 32a09e7d21324f242961c75f84bfa182, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4766462964145918, guid: 32a09e7d21324f242961c75f84bfa182, type: 3}
       propertyPath: m_RootOrder
       value: 859
@@ -8150,6 +8222,10 @@ PrefabInstance:
     - target: {fileID: 1287526283467148, guid: 1610cb72fa689a8419fbdd98c4ada93c, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Plant_04 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1287526283467148, guid: 1610cb72fa689a8419fbdd98c4ada93c, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4797593861707532, guid: 1610cb72fa689a8419fbdd98c4ada93c, type: 3}
       propertyPath: m_RootOrder
@@ -23625,6 +23701,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 364500491}
     m_Modifications:
+    - target: {fileID: 1006330026806600, guid: 972a49b5646473f42bf39f20b14ced49, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1368751818659320, guid: 972a49b5646473f42bf39f20b14ced49, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4239720119124300, guid: 972a49b5646473f42bf39f20b14ced49, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -24018,6 +24102,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1130389705}
     m_Modifications:
+    - target: {fileID: 1440611451762170, guid: 7916be8eb63d3124c9b8f2789c8e284f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4611764893549844, guid: 7916be8eb63d3124c9b8f2789c8e284f, type: 3}
       propertyPath: m_RootOrder
       value: 824
@@ -25604,6 +25692,10 @@ PrefabInstance:
     - target: {fileID: 1991754674016686, guid: e4f17a6172a5cd040b4eaf33b02f3c43, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Book_Magazine_01_High
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991754674016686, guid: e4f17a6172a5cd040b4eaf33b02f3c43, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4425294765648716, guid: e4f17a6172a5cd040b4eaf33b02f3c43, type: 3}
       propertyPath: m_RootOrder
@@ -28841,6 +28933,14 @@ PrefabInstance:
     - target: {fileID: 1306924218609970, guid: fae614550b766604bb03f019f586c0a1, type: 3}
       propertyPath: m_Name
       value: SM_Prop_ToolBox_01_Mid
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306924218609970, guid: fae614550b766604bb03f019f586c0a1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757544910094292, guid: fae614550b766604bb03f019f586c0a1, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4448880198459766, guid: fae614550b766604bb03f019f586c0a1, type: 3}
       propertyPath: m_LocalScale.x
@@ -33022,9 +33122,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 364500491}
     m_Modifications:
+    - target: {fileID: 1289289775441498, guid: 89a2f5dca3a597f4f8f4ab7be04660c5, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1882768246722254, guid: 89a2f5dca3a597f4f8f4ab7be04660c5, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Couch_Pillows_01_Mid
+      objectReference: {fileID: 0}
+    - target: {fileID: 1882768246722254, guid: 89a2f5dca3a597f4f8f4ab7be04660c5, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4880730266483518, guid: 89a2f5dca3a597f4f8f4ab7be04660c5, type: 3}
       propertyPath: m_RootOrder
@@ -51013,3 +51121,4 @@ SceneRoots:
   - {fileID: 567355779}
   - {fileID: 363654660}
   - {fileID: 625553508}
+  - {fileID: 165850389}
