@@ -207,7 +207,7 @@ namespace EchoCity
             switch (code)
             {
                 case EchoMaterialCodeEnum.Active:
-                    if (useEcholocationMaterial == true) return;
+                    // if (useEcholocationMaterial == true) return;
                     if (echolocationMaterial)
                     {
                         MaterialSwitcher.ApplyOverrideMaterial(echolocationMaterial);
@@ -217,7 +217,7 @@ namespace EchoCity
                     }
                     break;
                 case EchoMaterialCodeEnum.Inactive:
-                    if (useEcholocationMaterial == false) return;
+                    // if (useEcholocationMaterial == false) return;
                     if (echolocationMaterial)
                     {
                         MaterialSwitcher.RestoreOriginalMaterials();
