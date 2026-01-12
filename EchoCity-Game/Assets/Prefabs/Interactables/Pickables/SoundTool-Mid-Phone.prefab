@@ -104,11 +104,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.09117123, y: 0.036481515, z: 0.19173735}
+  m_Size: {x: 0.1, y: 0.07, z: 0.2}
   m_Center: {x: 0, y: 0.021511298, z: 0.0027055182}
 --- !u!114 &1454815532094826069
 MonoBehaviour:
@@ -149,7 +149,11 @@ MonoBehaviour:
     _count: 0
   _interactionDescription: Either a stone or a satellite phone
   _InteractionSuccessMessage: Satelite phone picked
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 8d5cd09edba4b4c488166748db2db6cb, type: 2}
   undoTagsOnDrop: 1
