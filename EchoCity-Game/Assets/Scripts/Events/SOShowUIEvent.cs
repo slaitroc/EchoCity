@@ -5,7 +5,7 @@ namespace EchoCity
     [CreateAssetMenu(fileName = "ShowUIEvent", menuName = "ECHO CITY/Events/Show UI")]
     public class SOShowUIEvent : SOEventDoubleParam<ShowableUIEnum, EventParams>
     {
-        public override void RaiseEvent(IEventSender sender, ShowableUIEnum showableUI, EventParams eventParameter)
+        public override void RaiseEvent(IEventSender sender, ShowableUIEnum showableUI, EventParams eventParameter = null)
         {
             base.RaiseEvent(sender, showableUI, eventParameter);
         }

@@ -7,7 +7,7 @@ namespace EchoCity
     public class AudioEmitter : MonoBehaviour, IEventSender
     {
         [Header("Invoking Events")]
-        [SerializeField] SOSoundEmittedEvent newAudioSphereEvent;
+        [SerializeField] SOSoundEmittedEvent soundEmittedEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -68,7 +68,7 @@ namespace EchoCity
                 audioSource.PlayOneShot(clipToPlay);
             }
 
-            newAudioSphereEvent?.RaiseEvent(this, new SoundEmissionData(transform.position, soundSource));
+            soundEmittedEvent?.RaiseEvent(this, new SoundEmissionData(transform.position, soundSource));
         }
 
         // If randomAudioClips has valid clips, return one at random; otherwise return the main audioClip

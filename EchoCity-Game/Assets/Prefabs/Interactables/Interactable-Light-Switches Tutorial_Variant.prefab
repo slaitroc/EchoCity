@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8399499093047546365
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1346007955238025358, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207197369276049000, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: m_Name
+      value: Interactable-Light-Switches Tutorial_Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _InteractionFailMessage
+      value: it is not the right moment to interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _interactionDescription
+      value: Turn on/off the lights
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _InteractionSuccessMessage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323753548153467149, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: setTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _interactionDescription
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: setTags.Array.data[0]._tag
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934896919237915648, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _InteractionFailMessage
+      value: it is not the right moment to interact
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: _interactionDescription
+      value: Turn on/off the lights
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367956345551536859, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}
+      propertyPath: checkTags.Array.data[0]._isActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 90fa292ef1a49bb4ab454569299b0451, type: 3}

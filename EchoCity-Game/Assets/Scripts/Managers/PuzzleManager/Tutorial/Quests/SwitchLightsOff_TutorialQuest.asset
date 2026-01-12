@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
+  m_Name: SwitchLightsOff_TutorialQuest
+  m_EditorClassIdentifier: 
+  questType: 0
+  quest: 10
+  tagsToCheck:
+  - _tag: 11
+    _isActive: 1
+    _count: 0
+  countToComplete: 1
+  subscribeToEvents:
+  - {fileID: 11400000, guid: 335560a647d4a6b4e84a5ee3d537e567, type: 2}
+  nextQuests:
+  - {fileID: 11400000, guid: 71070c2dabe82f045a2150eb36ff5740, type: 2}
+  description: Turn off the light
+  questCompletedText: 'Tutorial: Light Off Completed'
+  scriptContainer: {fileID: 11400000, guid: fdedf9781e208e046acd0cf825bc8c80, type: 2}

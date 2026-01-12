@@ -7,8 +7,18 @@ namespace EchoCity
         None,
         Radio,
         DeskFan,
+        Generator,
+        CardReader,
+        Door,
+        ChangeSceneDoor,
+        FirstAreaEscapeDoor,
+        SecondAreaEscapeDoor,
+        SecondAreaEscapeDoorFence,
+        SecondAreaIDChecker,
+        DoorArea,
         Pickable,
-        LightSwitch,
+        WallLightSwitch,
+        TutorialTrigger
     }
 
     public enum InteractionObjectTypeEnum

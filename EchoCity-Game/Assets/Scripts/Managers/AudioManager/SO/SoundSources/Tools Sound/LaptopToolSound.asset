@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
+  m_Name: LaptopToolSound
+  m_EditorClassIdentifier: 
+  soundClass: {fileID: 11400000, guid: c262f58ba54d01d4886b955d374e26d3, type: 2}
+  soundClassIntensityFactorMultiplier: 1
+  audioClip: {fileID: 0}
+  audioLengthReference: 2.087982
+  audioLengthOverride: 0.1
+  intensity: 0.7
+  volume: 0.76
+  radius: 10
+  minEchoDuration: 0.1
+  isEnvironmental: 0
+  randomAudioClips:
+  - {fileID: 8300000, guid: 27f25807224544254881c0b0a60d6f2b, type: 3}
+  - {fileID: 8300000, guid: 4cded9dcb8b704e55b15c7f540b49651, type: 3}
+  - {fileID: 8300000, guid: b8869937ffee14220aca23bf51007aac, type: 3}
+  - {fileID: 8300000, guid: 1333cf43303af4d6ba39f234b5e7d21c, type: 3}
+  - {fileID: 8300000, guid: 2243b313d3961464bb95647fb8419c3f, type: 3}

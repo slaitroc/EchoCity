@@ -22,7 +22,7 @@ MonoBehaviour:
   m_Scenes:
   - m_enabled: 1
     m_path: Assets/Scenes/Persistent.unity
-  - m_enabled: 1
+  - m_enabled: 0
     m_path: Assets/Scenes/Playground.unity
   - m_enabled: 1
     m_path: Assets/Scenes/InitialNarration.unity
@@ -32,7 +32,7 @@ MonoBehaviour:
     m_path: Assets/Scenes/AfterTutorialNarration.unity
   - m_enabled: 1
     m_path: Assets/Scenes/First-Level.unity
-  - m_enabled: 1
+  - m_enabled: 0
     m_path: Assets/Scenes/Second-Level.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
@@ -54,7 +54,7 @@ MonoBehaviour:
     - line: '|   cursorHotspot: {x: 0, y: 0}'
     - line: '|   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b:
         0.1254902, a: 1}'
-    - line: '|   m_ShowUnitySplashScreen: 1'
+    - line: '|   m_ShowUnitySplashScreen: 0'
     - line: '|   m_ShowUnitySplashLogo: 0'
     - line: '|   m_SplashScreenOverlayOpacity: 1'
     - line: '|   m_SplashScreenAnimation: 1'
@@ -179,9 +179,12 @@ MonoBehaviour:
     - line: '|   loadStoreDebugModeEnabled: 0'
     - line: '|   visionOSBundleVersion: 1.0'
     - line: '|   tvOSBundleVersion: 1.0'
-    - line: '|   bundleVersion: 0.0.1'
+    - line: '|   bundleVersion: 0.1.0'
     - line: '|   preloadedAssets:'
-    - line: '|   - {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b,
+    - line: '|   - {instanceID: 0}'
+    - line: '|   - {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type:
+        2}'
+    - line: '|   - {fileID: -944628639613478452, guid: 8e55a5efac2955f4a882d461d594a197,
         type: 3}'
     - line: '|   metroInputSource: 0'
     - line: '|   wsaTransparentSwapchain: 0'
@@ -996,7 +999,7 @@ MonoBehaviour:
     - rid: 2323323352073896024
       type: {class: WebGLPlatformSettings, ns: UnityEditor.WebGL, asm: UnityEditor.WebGL.Extensions}
       data:
-        m_Development: 1
+        m_Development: 0
         m_ConnectProfiler: 0
         m_BuildWithDeepProfilingSupport: 0
         m_AllowDebugging: 0
@@ -1010,4 +1013,4 @@ MonoBehaviour:
         m_CodeOptimization: 0
         m_WebGLClientBrowserPath: 
         m_WebGLClientBrowserType: 0
-        m_WebGLTextureSubtarget: 0
+        m_WebGLTextureSubtarget: 1

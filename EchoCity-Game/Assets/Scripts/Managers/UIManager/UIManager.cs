@@ -7,14 +7,15 @@ namespace EchoCity
     public enum ShowableUIEnum
     {
         TitleMenu,
-        LoadingScreen,
         HUD,
+        PopUpMessage,
         PauseMenu,
+        Subtitles,
         DeathMenu,
+        LoadingScreen,
         WinMenu,
         Narration,
-        PopUpMessage,
-        Subtitles,
+        Play,
     }
 
     [System.Serializable]
@@ -104,6 +105,15 @@ namespace EchoCity
         private GameObject _narration;
 
         private bool _showTutorial = true;
+        private struct InteractableParams
+        {
+            public bool IsInteractable;
+            public bool ShowDescription;
+            public string Text;
+            public float PanelHeight;
+        }
+        private InteractableParams _cachedInteractParams;
+        private bool _isCachedInteractPanel;
 
         #endregion
         #region Public Properties
@@ -128,12 +138,10 @@ namespace EchoCity
             _winMenu = winMenuController.gameObject;
             _narration = narrationController.gameObject;
 
-
             if (playerController == null)
             {
                 Log.ELazy(() => "PlayerController reference is missing in UIManager!", this);
             }
-
         }
 
         private void OnEnable()
@@ -148,34 +156,9 @@ namespace EchoCity
         }
 
         #region Public Methods
-        public void SwitchToPlayState()
-        {
-            HideAllElements();
-            _hud.SetActive(true);
-            _subtitles.SetActive(true);
-            tutorialPanelController.ShowHideLines(_showTutorial);
-            EquippedItemHandler(this, PickablesEnum.None);
-            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
-        }
-
-        public void SwitchToTitleState()
-        {
-            HideAllElements();
-            _titleMenu.SetActive(true);
-            switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Title, null);
-        }
-
-        public void SwitchToInitLevel(SceneEnum scene)
-        {
-            HideAllElements();
-            _hud.SetActive(true);
-            _subtitles.SetActive(true);
-            tutorialPanelController.ShowHideLines(_showTutorial);
-            EquippedItemHandler(this, PickablesEnum.None);
-            switchLevelEvent?.RaiseEvent(this, scene, null);
-        }
-
-
+        public void SwitchToPlayState() => switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
+        public void SwitchToTitleState() => switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Title, null);
+        public void SwitchToInitLevel(SceneEnum scene) => switchLevelEvent?.RaiseEvent(this, scene, null);
         public void OpenSettingsMenu() => _settingsMenu.SetActive(true);
         public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
         public void OpenFeedbackMenu() => _feedbackMenu.SetActive(true);
@@ -220,16 +203,13 @@ namespace EchoCity
                             break;
                     }
                     break;
-                case ShowableUIEnum.PauseMenu:
-                    HideAllElements(narration: true);
-                    _pauseMenu.SetActive(true);
+                case ShowableUIEnum.PopUpMessage:
+                    var popUpParams = eventParams as PopUpMessageParams;
+                    popUpController.SpawnPopUp(popUpParams.Message, popUpParams.Color);
                     break;
-                case ShowableUIEnum.Narration:
-                    var narrationParams = eventParams as NarrationParams;
-                    HideAllElements();
-                    _narration.SetActive(true);
-                    narrationController.StartNarration(narrationParams);
-                    if (!narrationParams.UseCached) EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender, eventTime: 1f);
+                case ShowableUIEnum.PauseMenu:
+                    HideAllElements(narration: true, subtitles: true);
+                    _pauseMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.Subtitles:
                     var subtitleParams = eventParams as SubtitleParams;
@@ -247,9 +227,20 @@ namespace EchoCity
                     HideAllElements();
                     _winMenu.SetActive(true);
                     break;
-                case ShowableUIEnum.PopUpMessage:
-                    var popUpParams = eventParams as PopUpMessageParams;
-                    popUpController.SpawnPopUp(popUpParams.Message, popUpParams.Color);
+                case ShowableUIEnum.Narration:
+                    var narrationParams = eventParams as NarrationParams;
+                    HideAllElements();
+                    _narration.SetActive(true);
+                    narrationController.StartNarration(narrationParams);
+                    if (!narrationParams.UseCached) EchoCitySound.PlayNarration(narrationParams.NarrationContainer, timerEvent, sender, eventTime: 1f);
+                    break;
+                case ShowableUIEnum.Play:
+                    HideAllElements(subtitles: true, hud: true);
+                    if (!_hud.activeSelf) _hud.SetActive(true);
+                    if (!_subtitles.activeSelf) _subtitles.SetActive(true);
+                    tutorialPanelController.ShowHideLines(_showTutorial);
+                    EquippedItemHandler(this, PickablesEnum.Hands);
+                    ShowInteractionHandler(this, _cachedInteractParams.IsInteractable, _cachedInteractParams.ShowDescription, _cachedInteractParams.Text);
                     break;
                 default:
                     break;
@@ -273,16 +264,29 @@ namespace EchoCity
 
         private void ShowInteractionHandler(IEventSender sender, bool isInteractable, bool showDescription, string text)
         {
+            float panelHeight = _isCachedInteractPanel ? _cachedInteractParams.PanelHeight : crosshairController.InteractionPanelHeight;
+
             crosshairController.IsInteractable(showDescription, isInteractable, text);
             if (showDescription)
-                subtitlesController.ApplyOffset(crosshairController.InteractionPanelHeight + _subtitlesBottomGapPx);
+            {
+                subtitlesController.ApplyOffset(panelHeight + _subtitlesBottomGapPx);
+                _isCachedInteractPanel = true;
+            }
             else
+            {
                 subtitlesController.ApplyOffset(0f);
+                _isCachedInteractPanel = false;
+            }
+
+            _cachedInteractParams.IsInteractable = isInteractable;
+            _cachedInteractParams.ShowDescription = showDescription;
+            _cachedInteractParams.Text = text;
+            _cachedInteractParams.PanelHeight = panelHeight;
         }
         private void EquippedItemHandler(IEventSender sender, PickablesEnum newEquippedItem) => equippedPanelController.SetEquippedItem(playerController.equippedItem.Data.Icon, playerController.equippedItem.Data.Name);
         private void InventoryChangedHandler(IEventSender sender, PickablesEnum pickable, PickableTypeEnum pickableType, InventoryCodesEnum code)
         {
-            if (code == InventoryCodesEnum.ItemDropped) equippedPanelController.ClearEquipped();
+            if (code == InventoryCodesEnum.ItemDropped || code == InventoryCodesEnum.Cleared) equippedPanelController.ClearEquipped();
         }
         private void QuestUpdatedEventHandler(IEventSender sender, int questID, int progression) => questController.UpdateQuest((QuestsEnum)questID, progression);
         private void TimerEventHandler(IEventSender sender, TimerEventEnum timerEventEnum)

@@ -8,7 +8,7 @@ namespace EchoCity
         [Header("Desk Fan Data")]
         [SerializeField] private SOSoundSource deskFanSoundSource;
         [SerializeField] private SOSoundSource deskFanStopSoundSource;
-        protected override InteractionEnum _interactionCode => InteractionEnum.DeskFan;
+        public override InteractionEnum InteractionCode => InteractionEnum.DeskFan;
         private AudioSource _audioSource;
 
         protected override void Start()
