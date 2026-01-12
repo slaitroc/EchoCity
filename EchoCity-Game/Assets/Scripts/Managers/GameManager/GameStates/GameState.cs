@@ -24,9 +24,6 @@ namespace EchoCity
         public virtual void SwitchToWinHandler(GameStatesEnum previousState) { }
         public virtual void SwitchToNarrationHandler(GameStatesEnum previousState, ToNarrationParams @params) { }
         public virtual void SwitchToHudHandler(GameStatesEnum previousState, HudEnum hud) { }
-        public virtual void InitLevelHandler(SceneEnum scene)
-        {
-            _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.LoadActiveLevel, scene);
-        }
+        public virtual void InitLevelHandler(SceneEnum scene) { }
     }
 }

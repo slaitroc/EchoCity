@@ -26,19 +26,15 @@ namespace EchoCity
         UseLowSO_Tutorial,
         UseMidSO_Tutorial,
         UseHighSO_Tutorial,
-        AttractEnemy_Tutorial,
+        EnemySoundChase_Tutorial,
         //FIRST LEVEL QUESTS
-        EscapeFirstArea,
-        FindPry,
-        FindFloppy,
-        FindPhone,
-        FindID,
-        FindDataCenterLaptop,
-        FindWalkieTalkie,
-        UseGenerator,
-        EnableEscapeDoorGenerator,
-        FindCable,
-        Escape,
+
+        //OLD QUESTS
+        TestOne,
+        TestTwo,
+        FindTheKey,
+        OpenTheDoor,
+        FixTheGenerator,
         MAX
     }
 
@@ -46,8 +42,7 @@ namespace EchoCity
     public class SOQuest : ScriptableObject
     {
         [SerializeField] private QuestsTypeEnum questType = QuestsTypeEnum.Main;
-        [SerializeField] private QuestsEnum quest = QuestsEnum.Escape;
-        [SerializeField] private PuzzleTagState[] tagsToActivate;
+        [SerializeField] private QuestsEnum quest = QuestsEnum.TestOne;
         [SerializeField] private PuzzleTagState[] tagsToCheck;
         [SerializeField] private int countToComplete = 1;
         [SerializeField] private SOEventBase[] subscribeToEvents;
@@ -60,7 +55,6 @@ namespace EchoCity
         public QuestsEnum Quest => quest;
         public string Description => description;
         public string QuestCompletedText => questCompletedText;
-        public PuzzleTagState[] TagsToActivate => tagsToActivate;
         public PuzzleTagState[] TagsToCheck => tagsToCheck;
         public int CountToComplete => countToComplete;
         public SOEventBase[] SubscribeToEvents => subscribeToEvents;
@@ -70,6 +64,11 @@ namespace EchoCity
 
         void OnValidate()
         {
+            if (tagsToCheck == null || tagsToCheck.Length == 0)
+            {
+                tagsToCheck = new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.NONE, true) };
+            }
+
             string assetName = this.name;
 
             if (!string.IsNullOrEmpty(assetName))

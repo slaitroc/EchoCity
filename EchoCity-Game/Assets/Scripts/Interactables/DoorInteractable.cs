@@ -1,6 +1,5 @@
 using EchoCity;
 using UnityEngine;
-using UnityEngine.AI;
 using static EchoCity.EchoCitySound;
 
 public class DoorInteractable : LinkableInteractable
@@ -11,8 +10,6 @@ public class DoorInteractable : LinkableInteractable
     [SerializeField] private SOSoundSource closeSound;
     private readonly int _hashIsOpen = Animator.StringToHash("isOpen");
     [SerializeField] private bool _isOpen = false;
-    [Header("Nav Mesh Obstacle")]
-    [SerializeField] private NavMeshObstacle navMeshObstacle;
 
     private bool isOpen
     {
@@ -34,22 +31,19 @@ public class DoorInteractable : LinkableInteractable
         }
     }
 
-    public override InteractionEnum InteractionCode => InteractionEnum.Door;
-
     protected override void Awake()
     {
         base.Awake();
         TryGetComponent(out doorAnimator);
     }
 
-    protected override void ResolveInteraction(bool outcome)
+    //skips puzzle interaction to just toggle door open/close
+    public override void Interact()
     {
-        if (outcome)
-        {
-            isOpen = !isOpen;
-            navMeshObstacle.enabled = !isOpen;
-        }
-
+        isOpen = !isOpen;
     }
+
+
+    protected override void ResolveInteraction(bool outcome) { }
 
 }

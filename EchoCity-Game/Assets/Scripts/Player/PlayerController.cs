@@ -52,7 +52,6 @@ namespace EchoCity
         [Header("Observing Events")]
         [SerializeField] private SOAttractionInfoEvent enemyAttractionEvent;
         [SerializeField] private SOSoundEmittedEvent perceivedSoundEvent;
-        [SerializeField] private SOGameManagerStateTransitionEvent stateTransitionEvent;
 
 
         [Header("Inventory")]
@@ -85,7 +84,6 @@ namespace EchoCity
         private AudioContext _audioContext;
 
         [Header("Audio")]
-        [SerializeField] private Transform soundEmissionPoint;
         private AudioSource _playerAudioSource;
         private VoiceAudioSource _playerLinesAudioSource;
         private VoiceAudioSource _playerSecondaryLinesAudioSource;
@@ -103,8 +101,6 @@ namespace EchoCity
                 enemyAttractionEvent.OnEventRaised += UpdateActiveAttractionTargets;
             if (perceivedSoundEvent != null)
                 perceivedSoundEvent.OnEventRaised += PerceivedSoundHandler;
-            if (stateTransitionEvent != null)
-                stateTransitionEvent.OnEventRaised += OnStateTransition;
         }
 
         void OnDisable()
@@ -113,16 +109,6 @@ namespace EchoCity
                 enemyAttractionEvent.OnEventRaised -= UpdateActiveAttractionTargets;
             if (perceivedSoundEvent != null)
                 perceivedSoundEvent.OnEventRaised -= PerceivedSoundHandler;
-            if (stateTransitionEvent != null)
-                stateTransitionEvent.OnEventRaised -= OnStateTransition;
-        }
-
-        private void OnStateTransition(IEventSender sender, GameStatesEnum newState, GameStatesEnum previousState)
-        {
-            if (newState != GameStatesEnum.Title)
-            {
-                currentHealth = maxHealth;
-            }
         }
 
         void Awake()
@@ -139,7 +125,7 @@ namespace EchoCity
             _lastTimeDamaged = float.NegativeInfinity;
 
             var playerAudio = new GameObject("ToolsAudioSource");
-            playerAudio.transform.SetParent(soundEmissionPoint);
+            playerAudio.transform.SetParent(transform);
             playerAudio.transform.localPosition = Vector3.zero;
             _playerAudioSource = playerAudio.AddComponent<AudioSource>();
             _playerAudioSource.spatialBlend = 1.0f; // 3D
@@ -244,14 +230,10 @@ namespace EchoCity
             else
             {
                 var dropped = Instantiate(equippedItem.Prefab, dropPosition, Quaternion.identity);
-                dropped.TryGetComponent<Pickable>(out var pickableComponent);
-                pickableComponent?.Drop();
-                PlayAtPosition(transform.position, equippedItem.Data.DropSound, _audioContext, MixerGroupEnum.SFX);
-                dropped.GetComponent<Collider>().isTrigger = false;
                 dropped.AddComponent<Rigidbody>();
             }
             playerInventory.DropItem(equippedItem.Index);
-            EquipItem(0, playerInventory.Items[0]?.Data, null);
+            EquipItem(0, playerInventory.Items[0]?.Data, playerInventory.Prefabs[0]);
 
             setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.ReApply);
         }
@@ -321,7 +303,6 @@ namespace EchoCity
 
         private void UpdateActiveAttractionTargets(IEventSender sender, IAttraction attraction, Transform transform, bool isAboveThreshold)
         {
-            if (transform == null || attraction == null) return;
             if (isAboveThreshold)
             {
                 for (int i = 0; i < _attractionTargets.Length - 1; i++)

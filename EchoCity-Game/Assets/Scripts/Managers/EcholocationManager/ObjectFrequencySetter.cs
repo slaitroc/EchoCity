@@ -9,7 +9,6 @@ public class ObjectFrequencySetter : MonoBehaviour
     {
         var objectRenderer = GetComponent<Renderer>();
         var mp = new MaterialPropertyBlock();
-        if (objectRenderer == null) return;
         objectRenderer.GetPropertyBlock(mp);
 
         mp.SetFloat(ObjectFrequency, objectFrequency);

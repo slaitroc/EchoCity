@@ -124,9 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e78cc734cfab946a4391eaba1e0c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEmittedEvent: {fileID: 0}
-  interactionEvent: {fileID: 0}
-  showUIEvent: {fileID: 0}
+  newAudioSphereEvent: {fileID: 11400000, guid: 8eb2bac987b8171418bf245960cd377b, type: 2}
   puzzleManager: {fileID: 0}
   checkTags:
   - _tag: 4
@@ -136,12 +134,12 @@ MonoBehaviour:
   - _tag: 4
     _isActive: 1
     _count: 0
-  _interactionDescription: A cable with 3 heads... a cerberus cable
-  _InteractionSuccessMessage: Cable picked
-  _InteractionFailMessage: There's a time and place for everything but not now!
-  interactionContainer: {fileID: 0}
+  _description: A pluggable cable...
+  itemPickedEvent: {fileID: 11400000, guid: a931bb9000c004941a71bf3b9ab877ff, type: 2}
   PickableData: {fileID: 11400000, guid: b7bd79ad65fc56449a3822c9158f169c, type: 2}
-  undoTagsOnDrop: 1
+  dialogContainer: {fileID: 11400000, guid: a9c25fc8f979844ea9f4dbd9d8d9e889, type: 2}
+  dialogDataEvent: {fileID: 11400000, guid: c0898010a31b82d419458851e621549b, type: 2}
+  spawnMessageEvent: {fileID: 11400000, guid: dfeb558dfed8d4bb093dcc93c6d4d6f9, type: 2}
 --- !u!65 &7650265509486726548
 BoxCollider:
   m_ObjectHideFlags: 0

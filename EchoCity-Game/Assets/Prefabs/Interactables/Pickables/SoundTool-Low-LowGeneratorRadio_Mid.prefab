@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2439349568433151353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6315056863803901366}
+  - component: {fileID: 4375657733762120061}
+  - component: {fileID: 4920881656528635841}
+  - component: {fileID: 1784088349245769618}
+  - component: {fileID: 2825628802368381764}
+  - component: {fileID: 4816817231411925918}
+  m_Layer: 0
+  m_Name: SoundTool-Low-LowGeneratorRadio_Mid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &6315056863803901366
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439349568433151353}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9004197, z: -0, w: -0.43502235}
+  m_LocalPosition: {x: -0.537, y: 0.102, z: 2.395}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 231.573, z: 0}
+--- !u!33 &4375657733762120061
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439349568433151353}
+  m_Mesh: {fileID: 4300000, guid: 74ac2bc1648d900499d19c6e27f27f42, type: 3}
+--- !u!23 &4920881656528635841
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439349568433151353}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1784088349245769618
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439349568433151353}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.38623375, y: 0.40816256, z: 0.14038382}
+  m_Center: {x: -0.000735931, y: 0.20408128, z: 0.010550232}
+--- !u!114 &2825628802368381764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439349568433151353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
+--- !u!114 &4816817231411925918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439349568433151353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags:
+  - _tag: 5
+    _isActive: 1
+    _count: 0
+  setTags: []
+  _interactionDescription: A radio capable of generating low frequency sounds
+  _InteractionSuccessMessage: low generator radio picked
+  _InteractionFailMessage: it is not the right moment to interact
+  interactionContainer: {fileID: 0}
+  PickableData: {fileID: 11400000, guid: 8c8e91bd46bef51409e868c42dd9ba7f, type: 2}

@@ -16,7 +16,6 @@ namespace EchoCity
         private readonly int _hashIsSwitchedOn = Animator.StringToHash("isSwitchedOn");
         [SerializeField] private bool _isSwitchedOn = true;
         private bool _firstInteractionDone = false;
-
         [Header("Invoking Events")]
         [SerializeField] private SOSetMaterialEvent setMaterialEvent;
         private bool isSwitchedOn
@@ -42,8 +41,7 @@ namespace EchoCity
             }
         }
 
-        public override InteractionEnum InteractionCode => InteractionEnum.WallLightSwitch;
-
+        [SerializeField] private SOQuest[] triggeredQuest;
         protected override void Awake()
         {
             base.Awake();
@@ -60,16 +58,14 @@ namespace EchoCity
             if (outcome)
             {
                 isSwitchedOn = !isSwitchedOn;
-                setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Toggle);
                 if (!_firstInteractionDone)
                 {
                     _firstInteractionDone = true;
-                    return;
                 }
-                else
+                setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Toggle);
+                foreach (var quest in triggeredQuest)
                 {
-                    PuzzleManager.SetTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.Lighting_On, true) }, true);
-                    _firstInteractionDone = false;
+                    puzzleManager?.AddQuest(quest);
                 }
             }
         }

@@ -2,7 +2,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections;
-using System.Text.RegularExpressions;
 
 namespace EchoCity
 {
@@ -61,6 +60,7 @@ namespace EchoCity
         private Label _toolsTutGeneral;
         private Label _toolsTutTextTransient;
         private Label _toolsTutTextRange;
+
         #endregion
 
         #region Private Fields Inventory
@@ -207,8 +207,7 @@ namespace EchoCity
             if (item != null)
             {
                 InventoryItem invItem = item.userData as InventoryItem;
-                string parsedName = Regex.Replace(invItem.Data.Name, "(?<!^)([A-Z0-9])", " $1");
-                _infoTitle.text = parsedName;
+                _infoTitle.text = invItem.Data.Name;
                 _infoText.text = invItem.Data.Description;
                 UpdateInfoProperties(invItem.Data);
             }
@@ -240,11 +239,9 @@ namespace EchoCity
                 SOPickable data = invItem.Data;
                 itemButton.userData = invItem;
 
-                VisualElement iconElement = itemButton.Q<VisualElement>(className: "radial-item-icon");
-
                 if (data.Icon != null)
                 {
-                    iconElement.style.backgroundImage = new StyleBackground(data.Icon);
+                    itemButton.style.backgroundImage = new StyleBackground(data.Icon);
                     itemButton.Q<Label>().text = "";
                 }
 

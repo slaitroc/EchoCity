@@ -43,12 +43,12 @@ namespace EchoCity
 
         void OnEnable()
         {
-            // if (switchLevelEvent) switchLevelEvent.OnEventRaised += ClearHandler;
+            if (switchLevelEvent) switchLevelEvent.OnEventRaised += ClearHandler;
         }
 
         void OnDisable()
         {
-            // if (switchLevelEvent) switchLevelEvent.OnEventRaised -= ClearHandler;
+            if (switchLevelEvent) switchLevelEvent.OnEventRaised -= ClearHandler;
         }
 
         public bool AddItem(SOPickable data, GameObject pickablePrefab)
@@ -67,21 +67,6 @@ namespace EchoCity
                 }
             }
             if (added) inventoryChangedEvent?.RaiseEvent(this, item.PickableEnum, item.PickableType, InventoryCodesEnum.ItemAdded);
-            return added;
-        }
-
-        public bool TryAddItem()
-        {
-            // For now it will be non-stacking: each item is a separate entry
-            bool added = false;
-            for (int i = 0; i < itemsArray.Length; i++)
-            {
-                if (itemsArray[i] == null)
-                {
-                    added = true;
-                    break;
-                }
-            }
             return added;
         }
 
@@ -106,7 +91,7 @@ namespace EchoCity
             inventoryChangedEvent?.RaiseEvent(this, PickablesEnum.None, PickableTypeEnum.None, InventoryCodesEnum.Cleared);
         }
 
-        // public void ClearHandler(IEventSender sender, SceneEnum scene, EventParams @params) => Clear();
+        public void ClearHandler(IEventSender sender, SceneEnum scene, EventParams @params) => Clear();
 
     }
 }

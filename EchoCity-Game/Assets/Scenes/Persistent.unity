@@ -142,10 +142,6 @@ PrefabInstance:
       propertyPath: overlayImage
       value: 
       objectReference: {fileID: 3225102660506634126}
-    - target: {fileID: 1468922952999432880, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: stateTransitionEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
     - target: {fileID: 3721493544747044234, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -35.01
@@ -186,31 +182,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4005199348455002943, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4005199348455002943, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4005199348455002943, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4689472295284435472, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6795490230609735767, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.91
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+--- !u!114 &567603873 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4925046041275752603, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+  m_PrefabInstance: {fileID: 532601089}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8ee35e27a14db43a4b82e8358934b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &824820248
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,48 +314,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1758418714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1869972777 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8009221871764747534, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-  m_PrefabInstance: {fileID: 532601089}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8ee35e27a14db43a4b82e8358934b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1995155082
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1995155083}
-  m_Layer: 0
-  m_Name: ---------------PLAYER-----------------------
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1995155083
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1995155082}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &71535596948952437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,9 +328,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
   sceneLoaderTriggerEvent: {fileID: 11400000, guid: 6d10ad2fbd1b5bb46a21634dd7b3e057, type: 2}
+  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
   loadLevelEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
   setPlayerOnSpawnEvent: {fileID: 11400000, guid: 87679f5c22fc4ba4b81e92d8b4bd0667, type: 2}
-  puzzleManager: {fileID: 8714278021380127983}
   scenesNames:
   - None
   - Persistent
@@ -550,7 +499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1422133484721034042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,7 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hudDocument: {fileID: 2914935634092200893}
   uiManager: {fileID: 4450455738711569964}
-  playerInventory: {fileID: 1869972777}
+  playerInventory: {fileID: 567603873}
   lowFreqIcon: {fileID: 21300000, guid: dfe9be298ba214ab98b64b34d99ae4ae, type: 3}
   midFreqIcon: {fileID: 21300000, guid: 503b493d40c874401915913ca5f42f24, type: 3}
   highFreqIcon: {fileID: 21300000, guid: 3de2d7170e93a41cd93f31baea0c8d05, type: 3}
@@ -1651,12 +1600,12 @@ MonoBehaviour:
   logEquippedItemChanged: 0
   gameManagerStateTransitionEvent: {fileID: 11400000, guid: aa0000fbedd57e84cbe045cadc3da3a5, type: 2}
   logGameManagerStateTransition: 0
-  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
   logInteraction: 0
   inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
   logInventoryChanged: 0
   itemUsedEvent: {fileID: 11400000, guid: 4fe41dcdfe7c3774eb6d383640386ad6, type: 2}
-  logItemUsed: 0
+  logItemUsed: 1
   levelActionEvent: {fileID: 11400000, guid: 2a63f2cfa9e13f54191cb10cd1951681, type: 2}
   logLevelAction: 0
   playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
@@ -1811,7 +1760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudDocument: {fileID: 2914935634092200893}
-  puzzleManager: {fileID: 8714278021380127983}
+  questsManager: {fileID: 8861211339865653366}
   completedVisibleSeconds: 5
   fadeOutSeconds: 2
 --- !u!114 &8714278021380127983
@@ -1826,7 +1775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8460cd2814f456b4287f66d9f4528181, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questsManager: {fileID: 0}
+  questManager: {fileID: 8861211339865653366}
   puzzleTags: []
 --- !u!114 &8734189390555504868
 MonoBehaviour:
@@ -1850,6 +1799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3005479713171637389}
   - component: {fileID: 8714278021380127983}
+  - component: {fileID: 8861211339865653366}
   m_Layer: 0
   m_Name: Puzzle Manager
   m_TagString: PuzzleManager
@@ -1857,6 +1807,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8861211339865653366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8861211339865653365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c6c3b97acd46e745add336fa6be8438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questsUpdatedEvent: {fileID: 11400000, guid: ccb1c037995eb234c9f17db5660c57a2, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  puzzleManager: {fileID: 8714278021380127983}
+  activeQuests: []
+  questProgression: 
 --- !u!114 &8883209508520622200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1897,7 +1864,6 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1995155083}
   - {fileID: 532601089}
   - {fileID: 6874851981068940742}
   - {fileID: 3282179606201673764}

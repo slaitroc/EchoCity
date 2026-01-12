@@ -22,8 +22,6 @@ namespace EchoCity
             }
         }
 
-        public override InteractionEnum InteractionCode => InteractionEnum.DoorArea;
-
         protected override void Awake()
         {
             base.Awake();
@@ -31,10 +29,9 @@ namespace EchoCity
         }
 
         //skips puzzle interaction to just toggle door open/close
-        public override bool Interact()
+        public override void Interact()
         {
             isOpen = !isOpen;
-            return true;
         }
 
         protected override void ResolveInteraction(bool outcome) { }

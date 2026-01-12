@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -52,9 +51,7 @@ namespace EchoCity
             if (_equippedPanel == null || _equippedIcon == null || _equippedName == null)
                 return;
 
-            string parsedName = Regex.Replace(itemName, "(?<!^)([A-Z0-9])", " $1");
-
-            _equippedName.text = string.IsNullOrWhiteSpace(parsedName) ? noItemText : parsedName;
+            _equippedName.text = string.IsNullOrWhiteSpace(itemName) ? noItemText : itemName;
             _currentEquippedName = _equippedName.text;
 
             if (icon != null)

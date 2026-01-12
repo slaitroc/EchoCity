@@ -42,9 +42,10 @@ GameObject:
   - component: {fileID: 1848375128815132782}
   - component: {fileID: 6481809184363699713}
   - component: {fileID: 4876590492631993148}
-  - component: {fileID: 7794946607153726275}
+  - component: {fileID: 5005050937506554166}
   - component: {fileID: 7376426708341033886}
   - component: {fileID: 3988382643267803885}
+  - component: {fileID: 7794946607153726275}
   m_Layer: 0
   m_Name: Interactable-CardReader_High
   m_TagString: Untagged
@@ -120,6 +121,73 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5005050937506554166
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819929284313190635}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 43359078142989216, guid: 727f066ebfa46484686ba48cc633c608, type: 2}
+--- !u!114 &7376426708341033886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819929284313190635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec509e72be1cfc45b8a371301e8aad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
+  interactionEvent: {fileID: 11400000, guid: 8f241d346f69ae74292b021150790408, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  puzzleManager: {fileID: 0}
+  checkTags:
+  - _tag: 0
+    _isActive: 0
+    _count: 0
+  setTags: []
+  _interactionDescription: 
+  _InteractionSuccessMessage: 
+  _InteractionFailMessage: 
+  interactionContainer: {fileID: 0}
+  setMaterialEvent: {fileID: 0}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
+  cardPrefab: {fileID: 2224368390549605647, guid: f16ddeba5edac764da33972634453b46, type: 3}
+  cardSpawnPoint: {fileID: 3462270299063593959}
+  dialogContainerSuccess: {fileID: 11400000, guid: d655277bb95a044298af0252e627d062, type: 2}
+  dialogContainerFail: {fileID: 11400000, guid: 588cbaac87d82400880f434fb0dd7c96, type: 2}
+--- !u!114 &3988382643267803885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819929284313190635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 2
 --- !u!65 &7794946607153726275
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -141,53 +209,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.18539146, y: 0.04665721, z: 0.14029902}
   m_Center: {x: 0, y: 0.023328604, z: 0.020149514}
---- !u!114 &7376426708341033886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3819929284313190635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ec509e72be1cfc45b8a371301e8aad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  interactionEvent: {fileID: 11400000, guid: f25f91fe03c58ca42a5f5574e59330a0, type: 2}
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  puzzleManager: {fileID: 0}
-  checkTags:
-  - _tag: 36
-    _isActive: 1
-    _count: 0
-  setTags: []
-  _interactionDescription: Card Reader
-  _InteractionSuccessMessage: 'Car reader: floppy disk ejected'
-  OnSuccessAddQuest: {fileID: 0}
-  OnSuccessAddTagsQuest: {fileID: 0}
-  _InteractionFailMessage: Card reader needs power supply to workcorrectly
-  OnFailAddQuest: {fileID: 0}
-  OnFailAddTagsQuest: {fileID: 0}
-  interactionContainer: {fileID: 0}
-  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
-  useSoundSource: {fileID: 11400000, guid: 641092f86f61a464bb51ecf2d8534aef, type: 2}
-  cardPrefab: {fileID: 2224368390549605647, guid: f16ddeba5edac764da33972634453b46, type: 3}
-  cardSpawnPoint: {fileID: 3462270299063593959}
-  triggeredQuestIfFail: {fileID: 0}
---- !u!114 &3988382643267803885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3819929284313190635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectFrequency: 2
 --- !u!1 &6186665633294773876
 GameObject:
   m_ObjectHideFlags: 0

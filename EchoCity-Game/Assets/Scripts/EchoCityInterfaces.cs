@@ -248,7 +248,7 @@ namespace EchoCity
     public interface IInteractable
     {
         //<summary> Triggers the interactable's interaction logic </summary>
-        bool Interact();
+        void Interact();
     }
 
     public interface IHasDescription
@@ -268,18 +268,8 @@ namespace EchoCity
         bool CheckTags(PuzzleTagState[] tagsToCheck);
         //<summary> Sets specific puzzle tags </summary>
         void SetTags(PuzzleTagState[] tagsToSet, bool checkQuests = true);
-        //<summary> Checks the active quests for completion </summary>
-        void CheckQuests();
         //<summary> Increments the count of a specific puzzle tag </summary>
         void IncrementTagCount(PuzzleTagEnum tag);
-        //<summary> Add an active quest</summary>
-        void AddQuest(SOQuest quest);
-        //<summary> Adds a quests to the tags triggered quests list </summary>
-        void AddToTagsTriggeredQuests(SOQuest quest);
-        //<summary> Removes a quest from the tags triggered quests list </summary>
-        void RemoveFromTagsTriggeredQuests(SOQuest quest);
-        //<summary> Constructs an array of puzzle tags with opposite active states </summary>
-        PuzzleTagState[] ConstructOppositeTags(PuzzleTagState[] puzzleTags);
     }
 
     public interface IQuestsManager

@@ -10,8 +10,8 @@ namespace EchoCity
     {
         [Header("UI")]
         [SerializeField] private UIDocument hudDocument;
-        [SerializeField] private PuzzleManager puzzleManager;
-        private IQuestsManager _questsManager => puzzleManager.QuestsManager as IQuestsManager;
+        [SerializeField] private QuestsManager questsManager;
+        private IQuestsManager _questsManager => questsManager as IQuestsManager;
 
         [SerializeField] private float completedVisibleSeconds = 5.0f;
         [SerializeField] private float fadeOutSeconds = 2.0f;
@@ -92,7 +92,6 @@ namespace EchoCity
 
         public void UpdateQuest(QuestsEnum questID, int progression)
         {
-            if (_questsManager == null) return;
             SOQuest quest = _questsManager.ActiveQuests[(int)questID];
             CacheRows(questID, progression, quest);
 
@@ -106,15 +105,6 @@ namespace EchoCity
             else if (progression == (int)QuestStateEnum.Completed)
             {
                 StartFade(questID);
-                return;
-            }
-            else if (progression == (int)QuestStateEnum.ResetQuestsManager)
-            {
-                _cache.Clear();
-                _list.Clear();
-                _rows.Clear();
-                _index = 0;
-                UpdatePanelVisibility();
                 return;
             }
 
@@ -162,6 +152,7 @@ namespace EchoCity
 
         private void StartFade(QuestsEnum id)
         {
+            if (_fadeCoroutines.ContainsKey(id)) return;
             if (!_rows.TryGetValue(id, out var row)) return;
 
             if (!row.ClassListContains("completed"))

@@ -6,9 +6,6 @@ namespace EchoCity
     {
         [Header("Invoking Events")]
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
-        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
-        [SerializeField] private SOShowUIEvent showUIEvent;
-
 
         [Header("Observing Events")]
         [SerializeField] private SOSceneLoaderTriggerEvent sceneLoaderTriggerEvent;
@@ -18,18 +15,8 @@ namespace EchoCity
         bool IEventSender.IsManager => true;
         EventSenderCategoriesEnum[] IEventSender.SenderCategory => new EventSenderCategoriesEnum[] { EventSenderCategoriesEnum.Initializer };
 
-        [Header("Initialization Settings")]
-        [SerializeField] protected bool initInventoryOnStart = true;
-        [SerializeField] protected bool setMaterialsActiveOnStart = true;
         [Header("Initialization Data")]
-        [SerializeField] private QuestsManager questsManager;
-        [SerializeField] private SOQuest initialQuest;
-        [SerializeField] private SOPickable equippedItemOnStart;
-        [SerializeField] private SODialogContainer initialDialogContainer;
-
-        protected PuzzleManager puzzleManager;
-        protected PlayerInventory playerInventory;
-        protected PlayerController playerController;
+        [SerializeField] private SOQuest initialTutorialQuest;
 
         void OnEnable()
         {
@@ -42,42 +29,17 @@ namespace EchoCity
         }
         void InitializeHandler(IEventSender sender, SceneLoaderTriggerEnum triggerCode)
         {
-            EchoCitySound.StopAllVoices();
             if (triggerCode != SceneLoaderTriggerEnum.InitLevel) return;
             setPlayerOnSpawnEvent.RaiseEvent(this);
             // add respawn quest to puzzle manager
-            puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
-            playerInventory = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerInventory>();
-            playerController = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
-            Debug.Assert(puzzleManager != null, "PuzzleManager not found in the scene");
-            Debug.Assert(playerInventory != null, "PlayerInventory not found in the scene");
-            Debug.Assert(playerController != null, "PlayerController not found in the scene");
-            if (initInventoryOnStart && playerInventory != null)
+            var puzzleManager = GameObject.FindGameObjectWithTag("PuzzleManager")?.GetComponent<PuzzleManager>();
+            if (puzzleManager != null && initialTutorialQuest != null)
             {
-                playerInventory.Clear();
-                playerController.EquipItem(0, equippedItemOnStart, null);
-                Log.DLazy(() => "Player inventory initialized on level start.", this);
+                puzzleManager.AddQuest(initialTutorialQuest);
+                Log.DLazy(() => "Respawn quest added to PuzzleManager", this);
             }
-            if (puzzleManager != null)
-            {
-                puzzleManager.SetQuestsManager(questsManager);
-                if (initialQuest != null)
-                    puzzleManager.AddQuest(initialQuest);
-                Log.DLazy(() => "PuzzleManager initialized on level start.", this);
-            }
-            if (setMaterialEvent != null)
-            {
-                if (setMaterialsActiveOnStart)
-                    setMaterialEvent.RaiseEvent(this, EchoMaterialCodeEnum.Active);
-                else
-                    setMaterialEvent.RaiseEvent(this, EchoMaterialCodeEnum.Inactive);
-            }
-            if (initialDialogContainer != null)
-            {
-                EchoCitySound.AddInVoicePlayQueue(initialDialogContainer, showUIEvent, 0, true);
-            }
-            InitializeLevel();
         }
-        protected virtual void InitializeLevel() { }
+
+
     }
 }

@@ -17,22 +17,17 @@ namespace EchoCity
         //Special Sound Tools
         Hands,
         // Sound Tools
-        AirHorn,
+        Screwdriver,
         Carillon,
         CannedFood,
-        CrowBar,
-        LowGeneratorRadio,
         MetalBar,
-        PowerDrill,
-        Screwdriver,
         WalkieTalkie,
-        Phone,
         // Tools
         Battery,
         Cable,
+        ElectricityCable,
         FloppyDisk,
-        DataCenterLaptop,
-        BadgeID,
+        LowGeneratorRadio,
     }
     public abstract class SOPickable : ScriptableObject
     {
@@ -61,24 +56,22 @@ namespace EchoCity
 
         void OnValidate()
         {
-            string rawAssetName = this.name;
-            if (string.IsNullOrEmpty(rawAssetName))
-            {
-                return;
-            }
-
-            string assetName = rawAssetName.Split('_')[0].Trim();
+            // 1. Get the name of the ScriptableObject asset
+            string assetName = this.name;
 
             if (!string.IsNullOrEmpty(assetName))
             {
+                // Try to convert the asset name to an Enum value
                 if (Enum.TryParse(assetName, true, out PickablesEnum result))
                 {
+                    // If found, assign it
                     if (_pickableEnum != result)
                     {
                         _pickableEnum = result;
-                        Debug.Log($"<color=green>Pickable automatically assigned:</color> {result} for asset {rawAssetName}");
+                        Debug.Log($"<color=green>Pickable automatically assigned:</color> {result} for asset {assetName}");
                     }
 
+                    // Sync the _pickableName with the enum value
                     if (_name != result.ToString())
                     {
                         _name = result.ToString();
@@ -86,7 +79,7 @@ namespace EchoCity
                 }
                 else
                 {
-                    Debug.LogWarning($"<color=black>No matching Enum value found for name: {assetName} (from asset {rawAssetName})");
+                    Debug.LogWarning($"<color=black>No matching Enum value found for name: {assetName}");
                 }
             }
 

@@ -1,49 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &695376112757023269
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3931922969259366146}
-  - component: {fileID: 52989713317815909}
-  m_Layer: 10
-  m_Name: SoundPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3931922969259366146
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695376112757023269}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.15, y: 2.56, z: 1.22}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5462534226246028213}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &52989713317815909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695376112757023269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1ad2b848c6d30e4586700b3a71ce903, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1599682547911214435
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,8 +15,6 @@ GameObject:
   - component: {fileID: 744462477895242458}
   - component: {fileID: 1707506660127259570}
   - component: {fileID: 1468922952999432880}
-  - component: {fileID: 5204501891286544960}
-  - component: {fileID: 8009221871764747534}
   m_Layer: 10
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -82,7 +36,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6795490230609735767}
-  - {fileID: 3931922969259366146}
   - {fileID: 214114970387274670}
   m_Father: {fileID: 3721493544747044234}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -233,7 +186,7 @@ MonoBehaviour:
   itemUsedEvent: {fileID: 11400000, guid: 4fe41dcdfe7c3774eb6d383640386ad6, type: 2}
   enemyAttractionEvent: {fileID: 11400000, guid: f6d82c8061ec2714d8e56ec74d9eecb8, type: 2}
   perceivedSoundEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
-  playerInventory: {fileID: 8009221871764747534}
+  playerInventory: {fileID: 4925046041275752603}
   fullInventorySound: {fileID: 11400000, guid: d2cef0896b5120044ac451ee4dcda5c6, type: 2}
   dropPoint: {fileID: 6795490230609735767}
   fixedDistanceEstimation: 10
@@ -245,46 +198,6 @@ MonoBehaviour:
   healthRegenDelay: 2
   currentHealth: 100
   overlayImage: {fileID: 0}
-  soundEmissionPoint: {fileID: 3931922969259366146}
---- !u!114 &5204501891286544960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599682547911214435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcec8e77535a7354782e47f1eb46f147, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputActionAsset: {fileID: -944628639613478452, guid: f24b24b4444f04457a7a21a9f6824076, type: 3}
-  starterAssetsInputs: {fileID: 1707506660127259570}
-  playerController: {fileID: 1468922952999432880}
-  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
-  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
-  showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
-  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
-  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
-  inRangeInteractables: []
-  closestAreaInteractable: {fileID: 0}
-  raycastDistance: 5
---- !u!114 &8009221871764747534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599682547911214435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8ee35e27a14db43a4b82e8358934b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
-  switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
-  itemsArray: []
-  handsSoundTool: {fileID: 11400000, guid: ee9b2fceb94035846b01d1e6ffd4676b, type: 2}
 --- !u!1 &1911577193568322461
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +325,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3721493544747044234}
+  - component: {fileID: 263669854187414106}
+  - component: {fileID: 4925046041275752603}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -437,6 +352,45 @@ Transform:
   - {fileID: 5664352856674987728}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 86.302, z: 0}
+--- !u!114 &263669854187414106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4689472295284435472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcec8e77535a7354782e47f1eb46f147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActionAsset: {fileID: -944628639613478452, guid: f24b24b4444f04457a7a21a9f6824076, type: 3}
+  starterAssetsInputs: {fileID: 1707506660127259570}
+  playerController: {fileID: 1468922952999432880}
+  switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
+  showUIEvent: {fileID: 11400000, guid: b06e1bb74855343f0a4742fc5934bca4, type: 2}
+  showInteractionEvent: {fileID: 11400000, guid: 3bbfeca3079c44417a63be3817699116, type: 2}
+  setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
+  playerInputEvent: {fileID: 11400000, guid: ebed20f5388598246b12ccd9e90e8159, type: 2}
+  inRangeInteractables: []
+  closestAreaInteractable: {fileID: 0}
+  raycastDistance: 5
+--- !u!114 &4925046041275752603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4689472295284435472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8ee35e27a14db43a4b82e8358934b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryChangedEvent: {fileID: 11400000, guid: de58a866739665b42a96a620d7ca6f0e, type: 2}
+  switchLevelEvent: {fileID: 11400000, guid: 08fd4bcdea41d4fb2920f4c6c91053c3, type: 2}
+  itemsArray: []
+  handsSoundTool: {fileID: 11400000, guid: ee9b2fceb94035846b01d1e6ffd4676b, type: 2}
 --- !u!1 &5417763617273222757
 GameObject:
   m_ObjectHideFlags: 0

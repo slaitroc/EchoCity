@@ -17,7 +17,7 @@ namespace EchoCity
         UI,
         Emitter,
         Utility,
-        ColliderTrigger,
+        Tutorial,
         Initializer
     }
     //Name must match exactly with the SOEventBase asset names (without the "Event" suffix)

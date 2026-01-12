@@ -373,25 +373,5 @@ namespace EchoCity
         }
 
         #endregion
-
-        public static void StopAllVoices()
-        {
-            if (playerController == null)
-                playerController = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<PlayerController>();
-            if (_voiceMainCoroutine != null)
-            {
-                playerController.StopCoroutine(_voiceMainCoroutine);
-                _voiceMainCoroutine = null;
-                playerController.PlayerVoiceAudioSource.AudioSource.Stop();
-                _voiceMainPlayQueue.Clear();
-            }
-            if (_voiceSecondaryCoroutine != null)
-            {
-                playerController.StopCoroutine(_voiceSecondaryCoroutine);
-                _voiceSecondaryCoroutine = null;
-                playerController.PlayerSecondaryVoiceAudioSource.AudioSource.Stop();
-                _voiceSecondaryPlayQueue.Clear();
-            }
-        }
     }
 }

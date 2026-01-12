@@ -105,10 +105,15 @@ namespace EchoCity
 
             for (int i = 0; i < _starButtons.Length; i++)
             {
-                var icon = _starButtons[i]?.Q<Image>(className: "rating-star-icon");
-                if (icon == null) continue;
+                if (_starButtons[i] == null) continue;
 
-                icon.EnableInClassList("active", i < rating);
+                bool active = i < rating;
+                _starButtons[i].text = active ? "★" : "☆";
+
+                if (active)
+                    _starButtons[i].style.color = new StyleColor(new Color(1f, 0.2f, 0.2f, 1f));
+                else
+                    _starButtons[i].style.color = new StyleColor(new Color(1f, 1f, 1f, 1f));
             }
         }
 

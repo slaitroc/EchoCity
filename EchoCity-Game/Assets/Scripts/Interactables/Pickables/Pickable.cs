@@ -9,9 +9,8 @@ namespace EchoCity
     {
         [Header("Pickable Data")]
         [SerializeField] public SOPickable PickableData;
-        [SerializeField] private bool undoTagsOnDrop = true;
 
-        public override InteractionEnum InteractionCode => InteractionEnum.Pickable;
+        protected override InteractionEnum _interactionCode => InteractionEnum.Pickable;
 
         protected override void Awake() => gameObject.layer = 9; // Set to Pickable layer
 
@@ -21,18 +20,10 @@ namespace EchoCity
                 PickUp();
         }
 
-        public virtual void PickUp()
+        public void PickUp()
         {
-            if (PickableData != null)
-                PlayAtPosition(transform.position, PickableData.PickUpSound, _audioContext, MixerGroupEnum.SFX);
+            PlayAtPosition(transform.position, PickableData.PickUpSound, _audioContext, MixerGroupEnum.SFX);
             Destroy(gameObject);
-        }
-
-        public virtual void Drop()
-        {
-            if (!undoTagsOnDrop) return;
-            if (PuzzleManager == null) return;
-            PuzzleManager.SetTags(PuzzleManager.ConstructOppositeTags(setTags), true);
         }
     }
 }

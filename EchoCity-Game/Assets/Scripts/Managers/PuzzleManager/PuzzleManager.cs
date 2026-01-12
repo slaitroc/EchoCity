@@ -24,20 +24,16 @@ namespace EchoCity
         EnemySoundChase_TutorialCompleted = 15,
         TutorialCompleted = 29,
         //FIRST LEVEL TAGS
+        // Picked
         Lighting_On = 30, // if false echo material must be used
         Phone_Picked = 31,
         WalkieTalkie_Picked = 32,
-        KaelID_Picked = 33,
+        BunkerDoorKey_Picked = 33,
         Cable_Picked = 34,
         FloppyDisk_Picked = 35,
+        // On / Activated
         CardReader_On = 36,
         WearingGlasses = 37,
-        PryTool_Picked = 38,
-        ExitFirstArea = 39,
-        Generator_On = 40,
-        DataCenterPC_Picked = 41,
-        EscapeDoor_Enabled = 42,
-        Fence_Removed = 43,
         MAX
     }
 
@@ -67,14 +63,15 @@ namespace EchoCity
 
 
         [Header("Quests Management")]
-        [SerializeField] private QuestsManager questsManager;
-        public IQuestsManager QuestsManager => questsManager;
+        [SerializeField] private QuestsManager questManager;
+        public IQuestsManager QuestsManager => questManager;
         [Header("Puzzle Tags")]
         [SerializeField] private PuzzleTagState[] puzzleTags;
 
         void Awake()
         {
             puzzleTags = new PuzzleTagState[(int)PuzzleTagEnum.MAX];
+            InitializeTags();
             Debug.Assert(puzzleTags != null && puzzleTags.Length > 0, "Active puzzle tags array is null or empty");
         }
 
@@ -88,24 +85,14 @@ namespace EchoCity
 
         public void AddQuest(SOQuest quest)
         {
-            questsManager?.AddQuest(quest);
-        }
-
-        public void AddToTagsTriggeredQuests(SOQuest quest)
-        {
-            questsManager?.AddToTagsTriggeredQuests(quest);
-        }
-
-        public void RemoveFromTagsTriggeredQuests(SOQuest quest)
-        {
-            questsManager?.RemoveFromTagsTriggeredQuests(quest);
+            questManager?.AddQuest(quest);
         }
 
         public void IncrementTagCount(PuzzleTagEnum tag)
         {
             if (tag == PuzzleTagEnum.NONE || tag == PuzzleTagEnum.MAX) return;
             puzzleTags[(int)tag].Count = puzzleTags[(int)tag].Count + 1;
-            questsManager?.UpdateActiveQuests(this);
+            questManager?.UpdateActiveQuests(this);
         }
 
         private void InitializeTags()
@@ -151,42 +138,8 @@ namespace EchoCity
                 puzzleTags[(int)tagsToSet[i].Tag].Count = tagsToSet[i].Count;
             }
             if (checkQuests)
-                CheckQuests();
-        }
-
-        public void CheckQuests()
-        {
-            questsManager?.UpdateActiveQuests(this);
-        }
-
-        public void ClearQuestsManager()
-        {
-            if (this.questsManager != null)
-                this.questsManager.UnsubscribeAll();
-            this.questsManager = null;
-        }
-        public void SetQuestsManager(QuestsManager questsManager)
-        {
-            ClearQuestsManager();
-            InitializeTags();
-            questsManager.SetPuzzleManager(this);
-            this.questsManager = questsManager;
-        }
-
-        public PuzzleTagState[] ConstructOppositeTags(PuzzleTagState[] puzzleTags)
-        {
-            PuzzleTagState[] oppositeTags = new PuzzleTagState[puzzleTags.Length];
-            for (int i = 0; i < puzzleTags.Length; i++)
-            {
-                oppositeTags[i] = new PuzzleTagState(puzzleTags[i].Tag, !puzzleTags[i].IsActive, puzzleTags[i].Count);
-            }
-            return oppositeTags;
-        }
-
-        public PuzzleTagState[] GetCurrentTags()
-        {
-            return (PuzzleTagState[])puzzleTags.Clone();
+                questManager?.UpdateActiveQuests(this);
         }
     }
-}
 
+}
