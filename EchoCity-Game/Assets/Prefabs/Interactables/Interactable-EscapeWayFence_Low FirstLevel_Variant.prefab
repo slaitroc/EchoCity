@@ -58,14 +58,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4569960267184319486, guid: dcbfccefaada31a4e996ff013cc1803e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5364490618885494210}
+      addedObject: {fileID: 6751217980032793738}
   m_SourcePrefab: {fileID: 100100000, guid: dcbfccefaada31a4e996ff013cc1803e, type: 3}
 --- !u!1 &2307023469274090502 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4569960267184319486, guid: dcbfccefaada31a4e996ff013cc1803e, type: 3}
   m_PrefabInstance: {fileID: 2265296564764927992}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5364490618885494210
+--- !u!114 &6751217980032793738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2307023469274090502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e6a37717e1abcb4284136853c3c5eef, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e281ff133219b34cb902a4ad2bec254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
@@ -89,12 +89,12 @@ MonoBehaviour:
   - _tag: 43
     _isActive: 1
     _count: 0
-  _interactionDescription: Try to force the fence
-  _InteractionSuccessMessage: Doo is now accessible
+  _interactionDescription: Try remove the fence
+  _InteractionSuccessMessage: Fence removed with pry tool
   OnSuccessAddQuest: {fileID: 0}
   OnSuccessAddTagsQuest: {fileID: 11400000, guid: b88dad7c2d4808f40955c1078b3fa5a7, type: 2}
-  _InteractionFailMessage: Force it with something
+  _InteractionFailMessage: Pry tool needed
   OnFailAddQuest: {fileID: 0}
-  OnFailAddTagsQuest: {fileID: 11400000, guid: c2210526d8dd6364e92c6ee63756b17d, type: 2}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
-  successSoundSource: {fileID: 11400000, guid: 70af7ecd1d29941f484db0d65bbc9f80, type: 2}
+  successSoundSource: {fileID: 11400000, guid: 65beaddefb5219f44a1fa679a4edefe7, type: 2}

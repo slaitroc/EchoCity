@@ -92,6 +92,7 @@ namespace EchoCity
 
         public void UpdateQuest(QuestsEnum questID, int progression)
         {
+            if (_questsManager == null) return;
             SOQuest quest = _questsManager.ActiveQuests[(int)questID];
             CacheRows(questID, progression, quest);
 

@@ -24,7 +24,8 @@ namespace EchoCity
             if (outcome)
             {
                 PlayAtPosition(transform.position, successSoundSource, _audioContext, MixerGroupEnum.SFX);
-                switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Win, null);
+                if (switchToGameStateEvent != null)
+                    switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Win, null);
             }
             else
             {

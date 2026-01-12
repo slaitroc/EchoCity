@@ -6842,7 +6842,10 @@ MonoBehaviour:
   - _tag: 38
     _isActive: 1
     _count: 0
-  setTags: []
+  setTags:
+  - _tag: 39
+    _isActive: 1
+    _count: 0
   _interactionDescription: Escape the bunker's laboratory area
   _InteractionSuccessMessage: Escaped bunker's laboratory area
   OnSuccessAddQuest: {fileID: 0}
@@ -86338,6 +86341,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5904902578963906420}
     m_Modifications:
+    - target: {fileID: 2223426950394351054, guid: c8af21e51ea258b42a78df3dd7535715, type: 3}
+      propertyPath: objectFrequency
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6605021694721633505, guid: c8af21e51ea258b42a78df3dd7535715, type: 3}
       propertyPath: extraTagTriggerQuest
       value: 
@@ -102017,8 +102024,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20.890224, y: 0.34070826, z: 18.2}
-  m_Center: {x: 42.554886, y: 0.5703542, z: 13.9}
+  m_Size: {x: 23.102585, y: 0.34070826, z: 18.2}
+  m_Center: {x: 43.661064, y: 0.5703542, z: 13.9}
 --- !u!65 &7166002030457969617
 BoxCollider:
   m_ObjectHideFlags: 0
