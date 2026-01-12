@@ -31,6 +31,7 @@ namespace EchoCity
         public virtual void Drop()
         {
             if (!undoTagsOnDrop) return;
+            if (PuzzleManager == null) return;
             PuzzleManager.SetTags(PuzzleManager.ConstructOppositeTags(setTags), true);
         }
     }

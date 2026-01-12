@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4677898336569634276}
   - component: {fileID: 5508349675265639212}
   - component: {fileID: 5040871913163830171}
-  - component: {fileID: 6834249675198122122}
   - component: {fileID: 2857024824260599028}
   - component: {fileID: 6615650875460704128}
   - component: {fileID: 1432661977623206350}
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2224368390549605647}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.25565067, z: -0, w: 0.9667692}
-  m_LocalPosition: {x: -34.793, y: -0.351, z: 36.356}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -90,28 +89,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6834249675198122122
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2224368390549605647}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43622211302900998, guid: 71c3cfe65a6068147962ef2b183a9c47, type: 2}
 --- !u!65 &2857024824260599028
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -145,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectFrequency: 1
+  objectFrequency: 2
 --- !u!114 &1432661977623206350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +149,11 @@ MonoBehaviour:
     _count: 0
   _interactionDescription: This is it! The floppy disk!
   _InteractionSuccessMessage: Floppy disk Picked
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 61fc36d83e190414cac0f070f42ec318, type: 2}
   undoTagsOnDrop: 1
