@@ -55,19 +55,38 @@ namespace EchoCity
 
         private void OnEnable()
         {
-            if (hudDocument == null)
+            _playerA ??= playerController as IAttraction;
+            if (_playerA == null)
+            {
+                enabled = false; // nothing to update without a source
                 return;
+            }
+
+            if (hudDocument == null)
+            {
+                enabled = false;
+                return;
+            }
 
             _root = hudDocument.rootVisualElement;
 
             _panel = _root.Q<VisualElement>("EnemyAttractionPanel");
             _barFill = _root.Q<VisualElement>("EnemyAttractionBarFill");
 
+            if (_panel == null || _barFill == null)
+            {
+                enabled = false;
+                return;
+            }
+
             _isVisible = false;
         }
 
         void Update()
         {
+            if (_playerA == null || _barFill == null)
+                return;
+
             UpdateBar(_playerA.CurrentAttraction);
         }
 

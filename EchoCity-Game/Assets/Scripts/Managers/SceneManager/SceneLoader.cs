@@ -10,7 +10,6 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private SOSceneLoaderTriggerEvent sceneLoaderTriggerEvent;
-        [SerializeField] private SOSetMaterialEvent setMaterialEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
@@ -22,6 +21,7 @@ namespace EchoCity
         [SerializeField] private SOSetPlayerOnSpawnEvent setPlayerOnSpawnEvent;
 
         [Header("Settings")]
+        [SerializeField] private PuzzleManager puzzleManager;
         [SerializeField]
         private string[] scenesNames ={
         "None",
@@ -62,8 +62,6 @@ namespace EchoCity
             var pc = _player?.GetComponent<PlayerController>();
             var cc = _player?.GetComponent<CharacterController>();
 
-            // FIXME: Will always disable ecolocation material when respawning
-            setMaterialEvent?.RaiseEvent(this, EchoMaterialCodeEnum.Inactive);
 
             if (_spawnPoint != null && _player != null && pc != null)
             {
@@ -89,15 +87,18 @@ namespace EchoCity
             switch (code)
             {
                 case LevelActionCodeEnum.LoadActiveLevel:
+                    puzzleManager?.ClearQuestsManager();
                     StartCoroutine(LoadLevelAdditiveWithLoading(scene));
                     break;
                 case LevelActionCodeEnum.LoadLevel:
+                    puzzleManager?.ClearQuestsManager();
                     StartCoroutine(LoadSceneAdditiveNoActiveWithLoading(scene));
                     break;
                 case LevelActionCodeEnum.UnloadLevel:
                     StartCoroutine(UnloadCurrentLevelWithLoading());
                     break;
                 case LevelActionCodeEnum.ReloadLevel:
+                    puzzleManager?.ClearQuestsManager();
                     StartCoroutine(ReloadCurrentLevelWithLoading());
                     break;
                 default:

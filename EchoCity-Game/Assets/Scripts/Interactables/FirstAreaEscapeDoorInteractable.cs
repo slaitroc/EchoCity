@@ -1,0 +1,18 @@
+using EchoCity;
+using UnityEngine;
+using static EchoCity.EchoCitySound;
+
+public class FirstAreaEscapeDoorInteractable : DoorInteractable
+{
+    [SerializeField] private SOSoundSource lockedSound;
+
+    public override InteractionEnum InteractionCode => InteractionEnum.FirstAreaEscapeDoor;
+
+    protected override void ResolveInteraction(bool outcome)
+    {
+        base.ResolveInteraction(outcome);
+        if (!outcome)
+            if (lockedSound != null)
+                PlayAtPosition(transform.position, lockedSound, _audioContext, MixerGroupEnum.SFX);
+    }
+}

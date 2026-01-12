@@ -80,11 +80,15 @@
 .rating-star {
     width: 70px;
     height: 70px;
-    font-size: 90px;
-    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
-    background-color: rgba(0, 0, 0, 0);
+
+    background-color: rgba(0,0,0,0);
     border-width: 0;
-    color: rgba(255, 255, 255, 1);
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 0;
+
     transition-duration: 0.3s;
 }
 
@@ -92,6 +96,17 @@
 .rating-star:focus {
     color: rgba(255, 0, 0, 1);
     scale: 1.15 1.15;
+}
+
+.rating-star-icon {
+    width: 60px;
+    height: 60px;
+    background-image: resource("Icons/Rating/Icon_StarEmpty");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.rating-star-icon.active {
+    background-image: resource("Icons/Rating/Icon_StarFull");
 }
 
 .feedback-content {

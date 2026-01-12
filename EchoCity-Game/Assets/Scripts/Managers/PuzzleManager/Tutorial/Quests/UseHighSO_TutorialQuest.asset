@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3c4d361a0afb468f18a11645f7a5b, type: 3}
+  m_Name: UseHighSO_TutorialQuest
+  m_EditorClassIdentifier: 
+  questType: 0
+  quest: 13
+  tagsToCheck:
+  - _tag: 14
+    _isActive: 1
+    _count: 0
+  countToComplete: 3
+  subscribeToEvents:
+  - {fileID: 11400000, guid: 4fe41dcdfe7c3774eb6d383640386ad6, type: 2}
+  nextQuests:
+  - {fileID: 11400000, guid: b1157002182ed7947bf10bac931690e4, type: 2}
+  description: Use a High Frequency sound tool
+  questCompletedText: 'Tutorial: High Freq Sound Tool Used.'
+  scriptContainer: {fileID: 11400000, guid: 29ac561b2db769a49acf42cc090a6f40, type: 2}

@@ -60,6 +60,7 @@ namespace EchoCity
                 _playerActionMap["OpenInventory"].performed += OnCloseInventory;
                 _playerActionMap["EnterPause"].performed += OnEnterPause;
 
+#if UNITY_EDITOR
                 //Test
                 //_playerActionMap["WearEcholocator"].performed += OnWearEcholocator;
                 _playerActionMap["PlayerHit"].performed += OnPlayerHit;
@@ -67,6 +68,7 @@ namespace EchoCity
                 _playerActionMap["Test2"].performed += OnTest2;
                 _playerActionMap["Test3"].performed += OnTest3;
                 _playerActionMap["Test4"].performed += OnTest4;
+#endif
             }
 
             //Error Logs
@@ -222,16 +224,21 @@ namespace EchoCity
                     if (pickable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
                     {
                         Log.DLazy(() => $"Interacting with Pickable: {pickable.name}", this);
-                        if (playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab))
-                            pickable.Interact();
+                        if (pickable.PickableData == null || playerController.playerInventory.TryAddItem())
+                        {
+                            if (pickable.Interact())
+                                playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab);
+                        }
                         else playerController.EmitFullInventorySound();
                     }
                     else
                     {
                         var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
                         if (interactable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
+                        {
+                            Log.DLazy(() => $"Interacting with Interactable: {interactable?.name}", this);
                             interactable.Interact();
-
+                        }
                     }
                 }
             }

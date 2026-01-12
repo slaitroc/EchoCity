@@ -319,8 +319,11 @@ namespace EchoCity
 
         private string GetColoredName(IEventSender sender)
         {
-            string color = sender != null ? SenderColorCache.GetColor(sender) : "#FFFFFF";
-            string name = sender != null ? sender.SenderName : "<null sender>";
+            // Unity "fake null" objects still pass a reference, so guard against destroyed senders before dereferencing
+            bool senderIsAlive = sender != null && (!(sender is UnityEngine.Object unityObj) || unityObj != null);
+
+            string color = senderIsAlive ? SenderColorCache.GetColor(sender) : "#FFFFFF";
+            string name = senderIsAlive ? sender.SenderName : "<null sender>";
             return $"<color={color}>[{name}]</color>";
         }
 

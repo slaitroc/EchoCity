@@ -10,11 +10,21 @@
             <ui:VisualElement name="RatingSection" class="feedback-section">
                 <ui:Label name="RatingLabel" class="feedback-label" text="How would you rate this experience?" />
                 <ui:VisualElement name="RatingStars" class="rating-stars">
-                    <ui:Button name="Star1" class="rating-star" text="☆" />
-                    <ui:Button name="Star2" class="rating-star" text="☆" />
-                    <ui:Button name="Star3" class="rating-star" text="☆" />
-                    <ui:Button name="Star4" class="rating-star" text="☆" />
-                    <ui:Button name="Star5" class="rating-star" text="☆" />
+                    <ui:Button name="Star1" class="rating-star">
+                        <ui:Image name="Icon" class="rating-star-icon" />
+                    </ui:Button>
+                    <ui:Button name="Star2" class="rating-star">
+                        <ui:Image name="Icon" class="rating-star-icon" />
+                    </ui:Button>
+                    <ui:Button name="Star3" class="rating-star">
+                        <ui:Image name="Icon" class="rating-star-icon" />
+                    </ui:Button>
+                    <ui:Button name="Star4" class="rating-star">
+                        <ui:Image name="Icon" class="rating-star-icon" />
+                    </ui:Button>
+                    <ui:Button name="Star5" class="rating-star">
+                        <ui:Image name="Icon" class="rating-star-icon" />
+                    </ui:Button>
                 </ui:VisualElement>
             </ui:VisualElement>
 

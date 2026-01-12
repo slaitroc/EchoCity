@@ -38,18 +38,21 @@ namespace EchoCity
             CurrentState = TitleState;
             PreviousState = TitleState;
             CurrentState.Enter();
+            _context.CurrentStateEnum = GameStatesEnum.Title;
             _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.None, GameStatesEnum.Title);
         }
         public void Initialize(GameState state)
         {
             CurrentState = state;
             CurrentState.Enter();
+            _context.CurrentStateEnum = state.GetEnum();
             _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.None, state.GetEnum());
         }
 
 
         public void SwitchState(GameState state)
         {
+            _context.CurrentStateEnum = state.GetEnum();
             CurrentState.Exit();
             PreviousState = CurrentState;
             CurrentState = state;
@@ -66,6 +69,7 @@ namespace EchoCity
 
         public void EnterLoading()
         {
+            _context.CurrentStateEnum = GameStatesEnum.Loading;
             if (CurrentState == LoadingState) return;
             CurrentState.EnterLoading();
             _inLoadingState = CurrentState;
@@ -76,6 +80,7 @@ namespace EchoCity
 
         public void ExitLoading()
         {
+            _context.CurrentStateEnum = _inLoadingState.GetEnum();
             if (CurrentState != LoadingState) return;
             _context.GameStateTransitionEvent.RaiseEvent(_context, GameStatesEnum.Loading, _inLoadingState.GetEnum());
             LoadingState.Exit();
@@ -86,6 +91,7 @@ namespace EchoCity
 
         public void SwitchToNarration(ToNarrationParams toNarrationParams)
         {
+            _context.CurrentStateEnum = GameStatesEnum.Narration;
             CurrentState.Exit();
             PreviousState = CurrentState;
             CurrentState = NarrationState;
@@ -94,6 +100,7 @@ namespace EchoCity
 
         public void SwitchToHud(HudEnum hud)
         {
+            _context.CurrentStateEnum = GameStatesEnum.Hud;
             CurrentState.Exit();
             PreviousState = CurrentState;
             CurrentState = HudState;

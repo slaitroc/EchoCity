@@ -8,6 +8,7 @@ namespace EchoCity
         public PlayingGameState(IGMContext context, GameManagerFSM fsm) : base(context, fsm) { }
         public override void Enter()
         {
+            _context.ShowUIEvent.RaiseEvent(_context, ShowableUIEnum.Play);
             Time.timeScale = 1;
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.UI, false);
             _context.PlayerInputEvent.RaiseEvent(_context, InputEnum.Player, true);
@@ -21,6 +22,6 @@ namespace EchoCity
         public override void SwitchToNarrationHandler(GameStatesEnum previousState, ToNarrationParams @params) => _fsm.SwitchToNarration(@params);
         public override void SwitchToHudHandler(GameStatesEnum previousState, HudEnum hud) => _fsm.SwitchToHud(hud);
         public override void EnterLoading() { }
-        public override void ExitLoading() { }
+        public override void ExitLoading() { this.Enter(); }
     }
 }
