@@ -104,7 +104,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -148,7 +148,11 @@ MonoBehaviour:
   setTags: []
   _interactionDescription: An empty can? Someone should really clean this mess
   _InteractionSuccessMessage: Canned food picked
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: b0d27fab71d05e449919984589991233, type: 2}
   undoTagsOnDrop: 1
