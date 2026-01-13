@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3629866760711947971
+--- !u!1 &5688089185306375172
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2467956190664798730}
-  - component: {fileID: 3232236486976791411}
-  - component: {fileID: 7612230985013342691}
-  - component: {fileID: 1472893363440511027}
-  - component: {fileID: 2167956122697233555}
+  - component: {fileID: 3106332923478141935}
+  - component: {fileID: 3822366014537062994}
+  - component: {fileID: 442694197256719294}
+  - component: {fileID: 635267805104530609}
   m_Layer: 7
-  m_Name: AI_Prop_Shelf_02 CowBarShelf
+  m_Name: MedicRoomTable (WalkieTalkie)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &2467956190664798730
+--- !u!4 &3106332923478141935
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3629866760711947971}
+  m_GameObject: {fileID: 5688089185306375172}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 4.22, y: -0.24, z: 8.54}
-  m_LocalScale: {x: 1, y: 1, z: 0.6}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 41.745983, y: 0.97676194, z: -2.5899982}
+  m_LocalScale: {x: 0.6, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!33 &3232236486976791411
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3822366014537062994
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3629866760711947971}
-  m_Mesh: {fileID: 4300000, guid: 503adbdc02b93384db3ffcbd3f58f382, type: 3}
---- !u!23 &7612230985013342691
+  m_GameObject: {fileID: 5688089185306375172}
+  m_Mesh: {fileID: 4300000, guid: 6dc06d60199fa0344b6ac5057f75ef52, type: 3}
+--- !u!23 &442694197256719294
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3629866760711947971}
+  m_GameObject: {fileID: 5688089185306375172}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -88,13 +87,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1472893363440511027
+--- !u!65 &635267805104530609
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3629866760711947971}
+  m_GameObject: {fileID: 5688089185306375172}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,26 +106,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2713528, y: 0.7170137, z: 1.2407047}
-  m_Center: {x: -0.0000009753487, y: 2.7664726, z: -0.000003928488}
---- !u!65 &2167956122697233555
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3629866760711947971}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.2713535, y: 1.6770005, z: 1.240705}
-  m_Center: {x: 0.0000009753488, y: 0.86670595, z: -0.0000077666655}
+  m_Size: {x: 5.1090817, y: 1.4448072, z: 1.7982187}
+  m_Center: {x: 0.000003973643, y: 0.7224036, z: 0.00000023841858}
