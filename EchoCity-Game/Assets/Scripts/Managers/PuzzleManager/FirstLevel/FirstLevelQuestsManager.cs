@@ -10,8 +10,11 @@ namespace EchoCity
         protected override void Awake()
         {
             base.Awake();
-            _addAudioAlreadyPlayed = new bool[(int)QuestsEnum.MAX];
-            _completeAudioAlreadyPlayed = new bool[(int)QuestsEnum.MAX];
+            if (_addAudioAlreadyPlayed == null)
+                _addAudioAlreadyPlayed = new bool[(int)QuestsEnum.MAX];
+            if (_completeAudioAlreadyPlayed == null)
+                _completeAudioAlreadyPlayed = new bool[(int)QuestsEnum.MAX];
+
             for (int i = 0; i < (int)QuestsEnum.MAX; i++)
             {
                 _addAudioAlreadyPlayed[i] = false;
