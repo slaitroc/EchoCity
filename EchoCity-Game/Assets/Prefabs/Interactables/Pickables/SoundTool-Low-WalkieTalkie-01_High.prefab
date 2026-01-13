@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3434314612403230416}
   - component: {fileID: -7152644826731902427}
   m_Layer: 0
-  m_Name: SoundTool-High-WalkieTalkie-01_High
+  m_Name: SoundTool-Low-WalkieTalkie-01_High
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.6672661, y: 0.23400013, z: 0.23400013, w: 0.6672661}
   m_LocalPosition: {x: 9.342, y: -0.89, z: -1.050119}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -117,7 +117,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -149,7 +149,11 @@ MonoBehaviour:
     _count: 0
   _interactionDescription: It looks like a walkie talkie
   _InteractionSuccessMessage: Walkie talkie
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
   undoTagsOnDrop: 1
