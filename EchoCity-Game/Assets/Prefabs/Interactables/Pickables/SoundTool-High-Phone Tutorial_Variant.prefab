@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1735151608094850, guid: 52b33c79cb66c4625a889fd0782555fd, type: 3}
       propertyPath: m_Name
-      value: SoundTool-Mid-Phone
+      value: SoundTool-Mid-Phone Tutorial_Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4719791096928064, guid: 52b33c79cb66c4625a889fd0782555fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -51,6 +51,14 @@ PrefabInstance:
     - target: {fileID: 4719791096928064, guid: 52b33c79cb66c4625a889fd0782555fd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178613963509093779, guid: 52b33c79cb66c4625a889fd0782555fd, type: 3}
+      propertyPath: checkTags.Array.data[0]._tag
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178613963509093779, guid: 52b33c79cb66c4625a889fd0782555fd, type: 3}
+      propertyPath: checkTags.Array.data[0]._isActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
