@@ -19,10 +19,9 @@ MonoBehaviour:
   audioLengthOverride: 0.1
   intensity: 0.3
   volume: 0.2
-  radius: 5
-  gapBetweenSounds: 0
-  minimumDuration: 0.2
-  emitOnStart: 0
+  radius: 5.5
+  minEchoDuration: 0.1
+  isEnvironmental: 0
   randomAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
   - {fileID: 8300000, guid: 85016e0f2b01da248b9663dd49a161b0, type: 3}
