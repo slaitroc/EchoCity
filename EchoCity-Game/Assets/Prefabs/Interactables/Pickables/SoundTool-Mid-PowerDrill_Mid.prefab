@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 4044569271382963998}
   - component: {fileID: 2328159663550327133}
   - component: {fileID: 5714337183056653460}
+  - component: {fileID: 5769547408309282474}
   - component: {fileID: 4086911524213826474}
   m_Layer: 0
   m_Name: SoundTool-Mid-PowerDrill_Mid
@@ -371,6 +372,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43719451199220948, guid: c92779b466240b34db1df710feadd729, type: 2}
+--- !u!114 &5769547408309282474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021186702065620220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!114 &4086911524213826474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +408,11 @@ MonoBehaviour:
   setTags: []
   _interactionDescription: I wonder how I could use this
   _InteractionSuccessMessage: Power drill picked
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: da824190e22bc4c30a1ff9b3646e0de0, type: 2}
   undoTagsOnDrop: 1
