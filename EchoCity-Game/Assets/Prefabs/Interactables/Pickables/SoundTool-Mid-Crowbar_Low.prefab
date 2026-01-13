@@ -11,10 +11,12 @@ GameObject:
   - component: {fileID: 1838951049633161157}
   - component: {fileID: 4972193119727002631}
   - component: {fileID: 6696616667219496015}
-  - component: {fileID: 3273426944801852864}
+  - component: {fileID: 51753364360685987}
+  - component: {fileID: 3894270621249153366}
+  - component: {fileID: 4588099752041064431}
   - component: {fileID: 3423624917598501708}
   m_Layer: 0
-  m_Name: SoundTool-Low-Crowbar_Low
+  m_Name: SoundTool-Mid-Crowbar_Low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,8 +90,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3273426944801852864
-MeshCollider:
+--- !u!65 &51753364360685987
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,13 +105,46 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43513415037828074, guid: f9679d3d6968ef24289618f5f703c2cf, type: 2}
+  serializedVersion: 3
+  m_Size: {x: 0.085899316, y: 0.14584056, z: 1.3550152}
+  m_Center: {x: -0.00000016391277, y: 0.02908459, z: 0.008028522}
+--- !u!65 &3894270621249153366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7306267876683987266}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.085899316, y: 0.35036737, z: 0.11686511}
+  m_Center: {x: -0.00000016391277, y: -0.07317881, z: -0.6220218}
+--- !u!114 &4588099752041064431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7306267876683987266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!114 &3423624917598501708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +168,11 @@ MonoBehaviour:
   setTags: []
   _interactionDescription: I may need one of these
   _InteractionSuccessMessage: Crowbar picked
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: 994ae997b12f041b58e1fcf109670541, type: 2}
   undoTagsOnDrop: 1
