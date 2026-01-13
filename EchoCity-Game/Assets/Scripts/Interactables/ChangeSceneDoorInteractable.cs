@@ -31,7 +31,7 @@ namespace EchoCity
                     nextSceneName = nextSceneName.Trim();
                 if (outcome)
                 {
-                    if (showUIEvent && !string.IsNullOrEmpty(_InteractionSuccessMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams($"Interact {_requiredConfirmations - _exitTutorialConfirmations} times to reach the {nextSceneName}", SuccessMessageColor));
+                    if (showUIEvent && !string.IsNullOrEmpty(_InteractionSuccessMessage)) showUIEvent.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams($"Interact {_requiredConfirmations - _exitTutorialConfirmations - 1} more times to reach the {nextSceneName}", SuccessMessageColor));
                 }
                 else
                 {
