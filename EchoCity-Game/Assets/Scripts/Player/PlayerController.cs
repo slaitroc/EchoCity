@@ -247,7 +247,10 @@ namespace EchoCity
                 dropped.TryGetComponent<Pickable>(out var pickableComponent);
                 pickableComponent?.Drop();
                 PlayAtPosition(transform.position, equippedItem.Data.DropSound, _audioContext, MixerGroupEnum.SFX);
-                dropped.GetComponent<Collider>().isTrigger = false;
+                foreach (var collider in dropped.GetComponents<Collider>())
+                {
+                    collider.isTrigger = false;
+                }
                 dropped.AddComponent<Rigidbody>();
             }
             playerInventory.DropItem(equippedItem.Index);
