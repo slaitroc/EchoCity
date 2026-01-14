@@ -101,7 +101,10 @@ MonoBehaviour:
   - _tag: 41
     _isActive: 1
     _count: 0
-  setTags: []
+  setTags:
+  - _tag: 44
+    _isActive: 1
+    _count: 0
   _interactionDescription: Check the ID to unlock the door
   _InteractionSuccessMessage: ID checke  - Door unlocked
   OnSuccessAddQuest: {fileID: 0}
@@ -112,3 +115,4 @@ MonoBehaviour:
   interactionContainer: {fileID: 0}
   successSoundSource: {fileID: 0}
   switchToGameStateEvent: {fileID: 0}
+  extraTagTriggerQuest: {fileID: 0}
