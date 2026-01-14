@@ -17,6 +17,7 @@ namespace EchoCity
         [Header("Invoking Events")]
         [SerializeField] protected SOQuestUpdatedEvent questsUpdatedEvent;
         [SerializeField] protected SOShowUIEvent showUIEvent;
+        [SerializeField] protected SOSwitchToGameStateEvent switchToGameStateEvent;
 
         string IEventSender.SenderName => gameObject.name;
         int IEventSender.SenderID => GetInstanceID();
