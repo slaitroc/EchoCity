@@ -33,11 +33,12 @@ namespace EchoCity
         CardReader_On = 36,
         WearingGlasses = 37,
         PryTool_Picked = 38,
-        ExitFirstArea = 39,
+        EscapedFirstArea = 39,
         Generator_On = 40,
         DataCenterPC_Picked = 41,
         EscapeDoor_Enabled = 42,
         Fence_Removed = 43,
+        EscapedSecondArea = 44,
         MAX
     }
 
