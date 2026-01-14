@@ -10,14 +10,13 @@ namespace EchoCity
         protected override void Awake()
         {
             base.Awake();
-
+            _addAudioAlreadyPlayed = new bool[(int)QuestsEnum.MAX];
+            _completeAudioAlreadyPlayed = new bool[(int)QuestsEnum.MAX];
             for (int i = 0; i < (int)QuestsEnum.MAX; i++)
             {
                 _addAudioAlreadyPlayed[i] = false;
                 _completeAudioAlreadyPlayed[i] = false;
             }
-            _addAudioAlreadyPlayed = new bool[(int)QuestsEnum.MAX];
-            _completeAudioAlreadyPlayed = new bool[(int)QuestsEnum.MAX];
 
             // Register level specific quest event handlers
             _onAddQuest[(int)QuestsEnum.FindPry] = OnFindPryAdded;
@@ -355,6 +354,8 @@ namespace EchoCity
 
         private void OnEscapeCompleted(SOQuest quest)
         {
+            if (switchToGameStateEvent != null)
+                switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Win, null);
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
             UnsubscribeEscapeHandler(quest);
             ShowCompletedMessage(quest);
