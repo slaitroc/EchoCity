@@ -89,23 +89,33 @@ namespace EchoCity
 
         private void OutcomeMessages(bool outcome)
         {
-            ShowInteractionLines(outcome);
+            InteractionLines(outcome);
             ShowPopUpMessage(outcome);
         }
 
-        protected virtual void ShowInteractionLines(bool outcome)
+        protected virtual void InteractionLines(bool outcome)
+        {
+            OnSuccessInteractionLine(outcome);
+            OnFailInteractionLine(outcome);
+        }
+
+        protected virtual void OnFailInteractionLine(bool outcome)
+        {
+            if (!outcome)
+            {
+                if (interactionContainer)
+                    if (interactionContainer.DialogLines != null && interactionContainer.DialogLines.Length > 0 && interactionContainer.DialogLines[0].AudioClip != null)
+                        EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 0, true);
+            }
+        }
+
+        protected virtual void OnSuccessInteractionLine(bool outcome)
         {
             if (outcome)
             {
                 if (interactionContainer)
-                    if (interactionContainer.DialogLines != null && interactionContainer.DialogLines.Length > 0)
+                    if (interactionContainer.DialogLines != null && interactionContainer.DialogLines.Length > 1 && interactionContainer.DialogLines[1].AudioClip != null)
                         EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 1, true);
-            }
-            else
-            {
-                if (interactionContainer)
-                    if (interactionContainer.DialogLines != null && interactionContainer.DialogLines.Length > 1)
-                        EchoCitySound.AddInSecondaryVoicePlayQueue(interactionContainer, showUIEvent, 0, true);
             }
         }
 
@@ -122,6 +132,12 @@ namespace EchoCity
         }
         protected virtual void DefaultAddQuest(bool outcome)
         {
+            DefaultAddSuccessQuest(outcome);
+            DefaultAddFailQuest(outcome);
+        }
+
+        protected virtual void DefaultAddSuccessQuest(bool outcome)
+        {
             if (outcome)
             {
                 if (OnSuccessAddQuest) puzzleManager.AddQuest(OnSuccessAddQuest);
@@ -131,7 +147,11 @@ namespace EchoCity
                     puzzleManager.CheckQuests();
                 }
             }
-            else
+        }
+
+        protected virtual void DefaultAddFailQuest(bool outcome)
+        {
+            if (!outcome)
             {
                 if (OnFailAddQuest) puzzleManager.AddQuest(OnFailAddQuest);
                 if (OnFailAddTagsQuest)

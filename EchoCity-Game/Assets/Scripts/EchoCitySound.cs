@@ -262,8 +262,11 @@ namespace EchoCity
 
         private static IEnumerator PlayVoiceSecondaryQueueCoroutine()
         {
-            _stopMainVoice = true;
-            playerController.PlayerVoiceAudioSource.AudioSource.Pause();
+            if (_voiceMainCoroutine != null)
+            {
+                _stopMainVoice = true;
+                playerController.PlayerVoiceAudioSource.AudioSource.Pause();
+            }
             var aSource = playerController.PlayerSecondaryVoiceAudioSource.AudioSource;
             while (_voiceSecondaryPlayQueue.Count > 0)
             {
@@ -274,9 +277,12 @@ namespace EchoCity
                 yield return new WaitWhile(() => aSource.isPlaying || _paused);
             }
             aSource.clip = null;
-            _stopMainVoice = false;
-            playerController.PlayerVoiceAudioSource.AudioSource.UnPause();
-            _showUIEvent?.RaiseEvent(playerController, ShowableUIEnum.Subtitles, new SubtitleParams(_currentMainVoiceLine.SpeakerName, _currentMainVoiceLine.DialogText, _currentMainVoiceLine.AudioClip.length));
+            if (_voiceMainCoroutine != null)
+            {
+                _stopMainVoice = false;
+                playerController.PlayerVoiceAudioSource.AudioSource.UnPause();
+                _showUIEvent?.RaiseEvent(playerController, ShowableUIEnum.Subtitles, new SubtitleParams(_currentMainVoiceLine.SpeakerName, _currentMainVoiceLine.DialogText, _currentMainVoiceLine.AudioClip.length));
+            }
             _voiceSecondaryCoroutine = null;
         }
 
