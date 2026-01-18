@@ -15,4 +15,16 @@ public class FirstAreaEscapeDoorInteractable : DoorInteractable
             if (lockedSound != null)
                 PlayAtPosition(transform.position, lockedSound, _audioContext, MixerGroupEnum.SFX);
     }
+
+    protected override void OnFailInteractionLine(bool outcome)
+    {
+        if (!outcome)
+        {
+            if (PuzzleManager.CheckTags(new PuzzleTagState[] { new PuzzleTagState(PuzzleTagEnum.PryTool_Picked, false) }))
+            {
+                base.OnFailInteractionLine(outcome);
+            }
+        }
+    }
+
 }
