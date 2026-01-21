@@ -119,6 +119,8 @@ namespace EchoCity
             }
 
             string counterText = "";
+            if (_fadeCoroutines.TryGetValue(questID, out var c) && c != null)
+                RemoveRowImmediate(questID);
 
             if (quest.CountToComplete > 1) counterText = $" ({progression}/{quest.CountToComplete})";
             UpdateRow(questID, quest.Description + counterText, false);
