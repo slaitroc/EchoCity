@@ -43,6 +43,7 @@ namespace EchoCity
         [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private SOEquippedItemChangedEvent equippedItemChanged;
         [SerializeField] private SOItemUsedEvent itemUsedEvent;
+        [SerializeField] private SOShowUIEvent showUIEvent;
 
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
@@ -180,6 +181,7 @@ namespace EchoCity
 
         public void EmitFullInventorySound()
         {
+            showUIEvent?.RaiseEvent(this, ShowableUIEnum.PopUpMessage, new PopUpMessageParams("Inventory Full", Color.red));
             PlayInAudioSource(fullInventorySound.AudioClip, fullInventorySound.Volume, _playerAudioSource, MixerGroupEnum.SFX);
         }
 
