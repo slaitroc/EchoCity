@@ -213,7 +213,6 @@ namespace EchoCity
                     _pauseMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.Subtitles:
-                    if (_hud.activeSelf != true) break;
                     var subtitleParams = eventParams as SubtitleParams;
                     subtitlesController.ShowSubtitle(subtitleParams.Subtitle, subtitleParams.Duration, subtitleParams.SpeakerName);
                     break;
