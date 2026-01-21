@@ -20,12 +20,7 @@ namespace EchoCity
             if (shader == null)
                 return true;
 
-            bool hasEchoData = shader.FindPropertyIndex("_AudioSpherePositions") >= 0 ||
-                               shader.FindPropertyIndex("_AudioSphereRadii") >= 0 ||
-                               shader.FindPropertyIndex("_AudioSphereCount") >= 0 ||
-                               shader.FindPropertyIndex("_ObjectFrequency") >= 0;
-
-            if (!hasEchoData)
+            if (Shader.GetGlobalFloat("_Echolocation") < 0.5f)
                 return true;
 
             int objectFrequency = GetObjectFrequency(renderer);

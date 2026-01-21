@@ -4,38 +4,11 @@ float _AudioSphereFrequencies[16];
 float _AudioSphereIntensities[16];
 int _AudioSphereCount;
 
-float _GridSize = 1.0;
-float _LineWidth = 0.05;
+static const float3 LOW_FREQ_COLOR = float3(0.2114455, 0.7478442, 0.9320595);
+static const float3 MID_FREQ_COLOR = float3(0.9660662, 0.5664417, 0.1507453);
+static const float3 HIGH_FREQ_COLOR = float3(0.8651463, 0.1946775, 0.1946775);
 
-// Visualization mode properties
-int _VisualizationMode = 0; // 0 = SolidColor, 1 = GridLines, 2 = GridPoints
-float _PointSize = 0.1;
-
-float CalculateGridPattern(float3 WorldPosition)
-{
-    float3 gridPos = WorldPosition / _GridSize;
-    float3 grid = abs(frac(gridPos - 0.5) - 0.5) / fwidth(gridPos);
-    float lineDistance = min(grid.x, min(grid.y, grid.z));
-
-    return 1.0 - min(lineDistance, 1.0);
-}
-
-float CalculatePointPattern(float3 WorldPosition)
-{
-    float3 gridPos = WorldPosition / _GridSize;
-    float3 cellPos = frac(gridPos);
-
-    float3 centerOffset = cellPos - 0.5;
-    float distanceFromCellCenter = length(centerOffset);
-
-    float pointRadius = _PointSize / _GridSize;
-    float pointIntensity = 1.0 - smoothstep(0.0, pointRadius, distanceFromCellCenter);
-
-    return pointIntensity;
-}
-
-void CalculateAudioVisibility_float(float3 WorldPosition, float _ObjectFrequency, float4 LowColor, float4 MidColor,
-                                    float4 HighColor, out float Visibility, out float3 OutColor)
+void CalculateAudioVisibility_float(float3 WorldPosition, float _ObjectFrequency, out float Visibility, out float3 OutColor)
 {
     int objectFrequency = (int)round(_ObjectFrequency);
     float3 objectColor;
@@ -44,15 +17,15 @@ void CalculateAudioVisibility_float(float3 WorldPosition, float _ObjectFrequency
     
     if (objectFrequency <= 0)
     {
-        objectColor = LowColor.rgb;
+        objectColor = LOW_FREQ_COLOR;
     }
     else if (objectFrequency == 1)
     {
-        objectColor = MidColor.rgb;
+        objectColor = MID_FREQ_COLOR;
     }
     else
     {
-        objectColor = HighColor.rgb;
+        objectColor = HIGH_FREQ_COLOR;
     }
 
     for (int i = 0; i < _AudioSphereCount && i < 16; i++)
@@ -86,21 +59,6 @@ void CalculateAudioVisibility_float(float3 WorldPosition, float _ObjectFrequency
 
     OutColor = accumulatedColor / totalWeight;
 
-    float visualizationPattern = 1.0;
-
-    if (_VisualizationMode == 0) // SolidColor
-    {
-        visualizationPattern = 1.0;
-    }
-    else if (_VisualizationMode == 1) // GridLines
-    {
-        visualizationPattern = CalculateGridPattern(WorldPosition);
-    }
-    else if (_VisualizationMode == 2) // GridPoints
-    {
-        visualizationPattern = CalculatePointPattern(WorldPosition);
-    }
-
     // Prevent seeing through low-freq objects without any audio sphere
     if (objectFrequency <= 0 && totalWeight == 0.0)
     {
@@ -108,6 +66,6 @@ void CalculateAudioVisibility_float(float3 WorldPosition, float _ObjectFrequency
     }
     else
     {
-        Visibility = saturate(totalWeight * visualizationPattern);
+        Visibility = saturate(totalWeight);
     }
 }
