@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 999004361981326000, guid: 152af1c4043b1a242bfd8e35b55e9097, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1631170705450618175, guid: 152af1c4043b1a242bfd8e35b55e9097, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.854
@@ -50,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6675492626182079464, guid: 152af1c4043b1a242bfd8e35b55e9097, type: 3}
       propertyPath: m_Name
-      value: Tool-Powercable_Mid Variant
+      value: Tool-Powercable_Mid FirstLevel_Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

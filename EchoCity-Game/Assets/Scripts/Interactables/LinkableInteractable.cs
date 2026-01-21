@@ -11,7 +11,7 @@ namespace EchoCity
             base.Awake();
             if (hasFixDetector)
             {
-                gameObject.layer = 1; // Set to Default layer
+                gameObject.layer = 6; // Set to Default layer
                 Debug.Assert(detector != null, $"LinkableInteractable: hasFixDetector is true but no detector assigned.");
             }
             else

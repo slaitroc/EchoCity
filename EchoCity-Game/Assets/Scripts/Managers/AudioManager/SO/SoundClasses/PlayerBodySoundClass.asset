@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: PlayerBodySoundClass
   m_EditorClassIdentifier: 
   frequency: 0
+  isTransient: 0
   intensityFactor: 0.8
-  rangeFactor: 5
+  rangeFactor: 4
   decay: 2
-  persistence: 0.4
+  persistence: 0.35
   isConfusing: 0
   isEnemy: 0
   isPlayerBodySound: 1
