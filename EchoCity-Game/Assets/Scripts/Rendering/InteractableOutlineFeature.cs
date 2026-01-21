@@ -85,7 +85,11 @@ namespace EchoCity
                     data.material.SetColor("_OutlineColor", data.outlineColor);
                     data.material.SetFloat("_Thickness", data.outlineThickness);
                     ctx.cmd.SetViewProjectionMatrices(data.camera.worldToCameraMatrix, data.camera.projectionMatrix);
-                    InteractableOutlineRenderer.ForEachActive(data.outlineLayers, r => ctx.cmd.DrawRenderer(r, data.material, 0, 0));
+                    InteractableOutlineRenderer.ForEachActive(data.outlineLayers, r =>
+                    {
+                        ctx.cmd.DrawRenderer(r, data.material, 0, 0);
+                        ctx.cmd.DrawRenderer(r, data.material, 0, 1);
+                    });
                 });
             }
         }
