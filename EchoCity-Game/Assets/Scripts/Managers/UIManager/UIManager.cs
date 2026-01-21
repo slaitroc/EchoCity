@@ -204,6 +204,7 @@ namespace EchoCity
                     }
                     break;
                 case ShowableUIEnum.PopUpMessage:
+                    if (_hud.activeSelf != true) break;
                     var popUpParams = eventParams as PopUpMessageParams;
                     popUpController.SpawnPopUp(popUpParams.Message, popUpParams.Color);
                     break;
@@ -212,6 +213,7 @@ namespace EchoCity
                     _pauseMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.Subtitles:
+                    if (_hud.activeSelf != true) break;
                     var subtitleParams = eventParams as SubtitleParams;
                     subtitlesController.ShowSubtitle(subtitleParams.Subtitle, subtitleParams.Duration, subtitleParams.SpeakerName);
                     break;
