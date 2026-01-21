@@ -230,7 +230,7 @@ namespace EchoCity
         {
             Button itemButton = _radialItems[idx];
 
-            if (invItem == null)
+            if (invItem == null || invItem.Data == null)
             {
                 itemButton.style.display = DisplayStyle.None;
                 return;

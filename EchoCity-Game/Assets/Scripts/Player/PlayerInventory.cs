@@ -29,11 +29,14 @@ namespace EchoCity
         public IReadOnlyList<InventoryItem> Items => itemsArray;
         public IReadOnlyList<GameObject> Prefabs => prefabsArray;
 
+        private InventoryItem _noItem;
+
         void Awake()
         {
+            _noItem = new InventoryItem(null);
             itemsArray = new InventoryItem[8];
             for (int i = 0; i < itemsArray.Length; i++)
-                itemsArray[i] = null;
+                itemsArray[i] = _noItem;
             prefabsArray = new GameObject[itemsArray.Length];
             for (int i = 0; i < prefabsArray.Length; i++)
                 prefabsArray[i] = null;
@@ -58,7 +61,7 @@ namespace EchoCity
             bool added = false;
             for (int i = 0; i < itemsArray.Length; i++)
             {
-                if (itemsArray[i] == null)
+                if (itemsArray[i] == _noItem)
                 {
                     itemsArray[i] = new InventoryItem(item);
                     prefabsArray[i] = pickablePrefab;
@@ -76,7 +79,7 @@ namespace EchoCity
             bool added = false;
             for (int i = 0; i < itemsArray.Length; i++)
             {
-                if (itemsArray[i] == null)
+                if (itemsArray[i] == _noItem)
                 {
                     added = true;
                     break;
@@ -89,15 +92,14 @@ namespace EchoCity
         {
             var item = itemsArray[itemIndex];
             prefabsArray[itemIndex] = null;
-            itemsArray[itemIndex] = null;
+            itemsArray[itemIndex] = _noItem;
             inventoryChangedEvent?.RaiseEvent(this, item.Data.PickableEnum, item.Data.PickableType, InventoryCodesEnum.ItemDropped);
         }
 
         public void Clear()
         {
-            itemsArray = new InventoryItem[8];
             for (int i = 0; i < itemsArray.Length; i++)
-                itemsArray[i] = null;
+                itemsArray[i] = _noItem;
             prefabsArray = new GameObject[itemsArray.Length];
             for (int i = 0; i < prefabsArray.Length; i++)
                 prefabsArray[i] = null;
