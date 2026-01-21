@@ -52,7 +52,7 @@ namespace EchoCity
             {
                 switchLinkedObject.SetActive(isSwitchedOn);
             }
-            Debug.Assert(switchLinkedObject != null, $"WallPanelSwitchInteractable: No switchLinkedObject assigned on {gameObject.name}.");
+            // Debug.Assert(switchLinkedObject != null, $"WallPanelSwitchInteractable: No switchLinkedObject assigned on {gameObject.name}.");
         }
 
         protected override void ResolveInteraction(bool outcome)
