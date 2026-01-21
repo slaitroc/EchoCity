@@ -57,15 +57,13 @@ namespace EchoCity
             HideSubtitle();
         }
 
-        #region Public API
+        #region Public Methods
         public void ApplyOffset(float offsetPx = 0f)
         {
             if (_anchor == null) return;
             _runtimeOffsetPx = Mathf.Max(0f, offsetPx);
 
             float totalPx = baseOffsetPx + _runtimeOffsetPx;
-
-            // translate Y negative => moves up
             _anchor.style.translate = new Translate(0f, -totalPx, 0f);
         }
 
@@ -76,11 +74,9 @@ namespace EchoCity
             // If a previous subtitle was waiting to hide, cancel it
             StopHideCoroutine();
 
-            // Set text
             if (_textLabel != null)
                 _textLabel.text = text ?? string.Empty;
 
-            // Speaker optional
             bool hasSpeaker = !string.IsNullOrEmpty(speaker);
             if (_speakerLabel != null)
             {
@@ -88,11 +84,9 @@ namespace EchoCity
                 if (hasSpeaker) _speakerLabel.text = speaker;
             }
 
-            // Show
             _panel.RemoveFromClassList("hidden");
             _panel.AddToClassList("visible");
 
-            // Schedule hide AFTER audio ends (+ padding)
             if (audioDurationSeconds > 0f)
             {
                 float delay = Mathf.Max(0f, audioDurationSeconds + hidePaddingSeconds);
@@ -113,8 +107,6 @@ namespace EchoCity
             _panel.AddToClassList("hidden");
         }
 
-
-
         private void StopHideCoroutine()
         {
             if (_hideCoroutine != null)
@@ -128,7 +120,6 @@ namespace EchoCity
         {
             yield return new WaitForSeconds(delay);
 
-            // Hide with USS transition
             if (_panel != null)
             {
                 _panel.RemoveFromClassList("visible");

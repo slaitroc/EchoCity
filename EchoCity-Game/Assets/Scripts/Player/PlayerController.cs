@@ -363,7 +363,7 @@ namespace EchoCity
 
             foreach (AttractionTarget t in _attractionTargets)
             {
-                if (t != null)
+                if (t != null && t.Transform != null && transform != null)
                 {
                     float dist = Vector3.Distance(transform.position, t.Transform.position);
                     if (dist < closestDist)

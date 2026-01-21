@@ -106,8 +106,11 @@ namespace EchoCity
             _context.HeadMark?.ClearMarks();
             _isWaitingAtWaypoint = false;
             _agent.isStopped = false;
-            _agent.SetDestination(_waypoints[_currentWaypointIndex].position);
-            _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
+            if (_waypoints[_currentWaypointIndex] != null)
+            {
+                _agent.SetDestination(_waypoints[_currentWaypointIndex].position);
+                _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
+            }
         }
 
 

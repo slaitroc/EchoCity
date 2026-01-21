@@ -204,6 +204,7 @@ namespace EchoCity
                     }
                     break;
                 case ShowableUIEnum.PopUpMessage:
+                    if (_hud.activeSelf != true) break;
                     var popUpParams = eventParams as PopUpMessageParams;
                     popUpController.SpawnPopUp(popUpParams.Message, popUpParams.Color);
                     break;
