@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -114,3 +115,4 @@ namespace EchoCity.EditorTools
 
     }
 }
+#endif
