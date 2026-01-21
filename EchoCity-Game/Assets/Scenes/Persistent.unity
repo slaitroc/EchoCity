@@ -182,25 +182,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4005199348455002943, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4005199348455002943, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4005199348455002943, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4689472295284435472, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6795490230609735767, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.91
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1211,14 +1195,8 @@ MonoBehaviour:
   echoMaterialUpdatedEvent: {fileID: 11400000, guid: 335560a647d4a6b4e84a5ee3d537e567, type: 2}
   soundEmittedEvent: {fileID: 11400000, guid: f58b0477dd2dcca4a8ce78e547d00724, type: 2}
   setMaterialEvent: {fileID: 11400000, guid: e2cee7ed04bebe24f8da79642585cdea, type: 2}
-  useEcholocationMaterial: 0
-  echolocationMaterial: {fileID: 2100000, guid: 93540b57ea56d16978865b3e9bfbed51, type: 2}
-  visualizationMode: 0
   fadeInDuration: 0.1
   fadeOutDuration: 0.5
-  gridCellSize: 1
-  gridWidth: 0.05
-  gridPointSize: 0.08
   activeSpheres: []
 --- !u!114 &4670484109929798670
 MonoBehaviour:
