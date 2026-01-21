@@ -184,8 +184,16 @@ namespace EchoCity
                     echoMaterialUpdatedEvent?.RaiseEvent(this, false);
                     break;
                 case EchoMaterialCodeEnum.ReApply:
-                    SetEcholocationActive(false);
-                    SetEcholocationActive(true);
+                    if (_isEcholocationActive)
+                    {
+                        SetEcholocationActive(false);
+                        SetEcholocationActive(true);
+                    }
+                    else
+                    {
+                        SetEcholocationActive(true);
+                        SetEcholocationActive(false);
+                    }
                     Log.DLazy(() => "Reapplied Echolocation Shader", this);
                     break;
                 case EchoMaterialCodeEnum.Toggle:
@@ -210,7 +218,6 @@ namespace EchoCity
 
         public void SetEcholocationActive(bool active)
         {
-            if (_isEcholocationActive == active) return;
             _isEcholocationActive = active;
 
             Shader.SetGlobalInt(GlobalToggleProp, active ? 1 : 0);

@@ -268,7 +268,10 @@ void LitPassFragment(
         float visibility;
         float3 audioColor;
         CalculateAudioVisibility_float(inputData.positionWS, _ObjectFrequency, visibility, audioColor);
+        
         half3 eco = lerp((0, 0, 0, 0), (half3)audioColor, (half)visibility);
+        float alpha = visibility > 0.0 ? 1.0 : 0.0;
+        clip(alpha - 0.5);
         color = half4(eco, 1.0);
     }
 
