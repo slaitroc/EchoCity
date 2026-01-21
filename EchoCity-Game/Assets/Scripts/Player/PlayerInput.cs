@@ -33,6 +33,7 @@ namespace EchoCity
         private bool _isShowingAreaDescription = false;
         private bool _isShowingDescription = false;
         [SerializeField] private float raycastDistance;
+        private Component _lastFocusedInteractable;
 
         // [Header("Test Parameters")]
 
@@ -106,6 +107,38 @@ namespace EchoCity
             return false;
         }
 
+        private bool IsStillFocusingObject()
+        {
+            if (_lastFocusedInteractable == null)
+                return false;
+
+            var origin = Camera.main.transform.position;
+            var direction = Camera.main.transform.forward;
+            Ray ray = new Ray(origin, direction);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance + 0.5f, (1 << 6) | (1 << 9), QueryTriggerInteraction.Collide))
+            {
+                var pickable = hit.collider?.GetComponent<Pickable>();
+                var interactable = hit.collider?.GetComponent<PlainInteractable>();
+                Component hitComponent = pickable != null ? (Component)pickable : (Component)interactable;
+
+                if (hitComponent == _lastFocusedInteractable)
+                    return true;
+
+                if (hitComponent != null && hitComponent.transform.IsChildOf(_lastFocusedInteractable.transform))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public Component GetCachedFocusedInteractable()
+        {
+            if (_lastFocusedInteractable != null && IsStillFocusingObject())
+                return _lastFocusedInteractable;
+            return null;
+        }
+
         void Update()
         {
             #region raycast always active
@@ -124,11 +157,27 @@ namespace EchoCity
                         showInteractionEvent.RaiseEvent(this, description.IsInteractable, true, description.Description);
                         _isShowingDescription = true;
                     }
+
+                    var pickable = hitInfo.collider?.GetComponent<Pickable>();
+                    var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
+                    if (pickable != null)
+                        _lastFocusedInteractable = interactable;
+                    else if (interactable != null)
+                        _lastFocusedInteractable = interactable;
                 }
                 else if (_isShowingDescription)
                 {
-                    showInteractionEvent.RaiseEvent(this, false, false, null);
-                    _isShowingDescription = false;
+                    // Object is still being raycast but is no longer visible
+                    var pickable = hitInfo.collider?.GetComponent<Pickable>();
+                    var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
+                    Component currentHitComponent = pickable != null ? (Component)pickable : (Component)interactable;
+
+                    if (currentHitComponent != _lastFocusedInteractable)
+                    {
+                        showInteractionEvent.RaiseEvent(this, false, false, null);
+                        _isShowingDescription = false;
+                        _lastFocusedInteractable = null;
+                    }
                 }
             }
             else
@@ -138,9 +187,15 @@ namespace EchoCity
                     showInteractionEvent.RaiseEvent(this, false, false, null);
                     _isShowingDescription = false;
                 }
+                _lastFocusedInteractable = null;
             }
             #endregion
             #region area interactables check
+            if (_lastFocusedInteractable != null && !IsStillFocusingObject())
+            {
+                _lastFocusedInteractable = null;
+            }
+
             if (!_isShowingDescription)
             {
                 if (inRangeInteractables.Count != 0)
@@ -230,15 +285,32 @@ namespace EchoCity
                                 playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab);
                         }
                         else playerController.EmitFullInventorySound();
+                        return;
                     }
-                    else
+
+                    var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
+                    if (interactable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
                     {
-                        var interactable = hitInfo.collider?.GetComponent<PlainInteractable>();
-                        if (interactable != null && EcholocationVisibility.IsRevealedByAudio(hitInfo))
+                        Log.DLazy(() => $"Interacting with Interactable: {interactable?.name}", this);
+                        interactable.Interact();
+                        return;
+                    }
+                }
+
+                // If no visible object was hit, check interaction with cached
+                if (_lastFocusedInteractable != null && IsStillFocusingObject())
+                {
+                    var pickable = _lastFocusedInteractable as Pickable;
+                    if (pickable != null)
+                    {
+                        Log.DLazy(() => $"Interacting with cached Pickable (aka invisible): {pickable.name}", this);
+                        if (pickable.PickableData == null || playerController.playerInventory.TryAddItem())
                         {
-                            Log.DLazy(() => $"Interacting with Interactable: {interactable?.name}", this);
-                            interactable.Interact();
+                            if (pickable.Interact())
+                                playerController.playerInventory.AddItem(pickable.PickableData, pickable.PickableData.Prefab);
                         }
+                        else playerController.EmitFullInventorySound();
+                        return;
                     }
                 }
             }

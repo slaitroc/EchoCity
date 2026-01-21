@@ -7,6 +7,7 @@ namespace EchoCity
     {
         [SerializeField] private float maxDistance = 5f;
         [SerializeField] private LayerMask outlineLayers = (1 << 6) | (1 << 9);
+        [SerializeField] private PlayerInput playerInput;
 
         private Camera _camera;
         private Interactable _current;
@@ -14,6 +15,8 @@ namespace EchoCity
         private void Awake()
         {
             _camera = Camera.main;
+            if (playerInput == null)
+                playerInput = FindAnyObjectByType<PlayerInput>();
         }
 
         private void OnDisable() => InteractableOutlineRenderer.ClearHovered();
@@ -30,6 +33,9 @@ namespace EchoCity
                 if (candidate != null && EcholocationVisibility.IsRevealedByAudio(hit))
                     interactable = candidate;
             }
+
+            if (interactable == null && playerInput != null)
+                interactable = playerInput.GetCachedFocusedInteractable() as Interactable;
 
             if (interactable != _current)
             {
