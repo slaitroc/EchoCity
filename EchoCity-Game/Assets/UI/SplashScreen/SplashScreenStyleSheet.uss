@@ -1,0 +1,41 @@
+.splash-screen-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.splash-screen-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    picking-mode: Ignore;
+    opacity: 0;
+    transition-duration: 2s;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+}
+
+.splash-screen-background.show {
+    opacity: 1;
+}
+
+
+.polimi-background {
+    background-image: resource('Images/EchoCity-PolimiLogo');
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.team-background {
+    background-image: resource('Images/EchoCity-TeamLogo');
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
