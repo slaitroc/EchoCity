@@ -200,7 +200,10 @@ namespace EchoCity
                         _titleMenuCalls++;
                     }
                     else
+                    {
+                        EchoCitySound.StopAllVoices();
                         _titleMenu.SetActive(true);
+                    }
                     break;
                 case ShowableUIEnum.HUD:
                     var hudParams = eventParams as HudParams;
