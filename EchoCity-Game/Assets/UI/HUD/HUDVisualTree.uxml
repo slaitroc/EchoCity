@@ -15,6 +15,14 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <!-- HEALTH PANEL -->
+        <ui:VisualElement name="HealthPanel" class="health-panel">
+            <ui:VisualElement name="HealthIcon" class="health-icon" />
+            <ui:VisualElement name="HealthBarBackground" class="health-bar-bg">
+                <ui:VisualElement name="HealthBarFill" class="health-bar-fill" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
 
         <!-- INTERACTION PANEL -->
         <ui:VisualElement name="interaction-panel" class="interaction-panel">
