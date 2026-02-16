@@ -30,6 +30,9 @@ namespace EchoCity
     {
         [Header("UI Controllers")]
 
+        [Header("Splash Screen")]
+        [SerializeField] private SplashScreenController splashScreenController;
+
         [Header("Title Menu")]
         [SerializeField] private TitleMenuController titleMenuController;
 
@@ -92,6 +95,7 @@ namespace EchoCity
         [SerializeField] private PlayerController playerController;
 
         #region Private Fields
+        private GameObject _splashScreen;
         private GameObject _titleMenu;
         private GameObject _hud;
         private GameObject _pauseMenu;
@@ -114,6 +118,7 @@ namespace EchoCity
         }
         private InteractableParams _cachedInteractParams;
         private bool _isCachedInteractPanel;
+        private int _titleMenuCalls = 0;
 
         #endregion
         #region Public Properties
@@ -126,6 +131,7 @@ namespace EchoCity
 
         private void Awake()
         {
+            _splashScreen = splashScreenController.gameObject;
             _titleMenu = titleMenuController.gameObject;
             _hud = crosshairController.gameObject;
             _pauseMenu = pauseMenuController.gameObject;
@@ -158,6 +164,11 @@ namespace EchoCity
         #region Public Methods
         public void SwitchToPlayState() => switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Playing, null);
         public void SwitchToTitleState() => switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Title, null);
+        public void ShowTitleMenu()
+        {
+            HideAllElements();
+            _titleMenu.SetActive(true);
+        }
         public void SwitchToInitLevel(SceneEnum scene) => switchLevelEvent?.RaiseEvent(this, scene, null);
         public void OpenSettingsMenu() => _settingsMenu.SetActive(true);
         public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
@@ -183,7 +194,13 @@ namespace EchoCity
             {
                 case ShowableUIEnum.TitleMenu:
                     HideAllElements();
-                    _titleMenu.SetActive(true);
+                    if (_titleMenuCalls < 1)
+                    {
+                        _splashScreen.SetActive(true);
+                        _titleMenuCalls++;
+                    }
+                    else
+                        _titleMenu.SetActive(true);
                     break;
                 case ShowableUIEnum.HUD:
                     var hudParams = eventParams as HudParams;
@@ -248,9 +265,10 @@ namespace EchoCity
             }
         }
 
-        private void HideAllElements(bool title = false, bool hud = false, bool pause = false, bool dialog = false,
+        private void HideAllElements(bool splashScreen = false, bool title = false, bool hud = false, bool pause = false, bool dialog = false,
             bool subtitles = false, bool death = false, bool loading = false, bool win = false, bool narration = false)
         {
+            if (!splashScreen) _splashScreen.SetActive(false);
             if (!title) _titleMenu.SetActive(false);
             if (!hud) _hud.SetActive(false);
             if (!pause) _pauseMenu.SetActive(false);
