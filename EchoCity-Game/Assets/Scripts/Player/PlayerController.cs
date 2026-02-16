@@ -45,6 +45,7 @@ namespace EchoCity
         [SerializeField] private SOItemUsedEvent itemUsedEvent;
         [SerializeField] private SOShowUIEvent showUIEvent;
 
+
         public string SenderName => gameObject.name;
         public int SenderID => GetInstanceID();
         public bool IsManager => false;
@@ -73,13 +74,13 @@ namespace EchoCity
         private bool _attractionCompute = true;
 
         [Header("Health Settings")]
-        public float maxHealth = 100f;
-        public float damageAmount = 70f;
-        public float healthRegenRate = 10f;
-        public float healthRegenDelay = 2f;
+        [SerializeField] private float maxHealth = 100f;
+        [SerializeField] private float healthRegenRate = 10f;
+        [SerializeField] private float healthRegenDelay = 2f;
 
-        public float currentHealth = 100f;
-        public Image overlayImage;
+        private float currentHealth = 100f;
+        public float CurrentHealth => currentHealth;
+        [SerializeField] private Image overlayImage;
 
         private float _lastTimeDamaged;
 
@@ -195,6 +196,11 @@ namespace EchoCity
                 Log.W("YOU DIED", "-", "red");
                 switchToGameStateEvent?.RaiseEvent(this, GameStatesEnum.Death, null);
             }
+        }
+
+        public void SetFullHealth()
+        {
+            currentHealth = maxHealth;
         }
 
         public void EquipItem(int index, SOPickable data, GameObject prefab)

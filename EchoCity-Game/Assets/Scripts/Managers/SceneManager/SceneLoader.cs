@@ -68,7 +68,7 @@ namespace EchoCity
                 if (cc != null) cc.enabled = false;
 
                 _player.transform.SetPositionAndRotation(_spawnPoint.position, _spawnPoint.rotation);
-                pc.currentHealth = pc.maxHealth;
+                pc.SetFullHealth();
 
                 yield return null;
 
