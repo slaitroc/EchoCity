@@ -16,7 +16,6 @@ namespace EchoCity
 
         [Header("Player Health")]
         [SerializeField] private PlayerController playerController;
-        private float _currentHealth;
 
         [Header("Behaviour")]
         [Tooltip("Time delay before hiding the panel after last update.")]
@@ -48,7 +47,6 @@ namespace EchoCity
 
         private void OnEnable()
         {
-            _currentHealth = playerController.currentHealth;
             if (playerController == null)
             {
                 enabled = false;
@@ -81,7 +79,7 @@ namespace EchoCity
             if (playerController == null || _barFill == null)
                 return;
 
-            UpdateBar(playerController.currentHealth);
+            UpdateBar(playerController.CurrentHealth);
         }
 
 
