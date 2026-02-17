@@ -24,11 +24,22 @@ namespace EchoCity
         }
         public override void InitLevelHandler(SceneEnum scene)
         {
-            _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.LoadActiveLevel, scene);
+            if (_params.DestinationScene != SceneEnum.None)
+                _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.LoadActiveLevel, _params.DestinationScene);
+            else
+                _context.LevelActionEvent.RaiseEvent(_context, LevelActionCodeEnum.UnloadLevel, SceneEnum.None);
         }
         public override void ExitLoading()
         {
-            _fsm.SwitchState(_fsm.PlayingState);
+            GameStatesEnum nextState = _params.NextGameState;
+            if (nextState == GameStatesEnum.Playing)
+                _fsm.SwitchState(_fsm.PlayingState);
+            else if (nextState == GameStatesEnum.Title)
+                _fsm.SwitchState(_fsm.TitleState);
+            else if (nextState == GameStatesEnum.Win)
+                _fsm.SwitchState(_fsm.WinState);
+            else if (nextState == GameStatesEnum.Death)
+                _fsm.SwitchState(_fsm.DeathState);
         }
         public override void SwitchToPauseHandler(GameStatesEnum previousState)
         {

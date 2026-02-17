@@ -26,14 +26,17 @@ namespace EchoCity
     {
         private readonly SODialogContainer _narrationContainer;
         private readonly SceneEnum _destinationScene;
+        private readonly GameStatesEnum _nextGameState;
         private readonly bool _useCached;
         public SODialogContainer NarrationContainer => _narrationContainer;
         public SceneEnum DestinationScene => _destinationScene;
+        public GameStatesEnum NextGameState => _nextGameState;
         public bool UseCached => _useCached;
 
-        public NarrationParams(SODialogContainer dialogContainer, SceneEnum destinationScene, bool useCached = false)
+        public NarrationParams(SODialogContainer dialogContainer, SceneEnum destinationScene, GameStatesEnum nextGameState, bool useCached = false)
         {
             _useCached = useCached;
+            _nextGameState = nextGameState;
             _narrationContainer = dialogContainer;
             _destinationScene = destinationScene;
         }
@@ -43,6 +46,7 @@ namespace EchoCity
             _useCached = useCached;
             _narrationContainer = toNarrationParams.NarrationContainer;
             _destinationScene = toNarrationParams.DestinationScene;
+            _nextGameState = toNarrationParams.NextGameState;
         }
     }
 

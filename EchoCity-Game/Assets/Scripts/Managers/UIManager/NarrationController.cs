@@ -23,7 +23,7 @@ namespace EchoCity
         private int _cachedIndex;
         private bool _isClosed;
         // private bool _isReady;
-        private SceneEnum _destinationScene;
+        // private SceneEnum _destinationScene;
         private bool _isFading;
         private int _queuedNext;
         #endregion
@@ -68,7 +68,7 @@ namespace EchoCity
 
         public void StartNarration(NarrationParams narrationParams)
         {
-            _destinationScene = narrationParams.DestinationScene;
+            // _destinationScene = narrationParams.DestinationScene;
 
             if (narrationParams == null || narrationParams.NarrationContainer.DialogLines == null || narrationParams.NarrationContainer.DialogLines.Length == 0)
             {
@@ -159,7 +159,7 @@ namespace EchoCity
             Hide();
 
             uiManager.StopNarration();
-            uiManager.SwitchToInitLevel(_destinationScene);
+            uiManager.SwitchToInitLevel(SceneEnum.None); //No need to specify scene here (already in narration state)
         }
 
         private void Show()

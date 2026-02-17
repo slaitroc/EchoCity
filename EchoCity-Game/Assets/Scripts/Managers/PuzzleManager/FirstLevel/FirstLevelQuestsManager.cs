@@ -5,6 +5,8 @@ namespace EchoCity
 {
     public class FirstLevelQuestManager : QuestsManager
     {
+        [SerializeField] private SceneEnum destinationScene;
+        [SerializeField] private SOSwitchLevelEvent switchLevelEvent;
         private bool[] _addAudioAlreadyPlayed;
         private bool[] _completeAudioAlreadyPlayed;
         protected override void Awake()
@@ -357,8 +359,8 @@ namespace EchoCity
 
         private void OnEscapeCompleted(SOQuest quest)
         {
-            if (switchToGameStateEvent != null)
-                switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Win, null);
+            if (switchLevelEvent != null)
+                switchLevelEvent.RaiseEvent(this, destinationScene);
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
             UnsubscribeEscapeHandler(quest);
             ShowCompletedMessage(quest);

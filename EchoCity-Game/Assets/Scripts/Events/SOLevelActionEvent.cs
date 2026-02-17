@@ -9,10 +9,11 @@ namespace EchoCity
         None = 0,
         Persistent,
         Playground,
-        InitialNarration,
+        Narration_Initial,
         Tutorial,
-        AfterTutorialNarration,
+        Narration_AfterTutorial,
         FirstLevel,
+        Narration_AfterFirstLevel,
         SecondLevel,
         MAX
     }
