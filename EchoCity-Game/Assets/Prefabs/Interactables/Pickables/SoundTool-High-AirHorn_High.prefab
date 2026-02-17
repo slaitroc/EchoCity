@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5246020073208458600}
   - component: {fileID: 563923204948342309}
   - component: {fileID: 7149908101699416427}
+  - component: {fileID: 239661896197964173}
   - component: {fileID: 9087527563764287827}
   m_Layer: 0
   m_Name: SoundTool-High-AirHorn_High
@@ -109,6 +110,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.18416974, y: 0.65801626, z: 0.2912342}
   m_Center: {x: 0, y: 0.32900825, z: 0}
+--- !u!114 &239661896197964173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9056602873422106177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
 --- !u!114 &9087527563764287827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +146,11 @@ MonoBehaviour:
   setTags: []
   _interactionDescription: Is this a air horn?
   _InteractionSuccessMessage: Air horn picked
+  OnSuccessAddQuest: {fileID: 0}
+  OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
+  OnFailAddQuest: {fileID: 0}
+  OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
   PickableData: {fileID: 11400000, guid: e42171ffa5dcf4a49bc303be8dbb6a3e, type: 2}
   undoTagsOnDrop: 1
