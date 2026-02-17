@@ -191,6 +191,8 @@ namespace EchoCity
         private static Coroutine _voiceSecondaryCoroutine;
         private static bool _paused = false;
         private static bool _stopMainVoice = false;
+        public static bool IsPlayingMainVoice => _voiceMainCoroutine != null;
+        public static bool IsPlayingSecondaryVoice => _voiceSecondaryCoroutine != null;
         private static bool AddInVoiceQueueChecks(SODialogContainer container, SOShowUIEvent @event, int lineIndex)
         {
             if (!container || !@event || container.DialogLines.Length == 0)
