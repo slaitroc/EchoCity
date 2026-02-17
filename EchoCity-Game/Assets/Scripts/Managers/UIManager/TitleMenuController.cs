@@ -27,6 +27,7 @@ namespace EchoCity
         private Button _settingsButton;
         private Button _quitButton;
         private Button _feedbackButton;
+        private Button _creditsButton;
         private Button[] _buttons;
         private bool _isNavMode = false;
         private bool _showCursor;
@@ -53,7 +54,8 @@ namespace EchoCity
             _settingsButton = _root.Q<Button>("SettingsButton");
             // quitButton = _root.Q<Button>("QuitButton");
             _feedbackButton = _root.Q<Button>("FeedbackButton");
-            _buttons = new Button[] { _startGameButton, _playgroundButton, _settingsButton, _feedbackButton };
+            _creditsButton = _root.Q<Button>("CreditsButton");
+            _buttons = new Button[] { _startGameButton, _playgroundButton, _settingsButton, _feedbackButton, _creditsButton };
             _redBlinkOverlay = _root.Q<VisualElement>("RedBlinkOverlay");
             _blueBlinkOverlay = _root.Q<VisualElement>("BlueBlinkOverlay");
 
@@ -96,6 +98,7 @@ namespace EchoCity
             if (_settingsButton != null) _settingsButton.clicked += SettingsClickHandler;
             if (_quitButton != null) _quitButton.clicked += QuitClickHandler;
             if (_feedbackButton != null) _feedbackButton.clicked += FeedbackClickHandler;
+            if (_creditsButton != null) _creditsButton.clicked += CreditsClickHandler;
         }
 
         IEnumerator RedBlinkLoop()
@@ -163,6 +166,7 @@ namespace EchoCity
         private void QuitClickHandler() => Log.DLazy(() => "Quit button clicked", this);
 
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
+        private void CreditsClickHandler() => uiManager.OpenCreditsMenu();
 
         public void ShowPlaygroundButton()
         {
@@ -177,7 +181,7 @@ namespace EchoCity
             if (_settingsButton != null) _settingsButton.clicked -= SettingsClickHandler;
             if (_quitButton != null) _quitButton.clicked -= QuitClickHandler;
             if (_feedbackButton != null) _feedbackButton.clicked -= FeedbackClickHandler;
-
+            if (_creditsButton != null) _creditsButton.clicked -= CreditsClickHandler;
             _showCursor = false;
         }
     }
