@@ -119,6 +119,72 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &18829715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 18829718}
+  - component: {fileID: 18829717}
+  - component: {fileID: 18829716}
+  m_Layer: 0
+  m_Name: Credits
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &18829716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18829715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817558b2747964a708a94921f752b617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManager: {fileID: 4450455738711569964}
+  creditsDocument: {fileID: 18829717}
+--- !u!114 &18829717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18829715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: abde7b552ae2c45258871ed3a19afc84, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: fdf0c992b50b9406aa56e38a8a8b190a, type: 3}
+  m_SortingOrder: 25
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+--- !u!4 &18829718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18829715}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4714204770916223035}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &259748716
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 259748717}
   m_Layer: 0
-  m_Name: ---------------V0.2.2-----------------------
+  m_Name: ---------------V0.2.3-----------------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1246,12 +1312,13 @@ MonoBehaviour:
   questController: {fileID: 8355520794717419949}
   pauseMenuController: {fileID: 4947843605029723030}
   settingsMenuController: {fileID: 7258202136021664574}
+  feedbackMenuController: {fileID: 2662594201329881594}
+  creditsController: {fileID: 18829716}
   dialogController: {fileID: 3153889324976173274}
   subtitlesController: {fileID: 827345870821352915}
   _subtitlesBottomGapPx: 10
   deathMenuController: {fileID: 1775551442792906967}
   loadingScreenController: {fileID: 7979531207589254676}
-  feedbackMenuController: {fileID: 2662594201329881594}
   winMenuController: {fileID: 3903647054322509604}
   narrationController: {fileID: 6130010360842380409}
   switchToGameStateEvent: {fileID: 11400000, guid: 86557fee844c74e9389297a778902730, type: 2}
@@ -1358,6 +1425,7 @@ Transform:
   - {fileID: 741555826839500518}
   - {fileID: 6481053663205550316}
   - {fileID: 5345279973803557987}
+  - {fileID: 18829718}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4735343869886633788
