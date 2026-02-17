@@ -1,5 +1,4 @@
 using System.Collections;
-using EchoCity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,10 +26,11 @@ namespace EchoCity
         "None",
         "Persistent",
         "Playground",
-        "InitialNarration",
+        "Narration-Initial",
         "Tutorial",
-        "AfterTutorialNarration",
+        "Narration-AfterTutorial",
         "First-Level",
+        "Narration-AfterFirstLevel",
         "Second-Level",
     };
         private SceneEnum _currentLevelEnum = SceneEnum.None;

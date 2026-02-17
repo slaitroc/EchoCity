@@ -18,6 +18,7 @@ namespace EchoCity
         [Header("Initialization Data")]
         [SerializeField] private SODialogContainer container;
         [SerializeField] private SceneEnum destinationScene;
+        [SerializeField] private GameStatesEnum nextGameState;
 
         void OnEnable()
         {
@@ -30,7 +31,7 @@ namespace EchoCity
         }
         void InitializeHandler(IEventSender sender, SceneLoaderTriggerEnum triggerCode)
         {
-            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Narration, new ToNarrationParams(container, destinationScene));
+            switchToGameStateEvent.RaiseEvent(this, GameStatesEnum.Narration, new ToNarrationParams(container, destinationScene, nextGameState));
         }
     }
 

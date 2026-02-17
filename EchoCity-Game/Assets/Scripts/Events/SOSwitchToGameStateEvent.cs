@@ -26,13 +26,16 @@ namespace EchoCity
     {
         private readonly SODialogContainer _narrationContainer;
         private readonly SceneEnum _destinationScene = SceneEnum.None;
+        private readonly GameStatesEnum _nextGameState;
         public SODialogContainer NarrationContainer => _narrationContainer;
         public SceneEnum DestinationScene => _destinationScene;
+        public GameStatesEnum NextGameState => _nextGameState;
 
-        public ToNarrationParams(SODialogContainer narrationContainer, SceneEnum destinationScene)
+        public ToNarrationParams(SODialogContainer narrationContainer, SceneEnum destinationScene, GameStatesEnum nextGameState)
         {
             _narrationContainer = narrationContainer;
             _destinationScene = destinationScene;
+            _nextGameState = nextGameState;
         }
     }
 
