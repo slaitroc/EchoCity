@@ -7,7 +7,6 @@ namespace EchoCity
     public class SecondAreaIDCheckerInteractable : PlainInteractable
     {
         [SerializeField] private SOSoundSource successSoundSource;
-        [SerializeField] private SOSwitchToGameStateEvent switchToGameStateEvent;
         [SerializeField] private SOQuest extraTagTriggerQuest;
         public override InteractionEnum InteractionCode => InteractionEnum.SecondAreaIDChecker;
         private AudioSource _audioSource;
@@ -16,14 +15,14 @@ namespace EchoCity
         {
             base.Start();
             _audioSource = gameObject.AddComponent<AudioSource>();
-            _audioSource.spatialBlend = 1.0f; // 3D sound
+            _audioSource.spatialBlend = 0.0f; // 2D sound
         }
 
         protected override void ResolveInteraction(bool outcome)
         {
             if (outcome)
             {
-                PlayAtPosition(transform.position, successSoundSource, _audioContext, MixerGroupEnum.SFX);
+                PlayAtPosition(transform.right, successSoundSource, _audioContext, MixerGroupEnum.SFX);
             }
             else
             {
