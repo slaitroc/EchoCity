@@ -21,6 +21,7 @@ namespace EchoCity
         private Button _playgroundButton;
         private Button _settingsButton;
         private Button _feedbackButton;
+        private Button _creditsButton;
         private Button _quitButton;
         private Button[] _buttons;
         private bool _isNavMode = false;
@@ -45,8 +46,9 @@ namespace EchoCity
             _playgroundButton = _root.Q<Button>("PlaygroundButton");
             _settingsButton = _root.Q<Button>("SettingsButton");
             _feedbackButton = _root.Q<Button>("FeedbackButton");
+            _creditsButton = _root.Q<Button>("CreditsButton");
             _quitButton = _root.Q<Button>("QuitButton");
-            _buttons = new Button[] { _resumeButton, _playgroundButton, _settingsButton, _feedbackButton, _quitButton };
+            _buttons = new Button[] { _resumeButton, _playgroundButton, _settingsButton, _feedbackButton, _creditsButton, _quitButton };
 
             if (_playgroundButton != null) _playgroundButton.style.display = DisplayStyle.None;
 
@@ -86,6 +88,7 @@ namespace EchoCity
             if (_playgroundButton != null) _playgroundButton.clicked += PlaygroundClickHandler;
             if (_settingsButton != null) _settingsButton.clicked += SettingsClickHandler;
             if (_feedbackButton != null) _feedbackButton.clicked += FeedbackClickHandler;
+            if (_creditsButton != null) _creditsButton.clicked += CreditsClickHandler;
             if (_quitButton != null) _quitButton.clicked += QuitClickHandler;
         }
 
@@ -104,6 +107,7 @@ namespace EchoCity
         private void SettingsClickHandler() => uiManager.OpenSettingsMenu();
         private void PlaygroundClickHandler() => uiManager.SwitchToInitLevel(SceneEnum.Playground);
         private void FeedbackClickHandler() => uiManager.OpenFeedbackMenu();
+        private void CreditsClickHandler() => uiManager.OpenCreditsMenu();
         private void QuitClickHandler() => uiManager.SwitchToTitleState();
 
         public void ShowPlaygroundButton()
@@ -118,6 +122,7 @@ namespace EchoCity
             if (_playgroundButton != null) _playgroundButton.clicked -= PlaygroundClickHandler;
             if (_settingsButton != null) _settingsButton.clicked -= SettingsClickHandler;
             if (_feedbackButton != null) _feedbackButton.clicked -= FeedbackClickHandler;
+            if (_creditsButton != null) _creditsButton.clicked -= CreditsClickHandler;
             if (_quitButton != null) _quitButton.clicked -= QuitClickHandler;
 
             _showCursor = false;

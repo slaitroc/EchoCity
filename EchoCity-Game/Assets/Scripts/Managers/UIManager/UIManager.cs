@@ -50,6 +50,12 @@ namespace EchoCity
         [Header("Settings Menu")]
         [SerializeField] private SettingsMenuController settingsMenuController;
 
+        [Header("Feedback Menu")]
+        [SerializeField] private FeedbackMenuController feedbackMenuController;
+
+        [Header("Credits Menu")]
+        [SerializeField] private CreditsController creditsController;
+
         [Header("Dialogs")]
         [SerializeField] private DialogController dialogController;
         [Header("Subtitle")]
@@ -61,7 +67,6 @@ namespace EchoCity
 
         [Header("Loading Screen")]
         [SerializeField] private LoadingScreenController loadingScreenController;
-        [SerializeField] private FeedbackMenuController feedbackMenuController;
 
         [Header("Win Menu")]
         [SerializeField] private WinMenuController winMenuController;
@@ -105,6 +110,7 @@ namespace EchoCity
         private GameObject _deathMenu;
         private GameObject _loadingScreen;
         private GameObject _feedbackMenu;
+        private GameObject _creditsMenu;
         private GameObject _winMenu;
         private GameObject _narration;
 
@@ -141,6 +147,7 @@ namespace EchoCity
             _deathMenu = deathMenuController.gameObject;
             _loadingScreen = loadingScreenController.gameObject;
             _feedbackMenu = feedbackMenuController.gameObject;
+            _creditsMenu = creditsController.gameObject;
             _winMenu = winMenuController.gameObject;
             _narration = narrationController.gameObject;
 
@@ -174,6 +181,8 @@ namespace EchoCity
         public void CloseSettingsMenu() => _settingsMenu.SetActive(false);
         public void OpenFeedbackMenu() => _feedbackMenu.SetActive(true);
         public void CloseFeedbackMenu() => _feedbackMenu.SetActive(false);
+        public void OpenCreditsMenu() => _creditsMenu.SetActive(true);
+        public void CloseCreditsMenu() => _creditsMenu.SetActive(false);
         public void EquipItem(int index, SOPickable pickableData, GameObject obj) => playerController.EquipItem(index, pickableData, obj);
         public void PlayNextNarrationLine(int index) => EchoCitySound.PlayNarrationLine(index);
         public void StopNarration() => EchoCitySound.StopNarration();
@@ -269,7 +278,7 @@ namespace EchoCity
         }
 
         private void HideAllElements(bool splashScreen = false, bool title = false, bool hud = false, bool pause = false, bool dialog = false,
-            bool subtitles = false, bool death = false, bool loading = false, bool win = false, bool narration = false)
+            bool subtitles = false, bool death = false, bool loading = false, bool win = false, bool narration = false, bool feedback = false, bool credits = false)
         {
             if (!splashScreen) _splashScreen.SetActive(false);
             if (!title) _titleMenu.SetActive(false);
@@ -281,6 +290,8 @@ namespace EchoCity
             if (!loading) _loadingScreen.SetActive(false);
             if (!win) _winMenu.SetActive(false);
             if (!narration) _narration.SetActive(false);
+            if (!feedback) _feedbackMenu.SetActive(false);
+            if (!credits) _creditsMenu.SetActive(false);
         }
 
 

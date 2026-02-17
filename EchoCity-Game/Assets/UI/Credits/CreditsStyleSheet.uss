@@ -1,0 +1,100 @@
+.credits-root {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.credits-title {
+    -unity-font-style: normal;
+    font-size: 100px;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    -unity-text-align: middle-center;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+}
+
+.credits-panel {
+    width: 50%;
+    height: 70%;
+    background-color: rgba(29, 29, 29, 0.95);
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+    padding: 24px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    justify-content: space-between;
+}
+
+.credits-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.credits-section-title {
+    font-size: 48px;
+    color: rgb(255, 154, 104);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    -unity-text-align: middle-center;
+}
+
+.credits-name {
+    font-size: 32px;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    -unity-text-align: middle-center;
+}
+
+
+.button-back {
+    height: 15%;
+    width: 80%;
+    align-self: center;
+    font-size: 500%;
+    margin-top: 20px;
+    bottom: 0;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border-radius: 15px;
+    align-content: center;
+    align-items: center;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    transition-duration: 0.5s;
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    -unity-background-scale-mode: scale-and-crop;
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+}
+
+.button-back:hover {
+    border-color: rgb(255, 0, 0);
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    scale: 1.2 1.2;
+    -unity-background-image-tint-color: rgb(106, 0, 0);
+}
+
+.button-back:focus {
+    border-color: rgb(255, 0, 0);
+    background-image: resource('Images/EchoCity-PolygonApocalypse_Blood');
+    scale: 1.2 1.2;
+    -unity-background-image-tint-color: rgb(106, 0, 0);
+}
