@@ -58,6 +58,7 @@ namespace EchoCity
         IEnumerator AttackRoutine()
         {
             yield return new WaitForSeconds(_enemyData.AttackDamageDelay);
+            EchoCitySound.PlayRandomInAudioSource(_enemyData.AttackStatePhrases, _context.AudioContext, _audioSource, EchoCitySound.MixerGroupEnum.SFX);
             _hitDetector.Enable();
             yield return new WaitForSeconds(_enemyData.AttackDamageWindowTime);
             _hitDetector.Disable();

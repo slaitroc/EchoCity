@@ -27,6 +27,8 @@ namespace EchoCity
             _fov.ActiveTarget = _fov.ClosestTarget;
 
             _context.HeadMark?.ShowChaseMark();
+            if (!_audioSource.isPlaying)
+                EchoCitySound.PlayRandomInAudioSource(_enemyData.PlayerChaseStatePhrases, _audioContext, _audioSource, EchoCitySound.MixerGroupEnum.SFX);
         }
 
         public override void Update()

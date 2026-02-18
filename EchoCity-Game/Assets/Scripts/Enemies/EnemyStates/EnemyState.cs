@@ -24,7 +24,7 @@ namespace EchoCity
         protected PerceivedSound _targetSound;
         protected IAttractionSystem _attractionSystem;
         protected IConfusionSystem _confusionSystem;
-        protected SOSoundEmittedEvent _newAudioSphereEvent;
+        protected AudioContext _audioContext;
         protected SOAttractionInfoEvent _enemyAttractionEvent;
 
 
@@ -46,7 +46,7 @@ namespace EchoCity
             _targetSound = _context.TargetSound;
             _attractionSystem = _context.AttractionSystem;
             _confusionSystem = _context.ConfusionSystem;
-            _newAudioSphereEvent = _context.SoundEmittedEvent;
+            _audioContext = _context.AudioContext;
             _enemyAttractionEvent = _context.AttractionInfoEvent;
         }
 

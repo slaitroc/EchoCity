@@ -151,7 +151,7 @@ namespace EchoCity
         public Transform Transform => this.transform;
         public GameObject GameObject => this.gameObject;
 
-        // ENEMY CONTEXT
+        // ENEMY 
         public IFSMOwner Owner => this;
         public IFOV FOV => fov;
         public EnemyStateEnum CurrentStateEnum { get => currentState; set => currentState = value; }
@@ -167,9 +167,11 @@ namespace EchoCity
         public PerceivedSound TargetSound => targetSound;
         public IAttractionSystem AttractionSystem => this;
         public IConfusionSystem ConfusionSystem => this;
-        public SOSoundEmittedEvent SoundEmittedEvent => soundEmittedEvent;
+        public AudioContext AudioContext => _audioContext;
         public SOAttractionInfoEvent AttractionInfoEvent => attractionInfoEvent;
         public SOEnemyStateTransitionEvent EnemyStateTransitionEvent => enemyStateTransitionEvent;
+
+        private AudioContext _audioContext;
 
         // ATTRACTION System
         [SerializeField] private float _A = 0f; //attraction
@@ -199,6 +201,8 @@ namespace EchoCity
             Debug.Assert(fov != null, "EnemyAI requires a FOV component.", this);
             Debug.Assert(enemyData != null, "No SOEnemyData assigned to EnemyAI on " + gameObject.name, this);
             Debug.Assert(hitDetector != null, "No AttackRangeDetector assigned to EnemyAI on " + gameObject.name, this);
+            _audioContext = new AudioContext(this, soundEmittedEvent);
+            audioSource.spatialBlend = 1f; // Make sure the audio source is 3D for spatial sound
         }
 
         void OnEnable()
