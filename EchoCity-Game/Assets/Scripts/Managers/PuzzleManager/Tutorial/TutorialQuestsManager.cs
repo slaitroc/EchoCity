@@ -669,6 +669,12 @@ namespace EchoCity
             UnsubscribeUseHighSOTutorialHandler(quest);
             ShowCompletedMessage(quest);
             PlayLine(quest, 1, true);
+            PlayLine(quest, 2);
+            PlayLine(quest, 3);
+            PlayLine(quest, 4);
+            PlayLine(quest, 5);
+            PlayLine(quest, 6);
+            PlayLine(quest, 7);
         }
         #endregion
 
@@ -706,15 +712,23 @@ namespace EchoCity
             Log.DLazy(() => $"Quest {quest.name} completed.", this);
             UnsubscribeEnemySoundChaseTutorialHandler(quest);
             ShowCompletedMessage(quest);
-            PlayLine(quest, 1, true);
+            PlayLine(quest, 9, true);
         }
 
         private IEnumerator StartEnemyQuestDelay(SOQuest quest)
         {
             questsUpdatedEvent.RaiseEvent(this, 0, (int)QuestStateEnum.ResetQuestsManager);
-            yield return new WaitForSeconds(activeQuests[(int)QuestsEnum.UseHighSO_Tutorial].ScriptContainer.DialogLines[1].AudioClip.length);
+            yield return new WaitWhile(() => EchoCitySound.IsPlayingMainVoice);
             PlayLine(quest, 0);
-            yield return new WaitForSeconds(activeQuests[(int)QuestsEnum.AttractEnemy_Tutorial].ScriptContainer.DialogLines[0].AudioClip.length);
+            PlayLine(quest, 1);
+            PlayLine(quest, 2);
+            PlayLine(quest, 3);
+            PlayLine(quest, 4);
+            PlayLine(quest, 5);
+            PlayLine(quest, 6);
+            PlayLine(quest, 7);
+            PlayLine(quest, 8);
+            yield return new WaitWhile(() => EchoCitySound.IsPlayingMainVoice);
             foreach (var eventBase in quest.SubscribeToEvents)
             {
                 if (eventBase.EventType == EchoCityEventsEnum.EnemyStateTransition)
