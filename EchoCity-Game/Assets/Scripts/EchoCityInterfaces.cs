@@ -126,7 +126,7 @@ namespace EchoCity
         // <summary> The enemy's confusion system</summary>
         IConfusionSystem ConfusionSystem { get; }
         // <summary> Echolocation enemy's events </summary>
-        SOSoundEmittedEvent SoundEmittedEvent { get; }
+        AudioContext AudioContext { get; }
         // <summary> enemyAttraction event </summary>
         SOAttractionInfoEvent AttractionInfoEvent { get; }
         // <summary> enemyStateTransition event </summary>

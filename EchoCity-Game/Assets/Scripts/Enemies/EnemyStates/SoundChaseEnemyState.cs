@@ -31,6 +31,8 @@ namespace EchoCity
             _targetSound.UpdatePerceivedSound(_attractionSystem.LastPerceivedSound);
 
             _context.HeadMark?.ShowChaseMark();
+            if (!_audioSource.isPlaying)
+                EchoCitySound.PlayRandomInAudioSource(_enemyData.SoundChaseStatePhrases, _audioContext, _audioSource, EchoCitySound.MixerGroupEnum.SFX);
         }
 
         public override void Update()
@@ -86,6 +88,8 @@ namespace EchoCity
         public override void DealDamage(IDamageable damageable) { }
         private void StartCheckingSound()
         {
+            if (!_audioSource.isPlaying)
+                EchoCitySound.PlayRandomInAudioSource(_enemyData.CheckSoundStatePhrases, _audioContext, _audioSource, EchoCitySound.MixerGroupEnum.SFX);
             _context.HeadMark?.ShowCheckMark();
             _isCheckingSound = true;
             _waitTimer = _context.EnemyData.CheckSoundPauseDuration;

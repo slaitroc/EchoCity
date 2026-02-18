@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: EnemyGrunts 1
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 49281afd3aa455741af4c174c271f1b2, type: 2}
+  soundClassIntensityFactorMultiplier: 1
   audioClip: {fileID: 0}
-  intensity: 1
+  audioLengthReference: 2.332744
+  audioLengthOverride: 0.8
+  intensity: 0.5
   volume: 0.75
-  radius: 30.4
-  gapBetweenSounds: 0
-  minimumDuration: 0.1
-  emitOnStart: 0
+  radius: 11.8
+  minEchoDuration: 0.1
+  isEnvironmental: 0
   randomAudioClips:
   - {fileID: 8300000, guid: 2a949a3d8b9c1be4789943423743ee54, type: 3}
   - {fileID: 8300000, guid: 1ff88e94ad1e7ce418204c82784e61fa, type: 3}

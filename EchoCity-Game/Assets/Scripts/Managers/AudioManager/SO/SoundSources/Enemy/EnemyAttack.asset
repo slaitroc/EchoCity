@@ -10,19 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b30b2b716e43e0974c152095f58ee3, type: 3}
-  m_Name: EnemyGrunts 2
+  m_Name: EnemyAttack
   m_EditorClassIdentifier: 
   soundClass: {fileID: 11400000, guid: 49281afd3aa455741af4c174c271f1b2, type: 2}
   soundClassIntensityFactorMultiplier: 1
-  audioClip: {fileID: 0}
-  audioLengthReference: 1.2746485
-  audioLengthOverride: 0.7
-  intensity: 0.5
+  audioClip: {fileID: 8300000, guid: d65be96a34150f749af9f562d3305848, type: 3}
+  audioLengthReference: 0.38267574
+  audioLengthOverride: 0.3
+  intensity: 0.4
   volume: 0.75
-  radius: 12.8
+  radius: 6.3
   minEchoDuration: 0.1
   isEnvironmental: 0
-  randomAudioClips:
-  - {fileID: 8300000, guid: 99f287902dbcc2543bb4e9e695142ac0, type: 3}
-  - {fileID: 8300000, guid: ef5aba4860742714e87aa732a09bca31, type: 3}
-  - {fileID: 8300000, guid: d7fce05d508e15c4e8f7f65e8a4df3c9, type: 3}
+  randomAudioClips: []
