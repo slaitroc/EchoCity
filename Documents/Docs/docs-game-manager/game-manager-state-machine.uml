@@ -1,0 +1,64 @@
+@startuml game-manager-state-machine
+
+skinparam backgroundColor #151b23
+skinparam defaultFontName "MesloLGL Nerd Font"
+skinparam defaultFontSize 13
+skinparam titleFontColor #cececeff
+skinparam arrowColor #cececeff
+skinparam arrowFontColor #cececeff
+hide empty description
+
+skinparam state {
+    BackgroundColor #202020ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam note {
+    BackgroundColor #404040ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+title Game Manager State Machine (simplified)
+
+
+[*] #cececeff -right-> Title : init
+
+Title --> Loading 
+
+Playing -up-> Paused #19478cff
+Playing -up-> Narration
+Playing -up-> HUD 
+Playing -right-> Win #3ca31cff
+Playing -left-> Death #8c1919ff
+
+Paused -down-> Playing
+Paused -down[#19478cff]-> Loading
+
+Narration -down-> Playing
+
+Death -down[#8c1919ff]-> Loading
+
+Win -down[#3ca31cff]-> Loading
+
+HUD -down-> Playing 
+HUD -down-> Paused
+HUD -down-> Narration
+HUD -left[hidden]-> Narration
+HUD -down-> Death
+
+Loading -up-> Playing 
+
+Loading -[#8c1919ff]-> Title
+Loading -[#8c1919ff]-> Playing
+
+Loading -[#3ca31cff]-> Title
+Loading -[#3ca31cff]-> Playing
+Loading -up[#19478cff]-> Title
+
+
+
+
+
+@enduml

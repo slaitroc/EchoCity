@@ -1,0 +1,106 @@
+@startuml game-manager-states-and-events
+title Game Manager States & Events
+
+skinparam backgroundColor #151b23
+skinparam defaultFontName "MesloLGL Nerd Font"
+skinparam defaultFontSize 13
+skinparam titleFontColor #cececeff
+skinparam arrowColor #cececeff
+skinparam arrowFontColor #cececeff
+hide empty description
+
+skinparam state {
+    BackgroundColor #202020ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+skinparam note {
+    BackgroundColor #404040ff
+    BorderColor #808080ff
+    FontColor #cececeff
+}
+
+
+Title : - player input -> off
+Title : - ui input -> on
+Title : - time scale -> paused
+
+state Title{
+    state "<<entry event>>" as TitleEntry #4e4e4eff : SwitchToTitleEvent
+}
+
+Playing : - player input -> on
+Playing : - ui input -> off
+Playing : - time scale -> normal
+
+state Playing{
+    state "<<entry event>>" as PlayingEntry #4e4e4eff : SwitchToPlayingEvent
+}
+
+Loading: - previousState.EnterLoading()
+Loading: - previousState.ExitLoading()
+
+state Loading{
+    state "<<entry event>>" as LoadingEntry #4e4e4eff : EnterLoadingEvent
+    state "<<exit event>>" as LoadingExit #4e4e4eff : ExitLoadingEvent
+}
+
+Narration : - player input -> off
+Narration : - ui input -> on
+Narration : - time scale -> paused
+
+state Narration{
+    state "<<entry event>>" as NarrationEntry #4e4e4eff : SwitchToNarrationEvent
+}
+
+HUD : - player input -> on
+HUD : - ui input -> on
+HUD : - time scale -> normal
+
+state HUD{
+    state "<<entry event>>" as HUDEntry #4e4e4eff: SwitchToHUDEvent
+}
+
+Paused : - player input -> off
+Paused : - ui input -> on
+Paused : - time scale -> paused
+
+state Paused  #19478cff {
+
+    state "<<entry event>>" as PausedEntry #4e4e4eff : SwitchToPausedEvent
+}
+
+Death : - player input -> off
+Death : - ui input -> on
+Death : - time scale -> paused
+
+state Death #8c1919ff {
+    state "<<entry event>>" as DeathEntry #4e4e4eff : SwitchToDeathEvent
+}
+
+Win : - player input -> off
+Win : - ui input -> on
+Win : - time scale -> paused
+
+state Win #3ca31cff {
+    
+    state "<<entry event>>" as WinEntry #4e4e4eff : SwitchToWinEvent
+}
+
+Title -right[hidden]-> Playing
+Playing -right[hidden]-> Paused
+
+
+Narration -right[hidden]-> Death
+Death -right[hidden]-> Win
+
+HUD -right[hidden]-> Loading
+
+Title -down[hidden]-> Narration
+Narration -down[hidden]-> HUD
+
+
+
+
+@enduml
