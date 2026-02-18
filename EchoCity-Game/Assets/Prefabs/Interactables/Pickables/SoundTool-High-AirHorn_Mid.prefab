@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7931390142878105525
+--- !u!1 &9056602873422106177
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5855796167742410494}
-  - component: {fileID: 3943915463905521218}
-  - component: {fileID: 3815544884769076997}
-  - component: {fileID: 4645055897433672366}
-  - component: {fileID: 3434314612403230416}
-  - component: {fileID: -7152644826731902427}
+  - component: {fileID: 1133095314035653438}
+  - component: {fileID: 5246020073208458600}
+  - component: {fileID: 563923204948342309}
+  - component: {fileID: 7149908101699416427}
+  - component: {fileID: 239661896197964173}
+  - component: {fileID: 9087527563764287827}
   m_Layer: 0
-  m_Name: SoundTool-Low-WalkieTalkie-01_High
+  m_Name: SoundTool-High-AirHorn_Mid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5855796167742410494
+--- !u!4 &1133095314035653438
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931390142878105525}
+  m_GameObject: {fileID: 9056602873422106177}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6672661, y: 0.23400013, z: 0.23400013, w: 0.6672661}
-  m_LocalPosition: {x: 9.342, y: -0.89, z: -1.050119}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: -0, y: 0.99544376, z: -0, w: -0.09535084}
+  m_LocalPosition: {x: 3.0079994, y: 0.1, z: 1.1940002}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 38.65}
---- !u!33 &3943915463905521218
+  m_LocalEulerAnglesHint: {x: 0, y: 190.943, z: 0}
+--- !u!33 &5246020073208458600
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931390142878105525}
-  m_Mesh: {fileID: 4300000, guid: cb9083df75a4c0441896209761b3d7c0, type: 3}
---- !u!23 &3815544884769076997
+  m_GameObject: {fileID: 9056602873422106177}
+  m_Mesh: {fileID: 4300000, guid: 48b0d291ebbb8be4bac3f0322d7325d9, type: 3}
+--- !u!23 &563923204948342309
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931390142878105525}
+  m_GameObject: {fileID: 9056602873422106177}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: 965e421d30d6a2a419dfd5b3597456b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,26 +89,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4645055897433672366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931390142878105525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectFrequency: 2
---- !u!65 &3434314612403230416
+--- !u!65 &7149908101699416427
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931390142878105525}
+  m_GameObject: {fileID: 9056602873422106177}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -117,19 +104,32 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.12172793, y: 0.3721778, z: 0.19091101}
-  m_Center: {x: 0.0053491574, y: 0.13603492, z: 0.058646612}
---- !u!114 &-7152644826731902427
+  m_Size: {x: 0.18416974, y: 0.65801626, z: 0.2912342}
+  m_Center: {x: 0, y: 0.32900825, z: 0}
+--- !u!114 &239661896197964173
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7931390142878105525}
+  m_GameObject: {fileID: 9056602873422106177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a73a507f72a331229877f92ec6e7fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectFrequency: 1
+--- !u!114 &9087527563764287827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9056602873422106177}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f35b3f35f84e9244b6b00ff0044696c, type: 3}
@@ -143,17 +143,14 @@ MonoBehaviour:
   - _tag: 0
     _isActive: 0
     _count: 0
-  setTags:
-  - _tag: 32
-    _isActive: 1
-    _count: 0
-  _interactionDescription: It looks like a walkie talkie
-  _InteractionSuccessMessage: Walkie talkie
+  setTags: []
+  _interactionDescription: Is this a air horn?
+  _InteractionSuccessMessage: Air horn picked
   OnSuccessAddQuest: {fileID: 0}
   OnSuccessAddTagsQuest: {fileID: 0}
   _InteractionFailMessage: There's a time and place for everything but not now!
   OnFailAddQuest: {fileID: 0}
   OnFailAddTagsQuest: {fileID: 0}
   interactionContainer: {fileID: 0}
-  PickableData: {fileID: 11400000, guid: 0123918977f40e846bb9df240fb4d47a, type: 2}
+  PickableData: {fileID: 11400000, guid: e42171ffa5dcf4a49bc303be8dbb6a3e, type: 2}
   undoTagsOnDrop: 1
