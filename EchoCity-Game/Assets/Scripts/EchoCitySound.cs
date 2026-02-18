@@ -67,7 +67,7 @@ namespace EchoCity
         {
             if (audioClips == null || audioClips.Length == 0)
             {
-                Debug.Assert(false, $"{_LOG_TAG}-GetRandomClip: AudioClips array is null or empty. Cannot get random sound.");
+                // Debug.Assert(false, $"{_LOG_TAG}-GetRandomClip: AudioClips array is null or empty. Cannot get random sound.");
                 return null;
             }
 
