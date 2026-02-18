@@ -367,7 +367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1086180932}
   m_Layer: 0
-  m_Name: __________________V0.3_____________________
+  m_Name: __________________V0.4_____________________
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,6 +478,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc8ee35e27a14db43a4b82e8358934b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1869972782 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5801772529471077269, guid: f60a5389651b9e644a14d1629c17129b, type: 3}
+  m_PrefabInstance: {fileID: 532601089}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7fe03dd08f4b84da36f4738b9f4e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1995155082
@@ -711,8 +722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfbc07f97f77643a592992fff687fed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudDocument: {fileID: 2914935634092200893}
   uiManager: {fileID: 4450455738711569964}
+  hudDocument: {fileID: 2914935634092200893}
   playerInventory: {fileID: 1869972777}
   lowFreqIcon: {fileID: 21300000, guid: dfe9be298ba214ab98b64b34d99ae4ae, type: 3}
   midFreqIcon: {fileID: 21300000, guid: 503b493d40c874401915913ca5f42f24, type: 3}
@@ -1721,6 +1732,7 @@ MonoBehaviour:
   - Soundtrack
   - SFX
   - Voice
+  firstPersonController: {fileID: 1869972782}
 --- !u!1 &7354801429895086652
 GameObject:
   m_ObjectHideFlags: 0
