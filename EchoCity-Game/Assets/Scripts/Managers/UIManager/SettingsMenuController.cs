@@ -1,4 +1,5 @@
 using System.Collections;
+using StarterAssets;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -16,12 +17,18 @@ namespace EchoCity
         [SerializeField] private AudioMixer masterMixer;
         [SerializeField] private string[] _mixerGroupsVolumes = { "Master", "Soundtrack", "SFX", "Voice" };
 
+        [Header("Controls Sliders")]
+        [SerializeField] private EC_FirstPersonController firstPersonController;
+
         #region Private Fields
         private VisualElement _root;
         private Slider _masterSlider;
         private Slider _musicSlider;
         private Slider _sfxSlider;
         private Slider _voiceSlider;
+        private Slider _mouseSensitivitySlider;
+        private Label _mouseSensitivityValueLabel;
+
         private Button _backButton;
         #endregion
 
@@ -38,6 +45,8 @@ namespace EchoCity
             _musicSlider = _root.Q<Slider>("MusicSlider");
             _sfxSlider = _root.Q<Slider>("SfxSlider");
             _voiceSlider = _root.Q<Slider>("VoiceSlider");
+            _mouseSensitivitySlider = _root.Q<Slider>("MouseSensitivitySlider");
+            _mouseSensitivityValueLabel = _root.Q<Label>("MouseSensitivityValue");
             _backButton = _root.Q<Button>("BackButton");
 
             _masterSlider.lowValue = 0f;
@@ -48,13 +57,16 @@ namespace EchoCity
             _sfxSlider.highValue = 10f;
             _voiceSlider.lowValue = 0f;
             _voiceSlider.highValue = 10f;
+            _mouseSensitivitySlider.lowValue = 0f;
+            _mouseSensitivitySlider.highValue = 10f;
             yield return null;
-            SetupVolumeSliders();
+            SetupSliders();
 
             _masterSlider.RegisterValueChangedCallback(OnMasterVolumeChanged);
             _musicSlider.RegisterValueChangedCallback(OnMusicVolumeChanged);
             _sfxSlider.RegisterValueChangedCallback(OnSfxVolumeChanged);
             _voiceSlider.RegisterValueChangedCallback(OnVoiceVolumeChanged);
+            _mouseSensitivitySlider.RegisterValueChangedCallback(OnMouseSensitivityChanged);
             if (_backButton != null) _backButton.clicked += BackClickHandler;
         }
 
@@ -63,7 +75,7 @@ namespace EchoCity
             uiManager.CloseSettingsMenu();
         }
 
-        private void SetupVolumeSliders()
+        private void SetupSliders()
         {
             float currentDB;
             float linearValue;
@@ -96,6 +108,11 @@ namespace EchoCity
                 linearValue = Mathf.Pow(10f, currentDB / 20f);
                 _voiceSlider.value = linearValue * 10f;
             }
+
+            // MOUSE SENSITIVITY
+            float currentSensitivity = firstPersonController.RotationSpeed;
+            _mouseSensitivitySlider.value = currentSensitivity;
+            _mouseSensitivityValueLabel.text = currentSensitivity.ToString("F1");
         }
 
         private void OnMasterVolumeChanged(ChangeEvent<float> evt)
@@ -140,11 +157,20 @@ namespace EchoCity
             masterMixer.SetFloat(_mixerGroupsVolumes[3], dBValue);
         }
 
+        private void OnMouseSensitivityChanged(ChangeEvent<float> evt)
+        {
+            float newSensitivity = evt.newValue;
+            firstPersonController.RotationSpeed = newSensitivity;
+            _mouseSensitivityValueLabel.text = newSensitivity.ToString("F1");
+        }
+
         private void OnDisable()
         {
             _masterSlider.UnregisterValueChangedCallback(OnMasterVolumeChanged);
             _musicSlider.UnregisterValueChangedCallback(OnMusicVolumeChanged);
             _sfxSlider.UnregisterValueChangedCallback(OnSfxVolumeChanged);
+            _voiceSlider.UnregisterValueChangedCallback(OnVoiceVolumeChanged);
+            _mouseSensitivitySlider.UnregisterValueChangedCallback(OnMouseSensitivityChanged);
             if (_backButton != null) _backButton.clicked -= BackClickHandler;
         }
     }
