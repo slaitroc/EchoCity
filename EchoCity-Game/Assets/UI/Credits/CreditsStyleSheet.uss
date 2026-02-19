@@ -22,7 +22,7 @@
 
 .credits-panel {
     width: 50%;
-    height: 70%;
+    height: 80%;
     background-color: rgba(29, 29, 29, 0.95);
     border-radius: 16px;
     border-width: 1px;
@@ -63,6 +63,19 @@
     margin-left: auto;
     margin-right: auto;
     -unity-text-align: middle-center;
+}
+
+.credits-disclaimer {
+    font-size: 20px;
+    color: rgb(255, 154, 104);
+    margin-top: 20px;
+    margin-bottom: 5px;
+    -unity-font-definition: resource('Fonts/EchoCity-Echotopia-Regular');
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    -unity-text-align: middle-center;
+    white-space: normal;
 }
 
 
