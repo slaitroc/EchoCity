@@ -38,7 +38,7 @@
     </table>
 </div>
 
-<p align="center">⚙️ Version: 0.2 &nbsp;•&nbsp; 🕒 Last modified: 2025-11-03</p>
+<p align="center">⚙️ Version: 0.2 &nbsp;•&nbsp; 🕒 Last modified: 2026-02-18</p>
 
 ## Table of Contents
 
@@ -289,9 +289,6 @@ Available Asset Packages:
 - [Simple Apocalypse - Cartoon Assets](https://assetstore.unity.com/packages/3d/environments/simple-apocalypse-cartoon-assets-44678)
 
 ## 8. Soundtrack
-
-- First level background music: Lorenzo Ricci;
-- Title menu music: Federico Nerozzi;
 
 Soundtrack references:
 
