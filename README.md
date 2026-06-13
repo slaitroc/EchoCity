@@ -81,3 +81,7 @@ The creatures hunting you use the same senses to navigate. They track the intens
 - **One Echo at a Time:** Complete high-stakes objectives in a world where your own heartbeat is your greatest enemy.
 
   <br><img src="./Images/gameplay-screenshot-three-enemies.png" width="700">
+
+- **Manage Your Resources:** Carefully organize your inventory and key items to overcome the darkness.
+
+  <br><img src="./Images/inventory.png" width="700">
