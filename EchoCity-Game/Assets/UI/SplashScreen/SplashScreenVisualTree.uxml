@@ -2,6 +2,12 @@
     <Style src="project://database/Assets/UI/SplashScreen/SplashScreenStyleSheet.uss?fileID=7433441132597879392&amp;guid=91ff32fae2aeb4c6297f039ec5895d65&amp;type=3#SplashScreenStyleSheet" />
     <ui:VisualElement name="SplashScreenContainer" class="splash-screen-container">
         <ui:VisualElement name="SplashScreenPolimiBackground" class="splash-screen-background polimi-background hide" />
+        <ui:VisualElement name="SplashScreenPhotosensitiveWarningBackground" class="splash-screen-background photosensitive-warning-background hide">
+            <ui:Label text="PHOTOSENSITIVE EPILEPSY WARNING" class="photosensitive-warning-title" />
+            <ui:Label text="A very small percentage of people may experience seizures or loss of awareness when exposed to certain flashing lights, visual patterns, high-contrast images, or repeated screen effects, including people with no prior history of seizures or epilepsy." class="photosensitive-warning-body" />
+            <ui:Label text="Stop playing immediately if you experience dizziness, altered vision, eye or muscle twitching, nausea, disorientation, confusion, loss of awareness, involuntary movements, or convulsions while playing." class="photosensitive-warning-body" />
+            <ui:Label text="If you or anyone in your family has a history of epilepsy, seizures, or photosensitive symptoms, consult a physician before playing. Parents and guardians should monitor children during play." class="photosensitive-warning-body photosensitive-warning-body-last" />
+        </ui:VisualElement>
         <ui:VisualElement name="SplashScreenTeamBackground" class="splash-screen-background team-background hide" />
     </ui:VisualElement>
 </ui:UXML>
